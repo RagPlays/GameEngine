@@ -1,11 +1,12 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-using namespace dae;
-
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) 
+	: m_name(name) 
+{
+}
 
 Scene::~Scene() = default;
 
@@ -24,11 +25,27 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-void Scene::Update()
+void Scene::FixedUpdate(float elapsedSec)
+{
+	for (auto& object : m_objects)
+	{
+		object->FixedUpdate(elapsedSec);
+	}
+}
+
+void Scene::Update(float elapsedSec)
 {
 	for(auto& object : m_objects)
 	{
-		object->Update();
+		object->Update(elapsedSec);
+	}
+}
+
+void Scene::LateUpdate(float elapsedSec)
+{
+	for (auto& object : m_objects)
+	{
+		object->LateUpdate(elapsedSec);
 	}
 }
 
@@ -39,4 +56,3 @@ void Scene::Render() const
 		object->Render();
 	}
 }
-

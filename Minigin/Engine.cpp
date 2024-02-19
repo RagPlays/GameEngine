@@ -4,11 +4,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "Minigin.h"
+#include "Engine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "chrono"
+#include "thread"
 
 SDL_Window* g_window{};
 
@@ -40,7 +42,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::Engine::Engine(const std::string &dataPath)
+Engine::Engine(const std::string &dataPath)
 {
 	PrintSDLVersion();
 	
@@ -57,7 +59,7 @@ dae::Engine::Engine(const std::string &dataPath)
 		480,
 		SDL_WINDOW_OPENGL
 	);
-	if (g_window == nullptr) 
+	if (g_window == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
@@ -67,7 +69,7 @@ dae::Engine::Engine(const std::string &dataPath)
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
-dae::Engine::~Engine()
+Engine::~Engine()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
@@ -75,20 +77,50 @@ dae::Engine::~Engine()
 	SDL_Quit();
 }
 
-void dae::Engine::Run(const std::function<void()>& load)
+void Engine::Run(const std::function<void()>& load)
 {
+	// Run Function
 	load();
 
+	// Get Instances
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
-	bool doContinue = true;
+	// Create Variables
+	std::chrono::duration<float> msPerFrame{ 0.33f };
+	bool doContinue{ true };
+	auto lastTime{ std::chrono::high_resolution_clock::now() };
+	float lag{ 0.f };
+	const float fixedTimeStep{ 0.02f };
+
 	while (doContinue)
 	{
+		// DeltaTime
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		const float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+
+		// Input
 		doContinue = input.ProcessInput();
-		sceneManager.Update();
+
+		// Fixed Update -> only for physics / networking
+		while (lag >= fixedTimeStep)
+		{
+			sceneManager.FixedUpdate(fixedTimeStep);
+			lag -= fixedTimeStep;
+		}
+
+		// Update
+		sceneManager.Update(elapsedSec);
+
+		// LateUpdate
+		//sceneManager
+
+		// Render
 		renderer.Render();
+
+		// Sleep -> FPS cap
+		/*const auto sleepTime{ currentTime + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now() };
+		std::this_thread::sleep_for(sleepTime);*/
 	}
 }

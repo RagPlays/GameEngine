@@ -1,14 +1,14 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
-
 #include "Font.h"
 
-TTF_Font* dae::Font::GetFont() const 
+
+TTF_Font* Font::GetFont() const 
 {
 	return m_font;
 }
 
-dae::Font::Font(const std::string& fullPath, unsigned int size) 
+Font::Font(const std::string& fullPath, unsigned int size)
 	: m_font{ nullptr }
 	, m_size{ size }
 {
@@ -19,7 +19,7 @@ dae::Font::Font(const std::string& fullPath, unsigned int size)
 	}
 }
 
-dae::Font::~Font()
+Font::~Font()
 {
 	TTF_CloseFont(m_font);
 }
