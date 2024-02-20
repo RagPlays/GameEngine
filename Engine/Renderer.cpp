@@ -5,23 +5,27 @@
 
 int GetOpenGLDriverIndex()
 {
-	auto openglIndex = -1;
-	const auto driverCount = SDL_GetNumRenderDrivers();
-	for (auto i = 0; i < driverCount; i++)
+	int openglIndex = -1;
+	const int driverCount = SDL_GetNumRenderDrivers();
+	for (int i{}; i < driverCount; i++)
 	{
 		SDL_RendererInfo info;
 		if (!SDL_GetRenderDriverInfo(i, &info))
+		{
 			if (!strcmp(info.name, "opengl"))
+			{
 				openglIndex = i;
+			}
+		}
 	}
 	return openglIndex;
 }
 
 void Renderer::Init(SDL_Window* window)
 {
-	m_window = window;
-	m_renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
-	if (m_renderer == nullptr) 
+	m_Window = window;
+	m_Renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
+	if (m_Renderer == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
@@ -29,21 +33,22 @@ void Renderer::Init(SDL_Window* window)
 
 void Renderer::Render() const
 {
-	const auto& color = GetBackgroundColor();
-	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderClear(m_renderer);
+	const SDL_Color& color = GetBackgroundColor();
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderClear(m_Renderer);
 
 	SceneManager::GetInstance().Render();
 	
-	SDL_RenderPresent(m_renderer);
+	SDL_RenderPresent(m_Renderer);
 }
 
 void Renderer::Destroy()
 {
-	if (m_renderer != nullptr)
+	if (m_Renderer)
 	{
-		SDL_DestroyRenderer(m_renderer);
-		m_renderer = nullptr;
+		SDL_DestroyRenderer(m_Renderer);
+		m_Renderer = nullptr;
 	}
 }
 
@@ -66,4 +71,7 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-SDL_Renderer* Renderer::GetSDLRenderer() const { return m_renderer; }
+SDL_Renderer* Renderer::GetSDLRenderer() const 
+{ 
+	return m_Renderer; 
+}

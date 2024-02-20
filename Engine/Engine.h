@@ -1,5 +1,5 @@
-#ifndef MINIGIN_H
-#define MINIGIN_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <string>
 #include <functional>
@@ -7,8 +7,9 @@
 class Engine
 {
 public:
-	explicit Engine(const std::string& dataPath);
+	explicit Engine(const std::string& dataPath, const std::string& title);
 	~Engine();
+
 	void Run(const std::function<void()>& load);
 
 	Engine(const Engine& other) = delete;
@@ -17,4 +18,4 @@ public:
 	Engine& operator=(Engine&& other) = delete;
 };
 
-#endif // !MINIGIN_H
+#endif // !ENGINE_H

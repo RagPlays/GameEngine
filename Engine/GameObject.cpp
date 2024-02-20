@@ -19,16 +19,16 @@ void GameObject::LateUpdate(float)
 
 void GameObject::Render() const
 {
-	const glm::vec3& renderPos{ m_transform.GetPosition() };
-	Renderer::GetInstance().RenderTexture(*m_texture, renderPos.x, renderPos.y);
+	const glm::vec3& renderPos{ m_Transform.GetPosition() };
+	Renderer::GetInstance().RenderTexture(*m_Texture, renderPos.x, renderPos.y);
 }
 
 void GameObject::SetTexture(const std::string& filename)
 {
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
 void GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_Transform.SetPosition(x, y, 0.0f);
 }

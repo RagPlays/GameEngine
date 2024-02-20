@@ -42,17 +42,17 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-Engine::Engine(const std::string &dataPath)
+Engine::Engine(const std::string &dataPath, const std::string& title)
 {
 	PrintSDLVersion();
 	
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
 	g_window = SDL_CreateWindow(
-		"Programming 4 assignment",
+		title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		640,
@@ -83,12 +83,12 @@ void Engine::Run(const std::function<void()>& load)
 	load();
 
 	// Get Instances
-	auto& renderer = Renderer::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	Renderer& renderer = Renderer::GetInstance();
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	InputManager& input = InputManager::GetInstance();
 
 	// Create Variables
-	std::chrono::duration<float> msPerFrame{ 0.33f };
+	std::chrono::duration<long> msPerFrame{ 33 };
 	bool doContinue{ true };
 	auto lastTime{ std::chrono::high_resolution_clock::now() };
 	float lag{ 0.f };
@@ -114,13 +114,13 @@ void Engine::Run(const std::function<void()>& load)
 		sceneManager.Update(elapsedSec);
 
 		// LateUpdate
-		//sceneManager
+		sceneManager.LateUpdate(elapsedSec);
 
 		// Render
 		renderer.Render();
 
 		// Sleep -> FPS cap
-		/*const auto sleepTime{ currentTime + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now() };
+		/*const std::chrono::nanoseconds sleepTime{ currentTime + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now() };
 		std::this_thread::sleep_for(sleepTime);*/
 	}
 }
