@@ -6,11 +6,12 @@
 Timer::Timer()
 	: m_FixedTimeStep{ 0.02f }
 	, m_ElapsedSec{}
+	, m_FPS{}
 	, m_Lag{}
 	, m_LastTime{ std::chrono::high_resolution_clock::now() }
 	, m_FpsCapped{ true }
-	, m_MsPerFrame{ 16.67 }
-	, m_ShowDebugFps{ false }
+	, m_MsPerFrame{ 16 }
+	, m_ShowDebugFps{ true }
 	, m_DebugPrintTime{}
 	, m_FpsCount{}
 {
@@ -30,51 +31,33 @@ void Timer::Update()
 	m_ElapsedSec = std::chrono::duration<float>(m_CurrentTime - m_LastTime).count();
 	m_LastTime = m_CurrentTime;
 	m_Lag += m_ElapsedSec;
-
-	// DEBUG
-	if (m_ShowDebugFps)
-	{
-		m_DebugPrintTime += m_ElapsedSec;
-		++m_FpsCount;
-
-		if (m_DebugPrintTime >= 1.0f)
-		{
-			std::cout << "FPS: " << static_cast<int>(m_FpsCount / m_DebugPrintTime) << "\n";
-			m_DebugPrintTime -= 1.f;
-			m_FpsCount = 0;
-		}
-	}
+	m_FPS = 1.f / m_ElapsedSec;
 }
 
 void Timer::CapFps()
 {
 	if (!m_FpsCapped) return;
 
-	std::chrono::nanoseconds sleepTime{ std::chrono::duration_cast<std::chrono::nanoseconds>(m_CurrentTime + m_MsPerFrame - std::chrono::high_resolution_clock::now()) };
-	if (sleepTime > std::chrono::nanoseconds::zero())
+	const auto sleeptime{ m_CurrentTime + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now() };
+	if (sleeptime > std::chrono::nanoseconds::zero())
 	{
-		std::this_thread::sleep_for(sleepTime);
+		std::this_thread::sleep_for(sleeptime);
 	}
 }
 
-float Timer::GetElapsedSec()
+float Timer::GetElapsedSec() const
 {
 	return m_ElapsedSec;
 }
 
-float Timer::GetFixedElapsedSec()
+float Timer::GetFixedElapsedSec() const
 {
 	return m_FixedTimeStep;
 }
 
-int Timer::GetFPS()
+float Timer::GetFPS() const
 {
-	return static_cast<int>(1.f / m_ElapsedSec);
-}
-
-float Timer::GetPreciseFPS()
-{
-	return 1.f / m_ElapsedSec;
+	return m_FPS;
 }
 
 bool Timer::GetNeedFixedUpdate()
@@ -95,5 +78,5 @@ void Timer::ClearFpsCap()
 void Timer::SetFpsCap(int newFps)
 {
 	m_FpsCapped = true;
-	m_MsPerFrame = std::chrono::duration<double, std::milli>(1000.f / newFps);
+	m_MsPerFrame = static_cast<int>(1.f / newFps * 1000.f);
 }

@@ -37,7 +37,10 @@ void Scene::Update()
 {
 	for(auto& object : m_Objects)
 	{
-		object->Update();
+		if(!object->IsDestroyed())
+		{
+			object->Update();
+		}
 	}
 }
 

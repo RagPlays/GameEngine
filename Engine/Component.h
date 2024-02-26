@@ -7,7 +7,6 @@ class Component
 {
 public:
 
-	explicit Component(GameObject* const owner);
 	virtual ~Component() = default;
 	Component(const Component& other) = delete;
 	Component(Component&& other) noexcept = delete;
@@ -19,12 +18,12 @@ public:
 	virtual void LateUpdate();
 	virtual void Render() const;
 
+protected:
+	explicit Component(GameObject* const owner);
 	GameObject* const GetOwner() const;
 
-protected:
-	GameObject* const m_Owner;
-
 private:
+	GameObject* const m_pOwner;
 };
 
 #endif // !COMPONENT_H

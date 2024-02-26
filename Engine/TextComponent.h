@@ -13,16 +13,14 @@ class GameObject;
 class TextComponent final : public Component
 {
 public:
-	explicit TextComponent(GameObject* const owner, const std::string& text, std::shared_ptr<Font> font, SDL_Color textColor = {255, 255, 255} );
-	~TextComponent() = default;
+	explicit TextComponent(GameObject* const owner, std::shared_ptr<Font> font, const std::string& text = "Empty", SDL_Color textColor = {255, 255, 255} );
+	virtual ~TextComponent() = default;
 	TextComponent(const TextComponent& other) = delete;
 	TextComponent(TextComponent&& other) noexcept = delete;
 	TextComponent& operator=(const TextComponent& other) = delete;
 	TextComponent& operator=(TextComponent&& other) noexcept = delete;
 
 	virtual void Update() override;
-	virtual void Render() const override;
-	void ForceTextUpdate();
 
 	void SetText(const std::string& newText);
 	void SetFont(std::shared_ptr<Font> newFont);
@@ -33,7 +31,6 @@ private:
 	bool m_NeedsUpdate;
 	std::string m_Text;
 	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_TextTexture;
 	SDL_Color m_TextColor;
 };
 

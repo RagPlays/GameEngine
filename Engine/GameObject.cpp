@@ -2,7 +2,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject(bool isStatic, const std::string& tag)
-	: m_IsStatic{ isStatic }
+	: m_IsDestroyed{ false }
+	, m_IsStatic{ isStatic }
 	, m_Tag{ tag }
 	, m_Transform{}
 {
@@ -10,6 +11,8 @@ GameObject::GameObject(bool isStatic, const std::string& tag)
 
 void GameObject::FixedUpdate()
 {
+	if (m_IsDestroyed) return;
+
 	for (auto& component : m_Components)
 	{
 		component->FixedUpdate();
@@ -18,6 +21,8 @@ void GameObject::FixedUpdate()
 
 void GameObject::Update()
 {
+	if (m_IsDestroyed) return;
+
 	for (auto& component : m_Components)
 	{
 		component->Update();
@@ -26,6 +31,8 @@ void GameObject::Update()
 
 void GameObject::LateUpdate()
 {
+	if (m_IsDestroyed) return;
+
 	for (auto& component : m_Components)
 	{
 		component->LateUpdate();
@@ -34,7 +41,9 @@ void GameObject::LateUpdate()
 
 void GameObject::Render() const
 {
-	for (auto& component : m_Components)
+	if (m_IsDestroyed) return;
+
+	for (const auto& component : m_Components)
 	{
 		component->Render();
 	}
@@ -51,22 +60,8 @@ void GameObject::RemoveComponent(std::shared_ptr<Component> component)
 	m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
 }
 
-template <typename ComponentType>
-std::shared_ptr<ComponentType> GameObject::GetComponent()
-{
-	for (auto& component : m_Components)
-	{
-		std::shared_ptr<ComponentType> castedComponent = std::dynamic_pointer_cast<ComponentType>(component);
-		if (castedComponent)
-		{
-			return castedComponent;
-		}
-	}
-	return nullptr;
-}
-
 template<typename ComponentType>
-bool GameObject::HasComponent()
+bool GameObject::HasComponent() const
 {
 	for (auto& component : m_Components)
 	{
@@ -78,7 +73,42 @@ bool GameObject::HasComponent()
 	return false;
 }
 
+// Get/Set Transform
+const glm::vec3& GameObject::GetPosition() const
+{
+	return m_Transform.GetPosition();
+}
+
+void GameObject::SetPosition(float x, float y, float z)
+{
+	if (m_IsStatic) return;
+	m_Transform.SetPosition(x, y, z);
+}
+
+void GameObject::SetPosition(const glm::vec3& pos)
+{
+	if (m_IsStatic) return;
+	m_Transform.SetPosition(pos.x, pos.y, pos.z);
+}
+
+void GameObject::SetPosition(float x, float y)
+{
+	if (m_IsStatic) return;
+	m_Transform.SetPosition(x, y, 0.f);
+}
+
+void GameObject::SetPosition(const glm::vec2& pos)
+{
+	if (m_IsStatic) return;
+	m_Transform.SetPosition(pos.x, pos.y, 0.f);
+}
+
 // Getters
+bool GameObject::IsDestroyed() const
+{
+	return m_IsDestroyed;
+}
+
 bool GameObject::IsStatic() const
 {
 	return m_IsStatic;
@@ -89,39 +119,19 @@ const std::string& GameObject::GetTag() const
 	return m_Tag;
 }
 
-const Transform& GameObject::GetTransform() const
-{
-	return m_Transform;
-}
-
 // Setters
 void GameObject::SetTag(const std::string& tag)
 {
 	m_Tag = tag;
 }
 
-void GameObject::SetPosition(float x, float y, float z)
-{
-	m_Transform.SetPosition(x, y, z);
-}
-
-void GameObject::SetPosition(const glm::vec3& pos)
-{
-	m_Transform.SetPosition(pos.x, pos.y, pos.z);
-}
-
-void GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.f);
-}
-
-void GameObject::SetPosition(const glm::vec2& pos)
-{
-	m_Transform.SetPosition(pos.x, pos.y, 0.f);
-}
-
 // Other
 bool GameObject::CompareTag(const std::string& tag)
 {
 	return m_Tag == tag;
+}
+
+void GameObject::Destroy()
+{
+	m_IsDestroyed = true;
 }

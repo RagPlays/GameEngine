@@ -7,7 +7,7 @@
 class Timer final :  public Singleton<Timer>
 {
 public:
-	Timer();
+	explicit Timer();
 	virtual ~Timer() = default;
 
 	Timer(const Timer& other) = delete;
@@ -20,10 +20,9 @@ public:
 	void CapFps();
 
 	// Getters
-	float GetElapsedSec();
-	float GetFixedElapsedSec();
-	int GetFPS();
-	float GetPreciseFPS();
+	float GetElapsedSec() const;
+	float GetFixedElapsedSec() const;
+	float GetFPS() const;
 	bool GetNeedFixedUpdate();
 
 	// Setters
@@ -33,10 +32,11 @@ public:
 private:
 	
 	bool m_FpsCapped;
-	std::chrono::duration<double, std::milli> m_MsPerFrame;
+	int m_MsPerFrame;
 
 	const float m_FixedTimeStep;
 	float m_ElapsedSec;
+	float m_FPS;
 	float m_Lag;
 	std::chrono::high_resolution_clock::time_point m_CurrentTime;
 	std::chrono::high_resolution_clock::time_point m_LastTime;

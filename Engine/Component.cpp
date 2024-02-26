@@ -1,7 +1,7 @@
 #include "Component.h"
 
 Component::Component(GameObject* const owner)
-	: m_Owner{ owner }
+	: m_pOwner{ owner }
 {
 }
 
@@ -23,5 +23,5 @@ void Component::Render() const
 
 GameObject* const Component::GetOwner() const
 {
-	return m_Owner;
+	return m_pOwner;
 }
