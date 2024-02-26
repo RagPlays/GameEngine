@@ -1,8 +1,7 @@
-#include "Timer.h"
-
 #include <SDL.h>
 #include <iostream>
-#include "thread"
+#include <thread>
+#include "Timer.h"
 
 Timer::Timer()
 	: m_FixedTimeStep{ 0.02f }

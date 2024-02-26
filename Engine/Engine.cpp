@@ -1,5 +1,5 @@
+#define WIN32_LEAN_AND_MEAN
 #include <stdexcept>
-#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <iostream>
 #include <SDL.h>
@@ -41,6 +41,8 @@ void PrintSDLVersion()
 }
 
 Engine::Engine(const std::string &dataPath, const std::string& title, int width, int height)
+	: m_WindowWidth{ width }
+	, m_WindowHeight{ height }
 {
 	PrintSDLVersion();
 	
@@ -53,8 +55,8 @@ Engine::Engine(const std::string &dataPath, const std::string& title, int width,
 		title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width,
-		height,
+		m_WindowWidth,
+		m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 

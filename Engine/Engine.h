@@ -18,6 +18,8 @@ public:
 	Engine& operator=(Engine&& other) = delete;
 
 private:
+	int m_WindowWidth;
+	int m_WindowHeight;
 	SDL_Window* m_Window{};
 };
 

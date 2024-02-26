@@ -27,6 +27,8 @@ public:
 private:
 
 	bool m_NeedsUpdate;
+	float m_TotalWaitTime;
+	const float m_UpdateTickTime;
 	std::shared_ptr<Font> m_Font;
 	std::shared_ptr<Texture2D> m_TextTexture;
 	SDL_Color m_TextColor;

@@ -12,6 +12,8 @@ FpsComponent::FpsComponent(GameObject* const owner, std::shared_ptr<Font> font, 
 	, m_TextTexture{ nullptr }
 	, m_TextColor{ textColor }
 	, m_NeedsUpdate{ true }
+	, m_TotalWaitTime{ }
+	, m_UpdateTickTime{ 0.5f }
 {
 }
 
@@ -31,10 +33,18 @@ void FpsComponent::Update()
 
 		SDL_FreeSurface(surface);
 		m_TextTexture = std::make_shared<Texture2D>(texture);
+
+		m_NeedsUpdate = false;
 	}
 	else
 	{
+		m_TotalWaitTime += Timer::GetInstance().GetElapsedSec();
 
+		if (m_TotalWaitTime > m_UpdateTickTime)
+		{
+			m_TotalWaitTime -= m_UpdateTickTime;
+			m_NeedsUpdate = true;
+		}
 	}
 }
 
