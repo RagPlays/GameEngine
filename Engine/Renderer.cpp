@@ -52,7 +52,7 @@ void Renderer::Destroy()
 	}
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void Renderer::RenderTexture(const Texture2D& texture, float x, float y) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -61,7 +61,7 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -74,4 +74,14 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 SDL_Renderer* Renderer::GetSDLRenderer() const 
 { 
 	return m_Renderer; 
+}
+
+const SDL_Color& Renderer::GetBackgroundColor() const
+{
+	return m_ClearColor;
+}
+
+void Renderer::SetBackgroundColor(const SDL_Color& color)
+{
+	m_ClearColor = color;
 }

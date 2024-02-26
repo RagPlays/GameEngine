@@ -1,6 +1,7 @@
 #include <stdexcept>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
+#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -9,10 +10,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "chrono"
-#include "thread"
-
-SDL_Window* g_window{};
+#include "Timer.h"
 
 void PrintSDLVersion()
 {
@@ -42,7 +40,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-Engine::Engine(const std::string &dataPath, const std::string& title)
+Engine::Engine(const std::string &dataPath, const std::string& title, int width, int height)
 {
 	PrintSDLVersion();
 	
@@ -51,20 +49,21 @@ Engine::Engine(const std::string &dataPath, const std::string& title)
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	g_window = SDL_CreateWindow(
+	m_Window = SDL_CreateWindow(
 		title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
+		width,
+		height,
 		SDL_WINDOW_OPENGL
 	);
-	if (g_window == nullptr)
+
+	if (!m_Window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(g_window);
+	Renderer::GetInstance().Init(m_Window);
 
 	ResourceManager::GetInstance().Init(dataPath);
 }
@@ -72,55 +71,47 @@ Engine::Engine(const std::string &dataPath, const std::string& title)
 Engine::~Engine()
 {
 	Renderer::GetInstance().Destroy();
-	SDL_DestroyWindow(g_window);
-	g_window = nullptr;
+	SDL_DestroyWindow(m_Window);
+	m_Window = nullptr;
 	SDL_Quit();
 }
 
-void Engine::Run(const std::function<void()>& load)
+void Engine::Run(const std::function<void()>& loadFunction)
 {
 	// Run Function
-	load();
+	loadFunction();
 
 	// Get Instances
-	Renderer& renderer = Renderer::GetInstance();
-	SceneManager& sceneManager = SceneManager::GetInstance();
-	InputManager& input = InputManager::GetInstance();
+	Renderer& renderer{ Renderer::GetInstance() };
+	SceneManager& sceneManager{ SceneManager::GetInstance() };
+	InputManager& input{ InputManager::GetInstance() };
+	Timer& timer{ Timer::GetInstance() };
 
-	// Create Variables
-	std::chrono::duration<long> msPerFrame{ 33 };
 	bool doContinue{ true };
-	auto lastTime{ std::chrono::high_resolution_clock::now() };
-	float lag{ 0.f };
-	const float fixedTimeStep{ 0.02f };
-
 	while (doContinue)
 	{
-		// DeltaTime
-		const auto currentTime = std::chrono::high_resolution_clock::now();
-		const float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+		// Timer
+		timer.Update();
 
 		// Input
 		doContinue = input.ProcessInput();
 
 		// Fixed Update -> only for physics / networking
-		while (lag >= fixedTimeStep)
+		while (timer.GetNeedFixedUpdate())
 		{
-			sceneManager.FixedUpdate(fixedTimeStep);
-			lag -= fixedTimeStep;
+			sceneManager.FixedUpdate();
 		}
 
 		// Update
-		sceneManager.Update(elapsedSec);
+		sceneManager.Update();
 
 		// LateUpdate
-		sceneManager.LateUpdate(elapsedSec);
+		sceneManager.LateUpdate();
 
 		// Render
 		renderer.Render();
 
-		// Sleep -> FPS cap
-		/*const std::chrono::nanoseconds sleepTime{ currentTime + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now() };
-		std::this_thread::sleep_for(sleepTime);*/
+		// FPS Cap
+		timer.CapFps();
 	}
 }

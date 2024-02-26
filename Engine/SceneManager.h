@@ -12,9 +12,9 @@ class SceneManager final : public Singleton<SceneManager>
 public:
 	Scene& CreateScene(const std::string& name);
 
-	void FixedUpdate(float elapsedSec);
-	void Update(float elapsedSec);
-	void LateUpdate(float elapsedSec);
+	void FixedUpdate();
+	void Update();
+	void LateUpdate();
 	void Render();
 
 private:

@@ -21,8 +21,8 @@ public:
 
 	SDL_Renderer* GetSDLRenderer() const;
 
-	const SDL_Color& GetBackgroundColor() const { return m_ClearColor; }
-	void SetBackgroundColor(const SDL_Color& color) { m_ClearColor = color; }
+	const SDL_Color& GetBackgroundColor() const;
+	void SetBackgroundColor(const SDL_Color& color);
 
 private:
 

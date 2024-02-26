@@ -7,7 +7,7 @@
 class Engine
 {
 public:
-	explicit Engine(const std::string& dataPath, const std::string& title);
+	explicit Engine(const std::string& dataPath, const std::string& title, int width, int height);
 	~Engine();
 
 	void Run(const std::function<void()>& load);
@@ -16,6 +16,9 @@ public:
 	Engine(Engine&& other) = delete;
 	Engine& operator=(const Engine& other) = delete;
 	Engine& operator=(Engine&& other) = delete;
+
+private:
+	SDL_Window* m_Window{};
 };
 
 #endif // !ENGINE_H
