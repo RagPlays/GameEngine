@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Texture2D.h"
 
+// Global functions
 int GetOpenGLDriverIndex()
 {
 	int openglIndex = -1;
@@ -21,6 +22,7 @@ int GetOpenGLDriverIndex()
 	return openglIndex;
 }
 
+// Init
 void Renderer::Init(SDL_Window* window)
 {
 	m_Window = window;
@@ -52,25 +54,42 @@ void Renderer::Destroy()
 	}
 }
 
+// Render Textures
 void Renderer::RenderTexture(const Texture2D& texture, float x, float y) const
 {
-	SDL_Rect dst{};
-	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(y);
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	SDL_Rect destRect{ static_cast<int>(x), static_cast<int>(y), 0, 0 };
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
+	RenderTexture(texture, destRect);
 }
 
 void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const
 {
-	SDL_Rect dst{};
-	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(y);
-	dst.w = static_cast<int>(width);
-	dst.h = static_cast<int>(height);
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	RenderTexture(texture, { static_cast<int>(x),static_cast<int>(y), static_cast<int>(width), static_cast<int>(height) });
 }
 
+void Renderer::RenderTexture(const Texture2D& texture, int x, int y) const
+{
+	SDL_Rect destRect{ x, y, 0, 0 };
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
+	RenderTexture(texture, destRect);
+}
+
+void Renderer::RenderTexture(const Texture2D& texture, int x, int y, int width, int height) const
+{
+	RenderTexture(texture, { x, y, width, height });
+}
+
+void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const
+{
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRect);
+}
+
+void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, const SDL_Rect& destRect) const
+{
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &destRect);
+}
+
+// Getters / Setters
 SDL_Renderer* Renderer::GetSDLRenderer() const 
 { 
 	return m_Renderer; 

@@ -35,7 +35,7 @@ void SceneManager::Render()
 
 Scene& SceneManager::CreateScene(const std::string& name)
 {
-	const std::shared_ptr<Scene>& scene = std::shared_ptr<Scene>(new Scene{ name });
+	const std::shared_ptr<Scene>& scene{ std::shared_ptr<Scene>(new Scene{ name }) };
 	m_scenes.push_back(scene);
 	return *scene;
 }

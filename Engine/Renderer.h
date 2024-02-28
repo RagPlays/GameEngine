@@ -12,12 +12,24 @@ class Renderer final : public Singleton<Renderer>
 {
 public:
 
+	Renderer() = default;
+	~Renderer() = default;
+	Renderer(const Renderer& other) = delete;
+	Renderer(Renderer&& other) noexcept = delete;
+	Renderer& operator=(const Renderer& other) = delete;
+	Renderer& operator=(Renderer&& other) noexcept = delete;
+
 	void Init(SDL_Window* window);
 	void Render() const;
 	void Destroy();
 
 	void RenderTexture(const Texture2D& texture, float x, float y) const;
 	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+	void RenderTexture(const Texture2D& texture, int x, int y) const;
+	void RenderTexture(const Texture2D& texture, int x, int y, int width, int height) const;
+	void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const;
+
+	void RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, const SDL_Rect& destRect) const;
 
 	SDL_Renderer* GetSDLRenderer() const;
 

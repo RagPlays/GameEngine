@@ -3,10 +3,10 @@
 
 bool InputManager::ProcessInput()
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) 
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) 
 	{
-		switch (e.type)
+		switch (event.type)
 		{
 		case SDL_QUIT:
 			return false;

@@ -26,15 +26,32 @@ public:
 	void Render() const;
 
 	// Components
-	void AddComponent(std::shared_ptr<Component> component);
+	template <typename ComponentType>
+	void AddComponent(std::shared_ptr<Component> component)
+	{
+		if (!HasComponent<ComponentType>())
+		{
+			m_Components.emplace_back(std::move(component));
+		}
+	}
+
 	void RemoveComponent(std::shared_ptr<Component> component);
+	template <typename ComponentType>
+	void RemoveComponent()
+	{
+		std::shared_ptr<ComponentType>& component{ GetComponent<ComponentType>() };
+		if (component.get())
+		{
+			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), GetComponent<ComponentType>()), m_Components.end());
+		}
+	}
 
 	template <typename ComponentType>
 	std::shared_ptr<ComponentType> GetComponent() const
 	{
 		for (auto& component : m_Components)
 		{
-			std::shared_ptr<ComponentType> castedComponent = std::dynamic_pointer_cast<ComponentType>(component);
+			std::shared_ptr<ComponentType> castedComponent{ std::dynamic_pointer_cast<ComponentType>(component) };
 			if (castedComponent)
 			{
 				return castedComponent;
@@ -42,8 +59,26 @@ public:
 		}
 		return nullptr;
 	}
+
 	template <typename ComponentType>
-	bool HasComponent() const;
+	bool HasComponent() const
+	{
+		for (auto& component : m_Components)
+		{
+			if (std::dynamic_pointer_cast<ComponentType>(component))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Childeren/Parent
+	bool IsChild(GameObject* gameObj) const;
+	GameObject* GetParent() const;
+	int GetChildCount() const;
+	GameObject* GetChildAt(size_t idx) const;
+	void SetParent(GameObject* parent, bool keepWorldPos);
 
 	// Get/Set Transform
 	const glm::vec3& GetPosition() const;
@@ -66,11 +101,20 @@ public:
 
 private:
 
+	bool m_PositionIsDirty;
 	bool m_IsDestroyed;
 	const bool m_IsStatic;
 	std::string m_Tag;
 	Transform m_Transform;
 	std::vector<std::shared_ptr<Component>> m_Components;
+
+	// nesting
+	std::vector<GameObject*> m_Children;
+	GameObject* m_Parent;
+
+	void AddChild(GameObject* child);
+	void RemoveChild(GameObject* child);
+	void UpdateWorldPosition();
 };
 
 #endif // !GAMEOBJECT_H

@@ -1,10 +1,8 @@
 #define WIN32_LEAN_AND_MEAN
-#include <stdexcept>
-#include <windows.h>
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+//#include <stdexcept>
+//#include <windows.h>
+//#include <SDL_image.h>
+//#include <SDL_ttf.h>
 #include "Engine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -12,39 +10,40 @@
 #include "ResourceManager.h"
 #include "Timer.h"
 
-void PrintSDLVersion()
-{
-	SDL_version version{};
-	SDL_VERSION(&version);
-	printf("We compiled against SDL version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
+//void PrintSDLVersion()
+//{
+//	SDL_version version;
+//	SDL_VERSION(&version);
+//	printf("We compiled against SDL version %u.%u.%u ...\n",
+//		version.major, version.minor, version.patch);
+//
+//	SDL_GetVersion(&version);
+//	printf("We are linking against SDL version %u.%u.%u.\n",
+//		version.major, version.minor, version.patch);
+//
+//	SDL_IMAGE_VERSION(&version);
+//	printf("We compiled against SDL_image version %u.%u.%u ...\n",
+//		version.major, version.minor, version.patch);
+//
+//	version = *IMG_Linked_Version();
+//	printf("We are linking against SDL_image version %u.%u.%u.\n",
+//		version.major, version.minor, version.patch);
+//
+//	SDL_TTF_VERSION(&version)
+//	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
+//		version.major, version.minor, version.patch);
+//
+//	version = *TTF_Linked_Version();
+//	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
+//		version.major, version.minor, version.patch);
+//}
 
-	SDL_GetVersion(&version);
-	printf("We are linking against SDL version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_IMAGE_VERSION(&version);
-	printf("We compiled against SDL_image version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *IMG_Linked_Version();
-	printf("We are linking against SDL_image version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *TTF_Linked_Version();
-	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-}
-
-Engine::Engine(const std::string &dataPath, const std::string& title, int width, int height)
+Engine::Engine(const std::string& dataPath, const std::string& title, int width, int height)
 	: m_WindowWidth{ width }
 	, m_WindowHeight{ height }
+	, m_Window{ nullptr }
 {
-	PrintSDLVersion();
+	//PrintSDLVersion();
 	
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
@@ -88,6 +87,8 @@ void Engine::Run(const std::function<void()>& loadFunction)
 	SceneManager& sceneManager{ SceneManager::GetInstance() };
 	InputManager& input{ InputManager::GetInstance() };
 	Timer& timer{ Timer::GetInstance() };
+
+	timer.ClearFpsCap();
 
 	bool doContinue{ true };
 	while (doContinue)
