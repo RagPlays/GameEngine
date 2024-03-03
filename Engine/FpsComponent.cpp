@@ -9,7 +9,7 @@ FpsComponent::FpsComponent(GameObject* const owner)
 	, m_NeedsUpdate{ true }
 	, m_FrameCount{}
 	, m_TotalWaitTime{}
-	, m_UpdateTickTime{ 1.f }
+	, m_UpdateTickTime{ 0.5f }
 {
 }
 

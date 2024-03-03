@@ -75,22 +75,16 @@ public:
 	int GetChildCount() const;
 	GameObject* GetChildAt(size_t idx) const;
 	GameObject* GetChildAt(int idx) const;
+	const std::vector<GameObject*>& GetChilderen() const;
 	void SetParent(GameObject* parent, bool keepWorldPos = false);
 
 	// Get/Set Transforms
 	const glm::vec3& GetLocalPosition() const;
-	void SetLocalPosition(float x, float y);
-	void SetLocalPosition(const glm::vec2& pos);
-	void SetLocalPosition(float x, float y, float z);
 	void SetLocalPosition(const glm::vec3& pos);
-
 	const glm::vec3& GetWorldPosition();
-	void SetWorldPosition(float x, float y, float z);
-	void SetWorldPosition(const glm::vec3& pos);
 
 	// Getters
 	bool IsDestroyed() const;
-	bool IsStatic() const;
 	const std::string& GetTag() const;
 
 	// Setters
@@ -102,15 +96,14 @@ public:
 
 private:
 
+	bool m_IsStatic;
 	bool m_PositionIsDirty;
 	bool m_IsDestroyed;
-	const bool m_IsStatic;
 	std::string m_Tag;
 	Transform m_LocalTransform;
 	Transform m_WorldTransform;
 	std::vector<std::shared_ptr<Component>> m_Components;
 
-	// nesting
 	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
 

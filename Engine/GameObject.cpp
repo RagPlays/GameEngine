@@ -107,6 +107,11 @@ GameObject* GameObject::GetChildAt(int idx) const
 	return m_Children[idx];
 }
 
+const std::vector<GameObject*>& GameObject::GetChilderen() const
+{
+	return m_Children;
+}
+
 void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
 {
 	if (parent == this || m_Parent == parent || IsChild(parent)) return;
@@ -135,27 +140,8 @@ const glm::vec3& GameObject::GetLocalPosition() const
 	return m_LocalTransform.GetPosition();
 }
 
-void GameObject::SetLocalPosition(float x, float y)
-{
-	if (m_IsStatic) return;
-	SetLocalPosition({ x, y, 0.f });
-}
-
-void GameObject::SetLocalPosition(const glm::vec2& pos)
-{
-	if (m_IsStatic) return;
-	SetLocalPosition({ pos.x, pos.y, 0.f });
-}
-
-void GameObject::SetLocalPosition(float x, float y, float z)
-{
-	if (m_IsStatic) return;
-	SetLocalPosition({ x, y, z });
-}
-
 void GameObject::SetLocalPosition(const glm::vec3& pos)
 {
-	if (m_IsStatic) return;
 	m_LocalTransform.SetPosition(pos);
 	m_PositionIsDirty = true;
 }
@@ -166,25 +152,10 @@ const glm::vec3& GameObject::GetWorldPosition()
 	return m_WorldTransform.GetPosition();
 }
 
-void GameObject::SetWorldPosition(float x, float y, float z)
-{
-	m_WorldTransform.SetPosition(x, y, z);
-}
-
-void GameObject::SetWorldPosition(const glm::vec3& pos)
-{
-	m_WorldTransform.SetPosition(pos);
-}
-
 // Getters
 bool GameObject::IsDestroyed() const
 {
 	return m_IsDestroyed;
-}
-
-bool GameObject::IsStatic() const
-{
-	return m_IsStatic;
 }
 
 const std::string& GameObject::GetTag() const
@@ -207,6 +178,10 @@ bool GameObject::CompareTag(const std::string& tag)
 void GameObject::Destroy()
 {
 	m_IsDestroyed = true;
+	for (auto& child : m_Children)
+	{
+		child->Destroy();
+	}
 }
 
 // Private functions
@@ -222,16 +197,16 @@ void GameObject::RemoveChild(GameObject* child)
 
 void GameObject::UpdateWorldPosition()
 {
-	if (m_PositionIsDirty)
+	if (!m_PositionIsDirty) return;
+
+	if (m_Parent)
 	{
-		if (m_Parent)
-		{
-			m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
-		}
-		else
-		{
-			m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
-		}
-		m_PositionIsDirty = false;
+		m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
 	}
+	else
+	{
+		m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
+	}
+
+	m_PositionIsDirty = false;
 }

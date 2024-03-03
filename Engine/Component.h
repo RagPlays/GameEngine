@@ -1,6 +1,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <glm/glm.hpp>
+
 class GameObject;
 
 class Component
@@ -20,7 +22,15 @@ public:
 
 protected:
 	explicit Component(GameObject* const owner);
+
+	// Gets
 	GameObject* const GetOwner() const;
+	GameObject* GetParent() const;
+	const glm::vec3& GetLocalPosition() const;
+	const glm::vec3& GetWorldPosition() const;
+
+	// Sets
+	void SetLocalPosition(const glm::vec3& pos);
 
 private:
 	GameObject* const m_pOwner;

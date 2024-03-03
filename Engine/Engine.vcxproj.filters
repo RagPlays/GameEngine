@@ -70,6 +70,9 @@
     <ClInclude Include="RenderComponent.h">
       <Filter>Classes\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="RotateAroundParentComponent.h">
+      <Filter>Classes\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -118,6 +121,9 @@
       <Filter>Classes\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
+      <Filter>Classes\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateAroundParentComponent.cpp">
       <Filter>Classes\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>

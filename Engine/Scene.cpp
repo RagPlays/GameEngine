@@ -8,8 +8,6 @@ Scene::Scene(const std::string& name)
 {
 }
 
-Scene::~Scene() = default;
-
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
 	m_Objects.emplace_back(std::move(object));

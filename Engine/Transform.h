@@ -33,7 +33,7 @@ public:
 private:
 
 	glm::vec3 m_Position;
-	glm::vec3 m_Rotation;
+	glm::vec3 m_Rotation; // in radius
 	glm::vec3 m_Scale;
 
 };
