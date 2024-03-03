@@ -75,7 +75,7 @@ public:
 	int GetChildCount() const;
 	GameObject* GetChildAt(size_t idx) const;
 	GameObject* GetChildAt(int idx) const;
-	const std::vector<GameObject*>& GetChilderen() const;
+	const std::vector<std::unique_ptr<GameObject>>& GetChilderen() const;
 	void SetParent(GameObject* parent, bool keepWorldPos = false);
 
 	// Get/Set Transforms
@@ -104,7 +104,7 @@ private:
 	Transform m_WorldTransform;
 	std::vector<std::shared_ptr<Component>> m_Components;
 
-	std::vector<GameObject*> m_Children;
+	std::vector<std::unique_ptr<GameObject>> m_Children;
 	GameObject* m_Parent;
 
 	void AddChild(GameObject* child);

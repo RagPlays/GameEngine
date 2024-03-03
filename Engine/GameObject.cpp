@@ -78,9 +78,9 @@ void GameObject::Render() const
 // Childeren/Parent
 bool GameObject::IsChild(GameObject* gameObj) const
 {
-	for (const GameObject* const child : m_Children)
+	for (const auto& child : m_Children) 
 	{
-		if (child == gameObj) return true;
+		if (child.get() == gameObj) return true;
 	}
 	return false;
 }
@@ -98,16 +98,16 @@ int GameObject::GetChildCount() const
 GameObject* GameObject::GetChildAt(size_t idx) const
 {
 	assert(idx < m_Children.size());
-	return m_Children[idx];
+	return m_Children[idx].get();
 }
 
 GameObject* GameObject::GetChildAt(int idx) const
 {
 	assert(idx < m_Children.size() && idx > -1);
-	return m_Children[idx];
+	return m_Children[idx].get();
 }
 
-const std::vector<GameObject*>& GameObject::GetChilderen() const
+const std::vector<std::unique_ptr<GameObject>>& GameObject::GetChilderen() const
 {
 	return m_Children;
 }
@@ -187,12 +187,16 @@ void GameObject::Destroy()
 // Private functions
 void GameObject::AddChild(GameObject* child)
 {
-	m_Children.emplace_back(child);
+	m_Children.emplace_back(std::unique_ptr<GameObject>(child));
 }
 
 void GameObject::RemoveChild(GameObject* child)
 {
-	m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
+	m_Children.erase(std::remove_if(m_Children.begin(), m_Children.end(),[&](const std::unique_ptr<GameObject>& ptr)
+		{ 
+			return ptr.get() == child; 
+		}
+	), m_Children.end());
 }
 
 void GameObject::UpdateWorldPosition()
