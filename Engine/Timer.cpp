@@ -4,7 +4,8 @@
 #include "Timer.h"
 
 Timer::Timer()
-	: m_FixedTimeStep{ 0.02f }
+	: m_VSync{ true }
+	, m_FixedTimeStep{ 0.02f }
 	, m_ElapsedSec{}
 	, m_FPS{}
 	, m_Lag{}
@@ -15,12 +16,14 @@ Timer::Timer()
 	, m_DebugPrintTime{}
 	, m_FpsCount{}
 {
-	SDL_DisplayMode displayMode{};
-	SDL_GetCurrentDisplayMode(0, &displayMode);
-	std::cout << "Monitor RefreshRate: " << displayMode.refresh_rate << "\n";
-
-	if (m_FpsCapped)
+	if (m_VSync)
 	{
+		SDL_GL_SetSwapInterval(1);
+	}
+	else if(m_FpsCapped)
+	{
+		SDL_DisplayMode displayMode{};
+		SDL_GetCurrentDisplayMode(0, &displayMode);
 		SetFpsCap(displayMode.refresh_rate);
 	}
 }

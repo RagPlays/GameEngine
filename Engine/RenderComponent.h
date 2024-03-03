@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <glm/glm.hpp>
+#include <SDL.h>
 #include "Component.h"
 
 class GameObject;
@@ -23,14 +24,21 @@ public:
 	RenderComponent& operator=(const RenderComponent& other) = delete;
 	RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
 
+	// Texture
 	void SetTextureFromFileName(const std::string& fileName);
 	void SetTexture(std::shared_ptr<Texture2D> newTexture);
 
+	// Dimentions
 	void SetDefaultDimentions();
 	void SetTextureWidth(int width);
 	void SetTextureHeight(int height);
 	void SetTextureDimentions(int width, int height);
 	void SetTextureDimentions(const glm::ivec2& dimentions);
+
+	// SrcRect
+	void ClearSourceRect();
+	void SetSourceRect(int x, int y, int width, int height);
+	void SetSourceRect(const SDL_Rect& srcRect);
 
 	virtual void Render() const override;
 
@@ -38,6 +46,8 @@ private:
 
 	glm::ivec2 m_RenderDimentions;
 	std::shared_ptr<Texture2D> m_Texture;
+	bool m_SrcRectSet;
+	SDL_Rect m_SrcRect;
 
 };
 

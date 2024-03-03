@@ -31,6 +31,7 @@ public:
 
 private:
 	
+	bool m_VSync;
 	bool m_FpsCapped;
 	int m_MsPerFrame;
 

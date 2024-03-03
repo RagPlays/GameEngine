@@ -1,4 +1,3 @@
-#include <string>
 #include "GameObject.h"
 
 GameObject::GameObject(bool isStatic, const std::string& tag)
@@ -6,9 +5,14 @@ GameObject::GameObject(bool isStatic, const std::string& tag)
 	, m_IsDestroyed{ false }
 	, m_IsStatic{ isStatic }
 	, m_Tag{ tag }
-	, m_Transform{}
+	, m_LocalTransform{}
+	, m_WorldTransform{}
+	, m_Components{}
+	, m_Children{}
 	, m_Parent{}
 {
+	m_Components.clear();
+	m_Children.clear();
 }
 
 void GameObject::FixedUpdate()
@@ -18,6 +22,11 @@ void GameObject::FixedUpdate()
 	for (auto& component : m_Components)
 	{
 		component->FixedUpdate();
+	}
+
+	for (auto& child : m_Children)
+	{
+		child->FixedUpdate();
 	}
 }
 
@@ -29,6 +38,11 @@ void GameObject::Update()
 	{
 		component->Update();
 	}
+
+	for (auto& child : m_Children)
+	{
+		child->Update();
+	}
 }
 
 void GameObject::LateUpdate()
@@ -38,6 +52,11 @@ void GameObject::LateUpdate()
 	for (auto& component : m_Components)
 	{
 		component->LateUpdate();
+	}
+
+	for (auto& child : m_Children)
+	{
+		child->LateUpdate();
 	}
 }
 
@@ -49,18 +68,17 @@ void GameObject::Render() const
 	{
 		component->Render();
 	}
-}
 
-// Components
-void GameObject::RemoveComponent(std::shared_ptr<Component> component)
-{
-	m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
+	for (const auto& child : m_Children)
+	{
+		child->Render();
+	}
 }
 
 // Childeren/Parent
-bool GameObject::IsChild(GameObject* gameObj) const
+bool GameObject::IsChild(std::shared_ptr<GameObject> gameObj) const
 {
-	for (const GameObject* const child : m_Children)
+	for (const std::shared_ptr<GameObject> child : m_Children)
 	{
 		if (child == gameObj) return true;
 	}
@@ -80,60 +98,82 @@ int GameObject::GetChildCount() const
 GameObject* GameObject::GetChildAt(size_t idx) const
 {
 	assert(idx < m_Children.size());
-	return m_Children[idx];
+	return m_Children[idx].get();
 }
 
-void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
+GameObject* GameObject::GetChildAt(int idx) const
 {
-	// TODO:: Make this complete
-	if (IsChild(parent) || parent == this || m_Parent == parent) return;
+	assert(idx < m_Children.size() && idx > -1);
+	return m_Children[idx].get();
+}
+
+void GameObject::SetParent(std::shared_ptr<GameObject> parent, bool keepWorldPos)
+{
+	if (parent.get() == this || m_Parent == parent.get() || IsChild(parent)) return;
 
 	if (parent)
 	{
 		if (keepWorldPos)
 		{
-			// SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
-			// SetPositionDirty
+			SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
 		}
+		m_PositionIsDirty = true;
 	}
 	else
 	{
-		// SetLocalPosition(GetWorldPosition());
+		SetLocalPosition(GetWorldPosition());
 	}
 
-	if (m_Parent) m_Parent->RemoveChild(this);
-	m_Parent = parent;
-	if (m_Parent) m_Parent->AddChild(this);
+	if (m_Parent) m_Parent->RemoveChild(std::make_shared<GameObject>(this));
+	m_Parent = parent.get();
+	if (m_Parent) m_Parent->AddChild(std::make_shared<GameObject>(this));
 }
 
 // Get/Set Transform
-const glm::vec3& GameObject::GetPosition() const
+const glm::vec3& GameObject::GetLocalPosition() const
 {
-	return m_Transform.GetPosition();
+	return m_LocalTransform.GetPosition();
 }
 
-void GameObject::SetPosition(float x, float y, float z)
+void GameObject::SetLocalPosition(float x, float y)
 {
 	if (m_IsStatic) return;
-	m_Transform.SetPosition(x, y, z);
+	SetLocalPosition({ x, y, 0.f });
 }
 
-void GameObject::SetPosition(const glm::vec3& pos)
+void GameObject::SetLocalPosition(const glm::vec2& pos)
 {
 	if (m_IsStatic) return;
-	m_Transform.SetPosition(pos);
+	SetLocalPosition({ pos.x, pos.y, 0.f });
 }
 
-void GameObject::SetPosition(float x, float y)
+void GameObject::SetLocalPosition(float x, float y, float z)
 {
 	if (m_IsStatic) return;
-	m_Transform.SetPosition(x, y, 0.f);
+	SetLocalPosition({ x, y, z });
 }
 
-void GameObject::SetPosition(const glm::vec2& pos)
+void GameObject::SetLocalPosition(const glm::vec3& pos)
 {
 	if (m_IsStatic) return;
-	m_Transform.SetPosition(pos.x, pos.y, 0.f);
+	m_LocalTransform.SetPosition(pos);
+	m_PositionIsDirty = true;
+}
+
+const glm::vec3& GameObject::GetWorldPosition()
+{
+	UpdateWorldPosition();
+	return m_WorldTransform.GetPosition();
+}
+
+void GameObject::SetWorldPosition(float x, float y, float z)
+{
+	m_WorldTransform.SetPosition(x, y, z);
+}
+
+void GameObject::SetWorldPosition(const glm::vec3& pos)
+{
+	m_WorldTransform.SetPosition(pos);
 }
 
 // Getters
@@ -170,12 +210,12 @@ void GameObject::Destroy()
 }
 
 // Private functions
-void GameObject::AddChild(GameObject* child)
+void GameObject::AddChild(std::shared_ptr<GameObject> child)
 {
 	m_Children.emplace_back(child);
 }
 
-void GameObject::RemoveChild(GameObject* child)
+void GameObject::RemoveChild(std::shared_ptr<GameObject> child)
 {
 	m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
 }
@@ -186,11 +226,12 @@ void GameObject::UpdateWorldPosition()
 	{
 		if (m_Parent)
 		{
-			// qmksjdfqsjdmfqs
+			m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
 		}
 		else
 		{
-			
+			m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
 		}
+		m_PositionIsDirty = false;
 	}
 }

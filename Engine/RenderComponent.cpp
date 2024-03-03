@@ -18,6 +18,8 @@ RenderComponent::RenderComponent(GameObject* const owner, std::shared_ptr<Textur
 	: Component{ owner }
 	, m_Texture{ texture }
 	, m_RenderDimentions{ glm::ivec2{} }
+	, m_SrcRectSet{ false }
+	, m_SrcRect{}
 {
 	if (m_Texture.get())
 	{
@@ -65,11 +67,37 @@ void RenderComponent::SetTextureDimentions(const glm::ivec2& dimentions)
 	SetTextureDimentions(dimentions.x, dimentions.y);
 }
 
+void RenderComponent::ClearSourceRect()
+{
+	m_SrcRect = SDL_Rect{};
+	m_SrcRectSet = false;
+}
+
+void RenderComponent::SetSourceRect(int x, int y, int width, int height)
+{
+	SetSourceRect({ x, y, width, height });
+}
+
+void RenderComponent::SetSourceRect(const SDL_Rect& srcRect)
+{
+	m_SrcRect = srcRect;
+	m_SrcRectSet = true;
+}
+
 void RenderComponent::Render() const
 {
-	if (m_Texture.get())
+	if (m_Texture)
 	{
-		const glm::vec3& renderPos{ GetOwner()->GetPosition() };
-		Renderer::GetInstance().RenderTexture(*m_Texture, static_cast<int>(renderPos.x), static_cast<int>(renderPos.y), m_RenderDimentions.x, m_RenderDimentions.y);
+		const glm::vec3& renderPos{ GetOwner()->GetWorldPosition() };
+		const SDL_Rect destRect{ static_cast<int>(renderPos.x),  static_cast<int>(renderPos.y), m_RenderDimentions.x, m_RenderDimentions.y };
+
+		if (m_SrcRectSet)
+		{
+			Renderer::GetInstance().RenderTexture(*m_Texture, m_SrcRect, destRect);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(*m_Texture, destRect);
+		}
 	}
 }

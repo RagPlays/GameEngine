@@ -25,7 +25,7 @@ private:
 	explicit Scene(const std::string& name);
 
 	void Remove(std::shared_ptr<GameObject> object);
-	void RemoveAll();
+	void RemoveAllObjects();
 
 	std::string m_Name;
 	std::vector<std::shared_ptr<GameObject>> m_Objects;

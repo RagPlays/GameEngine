@@ -34,8 +34,6 @@ public:
 			m_Components.emplace_back(std::move(component));
 		}
 	}
-
-	void RemoveComponent(std::shared_ptr<Component> component);
 	template <typename ComponentType>
 	void RemoveComponent()
 	{
@@ -45,7 +43,6 @@ public:
 			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), GetComponent<ComponentType>()), m_Components.end());
 		}
 	}
-
 	template <typename ComponentType>
 	std::shared_ptr<ComponentType> GetComponent() const
 	{
@@ -59,7 +56,6 @@ public:
 		}
 		return nullptr;
 	}
-
 	template <typename ComponentType>
 	bool HasComponent() const
 	{
@@ -74,18 +70,23 @@ public:
 	}
 
 	// Childeren/Parent
-	bool IsChild(GameObject* gameObj) const;
+	bool IsChild(std::shared_ptr<GameObject> gameObj) const;
 	GameObject* GetParent() const;
 	int GetChildCount() const;
 	GameObject* GetChildAt(size_t idx) const;
-	void SetParent(GameObject* parent, bool keepWorldPos);
+	GameObject* GetChildAt(int idx) const;
+	void SetParent(std::shared_ptr<GameObject>, bool keepWorldPos = false);
 
-	// Get/Set Transform
-	const glm::vec3& GetPosition() const;
-	void SetPosition(float x, float y, float z);
-	void SetPosition(const glm::vec3& pos);
-	void SetPosition(float x, float y);
-	void SetPosition(const glm::vec2& pos);
+	// Get/Set Transforms
+	const glm::vec3& GetLocalPosition() const;
+	void SetLocalPosition(float x, float y);
+	void SetLocalPosition(const glm::vec2& pos);
+	void SetLocalPosition(float x, float y, float z);
+	void SetLocalPosition(const glm::vec3& pos);
+
+	const glm::vec3& GetWorldPosition();
+	void SetWorldPosition(float x, float y, float z);
+	void SetWorldPosition(const glm::vec3& pos);
 
 	// Getters
 	bool IsDestroyed() const;
@@ -105,15 +106,16 @@ private:
 	bool m_IsDestroyed;
 	const bool m_IsStatic;
 	std::string m_Tag;
-	Transform m_Transform;
+	Transform m_LocalTransform;
+	Transform m_WorldTransform;
 	std::vector<std::shared_ptr<Component>> m_Components;
 
 	// nesting
-	std::vector<GameObject*> m_Children;
+	std::vector<std::shared_ptr<GameObject>> m_Children;
 	GameObject* m_Parent;
 
-	void AddChild(GameObject* child);
-	void RemoveChild(GameObject* child);
+	void AddChild(std::shared_ptr<GameObject> child);
+	void RemoveChild(std::shared_ptr<GameObject> child);
 	void UpdateWorldPosition();
 };
 
