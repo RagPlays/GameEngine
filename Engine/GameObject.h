@@ -70,12 +70,12 @@ public:
 	}
 
 	// Childeren/Parent
-	bool IsChild(std::shared_ptr<GameObject> gameObj) const;
+	bool IsChild(GameObject* gameObj) const;
 	GameObject* GetParent() const;
 	int GetChildCount() const;
 	GameObject* GetChildAt(size_t idx) const;
 	GameObject* GetChildAt(int idx) const;
-	void SetParent(std::shared_ptr<GameObject>, bool keepWorldPos = false);
+	void SetParent(GameObject* parent, bool keepWorldPos = false);
 
 	// Get/Set Transforms
 	const glm::vec3& GetLocalPosition() const;
@@ -111,11 +111,11 @@ private:
 	std::vector<std::shared_ptr<Component>> m_Components;
 
 	// nesting
-	std::vector<std::shared_ptr<GameObject>> m_Children;
+	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
 
-	void AddChild(std::shared_ptr<GameObject> child);
-	void RemoveChild(std::shared_ptr<GameObject> child);
+	void AddChild(GameObject* child);
+	void RemoveChild(GameObject* child);
 	void UpdateWorldPosition();
 };
 

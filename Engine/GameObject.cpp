@@ -76,9 +76,9 @@ void GameObject::Render() const
 }
 
 // Childeren/Parent
-bool GameObject::IsChild(std::shared_ptr<GameObject> gameObj) const
+bool GameObject::IsChild(GameObject* gameObj) const
 {
-	for (const std::shared_ptr<GameObject> child : m_Children)
+	for (const GameObject* const child : m_Children)
 	{
 		if (child == gameObj) return true;
 	}
@@ -98,18 +98,18 @@ int GameObject::GetChildCount() const
 GameObject* GameObject::GetChildAt(size_t idx) const
 {
 	assert(idx < m_Children.size());
-	return m_Children[idx].get();
+	return m_Children[idx];
 }
 
 GameObject* GameObject::GetChildAt(int idx) const
 {
 	assert(idx < m_Children.size() && idx > -1);
-	return m_Children[idx].get();
+	return m_Children[idx];
 }
 
-void GameObject::SetParent(std::shared_ptr<GameObject> parent, bool keepWorldPos)
+void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
 {
-	if (parent.get() == this || m_Parent == parent.get() || IsChild(parent)) return;
+	if (parent == this || m_Parent == parent || IsChild(parent)) return;
 
 	if (parent)
 	{
@@ -124,9 +124,9 @@ void GameObject::SetParent(std::shared_ptr<GameObject> parent, bool keepWorldPos
 		SetLocalPosition(GetWorldPosition());
 	}
 
-	if (m_Parent) m_Parent->RemoveChild(std::make_shared<GameObject>(this));
-	m_Parent = parent.get();
-	if (m_Parent) m_Parent->AddChild(std::make_shared<GameObject>(this));
+	if (m_Parent) m_Parent->RemoveChild(this);
+	m_Parent = parent;
+	if (m_Parent) m_Parent->AddChild(this);
 }
 
 // Get/Set Transform
@@ -210,12 +210,12 @@ void GameObject::Destroy()
 }
 
 // Private functions
-void GameObject::AddChild(std::shared_ptr<GameObject> child)
+void GameObject::AddChild(GameObject* child)
 {
 	m_Children.emplace_back(child);
 }
 
-void GameObject::RemoveChild(std::shared_ptr<GameObject> child)
+void GameObject::RemoveChild(GameObject* child)
 {
 	m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
 }
