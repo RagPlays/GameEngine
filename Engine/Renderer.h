@@ -4,6 +4,8 @@
 #include <SDL.h>
 #include "Singleton.h"
 
+struct SDL_Color;
+
 class Texture2D;
 /**
  * Simple RAII wrapper for the SDL renderer
@@ -12,7 +14,7 @@ class Renderer final : public Singleton<Renderer>
 {
 public:
 
-	Renderer() = default;
+	Renderer();
 	~Renderer() = default;
 	Renderer(const Renderer& other) = delete;
 	Renderer(Renderer&& other) noexcept = delete;
@@ -38,9 +40,9 @@ public:
 
 private:
 
-	SDL_Renderer* m_Renderer{};
-	SDL_Window* m_Window{};
-	SDL_Color m_ClearColor{};
+	SDL_Renderer* m_Renderer;
+	SDL_Window* m_Window;
+	SDL_Color m_ClearColor;
 };
 
 #endif // !RENDERER_H

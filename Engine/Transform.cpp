@@ -1,5 +1,12 @@
 #include "Transform.h"
 
+Transform::Transform()
+	: m_Position{}
+	, m_Rotation{}
+	, m_Scale{ 1.f, 1.f, 1.f }
+{
+}
+
 const glm::vec3& Transform::GetPosition() const
 {
 	return m_Position;

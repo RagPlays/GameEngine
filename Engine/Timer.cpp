@@ -1,5 +1,4 @@
 #include <SDL.h>
-#include <iostream>
 #include <thread>
 #include "Timer.h"
 
@@ -75,6 +74,11 @@ bool Timer::GetNeedFixedUpdate()
 
 void Timer::ClearFpsCap()
 {
+	if (m_VSync)
+	{
+		m_VSync = false;
+		SDL_GL_SetSwapInterval(0);
+	}
 	m_FpsCapped = false;
 }
 

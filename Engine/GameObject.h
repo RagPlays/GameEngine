@@ -72,9 +72,8 @@ public:
 	// Childeren/Parent
 	bool IsChild(GameObject* gameObj) const;
 	GameObject* GetParent() const;
-	int GetChildCount() const;
+	size_t GetChildCount() const;
 	GameObject* GetChildAt(size_t idx) const;
-	GameObject* GetChildAt(int idx) const;
 	const std::vector<std::unique_ptr<GameObject>>& GetChilderen() const;
 	void SetParent(GameObject* parent, bool keepWorldPos = false);
 

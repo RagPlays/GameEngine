@@ -26,7 +26,7 @@ public:
 
 private:
 
-	std::string m_FilePath;
+	const std::string m_FilePath;
 	_TTF_Font* m_Font;
 	unsigned int m_Size;
 };

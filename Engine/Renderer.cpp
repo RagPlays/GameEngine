@@ -22,6 +22,13 @@ int GetOpenGLDriverIndex()
 	return openglIndex;
 }
 
+Renderer::Renderer()
+	: m_Window{}
+	, m_Renderer{}
+	, m_ClearColor{}
+{
+}
+
 // Init
 void Renderer::Init(SDL_Window* window)
 {
@@ -35,9 +42,7 @@ void Renderer::Init(SDL_Window* window)
 
 void Renderer::Render() const
 {
-	const SDL_Color& color = GetBackgroundColor();
-
-	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
+	SDL_SetRenderDrawColor(m_Renderer, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
 	SDL_RenderClear(m_Renderer);
 
 	SceneManager::GetInstance().Render();

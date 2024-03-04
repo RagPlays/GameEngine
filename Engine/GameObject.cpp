@@ -90,20 +90,14 @@ GameObject* GameObject::GetParent() const
 	return m_Parent;
 }
 
-int GameObject::GetChildCount() const
+size_t GameObject::GetChildCount() const
 {
-	return static_cast<int>(m_Children.size());
+	return m_Children.size();
 }
 
 GameObject* GameObject::GetChildAt(size_t idx) const
 {
 	assert(idx < m_Children.size());
-	return m_Children[idx].get();
-}
-
-GameObject* GameObject::GetChildAt(int idx) const
-{
-	assert(idx < m_Children.size() && idx > -1);
 	return m_Children[idx].get();
 }
 
