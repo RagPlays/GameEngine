@@ -22,7 +22,7 @@ void TextComponent::Update()
 		SDL_Surface* surface{ TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_TextColor) };
 		if (!surface) throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 
-		SDL_Texture* texture{ SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surface) };
+		SDL_Texture* texture{ SDL_CreateTextureFromSurface(Renderer::Get().GetSDLRenderer(), surface) };
 		if (!texture) throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 
 		GetOwner()->GetComponent<RenderComponent>()->SetTexture(std::make_shared<Texture2D>(texture));

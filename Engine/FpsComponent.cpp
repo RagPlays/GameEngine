@@ -16,7 +16,7 @@ FpsComponent::FpsComponent(GameObject* const owner)
 void FpsComponent::Update()
 {
 	++m_FrameCount;
-	m_TotalWaitTime += Timer::GetInstance().GetElapsedSec();
+	m_TotalWaitTime += Timer::Get().GetElapsedSec();
 
 	if (m_TotalWaitTime >= m_UpdateTickTime)
 	{

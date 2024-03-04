@@ -10,7 +10,7 @@ RenderComponent::RenderComponent(GameObject* const owner)
 }
 
 RenderComponent::RenderComponent(GameObject* const owner, const std::string& fileName)
-	: RenderComponent{ owner, ResourceManager::GetInstance().LoadTexture(fileName) }
+	: RenderComponent{ owner, ResourceManager::Get().LoadTexture(fileName) }
 {
 }
 
@@ -29,7 +29,7 @@ RenderComponent::RenderComponent(GameObject* const owner, std::shared_ptr<Textur
 
 void RenderComponent::SetTextureFromFileName(const std::string& fileName)
 {
-	SetTexture(ResourceManager::GetInstance().LoadTexture(fileName));
+	SetTexture(ResourceManager::Get().LoadTexture(fileName));
 }
 
 void RenderComponent::SetTexture(std::shared_ptr<Texture2D> newTexture)
@@ -93,11 +93,11 @@ void RenderComponent::Render() const
 
 		if (m_SrcRectSet)
 		{
-			Renderer::GetInstance().RenderTexture(*m_Texture, m_SrcRect, destRect);
+			Renderer::Get().RenderTexture(*m_Texture, m_SrcRect, destRect);
 		}
 		else
 		{
-			Renderer::GetInstance().RenderTexture(*m_Texture, destRect);
+			Renderer::Get().RenderTexture(*m_Texture, destRect);
 		}
 	}
 }

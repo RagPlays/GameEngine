@@ -64,14 +64,14 @@ Engine::Engine(const std::string& dataPath, const std::string& title, int width,
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(m_Window);
+	Renderer::Get().Init(m_Window);
 
-	ResourceManager::GetInstance().Init(dataPath);
+	ResourceManager::Get().Init(dataPath);
 }
 
 Engine::~Engine()
 {
-	Renderer::GetInstance().Destroy();
+	Renderer::Get().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	SDL_Quit();
@@ -83,12 +83,10 @@ void Engine::Run(const std::function<void()>& loadFunction)
 	loadFunction();
 
 	// Get Instances
-	Renderer& renderer{ Renderer::GetInstance() };
-	SceneManager& sceneManager{ SceneManager::GetInstance() };
-	InputManager& input{ InputManager::GetInstance() };
-	Timer& timer{ Timer::GetInstance() };
-
-	timer.ClearFpsCap();
+	Renderer& renderer{ Renderer::Get() };
+	SceneManager& sceneManager{ SceneManager::Get() };
+	InputManager& input{ InputManager::Get() };
+	Timer& timer{ Timer::Get() };
 
 	bool doContinue{ true };
 	while (doContinue)
@@ -115,6 +113,6 @@ void Engine::Run(const std::function<void()>& loadFunction)
 		renderer.Render();
 
 		// FPS Cap
-		timer.CapFps();
+		timer.UpdateFpsCap();
 	}
 }

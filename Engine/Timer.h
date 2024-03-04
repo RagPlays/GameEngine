@@ -1,6 +1,7 @@
 #ifndef TIME_H
 #define TIME_H
 
+#include <SDL.h>
 #include <chrono>
 #include "Singleton.h"
 
@@ -17,7 +18,7 @@ public:
 
 	// Update
 	void Update();
-	void CapFps();
+	void UpdateFpsCap();
 
 	// Getters
 	float GetElapsedSec() const;
@@ -26,10 +27,14 @@ public:
 	bool GetNeedFixedUpdate();
 
 	// Setters
-	void ClearFpsCap();
-	void SetFpsCap(int newFps);
+	void EnableFpsCap(int newFps);
+	void DisableFpsCap();
+	void EnableVSync();
+	void DisableVSync();
 
 private:
+
+	SDL_DisplayMode m_MonitorInfo;
 	
 	bool m_VSync;
 	bool m_FpsCapped;
@@ -41,11 +46,6 @@ private:
 	float m_Lag;
 	std::chrono::high_resolution_clock::time_point m_CurrentTime;
 	std::chrono::high_resolution_clock::time_point m_LastTime;
-
-	// DEBUG
-	bool m_ShowDebugFps;
-	float m_DebugPrintTime;
-	int m_FpsCount;
 };
 
 #endif // !TIME_H
