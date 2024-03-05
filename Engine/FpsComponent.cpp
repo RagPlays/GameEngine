@@ -20,11 +20,10 @@ void FpsComponent::Update()
 
 	if (m_TotalWaitTime >= m_UpdateTickTime)
 	{
-		std::shared_ptr<TextComponent> textComponent{ GetOwner()->GetComponent<TextComponent>() };
+		const float fpsAverage{ 1.f / (m_TotalWaitTime / m_FrameCount) };
 
-		if (textComponent)
+		if (TextComponent* textComponent{ GetOwner()->GetComponent<TextComponent>() })
 		{
-			const float fpsAverage{ 1.f / (m_TotalWaitTime / m_FrameCount) };
 			textComponent->SetText(std::format("{:.1f}", fpsAverage) + " FPS");
 		}
 

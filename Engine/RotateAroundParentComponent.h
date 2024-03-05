@@ -6,6 +6,7 @@
 class RotateAroundParentComponent final : public Component
 {
 public:
+
 	RotateAroundParentComponent(GameObject* const owner, float rotationSpeed = 1.57f);
 	~RotateAroundParentComponent() = default;
 

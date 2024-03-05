@@ -27,7 +27,7 @@ public:
 
 	// Components
 	template <typename ComponentType>
-	void AddComponent(std::shared_ptr<Component> component)
+	void AddComponent(std::unique_ptr<Component> component)
 	{
 		if (!HasComponent<ComponentType>())
 		{
@@ -37,18 +37,22 @@ public:
 	template <typename ComponentType>
 	void RemoveComponent()
 	{
-		std::shared_ptr<ComponentType>& component{ GetComponent<ComponentType>() };
-		if (component.get())
+		ComponentType* component = GetComponent<ComponentType>();
+		if (component)
 		{
-			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), GetComponent<ComponentType>()), m_Components.end());
+			m_Components.erase(std::remove_if(m_Components.begin(), m_Components.end(),[&](std::unique_ptr<Component> comp)
+				{
+					return comp.get() == component; 
+				}
+			), m_Components.end());
 		}
 	}
 	template <typename ComponentType>
-	std::shared_ptr<ComponentType> GetComponent() const
+	ComponentType* GetComponent() const
 	{
 		for (auto& component : m_Components)
 		{
-			std::shared_ptr<ComponentType> castedComponent{ std::dynamic_pointer_cast<ComponentType>(component) };
+			ComponentType* castedComponent{ dynamic_cast<ComponentType*>(component.get()) };
 			if (castedComponent)
 			{
 				return castedComponent;
@@ -61,7 +65,7 @@ public:
 	{
 		for (auto& component : m_Components)
 		{
-			if (std::dynamic_pointer_cast<ComponentType>(component))
+			if (dynamic_cast<ComponentType*>(component.get()))
 			{
 				return true;
 			}
@@ -101,7 +105,7 @@ private:
 	std::string m_Tag;
 	Transform m_LocalTransform;
 	Transform m_WorldTransform;
-	std::vector<std::shared_ptr<Component>> m_Components;
+	std::vector<std::unique_ptr<Component>> m_Components;
 
 	std::vector<std::unique_ptr<GameObject>> m_Children;
 	GameObject* m_Parent;

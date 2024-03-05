@@ -1,3 +1,4 @@
+#include <numbers>
 #include <glm/glm.hpp>
 #include "RotateAroundParentComponent.h"
 #include "GameObject.h"
@@ -12,8 +13,15 @@ RotateAroundParentComponent::RotateAroundParentComponent(GameObject* const owner
 
 void RotateAroundParentComponent::Update()
 {
+	constexpr float fullCirlce{ static_cast<float>(std::numbers::pi) * 2.f };
+
 	if (GetParent())
 	{
+		if (m_CurrentAngle >= fullCirlce)
+		{
+			m_CurrentAngle -= fullCirlce;
+		}
+
 		const float radius{ glm::length(GetLocalPosition()) };
 		m_CurrentAngle += m_RotationSpeed * Timer::Get().GetElapsedSec();
 
