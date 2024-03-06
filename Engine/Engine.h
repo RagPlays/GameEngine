@@ -15,7 +15,7 @@ public:
 	Engine& operator=(const Engine& other) = delete;
 	Engine& operator=(Engine&& other) noexcept = delete;
 
-	void Run(const std::function<void()>& load);
+	void Run();
 
 private:
 	const int m_WindowWidth;

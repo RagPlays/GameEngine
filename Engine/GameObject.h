@@ -85,6 +85,8 @@ public:
 	const glm::vec3& GetLocalPosition() const;
 	void SetLocalPosition(const glm::vec3& pos);
 	const glm::vec3& GetWorldPosition();
+	void SetWorldPosition(const glm::vec3& pos);
+	void SetPositionDirty();
 
 	// Getters
 	bool IsDestroyed() const;

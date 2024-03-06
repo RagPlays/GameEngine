@@ -1,5 +1,12 @@
 #include <stdexcept>
+
+// ImGui
+#include <imgui.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <backends/imgui_impl_sdl2.h>
+
 #include "Renderer.h"
+
 #include "SceneManager.h"
 #include "Texture2D.h"
 
@@ -38,20 +45,40 @@ void Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL3_Init();
 }
 
 void Renderer::Render() const
 {
+	// Clear Screen With ClearColor
 	SDL_SetRenderDrawColor(m_Renderer, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
 	SDL_RenderClear(m_Renderer);
 
+	// Render All Objects
 	SceneManager::Get().Render();
+
+	// ImGui Rendering
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+	//ImGui::ShowDemoWindow();
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
+	// Sent Data To Monitor Memory
 	SDL_RenderPresent(m_Renderer);
 }
 
 void Renderer::Destroy()
 {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	if (m_Renderer)
 	{
 		SDL_DestroyRenderer(m_Renderer);

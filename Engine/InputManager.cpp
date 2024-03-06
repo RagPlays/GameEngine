@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "InputManager.h"
+#include <backends/imgui_impl_sdl2.h>
 
 bool InputManager::ProcessInput()
 {
@@ -21,6 +22,8 @@ bool InputManager::ProcessInput()
 		default:
 			break;
 		}
+
+		ImGui_ImplSDL2_ProcessEvent(&event);
 	}
 	return true;
 }

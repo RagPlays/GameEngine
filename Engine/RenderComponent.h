@@ -35,6 +35,10 @@ public:
 	void SetTextureDimentions(int width, int height);
 	void SetTextureDimentions(const glm::ivec2& dimentions);
 
+	int GetTextureWidth() const;
+	int GetTextureHeight() const;
+	const glm::ivec2& GetTextureDimentions() const;
+
 	// SrcRect
 	void ClearSourceRect();
 	void SetSourceRect(int x, int y, int width, int height);

@@ -5,7 +5,6 @@
 #include "Singleton.h"
 
 struct SDL_Color;
-
 class Texture2D;
 /**
  * Simple RAII wrapper for the SDL renderer

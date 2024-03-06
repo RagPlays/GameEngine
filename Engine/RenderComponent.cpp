@@ -67,6 +67,21 @@ void RenderComponent::SetTextureDimentions(const glm::ivec2& dimentions)
 	SetTextureDimentions(dimentions.x, dimentions.y);
 }
 
+int RenderComponent::GetTextureWidth() const
+{
+	return m_RenderDimentions.x;
+}
+
+int RenderComponent::GetTextureHeight() const
+{
+	return  m_RenderDimentions.y;
+}
+
+const glm::ivec2& RenderComponent::GetTextureDimentions() const
+{
+	return m_RenderDimentions;
+}
+
 void RenderComponent::ClearSourceRect()
 {
 	m_SrcRect = SDL_Rect{};

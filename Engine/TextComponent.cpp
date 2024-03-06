@@ -17,7 +17,7 @@ TextComponent::TextComponent(GameObject* const owner, std::shared_ptr<Font> font
 
 void TextComponent::Update()
 {
-	if (m_NeedsUpdate)
+	if (m_NeedsUpdate && GetOwner()->HasComponent<RenderComponent>())
 	{
 		SDL_Surface* surface{ TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_TextColor) };
 		if (!surface) throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
