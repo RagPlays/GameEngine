@@ -2,8 +2,7 @@
 #define SCENE_H
 
 #include "SceneManager.h"
-
-class GameObject;
+#include "GameObject.h"
 
 class Scene final
 {
@@ -11,7 +10,7 @@ class Scene final
 public:
 	~Scene() = default;
 
-	void Add(std::shared_ptr<GameObject> object);
+	void Add(std::unique_ptr<GameObject> object);
 
 	void FixedUpdate();
 	void Update();
@@ -26,11 +25,10 @@ public:
 private:
 	explicit Scene(const std::string& name);
 
-	void Remove(std::shared_ptr<GameObject> object);
 	void RemoveAllObjects();
 
 	std::string m_Name;
-	std::vector<std::shared_ptr<GameObject>> m_Objects;
+	std::vector<std::unique_ptr<GameObject>> m_Objects;
 
 	static unsigned int m_IdCounter;
 };

@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include "GameObject.h"
 
 unsigned int Scene::m_IdCounter = 0;
 
@@ -8,7 +7,7 @@ Scene::Scene(const std::string& name)
 {
 }
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<GameObject> object)
 {
 	m_Objects.emplace_back(std::move(object));
 }
@@ -50,11 +49,6 @@ void Scene::Render() const
 	{
 		object->Render();
 	}
-}
-
-void Scene::Remove(std::shared_ptr<GameObject> object)
-{
-	m_Objects.erase(std::remove(m_Objects.begin(), m_Objects.end(), object), m_Objects.end());
 }
 
 void Scene::RemoveAllObjects()

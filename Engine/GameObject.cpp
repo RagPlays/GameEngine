@@ -202,7 +202,7 @@ void GameObject::Destroy()
 // Private functions
 void GameObject::AddChild(GameObject* child)
 {
-	m_Children.emplace_back(std::unique_ptr<GameObject>(child));
+	m_Children.emplace_back(std::move(child));
 }
 
 void GameObject::RemoveChild(GameObject* child)

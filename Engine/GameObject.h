@@ -108,7 +108,6 @@ private:
 	Transform m_LocalTransform;
 	Transform m_WorldTransform;
 	std::vector<std::unique_ptr<Component>> m_Components;
-
 	std::vector<std::unique_ptr<GameObject>> m_Children;
 	GameObject* m_Parent;
 
