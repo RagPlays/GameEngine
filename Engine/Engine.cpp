@@ -1,4 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
+
 #include <stdexcept>
 #include <windows.h>
 #include <SDL_image.h>

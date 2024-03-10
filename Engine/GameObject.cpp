@@ -207,7 +207,8 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::RemoveChild(GameObject* child)
 {
-	m_Children.erase(std::remove_if(m_Children.begin(), m_Children.end(),[&](const std::unique_ptr<GameObject>& ptr)
+	m_Children.erase(std::remove_if(m_Children.begin(), m_Children.end(),
+		[&](auto& ptr)
 		{ 
 			return ptr.get() == child; 
 		}

@@ -25,7 +25,7 @@ void SceneManager::LateUpdate()
 	}
 }
 
-void SceneManager::Render()
+void SceneManager::Render() const
 {
 	for (const auto& scene : m_scenes)
 	{

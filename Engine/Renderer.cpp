@@ -1,6 +1,7 @@
 #include <stdexcept>
 
 // ImGui
+#include <imgui_plot.h>
 #include <imgui.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl2.h>
@@ -8,6 +9,7 @@
 #include "Renderer.h"
 
 #include "SceneManager.h"
+#include "ImGuiRenderer.h"
 #include "Texture2D.h"
 
 // Global functions
@@ -61,13 +63,8 @@ void Renderer::Render() const
 	// Render All Objects
 	SceneManager::Get().Render();
 
-	// ImGui Rendering
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-	//ImGui::ShowDemoWindow();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	// Render ImGui
+	ImGuiRenderer::Get().Render();
 	
 	// Sent Data To Monitor Memory
 	SDL_RenderPresent(m_Renderer);

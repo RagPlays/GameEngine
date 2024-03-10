@@ -15,7 +15,7 @@ public:
 	void FixedUpdate();
 	void Update();
 	void LateUpdate();
-	void Render();
+	void Render() const;
 
 private:
 

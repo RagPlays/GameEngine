@@ -16,21 +16,30 @@
     <Filter Include="Classes\GameObject\Components\Base">
       <UniqueIdentifier>{0b2fe52c-c0aa-4b55-874f-bef34e75c584}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ImGui">
-      <UniqueIdentifier>{00f4385e-6450-4410-9db0-2c67631830e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OutsideEngine">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ImGui\Backends">
-      <UniqueIdentifier>{d7fd80d6-b193-468f-885a-c3f4291a04d9}</UniqueIdentifier>
     </Filter>
     <Filter Include="HelperClasses">
       <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
     </Filter>
     <Filter Include="EngineCore">
       <UniqueIdentifier>{ecd5b4af-f842-4dd4-a659-7995934cef73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiLib">
+      <UniqueIdentifier>{00f4385e-6450-4410-9db0-2c67631830e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiLib\Backends">
+      <UniqueIdentifier>{d7fd80d6-b193-468f-885a-c3f4291a04d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiLib\Plots">
+      <UniqueIdentifier>{35beed4f-18c8-4227-9068-5db624102f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiImpl">
+      <UniqueIdentifier>{3eea3f34-a969-4d90-9acb-d13660b69721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiImpl\Excersises">
+      <UniqueIdentifier>{2882c993-126d-4f1c-8643-8e0921a75212}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -68,28 +77,28 @@
       <Filter>HelperClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imconfig.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imgui.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imgui_internal.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_opengl3.h">
-      <Filter>ImGui\Backends</Filter>
+      <Filter>ImGuiLib\Backends</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.h">
-      <Filter>ImGui\Backends</Filter>
+      <Filter>ImGuiLib\Backends</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>HelperClasses</Filter>
@@ -108,6 +117,18 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>EngineCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
+      <Filter>ImGuiLib\Plots</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise1.h">
+      <Filter>ImGuiImpl\Excersises</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise2.h">
+      <Filter>ImGuiImpl\Excersises</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiRenderer.h">
+      <Filter>ImGuiImpl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,25 +169,25 @@
       <Filter>HelperClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>ImGuiLib</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_opengl3.cpp">
-      <Filter>ImGui\Backends</Filter>
+      <Filter>ImGuiLib\Backends</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.cpp">
-      <Filter>ImGui\Backends</Filter>
+      <Filter>ImGuiLib\Backends</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>HelperClasses</Filter>
@@ -182,6 +203,18 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>EngineCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
+      <Filter>ImGuiLib\Plots</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise1.cpp">
+      <Filter>ImGuiImpl\Excersises</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiRenderer.cpp">
+      <Filter>ImGuiImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise2.cpp">
+      <Filter>ImGuiImpl\Excersises</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
