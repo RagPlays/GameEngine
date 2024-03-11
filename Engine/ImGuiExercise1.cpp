@@ -14,7 +14,7 @@ ImGuiExercise1::ImGuiExercise1()
 	m_PlotConfig.grid_y.size = 2;*/
 
 	m_PlotConfig.line_thickness = 2.f;
-	m_PlotConfig.values.color = ImGui::ColorConvertFloat4ToU32({1.0f, 0.5f, 0.0f, 1.0f }); // orange
+	m_PlotConfig.values.color = ImGui::ColorConvertFloat4ToU32({1.f, 0.5f, 0.f, 1.f }); // orange
 	m_PlotConfig.scale.min = 0;
 	m_PlotConfig.skip_small_lines = false;
 	m_PlotConfig.overlay_text = "int[] timings";
@@ -53,38 +53,65 @@ void ImGuiExercise1::Render()
 
 void ImGuiExercise1::LoadData()
 {
+	constexpr int maxStepSize{ 1024 };
+	constexpr int dataSize{ 11 };
+
 	// Clear all previous data
 	m_XData.clear();
 	m_YData.clear();
 
 	// Reserve enough data to minimise data copying and setting all values
-	m_XData.reserve(m_SampleSize);
-	m_YData.reserve(m_SampleSize);
+	m_XData.resize(dataSize);
+	m_YData.resize(dataSize);
 
 	// Make TestVec
 	constexpr int arrSize{ 10'000'000 };
 	std::vector<int> testVec;
 	testVec.resize(arrSize);
 
-	// Get Data
-	for (int stepsize{ 1 }; stepsize <= 1024; stepsize *= 2)
+	// Get XData
+	for (int stepsize{ 1 }; stepsize <= maxStepSize; stepsize *= 2)
 	{
-		const auto start{ std::chrono::high_resolution_clock::now() };
-
-		for (int i{}; i < arrSize; i += stepsize)
-		{
-			testVec[i] *= 2;
-		}
-
-		const auto end{ std::chrono::high_resolution_clock::now() };
-		const auto casttime{ std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() };
 		m_XData.emplace_back(static_cast<float>(stepsize));
-		m_YData.emplace_back(static_cast<float>(casttime));
 	}
 
-	// Set Plot Configs
+	for (int sampleIdx{}; sampleIdx < m_SampleSize; ++sampleIdx)
+	{
+		// Create temp vec for data of 1 sample
+		std::vector<float> tempDataVec;
+		tempDataVec.reserve(dataSize);
+
+		// Get YData
+		for (int stepsize{ 1 }; stepsize <= maxStepSize; stepsize *= 2)
+		{
+			const auto start{ std::chrono::high_resolution_clock::now() };
+
+			for (int i{}; i < arrSize; i += stepsize)
+			{
+				testVec[i] *= 2;
+			}
+
+			const auto end{ std::chrono::high_resolution_clock::now() };
+			const auto casttime{ std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() };
+			tempDataVec.emplace_back(static_cast<float>(casttime));
+		}
+
+		// Add Data
+		for (int idx{}; idx < dataSize; ++idx)
+		{
+			m_YData[idx] += tempDataVec[idx];
+		}
+	}
+
+	// Divide By SampleSize
+	for (int idx{}; idx < dataSize; ++idx)
+	{
+		m_YData[idx] /= m_SampleSize;
+	}
+
+	// Set Plot Configs / Values
 	m_PlotConfig.scale.max = m_YData.front();
-	m_PlotConfig.values.count = m_SampleSize;
+	m_PlotConfig.values.count = dataSize;
 	m_PlotConfig.values.xs = m_XData.data();
 	m_PlotConfig.values.ys = m_YData.data();
 }

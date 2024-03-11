@@ -48,10 +48,7 @@ void Renderer::Init(SDL_Window* window)
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
-	ImGui_ImplOpenGL3_Init();
+	InitImGui();
 }
 
 void Renderer::Render() const
@@ -72,9 +69,7 @@ void Renderer::Render() const
 
 void Renderer::Destroy()
 {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
+	DestroyImGui();
 
 	if (m_Renderer)
 	{
@@ -132,4 +127,19 @@ const SDL_Color& Renderer::GetBackgroundColor() const
 void Renderer::SetBackgroundColor(const SDL_Color& color)
 {
 	m_ClearColor = color;
+}
+
+void Renderer::InitImGui()
+{
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(m_Window, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL3_Init();
+}
+
+void Renderer::DestroyImGui()
+{
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 }

@@ -45,15 +45,25 @@ private:
 	};
 
 private:
+	void LoadDataGameObj3D();
+	void LoadDataGameObj3DAlt();
+
+private:
 
 	int m_SampleSize;
-	bool m_GraphOneLoading;
-	bool m_GraphTwoLoading;
 
-	ImGui::PlotConfig m_PlotOneConfig;
-	ImGui::PlotConfig m_PlotTwoConfig;
+	bool m_LoadingGameObj3D;
+	bool m_LoadingGameObj3DAlt;
 
+	ImGui::PlotConfig m_PlotConfigGameObj3D;
+	ImGui::PlotConfig m_PlotConfigGameObj3DAlt;
+	ImGui::PlotConfig m_PlotConfigCombined;
 
+	std::vector<float> m_XData3D;
+	std::vector<float> m_YData3D;
+
+	std::vector<float> m_XData3DAlt;
+	std::vector<float> m_YData3DAlt;
 };
 
 #endif // !IMGUIEXERCISE2_H
