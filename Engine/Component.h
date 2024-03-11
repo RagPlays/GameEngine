@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 
 class GameObject;
 

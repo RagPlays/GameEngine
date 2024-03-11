@@ -3,7 +3,7 @@
 
 #include <string>
 #include <memory>
-#include <glm/glm.hpp>
+#include <glm.hpp>
 #include <SDL.h>
 #include "Component.h"
 

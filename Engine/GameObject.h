@@ -1,7 +1,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 #include <string>
 #include <vector>
 #include <memory>

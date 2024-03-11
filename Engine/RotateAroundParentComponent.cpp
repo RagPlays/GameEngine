@@ -1,5 +1,5 @@
 #include <numbers>
-#include <glm/glm.hpp>
+#include <glm.hpp>
 #include "RotateAroundParentComponent.h"
 #include "GameObject.h"
 #include "Timer.h"
