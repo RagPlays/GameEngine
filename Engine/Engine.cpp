@@ -66,7 +66,6 @@ Engine::Engine(const std::string& dataPath, const std::string& title, int width,
 	}
 
 	Renderer::Get().Init(m_Window);
-
 	ResourceManager::Get().Init(dataPath);
 }
 
@@ -83,7 +82,7 @@ void Engine::Run()
 	// Get Instances
 	Renderer& renderer{ Renderer::Get() };
 	SceneManager& sceneManager{ SceneManager::Get() };
-	InputManager& input{ InputManager::Get() };
+	InputManager& inputManager{ InputManager::Get() };
 	Timer& timer{ Timer::Get() };
 
 	bool doContinue{ true };
@@ -93,7 +92,7 @@ void Engine::Run()
 		timer.Update();
 
 		// Input
-		doContinue = input.ProcessInput();
+		doContinue = inputManager.ProcessInput();
 
 		// Fixed Update -> only for physics / networking
 		while (timer.GetNeedFixedUpdate())

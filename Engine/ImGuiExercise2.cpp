@@ -112,8 +112,8 @@ void ImGuiExercise2::LoadDataGameObj3D()
 	m_YData3D.clear();
 
 	// Reserve enough data to minimise data copying and setting all values
-	m_XData3D.resize(dataSize);
-	m_YData3D.resize(dataSize);
+	m_XData3D.resize(dataSize, 1.f);
+	m_YData3D.resize(dataSize, 1.f);
 
 	// Make TestVec
 	constexpr int arrSize{ 10'000'000 };

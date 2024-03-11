@@ -8,17 +8,23 @@ void ImGuiRenderer::Render()
 	StartImGuiRender();
 
 	// ...
-	m_Exercise1.Render();
-	m_Exercise2.Render();
+	for (auto& imGuiComp : m_ImGuiComponents)
+	{
+		imGuiComp->Render();
+	}
 	// ...
 
 	// End
 	EndImGuiRender();
 }
 
+void ImGuiRenderer::AddImGuiComponent(std::unique_ptr<ImGuiComponent> component)
+{
+	m_ImGuiComponents.emplace_back(std::move(component));
+}
+
 void ImGuiRenderer::StartImGuiRender()
 {
-	// ImGui Rendering
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();

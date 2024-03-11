@@ -1,27 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Classes">
-      <UniqueIdentifier>{27f6ea77-b026-4327-a627-a52e41ae2eb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\Managers">
-      <UniqueIdentifier>{71dcceb9-4b8d-41d1-885b-4a884ebff391}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\GameObject">
-      <UniqueIdentifier>{0f925781-cb9c-4554-85b3-322c45532722}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\GameObject\Components">
-      <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\GameObject\Components\Base">
-      <UniqueIdentifier>{0b2fe52c-c0aa-4b55-874f-bef34e75c584}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OutsideEngine">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="HelperClasses">
-      <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
     </Filter>
     <Filter Include="EngineCore">
       <UniqueIdentifier>{ecd5b4af-f842-4dd4-a659-7995934cef73}</UniqueIdentifier>
@@ -38,37 +20,46 @@
     <Filter Include="ImGuiImpl">
       <UniqueIdentifier>{3eea3f34-a969-4d90-9acb-d13660b69721}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ImGuiImpl\Excersises">
-      <UniqueIdentifier>{2882c993-126d-4f1c-8643-8e0921a75212}</UniqueIdentifier>
+    <Filter Include="EngineCore\Input">
+      <UniqueIdentifier>{615d0c5c-d8a2-4b8a-b193-9b9fceb0bf8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\GameObject">
+      <UniqueIdentifier>{0f925781-cb9c-4554-85b3-322c45532722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\GameComponents">
+      <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\GameObject\Component">
+      <UniqueIdentifier>{0b2fe52c-c0aa-4b55-874f-bef34e75c584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HelperClasses">
+      <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiImpl\Components">
+      <UniqueIdentifier>{567f36fd-22a2-43e8-bfa8-743820440668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiImpl\Components\Base">
+      <UniqueIdentifier>{3932b226-5011-4a8d-ac23-c6b5c9635c89}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InputManager.h">
-      <Filter>Classes\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Classes\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Classes\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Classes\GameObject\Components\Base</Filter>
+      <Filter>EngineCore\GameObject\Component</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Classes\GameObject</Filter>
+      <Filter>EngineCore\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="FpsComponent.h">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="RotateAroundParentComponent.h">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>HelperClasses</Filter>
@@ -121,46 +112,49 @@
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
       <Filter>ImGuiLib\Plots</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiExercise1.h">
-      <Filter>ImGuiImpl\Excersises</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiExercise2.h">
-      <Filter>ImGuiImpl\Excersises</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiRenderer.h">
       <Filter>ImGuiImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>EngineCore</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>EngineCore\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>EngineCore</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiComponent.h">
+      <Filter>ImGuiImpl\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise1.h">
+      <Filter>ImGuiImpl\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise2.h">
+      <Filter>ImGuiImpl\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>OutsideEngine</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Classes\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Classes\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Classes\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Classes\GameObject\Components\Base</Filter>
+      <Filter>EngineCore\GameObject\Component</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Classes\GameObject</Filter>
+      <Filter>EngineCore\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="FpsComponent.cpp">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="RotateAroundParentComponent.cpp">
-      <Filter>Classes\GameObject\Components</Filter>
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>HelperClasses</Filter>
@@ -207,14 +201,23 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
       <Filter>ImGuiLib\Plots</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiExercise1.cpp">
-      <Filter>ImGuiImpl\Excersises</Filter>
-    </ClCompile>
     <ClCompile Include="ImGuiRenderer.cpp">
       <Filter>ImGuiImpl</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>EngineCore</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>EngineCore\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>EngineCore</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise1.cpp">
+      <Filter>ImGuiImpl\Components</Filter>
+    </ClCompile>
     <ClCompile Include="ImGuiExercise2.cpp">
-      <Filter>ImGuiImpl\Excersises</Filter>
+      <Filter>ImGuiImpl\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

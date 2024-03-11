@@ -53,9 +53,12 @@ void Renderer::Init(SDL_Window* window)
 
 void Renderer::Render() const
 {
+	if (!m_Window || !m_Renderer) return;
+
 	// Clear Screen With ClearColor
 	SDL_SetRenderDrawColor(m_Renderer, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
 	SDL_RenderClear(m_Renderer);
+	SDL_RenderFlush(m_Renderer);
 
 	// Render All Objects
 	SceneManager::Get().Render();

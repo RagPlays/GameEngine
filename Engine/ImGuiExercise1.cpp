@@ -10,14 +10,12 @@ ImGuiExercise1::ImGuiExercise1()
 	m_YData.clear();
 
 	// setting defaults
-	/*m_PlotConfig.grid_y.show = true;
-	m_PlotConfig.grid_y.size = 2;*/
 
 	m_PlotConfig.line_thickness = 2.f;
 	m_PlotConfig.values.color = ImGui::ColorConvertFloat4ToU32({1.f, 0.5f, 0.f, 1.f }); // orange
 	m_PlotConfig.scale.min = 0;
 	m_PlotConfig.skip_small_lines = false;
-	m_PlotConfig.overlay_text = "int[] timings";
+	m_PlotConfig.overlay_text = "int";
 	m_PlotConfig.tooltip.format = "x=%.2f, y=%.2f";
 	m_PlotConfig.tooltip.show = true;
 	m_PlotConfig.frame_size = ImVec2{ 200, 100 };
@@ -45,7 +43,7 @@ void ImGuiExercise1::Render()
 
 		if (!m_IsLoading && m_PlotConfig.values.ys != nullptr)
 		{
-			ImGui::Plot("plot", m_PlotConfig);
+			ImGui::Plot("plotInt", m_PlotConfig);
 		}
 	}
 	ImGui::End();
@@ -53,6 +51,7 @@ void ImGuiExercise1::Render()
 
 void ImGuiExercise1::LoadData()
 {
+	constexpr int arrSize{ 10'000'000 };
 	constexpr int maxStepSize{ 1024 };
 	constexpr int dataSize{ 11 };
 
@@ -65,7 +64,6 @@ void ImGuiExercise1::LoadData()
 	m_YData.resize(dataSize);
 
 	// Make TestVec
-	constexpr int arrSize{ 10'000'000 };
 	std::vector<int> testVec;
 	testVec.resize(arrSize);
 

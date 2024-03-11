@@ -1,9 +1,10 @@
 #ifndef IMGUIRENDERER_H
 #define IMGUIRENDERER_H
 
+#include <memory>
+#include <vector>
 #include "Singleton.h"
-#include "ImGuiExercise1.h"
-#include "ImGuiExercise2.h"
+#include "ImGuiComponent.h"
 
 class ImGuiRenderer final : public Singleton<ImGuiRenderer>
 {
@@ -19,13 +20,15 @@ public:
 
 	void Render();
 
+	void AddImGuiComponent(std::unique_ptr<ImGuiComponent> component);
+
 private:
 	void StartImGuiRender();
 	void EndImGuiRender();
 
 private:
-	ImGuiExercise1 m_Exercise1;
-	ImGuiExercise2 m_Exercise2;
+
+	std::vector<std::unique_ptr<ImGuiComponent>> m_ImGuiComponents;
 };
 
 #endif // !IMGUIRENDERER_H
