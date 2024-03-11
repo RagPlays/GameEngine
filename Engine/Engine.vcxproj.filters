@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="OutsideEngine">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="EngineCore">
       <UniqueIdentifier>{ecd5b4af-f842-4dd4-a659-7995934cef73}</UniqueIdentifier>
     </Filter>
@@ -26,9 +22,6 @@
     <Filter Include="EngineCore\GameObject">
       <UniqueIdentifier>{0f925781-cb9c-4554-85b3-322c45532722}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OutsideEngine\GameComponents">
-      <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EngineCore\GameObject\Component">
       <UniqueIdentifier>{0b2fe52c-c0aa-4b55-874f-bef34e75c584}</UniqueIdentifier>
     </Filter>
@@ -40,6 +33,15 @@
     </Filter>
     <Filter Include="ImGuiImpl\Components\Base">
       <UniqueIdentifier>{3932b226-5011-4a8d-ac23-c6b5c9635c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine">
+      <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\GameComponents">
+      <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Input\Commands">
+      <UniqueIdentifier>{e7318aa0-a91b-474d-80f5-7c0176c7b971}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -133,11 +135,14 @@
     <ClInclude Include="ImGuiExercise2.h">
       <Filter>ImGuiImpl\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>EngineCore\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>EngineCore\Input\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>OutsideEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>EngineCore\GameObject\Component</Filter>
     </ClCompile>
@@ -219,5 +224,12 @@
     <ClCompile Include="ImGuiExercise2.cpp">
       <Filter>ImGuiImpl\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>EngineCore\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>OutsideEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp" />
   </ItemGroup>
 </Project>

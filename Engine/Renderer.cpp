@@ -53,7 +53,8 @@ void Renderer::Init(SDL_Window* window)
 
 void Renderer::Render() const
 {
-	if (!m_Window || !m_Renderer) return;
+	assert(m_Window);
+	assert(m_Renderer);
 
 	// Clear Screen With ClearColor
 	SDL_SetRenderDrawColor(m_Renderer, m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
