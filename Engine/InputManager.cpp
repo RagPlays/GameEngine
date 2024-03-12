@@ -6,12 +6,6 @@
 
 bool InputManager::ProcessInput()
 {
-	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(m_ControllerIdx, &m_CurrentState);
-	auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
-	auto buttonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
-	auto buttonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 
 	if (IsDownThisFrame(buttonsPressedThisFrame, XINPUT_GAMEPAD_A))
 	{

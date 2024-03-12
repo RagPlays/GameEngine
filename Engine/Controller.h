@@ -1,6 +1,9 @@
 #ifndef CONTROLLERINPUT_H
 #define CONTROLLERINPUT_H
 
+#include <Windows.h>
+#include <Xinput.h>
+
 class Controller final
 {
 public:
@@ -12,8 +15,16 @@ public:
 	Controller& operator=(const Controller& other) = delete;
 	Controller& operator=(Controller&& other) noexcept = delete;
 
+	void Update();
+
 private:
 
+	XINPUT_STATE m_CurrentState;
+	XINPUT_STATE m_PreviousState;
+	unsigned int m_ControllerIdx;
+	unsigned int m_ButtonsChangedThisFrame;
+	unsigned int m_ButtonsPressedthisFrame;
+	unsigned int m_ButtonsReleasedthisFrame;
 };
 
 #endif // !CONTROLLERINPUT_H
