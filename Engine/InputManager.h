@@ -1,26 +1,29 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include <memory>
 #include "Singleton.h"
-
-#pragma comment(lib, "xinput.lib")
+#include "Controller.h"
+#include "KeyboardMouse.h"
 
 class InputManager final : public Singleton<InputManager>
 {
 public:
-	bool ProcessInput();
+	InputManager();
+	~InputManager() = default;
+
+	void ProcessInput();
+
+	bool HasQuit() const;
+	void Quit();
+
+	//void AddKeyboardMouseBind(); // SDL_Key/SDL_MouseBotton + SDL_EventType
+	//void AddControllerBind();
 
 private:
+	bool m_HasQuit;
+	std::unique_ptr<Controller> m_Controller;
+	std::unique_ptr<KeyboardMouse> m_KeyboardMouse;
 };
-
-//inline bool IsDownThisFrame(unsigned int buttonsPressed, unsigned int button)
-//{
-//	return buttonsPressed & button;
-//}
-//inline bool IsUpThisFrame(unsigned int buttonsReleased, unsigned int button)
-//{
-//	return buttonsReleased & button;
-//}
-
 
 #endif // !INPUTMANAGER_H

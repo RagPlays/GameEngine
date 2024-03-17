@@ -15,7 +15,7 @@ public:
 	Controller& operator=(const Controller& other) = delete;
 	Controller& operator=(Controller&& other) noexcept = delete;
 
-	void Update();
+	void ProcessInput();
 
 private:
 

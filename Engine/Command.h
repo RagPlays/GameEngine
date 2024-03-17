@@ -1,5 +1,5 @@
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef COMMAND_H
+#define COMMAND_H
 
 class Command
 {
@@ -8,4 +8,4 @@ public:
 	virtual void Execute() = 0;
 };
 
-#endif // !COMMANDS_H
+#endif // !COMMAND_H

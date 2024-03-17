@@ -138,8 +138,11 @@
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.h">
+    <ClInclude Include="Command.h">
       <Filter>EngineCore\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardMouse.h">
+      <Filter>EngineCore\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +233,8 @@
     <ClCompile Include="Main.cpp">
       <Filter>OutsideEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="KeyboardMouse.cpp">
+      <Filter>EngineCore\Input</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

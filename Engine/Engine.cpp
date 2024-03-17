@@ -85,14 +85,13 @@ void Engine::Run()
 	InputManager& inputManager{ InputManager::Get() };
 	Timer& timer{ Timer::Get() };
 
-	bool doContinue{ true };
-	while (doContinue)
+	while (!inputManager.HasQuit())
 	{
 		// Timer
 		timer.Update();
 
 		// Input
-		doContinue = inputManager.ProcessInput();
+		inputManager.ProcessInput();
 
 		// Fixed Update -> only for physics / networking
 		while (timer.GetNeedFixedUpdate())

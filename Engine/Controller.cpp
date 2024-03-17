@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-void Controller::Update()
+void Controller::ProcessInput()
 {
 	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
