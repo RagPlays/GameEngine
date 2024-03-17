@@ -1,6 +1,4 @@
 #include "InputManager.h"
-#include "KeyboardMouse.h"
-#include "Controller.h"
 
 InputManager::InputManager()
 	: m_HasQuit{ false }

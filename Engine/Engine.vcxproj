@@ -199,7 +199,14 @@
     <ClInclude Include="ImGuiRenderer.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="InputStructs.h" />
     <ClInclude Include="KeyboardMouse.h" />
+    <ClInclude Include="PlayerCommand.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerDownCommand.h" />
+    <ClInclude Include="PlayerLeftCommand.h" />
+    <ClInclude Include="PlayerRightCommand.h" />
+    <ClInclude Include="PlayerUpCommand.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
@@ -230,9 +237,11 @@
     <ClCompile Include="ImGuiExercise2.cpp" />
     <ClCompile Include="ImGuiRenderer.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputStructs.cpp" />
     <ClCompile Include="KeyboardMouse.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />

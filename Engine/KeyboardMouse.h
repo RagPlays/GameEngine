@@ -1,15 +1,18 @@
 #ifndef KEYBOARDMOUSE_H
 #define KEYBOARDMOUSE_H
 
+#include <array>
 #include <unordered_map>
+
+#include "InputStructs.h"
 
 class Command;
 
-class KeyboardMouse
+class KeyboardMouse final
 {
 public:
 
-	KeyboardMouse() = default;
+	KeyboardMouse();
 	~KeyboardMouse() = default;
 
 	KeyboardMouse(const KeyboardMouse& other) = delete;
@@ -21,12 +24,18 @@ public:
 
 private:
 
-	/*Command* move_up;
-	Command* move_down;
-	Command* move_left;
-	Command* move_right;*/
+	void UpdateKeyPressed(const SDL_Event& event);
 
-	//std::unordered_map<int, Command*> m_KeyboardMouseCommands;
+	bool WasPressedThisFrame(SDL_Scancode key) const;
+	bool WasReleasedThisFrame(SDL_Scancode key) const;
+	bool IsPressed(SDL_Scancode key) const;
+
+private:
+
+	std::array<bool, SDL_NUM_SCANCODES> m_CurrentKeyPressed;
+	std::array<bool, SDL_NUM_SCANCODES> m_PreviousKeyPressed;
+
+	//td::unordered_map<KeyBoardCommandEvent, Command*> m_KeyboardMouseCommands;
 };
 
 #endif // !KEYBOARDMOUSE_H

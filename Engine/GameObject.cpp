@@ -1,9 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(bool isStatic, const std::string& tag)
+GameObject::GameObject(const std::string& tag)
 	: m_PositionIsDirty{ true }
 	, m_IsDestroyed{ false }
-	, m_IsStatic{ isStatic }
 	, m_Tag{ tag }
 	, m_LocalTransform{}
 	, m_WorldTransform{}
@@ -180,6 +179,11 @@ void GameObject::SetPositionDirty()
 	}
 }
 
+void GameObject::Translate(const glm::vec3& translate)
+{
+	SetLocalPosition(GetLocalPosition() + translate);
+}
+
 // Getters
 bool GameObject::IsDestroyed() const
 {
@@ -221,7 +225,7 @@ void GameObject::AddChild(GameObject* child)
 void GameObject::RemoveChild(GameObject* child)
 {
 	m_Children.erase(std::remove_if(m_Children.begin(), m_Children.end(),
-		[&](auto& ptr)
+		[child](auto& ptr)
 		{ 
 			return ptr.get() == child; 
 		}

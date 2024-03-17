@@ -12,7 +12,7 @@ class GameObject final
 {
 public:
 
-	explicit GameObject(bool isStatic = false, const std::string& tag = "Empty");
+	explicit GameObject(const std::string& tag = "Empty");
 	~GameObject() = default;
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) noexcept = delete;
@@ -89,6 +89,9 @@ public:
 	void SetWorldPosition(const glm::vec3& pos);
 	void SetPositionDirty();
 
+	// Translate
+	void Translate(const glm::vec3& translate);
+
 	// Getters
 	bool IsDestroyed() const;
 	const std::string& GetTag() const;
@@ -102,7 +105,6 @@ public:
 
 private:
 
-	bool m_IsStatic;
 	bool m_PositionIsDirty;
 	bool m_IsDestroyed;
 	std::string m_Tag;

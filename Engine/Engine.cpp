@@ -13,6 +13,8 @@
 
 void PrintSDLVersion()
 {
+	printf("\nENGINE INFO:\n");
+
 	SDL_version version;
 	SDL_VERSION(&version);
 	printf("We compiled against SDL version %u.%u.%u ...\n",
@@ -37,6 +39,9 @@ void PrintSDLVersion()
 	version = *TTF_Linked_Version();
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
+
+	printf("\n");
+	printf("GAMEINFO:\n");
 }
 
 Engine::Engine(const std::string& dataPath, const std::string& title, int width, int height)

@@ -27,7 +27,8 @@ void Scene::Update()
 		object->Update();
 	}
 
-	m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(),[](auto& object)
+	m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(),
+		[](auto& object)
 		{
 			if (object->IsDestroyed())
 			{

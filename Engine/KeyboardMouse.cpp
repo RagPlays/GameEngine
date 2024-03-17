@@ -1,49 +1,55 @@
 #include <SDL.h>
 #include <backends/imgui_impl_sdl2.h>
-
 #include "KeyboardMouse.h"
 #include "InputManager.h"
 
+KeyboardMouse::KeyboardMouse()
+{
+	m_CurrentKeyPressed.fill(false);
+	m_PreviousKeyPressed.fill(false);
+
+	/*KeyBoardCommandEvent moveUp{ SDL_SCANCODE_W };
+
+	m_KeyboardMouseCommands[]*/
+}
+
 void KeyboardMouse::ProcessInput()
 {
+	std::swap(m_CurrentKeyPressed, m_PreviousKeyPressed);
+
 	// PC Game Inputs
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
+	SDL_Event sdlEvent;
+	while (SDL_PollEvent(&sdlEvent))
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			InputManager::Get().Quit();
-			break;
-
-		case SDL_KEYDOWN:
-			break;
-
-		case SDL_KEYUP:
-			break;
-
-		case SDL_MOUSEBUTTONUP:
-			switch (event.button.button)
-			{
-			case SDL_BUTTON_LEFT:
-				break;
-			case SDL_BUTTON_RIGHT:
-				break;
-			case SDL_BUTTON_MIDDLE:
-				break;
-			default:
-				break;
-			}
-			break;
-
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-
-		default:
-			break;
-		}
-
-		// ImGui inputs
-		ImGui_ImplSDL2_ProcessEvent(&event);
+		UpdateKeyPressed(sdlEvent);
+		ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
 	}
+}
+
+void KeyboardMouse::UpdateKeyPressed(const SDL_Event& event)
+{
+	if (event.type == SDL_KEYDOWN)
+	{
+		m_CurrentKeyPressed[event.key.keysym.scancode] = true;
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		m_CurrentKeyPressed[event.key.keysym.scancode] = false;
+	}
+}
+
+// Private functions //
+bool KeyboardMouse::WasPressedThisFrame(SDL_Scancode key) const
+{
+	return m_CurrentKeyPressed[key] && !m_PreviousKeyPressed[key];
+}
+
+bool KeyboardMouse::WasReleasedThisFrame(SDL_Scancode key) const
+{
+	return !m_CurrentKeyPressed[key] && m_PreviousKeyPressed[key];
+}
+
+bool KeyboardMouse::IsPressed(SDL_Scancode key) const
+{
+	return m_CurrentKeyPressed[key];
 }

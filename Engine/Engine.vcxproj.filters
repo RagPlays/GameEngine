@@ -31,9 +31,6 @@
     <Filter Include="ImGuiImpl\Components">
       <UniqueIdentifier>{567f36fd-22a2-43e8-bfa8-743820440668}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ImGuiImpl\Components\Base">
-      <UniqueIdentifier>{3932b226-5011-4a8d-ac23-c6b5c9635c89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OutsideEngine">
       <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,30 @@
     </Filter>
     <Filter Include="EngineCore\Input\Commands">
       <UniqueIdentifier>{e7318aa0-a91b-474d-80f5-7c0176c7b971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiImpl\Components\ImGuiComponent">
+      <UniqueIdentifier>{3932b226-5011-4a8d-ac23-c6b5c9635c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\ImGuiComponents">
+      <UniqueIdentifier>{d1aade70-588b-4130-9ced-3a97d3b278f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Scenes">
+      <UniqueIdentifier>{adad4fa5-199e-48b9-95de-23be5ed125f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Rendering">
+      <UniqueIdentifier>{373017c7-5d43-4380-a1ea-c634272781af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Resources">
+      <UniqueIdentifier>{f5ad1cc7-8bb8-4fce-a051-46426697cb1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Input\Structs">
+      <UniqueIdentifier>{28e4b6d3-cbd0-4ab7-b9cb-d6371e8f5fff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\InputCommands">
+      <UniqueIdentifier>{6fb75d06-c899-4ed6-882d-60b066d6f229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\InputCommands\PlayerCommands">
+      <UniqueIdentifier>{44052eae-7ec1-40f7-93de-ea3cfc703bc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,44 +126,65 @@
     <ClInclude Include="Engine.h">
       <Filter>EngineCore</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>EngineCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>EngineCore</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imgui_plot.h">
       <Filter>ImGuiLib\Plots</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiRenderer.h">
       <Filter>ImGuiImpl</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>EngineCore</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>EngineCore</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiComponent.h">
-      <Filter>ImGuiImpl\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiExercise1.h">
-      <Filter>ImGuiImpl\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiExercise2.h">
-      <Filter>ImGuiImpl\Components</Filter>
+      <Filter>ImGuiImpl\Components\ImGuiComponent</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>EngineCore\Input\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardMouse.h">
       <Filter>EngineCore\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise1.h">
+      <Filter>OutsideEngine\ImGuiComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise2.h">
+      <Filter>OutsideEngine\ImGuiComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>EngineCore\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>EngineCore\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>EngineCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>EngineCore\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>OutsideEngine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="InputStructs.h">
+      <Filter>EngineCore\Input\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCommand.h">
+      <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpCommand.h">
+      <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDownCommand.h">
+      <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLeftCommand.h">
+      <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRightCommand.h">
+      <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>EngineCore\Input\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -200,32 +242,14 @@
     <ClCompile Include="Engine.cpp">
       <Filter>EngineCore</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>EngineCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>EngineCore</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
       <Filter>ImGuiLib\Plots</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiRenderer.cpp">
       <Filter>ImGuiImpl</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>EngineCore</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>EngineCore\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>EngineCore</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiExercise1.cpp">
-      <Filter>ImGuiImpl\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiExercise2.cpp">
-      <Filter>ImGuiImpl\Components</Filter>
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>EngineCore\Input</Filter>
@@ -235,6 +259,30 @@
     </ClCompile>
     <ClCompile Include="KeyboardMouse.cpp">
       <Filter>EngineCore\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise1.cpp">
+      <Filter>OutsideEngine\ImGuiComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise2.cpp">
+      <Filter>OutsideEngine\ImGuiComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>EngineCore\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>EngineCore\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>EngineCore\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>EngineCore\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>OutsideEngine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="InputStructs.cpp">
+      <Filter>EngineCore\Input\Structs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
