@@ -19,6 +19,7 @@ public:
 	virtual void Update();
 	virtual void LateUpdate();
 	virtual void Render() const;
+	virtual void OnDestroy();
 
 protected:
 	explicit Component(GameObject* const owner);

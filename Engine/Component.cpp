@@ -22,6 +22,10 @@ void Component::Render() const
 {
 }
 
+void Component::OnDestroy()
+{
+}
+
 // Gets
 GameObject* const Component::GetOwner() const
 {

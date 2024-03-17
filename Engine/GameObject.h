@@ -24,6 +24,7 @@ public:
 	void Update();
 	void LateUpdate();
 	void Render() const;
+	void OnDestroy();
 
 	// Components
 	template <typename ComponentType>

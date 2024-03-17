@@ -29,7 +29,12 @@ void Scene::Update()
 
 	m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(),[](auto& object)
 		{
-			return object->IsDestroyed();
+			if (object->IsDestroyed())
+			{
+				object->OnDestroy();
+				return true;
+			}
+			else return false;
 		}
 	), m_Objects.end());
 }
