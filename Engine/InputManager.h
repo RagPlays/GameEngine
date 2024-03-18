@@ -1,7 +1,6 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include <SDL.h>
 #include <memory>
 #include "Singleton.h"
 #include "Controller.h"

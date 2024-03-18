@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include "Command.h"
 
 Controller::Controller()
 	: m_CurrentState{ XINPUT_STATE{} }

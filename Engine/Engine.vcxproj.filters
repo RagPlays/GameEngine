@@ -37,12 +37,6 @@
     <Filter Include="OutsideEngine\GameComponents">
       <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineCore\Input\Commands">
-      <UniqueIdentifier>{e7318aa0-a91b-474d-80f5-7c0176c7b971}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ImGuiImpl\Components\ImGuiComponent">
-      <UniqueIdentifier>{3932b226-5011-4a8d-ac23-c6b5c9635c89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OutsideEngine\ImGuiComponents">
       <UniqueIdentifier>{d1aade70-588b-4130-9ced-3a97d3b278f4}</UniqueIdentifier>
     </Filter>
@@ -135,9 +129,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiComponent.h">
-      <Filter>ImGuiImpl\Components\ImGuiComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
@@ -184,7 +175,10 @@
       <Filter>OutsideEngine\InputCommands\PlayerCommands</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
-      <Filter>EngineCore\Input\Commands</Filter>
+      <Filter>EngineCore\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiComponent.h">
+      <Filter>ImGuiImpl\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
