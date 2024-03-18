@@ -9,14 +9,13 @@ Controller::Controller()
 	, m_ButtonsPressedthisFrame{}
 	, m_ButtonsReleasedthisFrame{}
 {
-	//AddBind(ControllerInput{XINPUT_GAMEPAD_A, InputType::ispressed}, )
 }
 
 void Controller::ProcessInput()
 {
 	UpdateInputs();
 
-	/*for (const auto& [input, command] : m_InputCommands)
+	for (const auto& [input, command] : m_Commands)
 	{
 		switch (input.inputType)
 		{
@@ -41,7 +40,13 @@ void Controller::ProcessInput()
 			}
 			break;
 		}
-	}*/
+
+	}
+}
+
+void Controller::AddBind(const ControllerInput& input, std::unique_ptr<Command> command)
+{
+	m_Commands[input] = std::move(command);
 }
 
 // Private functions //
@@ -72,14 +77,3 @@ bool Controller::IsPressed(unsigned int button) const
 {
 	return m_CurrentState.Gamepad.wButtons & button;
 }
-
-//void Controller::AddBind(unsigned int inputButton, InputType inputType, Command* command)
-//{
-//	ControllerInput input{ inputButton, inputType };
-//	AddBind(input, command);
-//}
-//
-//void Controller::AddBind(const ControllerInput& input, Command* command)
-//{
-//	m_InputCommands[input] = command;
-//}

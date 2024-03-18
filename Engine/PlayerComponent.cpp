@@ -10,12 +10,12 @@ PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 
 void PlayerComponent::MoveUp()
 {
-	GetOwner()->Translate({ 0.f, m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
+	GetOwner()->Translate({ 0.f, -m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
 }
 
 void PlayerComponent::MoveDown()
 {
-	GetOwner()->Translate({ 0.f, -m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
+	GetOwner()->Translate({ 0.f, m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
 }
 
 void PlayerComponent::MoveLeft()

@@ -18,6 +18,9 @@ public:
 	bool HasQuit() const;
 	void Quit();
 
+	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command);
+	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
+
 private:
 
 	bool m_HasQuit;

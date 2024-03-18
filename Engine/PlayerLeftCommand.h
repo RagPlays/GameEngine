@@ -4,10 +4,13 @@
 #include "PlayerCommand.h"
 #include "PlayerComponent.h"
 
-class PlayerLeftCommand final : PlayerCommand
+class PlayerLeftCommand final : public PlayerCommand
 {
 public:
-	PlayerLeftCommand() = default;
+	PlayerLeftCommand(PlayerComponent* player)
+		: PlayerCommand{ player }
+	{
+	}
 	virtual ~PlayerLeftCommand() = default;
 
 	virtual void Execute() override
@@ -15,5 +18,6 @@ public:
 		GetPlayer()->MoveLeft();
 	}
 };
+
 
 #endif // !PLAYERLEFTCOMMAND_H

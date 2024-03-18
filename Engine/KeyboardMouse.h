@@ -1,7 +1,7 @@
 #ifndef KEYBOARDMOUSE_H
 #define KEYBOARDMOUSE_H
 
-#include <array>
+#include <memory>
 #include <unordered_map>
 
 #include "InputStructs.h"
@@ -22,9 +22,9 @@ public:
 
 	void ProcessInput();
 
-private:
+	void AddBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
 
-	void UpdateKeyPressed(const SDL_Event& event);
+private:
 
 	bool WasPressedThisFrame(SDL_Scancode key) const;
 	bool WasReleasedThisFrame(SDL_Scancode key) const;
@@ -32,10 +32,12 @@ private:
 
 private:
 
-	std::array<bool, SDL_NUM_SCANCODES> m_CurrentKeyPressed;
-	std::array<bool, SDL_NUM_SCANCODES> m_PreviousKeyPressed;
+	SDL_Event m_Event;
 
-	//td::unordered_map<KeyBoardCommandEvent, Command*> m_KeyboardMouseCommands;
+	std::vector<Uint8> m_CurrentKeyStates;
+	std::vector<Uint8> m_PreviousKeyStates;
+
+	std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
 };
 
 #endif // !KEYBOARDMOUSE_H

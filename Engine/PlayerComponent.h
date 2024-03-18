@@ -6,7 +6,7 @@
 class PlayerComponent final : public Component
 {
 public:
-	PlayerComponent(GameObject* const owner, float moveSpeed = 5.f);
+	PlayerComponent(GameObject* const owner, float moveSpeed = 200.f);
 	~PlayerComponent() = default;
 
 	PlayerComponent(const PlayerComponent& other) = delete;

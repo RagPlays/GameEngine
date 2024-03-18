@@ -4,10 +4,13 @@
 #include "PlayerCommand.h"
 #include "PlayerComponent.h"
 
-class PlayerDownCommand final : PlayerCommand
+class PlayerDownCommand final : public PlayerCommand
 {
 public:
-	PlayerDownCommand() = default;
+	PlayerDownCommand(PlayerComponent* player)
+		: PlayerCommand{ player }
+	{
+	}
 	virtual ~PlayerDownCommand() = default;
 
 	virtual void Execute() override

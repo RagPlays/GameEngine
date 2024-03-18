@@ -1,6 +1,7 @@
 #ifndef INPUTSTRUCTS_H
 #define INPUTSTRUCTS_H
 
+#include <functional>
 #include <SDL.h>
 #include <Windows.h>
 #include <Xinput.h>
@@ -12,6 +13,7 @@ enum class InputType
 	wasReleasedThisFrame
 };
 
+// KEYBOARD INPUT //
 struct KeyBoardInput
 {
 	explicit KeyBoardInput(SDL_Scancode scancode);
@@ -21,6 +23,23 @@ struct KeyBoardInput
 	InputType inputType;
 };
 
+struct KeyBoardInputHash
+{
+	size_t operator()(const KeyBoardInput& input) const
+	{
+		return std::hash<unsigned int>()(input.scancode) ^ std::hash<int>()(static_cast<int>(input.inputType));
+	}
+};
+
+struct KeyBoardInputEqual
+{
+	bool operator()(const KeyBoardInput& lhs, const KeyBoardInput& rhs) const
+	{
+		return lhs.scancode == rhs.scancode && lhs.inputType == rhs.inputType;
+	}
+};
+
+// CONTROLLER INPUT //
 struct ControllerInput
 {
 	explicit ControllerInput(unsigned int controllerKey);
@@ -28,6 +47,22 @@ struct ControllerInput
 
 	unsigned int controllerKey;
 	InputType inputType;
+};
+
+struct ControllerInputHash
+{
+	size_t operator()(const ControllerInput& input) const
+	{
+		return std::hash<unsigned int>()(input.controllerKey) ^ std::hash<int>()(static_cast<int>(input.inputType));
+	}
+};
+
+struct ControllerInputEqual
+{
+	bool operator()(const ControllerInput& lhs, const ControllerInput& rhs) const
+	{
+		return lhs.controllerKey == rhs.controllerKey && lhs.inputType == rhs.inputType;
+	}
 };
 
 #endif // !INPUTSTRUCTS_H

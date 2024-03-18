@@ -1,10 +1,10 @@
 #ifndef CONTROLLERINPUT_H
 #define CONTROLLERINPUT_H
 
+#include <memory>
 #include <unordered_map>
 #include "InputStructs.h"
-
-class Command;
+#include "Command.h"
 
 class Controller final
 {
@@ -20,6 +20,8 @@ public:
 
 	void ProcessInput();
 
+	void AddBind(const ControllerInput& input, std::unique_ptr<Command> command);
+
 private:
 
 	void UpdateInputs();
@@ -27,9 +29,6 @@ private:
 	bool WasPressedThisFrame(unsigned int button) const;
 	bool WasReleasedThisFrame(unsigned int button) const;
 	bool IsPressed(unsigned int button) const;
-
-	//void AddBind(unsigned int inputButton, InputType inputType, Command* command);
-	//void AddBind(const ControllerInput& input, Command* command);
 
 private:
 
@@ -40,7 +39,7 @@ private:
 	unsigned int m_ButtonsPressedthisFrame;
 	unsigned int m_ButtonsReleasedthisFrame;
 
-	//std::unordered_map<ControllerInput, Command*> m_InputCommands;
+	std::unordered_map<ControllerInput, std::unique_ptr<Command>, ControllerInputHash, ControllerInputEqual> m_Commands;
 };
 
 #endif // !CONTROLLERINPUT_H

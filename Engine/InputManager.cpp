@@ -22,3 +22,13 @@ void InputManager::Quit()
 {
 	m_HasQuit = true;
 }
+
+void InputManager::AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command)
+{
+	m_Controller->AddBind(input, std::move(command));
+}
+
+void InputManager::AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command)
+{
+	m_KeyboardMouse->AddBind(input, std::move(command));
+}
