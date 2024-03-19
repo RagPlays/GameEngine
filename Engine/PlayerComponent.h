@@ -14,10 +14,7 @@ public:
 	PlayerComponent& operator=(const PlayerComponent& other) = delete;
 	PlayerComponent& operator=(PlayerComponent&& other) noexcept = delete;
 
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
+	void Move(const glm::vec3& dir);
 
 private:
 

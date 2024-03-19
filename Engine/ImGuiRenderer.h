@@ -10,7 +10,7 @@ class ImGuiRenderer final : public Singleton<ImGuiRenderer>
 {
 public:
 
-	ImGuiRenderer() = default;
+	ImGuiRenderer();
 	~ImGuiRenderer() = default;
 
 	ImGuiRenderer(const ImGuiRenderer& other) = delete;
@@ -22,12 +22,17 @@ public:
 
 	void AddImGuiComponent(std::unique_ptr<ImGuiComponent> component);
 
+	void SetEnable(bool enable);
+	bool IsEnabled() const;
+
 private:
+
 	void StartImGuiRender();
 	void EndImGuiRender();
 
 private:
 
+	bool m_Enabled;
 	std::vector<std::unique_ptr<ImGuiComponent>> m_ImGuiComponents;
 };
 

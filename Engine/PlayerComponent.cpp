@@ -8,22 +8,7 @@ PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 {
 }
 
-void PlayerComponent::MoveUp()
+void PlayerComponent::Move(const glm::vec3& dir)
 {
-	GetOwner()->Translate({ 0.f, -m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
-}
-
-void PlayerComponent::MoveDown()
-{
-	GetOwner()->Translate({ 0.f, m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f });
-}
-
-void PlayerComponent::MoveLeft()
-{
-	GetOwner()->Translate({ -m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f, 0.f });
-}
-
-void PlayerComponent::MoveRight()
-{
-	GetOwner()->Translate({ m_PlayerSpeed * Timer::Get().GetElapsedSec(), 0.f, 0.f });
+	GetOwner()->Translate(dir * m_PlayerSpeed * Timer::Get().GetElapsedSec());
 }

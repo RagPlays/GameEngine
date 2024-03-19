@@ -3,8 +3,8 @@
 
 #include <functional>
 #include <SDL.h>
-#include <Windows.h>
-#include <Xinput.h>
+//#include <Windows.h>
+//#include <Xinput.h>
 
 enum class InputType
 {
@@ -39,13 +39,39 @@ struct KeyBoardInputEqual
 	}
 };
 
+//// XINPUT CONTROLLER INPUT //
+//struct XinputControllerInput
+//{
+//	explicit XinputControllerInput(unsigned int controllerKey);
+//	explicit XinputControllerInput(unsigned int controllerKey, InputType inputType);
+//
+//	unsigned int controllerKey;
+//	InputType inputType;
+//};
+//
+//struct XinputµControllerInputHash
+//{
+//	size_t operator()(const XinputControllerInput& input) const
+//	{
+//		return std::hash<unsigned int>()(input.controllerKey) ^ std::hash<int>()(static_cast<int>(input.inputType));
+//	}
+//};
+//
+//struct XinputControllerInputEqual
+//{
+//	bool operator()(const XinputControllerInput& lhs, const XinputControllerInput& rhs) const
+//	{
+//		return lhs.controllerKey == rhs.controllerKey && lhs.inputType == rhs.inputType;
+//	}
+//};
+
 // CONTROLLER INPUT //
 struct ControllerInput
 {
-	explicit ControllerInput(unsigned int controllerKey);
-	explicit ControllerInput(unsigned int controllerKey, InputType inputType);
+	explicit ControllerInput(SDL_GameControllerButton controllerKey);
+	explicit ControllerInput(SDL_GameControllerButton, InputType inputType);
 
-	unsigned int controllerKey;
+	SDL_GameControllerButton button;
 	InputType inputType;
 };
 
@@ -53,7 +79,7 @@ struct ControllerInputHash
 {
 	size_t operator()(const ControllerInput& input) const
 	{
-		return std::hash<unsigned int>()(input.controllerKey) ^ std::hash<int>()(static_cast<int>(input.inputType));
+		return std::hash<int>()(static_cast<int>(input.button)) ^ std::hash<int>()(static_cast<int>(input.inputType));
 	}
 };
 
@@ -61,7 +87,7 @@ struct ControllerInputEqual
 {
 	bool operator()(const ControllerInput& lhs, const ControllerInput& rhs) const
 	{
-		return lhs.controllerKey == rhs.controllerKey && lhs.inputType == rhs.inputType;
+		return lhs.button == rhs.button && lhs.inputType == rhs.inputType;
 	}
 };
 

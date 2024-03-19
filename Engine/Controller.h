@@ -1,7 +1,8 @@
-#ifndef CONTROLLERINPUT_H
-#define CONTROLLERINPUT_H
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include <memory>
+#include <vector>
 #include <unordered_map>
 #include "InputStructs.h"
 #include "Command.h"
@@ -10,36 +11,36 @@ class Controller final
 {
 public:
 
-	Controller();
-	~Controller() = default;
+	Controller(int controllerIndx);
+	~Controller();
 
 	Controller(const Controller& other) = delete;
 	Controller(Controller&& other) noexcept = delete;
 	Controller& operator=(const Controller& other) = delete;
-	Controller& operator=(Controller&& other) noexcept = delete;
+	Controller& operator=(Controller&& other) = delete;
 
+	void Update();
 	void ProcessInput();
 
 	void AddBind(const ControllerInput& input, std::unique_ptr<Command> command);
 
-private:
-
-	void UpdateInputs();
-
-	bool WasPressedThisFrame(unsigned int button) const;
-	bool WasReleasedThisFrame(unsigned int button) const;
-	bool IsPressed(unsigned int button) const;
+	SDL_GameController* GetGameController() const;
+	int GetControllerIdx() const;
 
 private:
 
-	XINPUT_STATE m_CurrentState;
-	XINPUT_STATE m_PreviousState;
-	unsigned int m_ControllerIdx;
-	unsigned int m_ButtonsChangedThisFrame;
-	unsigned int m_ButtonsPressedthisFrame;
-	unsigned int m_ButtonsReleasedthisFrame;
+	bool WasPressedThisFrame(SDL_GameControllerButton button) const;
+	bool WasReleasedThisFrame(SDL_GameControllerButton button) const;
+	bool IsPressed(SDL_GameControllerButton button) const;
 
+private:
+
+	SDL_GameController* m_GameController;
+	int m_ControllerIdx;
+	std::vector<Uint8> m_CurrentButtonStates;
+	std::vector<Uint8> m_PreviousButtonStates;
 	std::unordered_map<ControllerInput, std::unique_ptr<Command>, ControllerInputHash, ControllerInputEqual> m_Commands;
+
 };
 
-#endif // !CONTROLLERINPUT_H
+#endif // !CONTROLLER_H

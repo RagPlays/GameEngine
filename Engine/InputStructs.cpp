@@ -16,18 +16,34 @@ KeyBoardInput::KeyBoardInput(SDL_Scancode scancode, InputType inputType)
 {
 }
 
+//*************************//
+//  XinputControllerInput  //
+//*************************//
+
+//XinputControllerInput::XinputControllerInput(unsigned int controllerKey)
+//	: controllerKey{ controllerKey }
+//	, inputType{ InputType::ispressed }
+//{
+//}
+//
+//XinputControllerInput::XinputControllerInput(unsigned int controllerKey, InputType inputType)
+//	: controllerKey{ controllerKey }
+//	, inputType{ inputType }
+//{
+//}
+
 //*******************//
 //  ControllerInput  //
 //*******************//
 
-ControllerInput::ControllerInput(unsigned int controllerKey)
-	: controllerKey{ controllerKey }
+ControllerInput::ControllerInput(SDL_GameControllerButton button)
+	: button{ button }
 	, inputType{ InputType::ispressed }
 {
 }
 
-ControllerInput::ControllerInput(unsigned int controllerKey, InputType inputType)
-	: controllerKey{ controllerKey }
+ControllerInput::ControllerInput(SDL_GameControllerButton button, InputType inputType)
+	: button{ button }
 	, inputType{ inputType }
 {
 }

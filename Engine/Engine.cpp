@@ -51,7 +51,7 @@ Engine::Engine(const std::string& dataPath, const std::string& title, int width,
 {
 	PrintSDLVersion();
 	
-	if (SDL_Init(SDL_INIT_VIDEO))
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER))
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}

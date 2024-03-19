@@ -19,6 +19,7 @@ public:
 	KeyboardMouse& operator=(const KeyboardMouse& other) = delete;
 	KeyboardMouse& operator=(KeyboardMouse&& other) noexcept = delete;
 
+	void Update();
 	void ProcessInput();
 
 	void AddBind(const KeyBoardInput& input, std::unique_ptr<Command> command);

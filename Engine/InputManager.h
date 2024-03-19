@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Singleton.h"
+#include "XinputController.h"
 #include "Controller.h"
 #include "KeyboardMouse.h"
 
@@ -12,19 +13,27 @@ public:
 	InputManager();
 	~InputManager() = default;
 
+	InputManager(const InputManager& other) = delete;
+	InputManager(InputManager&& other) noexcept = delete;
+	InputManager& operator=(const InputManager& other) = delete;
+	InputManager& operator=(InputManager&& other) noexcept = delete;
+
 	void ProcessInput();
 
 	bool HasQuit() const;
 	void Quit();
 
-	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command);
 	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
+	//void AddXinputControllerBind(const XinputControllerInput& input, std::unique_ptr<Command> command);
+	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command);
 
 private:
 
+	SDL_Event m_Event;
 	bool m_HasQuit;
-	std::unique_ptr<Controller> m_Controller;
 	std::unique_ptr<KeyboardMouse> m_KeyboardMouse;
+	//std::unique_ptr<XinputController> m_XinputController;
+	std::unique_ptr<Controller> m_Controller;
 
 };
 

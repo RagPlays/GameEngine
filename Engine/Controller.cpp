@@ -1,78 +1,98 @@
+#include <cassert>
+#include <iostream>
+#include <algorithm>
 #include "Controller.h"
 
-Controller::Controller()
-	: m_CurrentState{ XINPUT_STATE{} }
-	, m_PreviousState{ XINPUT_STATE{} }
-	, m_ControllerIdx{}
-	, m_ButtonsChangedThisFrame{}
-	, m_ButtonsPressedthisFrame{}
-	, m_ButtonsReleasedthisFrame{}
+Controller::Controller(int controllerIndx)
+	: m_ControllerIdx{ controllerIndx }
+	, m_GameController{ SDL_GameControllerOpen(controllerIndx) }
 {
+    m_CurrentButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
+    m_PreviousButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
+}
+
+Controller::~Controller()
+{
+	SDL_GameControllerClose(m_GameController);
+}
+
+void Controller::Update()
+{
+    // Update the button states.
+    std::transform(m_CurrentButtonStates.begin(), m_CurrentButtonStates.end(), m_CurrentButtonStates.begin(),
+        [&](const Uint8& state) 
+        {
+            SDL_GameControllerButton button = static_cast<SDL_GameControllerButton>(&state - &m_CurrentButtonStates[0]);
+            return SDL_GameControllerGetButton(m_GameController, button);
+        }
+    );
 }
 
 void Controller::ProcessInput()
 {
-	UpdateInputs();
+    // check
+    if (!m_GameController) return;
 
-	for (const auto& [input, command] : m_Commands)
-	{
-		switch (input.inputType)
-		{
-		case InputType::ispressed:
-			if (IsPressed(input.controllerKey))
-			{
-				command->Execute();
-			}
-			break;
+    // Go over all commands
+    for (const auto& [input, command] : m_Commands)
+    {
+        switch (input.inputType)
+        {
+        case InputType::ispressed:
+            if (IsPressed(input.button))
+            {
+                command->Execute();
+            }
+            break;
 
-		case InputType::wasPressedThisFrame:
-			if (WasPressedThisFrame(input.controllerKey))
-			{
-				command->Execute();
-			}
-			break;
+        case InputType::wasPressedThisFrame:
+            if (WasPressedThisFrame(input.button))
+            {
+                command->Execute();
+            }
+            break;
 
-		case InputType::wasReleasedThisFrame:
-			if (WasReleasedThisFrame(input.controllerKey))
-			{
-				command->Execute();
-			}
-			break;
-		}
+        case InputType::wasReleasedThisFrame:
+            if (WasReleasedThisFrame(input.button))
+            {
+                command->Execute();
+            }
+            break;
+        }
+    }
 
-	}
+    // Swap the values
+    std::swap(m_PreviousButtonStates, m_CurrentButtonStates);
 }
 
 void Controller::AddBind(const ControllerInput& input, std::unique_ptr<Command> command)
 {
-	m_Commands[input] = std::move(command);
+    m_Commands[input] = std::move(command);
 }
 
-// Private functions //
-
-void Controller::UpdateInputs()
+SDL_GameController* Controller::GetGameController() const
 {
-	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-
-	if (XInputGetState(m_ControllerIdx, &m_CurrentState) != ERROR_SUCCESS) return;
-
-	m_ButtonsChangedThisFrame = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
-	m_ButtonsPressedthisFrame = m_ButtonsChangedThisFrame & m_CurrentState.Gamepad.wButtons;
-	m_ButtonsReleasedthisFrame = m_ButtonsChangedThisFrame & (~m_CurrentState.Gamepad.wButtons);
+	return m_GameController;
 }
 
-bool Controller::WasPressedThisFrame(unsigned int button) const
+int Controller::GetControllerIdx() const
 {
-	return m_ButtonsPressedthisFrame & button;
+	return m_ControllerIdx;
 }
 
-bool Controller::WasReleasedThisFrame(unsigned int button) const
+bool Controller::WasPressedThisFrame(SDL_GameControllerButton button) const
 {
-	return m_ButtonsReleasedthisFrame & button;
+    return m_CurrentButtonStates[button] && !m_PreviousButtonStates[button];
 }
 
-bool Controller::IsPressed(unsigned int button) const
+bool Controller::WasReleasedThisFrame(SDL_GameControllerButton button) const
 {
-	return m_CurrentState.Gamepad.wButtons & button;
+    return !m_CurrentButtonStates[button] && m_PreviousButtonStates[button];
+}
+
+bool Controller::IsPressed(SDL_GameControllerButton button) const
+{
+    if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
+
+    return m_CurrentButtonStates[button];
 }

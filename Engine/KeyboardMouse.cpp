@@ -1,4 +1,3 @@
-#include <backends/imgui_impl_sdl2.h>
 #include "KeyboardMouse.h"
 #include "InputManager.h"
 
@@ -10,19 +9,13 @@ KeyboardMouse::KeyboardMouse()
 	m_PreviousKeyStates.reserve(SDL_NUM_SCANCODES);
 }
 
+void KeyboardMouse::Update()
+{
+	m_CurrentKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
+}
+
 void KeyboardMouse::ProcessInput()
 {
-	SDL_PumpEvents();  // Update the state of the keys
-	m_CurrentKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
-
-	// PC Game Inputs
-	while (SDL_PollEvent(&m_Event))
-	{
-		if (m_Event.type == SDL_QUIT) InputManager::Get().Quit();
-
-		ImGui_ImplSDL2_ProcessEvent(&m_Event);
-	}
-
 	// Go over all commands
 	for (const auto& [input, command] : m_Commands)
 	{
