@@ -23,16 +23,18 @@ public:
 	bool HasQuit() const;
 	void Quit();
 
+	void AddController(int controllerIdx);
+	Controller* GetController(int controllerIdx);
+
 	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
-	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command);
+	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command, int controllerIdx);
 
 private:
 
 	SDL_Event m_Event;
 	bool m_HasQuit;
 	std::unique_ptr<KeyboardMouse> m_KeyboardMouse;
-	std::unique_ptr<Controller> m_Controller;
-
+	std::vector<std::unique_ptr<Controller>> m_Controllers;
 };
 
 #endif // !INPUTMANAGER_H
