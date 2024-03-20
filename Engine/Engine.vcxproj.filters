@@ -126,9 +126,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="XinputController.h">
-      <Filter>EngineCore\Input</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardMouse.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
@@ -231,9 +228,6 @@
       <Filter>ImGuiImpl</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>EngineCore\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="XinputController.cpp">
       <Filter>EngineCore\Input</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">

@@ -16,22 +16,6 @@ KeyBoardInput::KeyBoardInput(SDL_Scancode scancode, InputType inputType)
 {
 }
 
-//*************************//
-//  XinputControllerInput  //
-//*************************//
-
-//XinputControllerInput::XinputControllerInput(unsigned int controllerKey)
-//	: controllerKey{ controllerKey }
-//	, inputType{ InputType::ispressed }
-//{
-//}
-//
-//XinputControllerInput::XinputControllerInput(unsigned int controllerKey, InputType inputType)
-//	: controllerKey{ controllerKey }
-//	, inputType{ inputType }
-//{
-//}
-
 //*******************//
 //  ControllerInput  //
 //*******************//

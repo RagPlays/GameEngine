@@ -39,32 +39,6 @@ struct KeyBoardInputEqual
 	}
 };
 
-//// XINPUT CONTROLLER INPUT //
-//struct XinputControllerInput
-//{
-//	explicit XinputControllerInput(unsigned int controllerKey);
-//	explicit XinputControllerInput(unsigned int controllerKey, InputType inputType);
-//
-//	unsigned int controllerKey;
-//	InputType inputType;
-//};
-//
-//struct XinputµControllerInputHash
-//{
-//	size_t operator()(const XinputControllerInput& input) const
-//	{
-//		return std::hash<unsigned int>()(input.controllerKey) ^ std::hash<int>()(static_cast<int>(input.inputType));
-//	}
-//};
-//
-//struct XinputControllerInputEqual
-//{
-//	bool operator()(const XinputControllerInput& lhs, const XinputControllerInput& rhs) const
-//	{
-//		return lhs.controllerKey == rhs.controllerKey && lhs.inputType == rhs.inputType;
-//	}
-//};
-
 // CONTROLLER INPUT //
 struct ControllerInput
 {
