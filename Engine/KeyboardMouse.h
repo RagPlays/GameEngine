@@ -32,8 +32,6 @@ private:
 
 private:
 
-	SDL_Event m_Event;
-
 	std::vector<Uint8> m_CurrentKeyStates;
 	std::vector<Uint8> m_PreviousKeyStates;
 

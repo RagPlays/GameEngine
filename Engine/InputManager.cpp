@@ -53,20 +53,26 @@ void InputManager::Quit()
 
 void InputManager::AddController(int controllerIdx)
 {
-	m_Controllers.emplace_back(std::move(std::make_unique<Controller>(controllerIdx)));
+	if (HasController(controllerIdx))
+	{
+		std::cerr << "INPUTMANAGER::ADDCONTROLLER::CONTROLLER_ALREADY_EXISTS\n";
+		return;
+	}
+	m_Controllers.emplace_back(std::make_unique<Controller>(controllerIdx));
 }
 
-Controller* InputManager::GetController(int controllerIdx)
+const Controller* InputManager::GetController(int controllerIdx)
 {
-	for (size_t idx{}; idx < m_Controllers.size(); ++idx)
-	{
-		if (m_Controllers[idx]->GetControllerIdx() == controllerIdx)
-		{
-			return m_Controllers[idx].get();
-		}
-	}
-	std::cerr << "INPUTMANAGER::GETCONTROLLER::CONTROLLERIDX_NOT_FOUND\n";
-	return nullptr;
+	Controller* controller{ FindController(controllerIdx) };
+
+	if(!controller) std::cerr << "INPUTMANAGER::GETCONTROLLER::CONTROLLERIDX_NOT_FOUND\n";
+
+	return controller;
+}
+
+bool InputManager::HasController(int controllerIdx)
+{
+	return FindController(controllerIdx) != nullptr;
 }
 
 void InputManager::AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command)
@@ -85,4 +91,16 @@ void InputManager::AddControllerBind(const ControllerInput& input, std::unique_p
 		}
 	}
 	std::cerr << "INPUTMANAGER::ADDCONTROLLERBIND::CONTROLLERIDX_NOT_FOUND\n";
+}
+
+Controller* InputManager::FindController(int controllerIdx)
+{
+	for (const auto& controller : m_Controllers)
+	{
+		if (controller->GetControllerIdx() == controllerIdx)
+		{
+			return controller.get();
+		}
+	}
+	return nullptr;
 }

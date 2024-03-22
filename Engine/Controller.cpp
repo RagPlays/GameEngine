@@ -18,6 +18,9 @@ Controller::~Controller()
 
 void Controller::Update()
 {
+    // check
+    if (!m_GameController) return;
+
     // Update the button states.
     std::transform(m_CurrentButtonStates.begin(), m_CurrentButtonStates.end(), m_CurrentButtonStates.begin(),
         [&](const Uint8& state) 

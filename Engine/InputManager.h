@@ -24,10 +24,15 @@ public:
 	void Quit();
 
 	void AddController(int controllerIdx);
-	Controller* GetController(int controllerIdx);
+	const Controller* GetController(int controllerIdx);
+	bool HasController(int controllerIdx);
 
 	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
 	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command, int controllerIdx);
+
+private:
+
+	Controller* FindController(int controllerIdx);
 
 private:
 

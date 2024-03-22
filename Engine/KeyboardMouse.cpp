@@ -2,11 +2,8 @@
 #include "InputManager.h"
 
 KeyboardMouse::KeyboardMouse()
-	: m_Event{ SDL_Event{} }
 {
-	m_CurrentKeyStates.reserve(SDL_NUM_SCANCODES);
 	m_CurrentKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
-	m_PreviousKeyStates.reserve(SDL_NUM_SCANCODES);
 }
 
 void KeyboardMouse::Update()

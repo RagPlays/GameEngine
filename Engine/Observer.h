@@ -3,7 +3,7 @@
 
 #include "GameEvents.h"
 
-class PlayerComponent;
+class GameObject;
 
 class Observer
 {
@@ -16,7 +16,7 @@ public:
 	Observer& operator=(const Observer& other) = delete;
 	Observer& operator=(Observer&& other) noexcept = delete;
 
-	virtual void OnNotify(PlayerComponent* entity, GameEvent event) = 0;
+	virtual void OnNotify(GameObject* gameObj, GameEvent event) = 0;
 
 protected:
 
