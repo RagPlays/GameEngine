@@ -55,6 +55,9 @@
     <Filter Include="OutsideEngine\InputCommands">
       <UniqueIdentifier>{6fb75d06-c899-4ed6-882d-60b066d6f229}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineCore\Events">
+      <UniqueIdentifier>{e0a6564c-4308-49f2-acdb-79cb438fc18f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -165,6 +168,15 @@
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>EngineCore\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvents.h">
+      <Filter>EngineCore\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>OutsideEngine\GameComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -265,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>EngineCore\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
