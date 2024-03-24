@@ -3,8 +3,6 @@
 
 #include <functional>
 #include <SDL.h>
-//#include <Windows.h>
-//#include <Xinput.h>
 
 enum class InputType
 {

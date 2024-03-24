@@ -23,7 +23,10 @@ public:
 
 	virtual void Execute() override
 	{
-		GetPlayer()->Move(m_Direcion);
+		if (GetPlayer())
+		{
+			GetPlayer()->Move(m_Direcion);
+		}
 	}
 
 private:

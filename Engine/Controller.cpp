@@ -7,6 +7,11 @@ Controller::Controller(int controllerIndx)
 	: m_ControllerIdx{ controllerIndx }
 	, m_GameController{ SDL_GameControllerOpen(controllerIndx) }
 {
+    if (!m_GameController)
+    {
+        std::cerr << "CONTROLLER::CONTROLLER::COULD_NOT_FIND_CONTROLLER_ON_START_WITH_IDX_" << m_ControllerIdx << "\n";
+    }
+
     m_CurrentButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
     m_PreviousButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
 }

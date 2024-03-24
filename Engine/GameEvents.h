@@ -4,7 +4,6 @@
 enum class GameEvent
 {
 	playerDied,
-	enemyDied,
 	foundPickup
 };
 

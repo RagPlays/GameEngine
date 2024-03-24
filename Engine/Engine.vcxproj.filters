@@ -28,9 +28,6 @@
     <Filter Include="HelperClasses">
       <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ImGuiImpl\Components">
-      <UniqueIdentifier>{567f36fd-22a2-43e8-bfa8-743820440668}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OutsideEngine">
       <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="EngineCore\Events">
       <UniqueIdentifier>{e0a6564c-4308-49f2-acdb-79cb438fc18f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OutsideEngine\GameComponents\Player">
+      <UniqueIdentifier>{ca09f010-6ffd-4404-8c76-cc64e61e68bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,17 +150,11 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>EngineCore\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClInclude>
     <ClInclude Include="InputStructs.h">
       <Filter>EngineCore\Input\Structs</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>EngineCore\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiComponent.h">
-      <Filter>ImGuiImpl\Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCommand.h">
       <Filter>OutsideEngine\InputCommands</Filter>
@@ -176,6 +170,21 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>OutsideEngine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPickupCommand.h">
+      <Filter>OutsideEngine\InputCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>OutsideEngine\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatsComponent.h">
+      <Filter>OutsideEngine\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiComponent.h">
+      <Filter>ImGuiImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>EngineCore\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +275,6 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>EngineCore\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClCompile>
     <ClCompile Include="InputStructs.cpp">
       <Filter>EngineCore\Input\Structs</Filter>
     </ClCompile>
@@ -280,6 +286,18 @@
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>OutsideEngine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerKillCommand.h">
+      <Filter>OutsideEngine\InputCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>OutsideEngine\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatsComponent.cpp">
+      <Filter>OutsideEngine\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>EngineCore\Events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
