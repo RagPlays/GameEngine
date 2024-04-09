@@ -11,7 +11,7 @@ class PlayerStatsComponent final : public Component, public Observer
 {
 public:
 
-	explicit PlayerStatsComponent(GameObject* const owner, PlayerComponent* const observedPlayer);
+	explicit PlayerStatsComponent(GameObject* const owner);
 	virtual ~PlayerStatsComponent() = default;
 
 	PlayerStatsComponent(const PlayerStatsComponent& other) = delete;
@@ -26,7 +26,9 @@ public:
 private:
 
 	bool m_NeedsUpdate;
-	PlayerComponent* const m_ObservedPlayer;
+	int m_PlayerIdx;
+	int m_Lives;
+	int m_Score;
 };
 
 #endif // !PLAYERSTATE

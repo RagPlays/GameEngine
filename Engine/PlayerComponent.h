@@ -4,6 +4,12 @@
 #include "Component.h"
 #include "Subject.h"
 
+enum class PickupItem
+{
+	smallItem,
+	bigItem
+};
+
 class PlayerComponent final : public Component, public Subject
 {
 public:
@@ -18,19 +24,15 @@ public:
 
 	void Move(const glm::vec3& dir);
 	void Killed();
-	void AddScore(int score);
+	void PickupEvent(PickupItem item);
 
 	int GetPlayerIdx() const;
-	int GetScore() const;
-	int GetLives() const;
 
 private:
 
 	static int s_playerCount;
 
 	const int m_PlayerIdx;
-	int m_Score;
-	int m_CurrentLives;
 	float m_PlayerSpeed;
 };
 

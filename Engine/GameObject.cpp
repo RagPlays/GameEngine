@@ -16,8 +16,6 @@ GameObject::GameObject(const std::string& tag)
 
 void GameObject::FixedUpdate()
 {
-	if (m_IsDestroyed) return;
-
 	for (auto& component : m_Components)
 	{
 		component->FixedUpdate();
@@ -31,8 +29,6 @@ void GameObject::FixedUpdate()
 
 void GameObject::Update()
 {
-	if (m_IsDestroyed) return;
-
 	for (auto& component : m_Components)
 	{
 		component->Update();
@@ -46,8 +42,6 @@ void GameObject::Update()
 
 void GameObject::LateUpdate()
 {
-	if (m_IsDestroyed) return;
-
 	for (auto& component : m_Components)
 	{
 		component->LateUpdate();
@@ -61,8 +55,6 @@ void GameObject::LateUpdate()
 
 void GameObject::Render() const
 {
-	if (m_IsDestroyed) return;
-
 	for (const auto& component : m_Components)
 	{
 		component->Render();
@@ -76,12 +68,12 @@ void GameObject::Render() const
 
 void GameObject::OnDestroy()
 {
-	for (const auto& component : m_Components)
+	for (auto& component : m_Components)
 	{
 		component->OnDestroy();
 	}
 
-	for (const auto& child : m_Children)
+	for (auto& child : m_Children)
 	{
 		child->OnDestroy();
 	}
@@ -163,11 +155,9 @@ void GameObject::SetWorldPosition(const glm::vec3& pos)
 	if (m_Parent)
 	{
 		SetLocalPosition(pos - m_Parent->GetWorldPosition());
+		return;
 	}
-	else
-	{
-		SetLocalPosition(pos);
-	}
+	SetLocalPosition(pos);
 }
 
 void GameObject::SetPositionDirty()
@@ -235,15 +225,12 @@ void GameObject::RemoveChild(GameObject* child)
 void GameObject::UpdateWorldPosition()
 {
 	if (!m_PositionIsDirty) return;
+	m_PositionIsDirty = false;
 
 	if (m_Parent)
 	{
 		m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
+		return;
 	}
-	else
-	{
-		m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
-	}
-
-	m_PositionIsDirty = false;
+	m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
 }

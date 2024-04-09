@@ -4,7 +4,8 @@
 enum class GameEvent
 {
 	playerDied,
-	foundPickup
+	foundSmallPickup,
+	foundLargePickup
 };
 
 #endif // !GAMEEVENTS_H

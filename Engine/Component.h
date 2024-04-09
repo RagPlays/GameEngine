@@ -15,6 +15,7 @@ public:
 	Component& operator=(const Component& other) = delete;
 	Component& operator=(Component&& other) noexcept = delete;
 
+	virtual void OnStart();
 	virtual void FixedUpdate();
 	virtual void Update();
 	virtual void LateUpdate();
@@ -22,6 +23,7 @@ public:
 	virtual void OnDestroy();
 
 protected:
+
 	explicit Component(GameObject* const owner);
 
 	// Gets
@@ -34,7 +36,9 @@ protected:
 	void SetLocalPosition(const glm::vec3& pos);
 
 private:
+
 	GameObject* const m_pOwner;
+
 };
 
 #endif // !COMPONENT_H

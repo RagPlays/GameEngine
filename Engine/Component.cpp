@@ -6,6 +6,10 @@ Component::Component(GameObject* const owner)
 {
 }
 
+void Component::OnStart()
+{
+}
+
 void Component::FixedUpdate()
 {
 }

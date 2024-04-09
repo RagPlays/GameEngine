@@ -8,9 +8,9 @@ class PlayerPickupCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerPickupCommand(PlayerComponent* player, int scoreOnPickup)
+	explicit PlayerPickupCommand(PlayerComponent* player, PickupItem pickupItem)
 		: PlayerCommand{ player }
-		, m_ScoreOnPickup{ scoreOnPickup }
+		, m_PickupItem{ pickupItem }
 	{
 	}
 	virtual ~PlayerPickupCommand() = default;
@@ -22,12 +22,12 @@ public:
 
 	virtual void Execute() override
 	{
-		GetPlayer()->AddScore(m_ScoreOnPickup);
+		GetPlayer()->PickupEvent(m_PickupItem);
 	}
 	
 private:
 
-	int m_ScoreOnPickup;
+	PickupItem m_PickupItem;
 };
 
 #endif // !PLAYERPICKUPCOMMAND_H

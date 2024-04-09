@@ -1,15 +1,17 @@
+#include <iostream>
 #include "PlayerStatsComponent.h"
 #include "GameObject.h"
 #include "PlayerComponent.h"
 #include "TextComponent.h"
 
-PlayerStatsComponent::PlayerStatsComponent(GameObject* const owner, PlayerComponent* const observedPlayer)
+PlayerStatsComponent::PlayerStatsComponent(GameObject* const owner)
 	: Component{ owner }
 	, Observer{}
-	, m_ObservedPlayer{ observedPlayer }
 	, m_NeedsUpdate{ true }
+	, m_PlayerIdx{ -1 }
+	, m_Lives{ 3 }
+	, m_Score{}
 {
-	if (m_ObservedPlayer) m_ObservedPlayer->RegisterObserver(this);
 }
 
 void PlayerStatsComponent::Update()
@@ -20,11 +22,11 @@ void PlayerStatsComponent::Update()
 		{
 			textComponent->SetText(
 				"/ PLAYER: " + 
-				std::to_string(m_ObservedPlayer->GetPlayerIdx()) + 
+				std::to_string(m_PlayerIdx) + 
 				" / Lives: " + 
-				std::to_string(m_ObservedPlayer->GetLives()) +
+				std::to_string(m_Lives) +
 				" Score: " +
-				std::to_string(m_ObservedPlayer->GetScore())
+				std::to_string(m_Score)
 				);
 		}
 
@@ -32,15 +34,32 @@ void PlayerStatsComponent::Update()
 	}
 }
 
-void PlayerStatsComponent::OnNotify(GameObject*, GameEvent gameEvent)
+void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 {
-	switch (gameEvent)
+	if (PlayerComponent * playerComp{ gameObj->GetComponent<PlayerComponent>() })
 	{
-	case GameEvent::playerDied:
-	case GameEvent::foundPickup:
-		m_NeedsUpdate = true;
-		break;
-	default:
-		break;
+		m_PlayerIdx = playerComp->GetPlayerIdx();
+
+		switch (gameEvent)
+		{
+		case GameEvent::playerDied:
+		case GameEvent::foundLargePickup:
+		case GameEvent::foundSmallPickup:
+			m_NeedsUpdate = true;
+			break;
+		}
+
+		switch (gameEvent)
+		{
+		case GameEvent::playerDied:
+			m_Lives -= 1;
+			break;
+		case GameEvent::foundLargePickup:
+			m_Score += 100;
+			break;
+		case GameEvent::foundSmallPickup:
+			m_Score += 10;
+			break;
+		}
 	}
 }

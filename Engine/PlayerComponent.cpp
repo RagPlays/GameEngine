@@ -8,8 +8,6 @@ PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerSpeed{ moveSpeed }
-	, m_CurrentLives{ 3 }
-	, m_Score{ 0 }
 	, m_PlayerIdx{ s_playerCount++ }
 {
 }
@@ -21,27 +19,25 @@ void PlayerComponent::Move(const glm::vec3& dir)
 
 void PlayerComponent::Killed()
 {
-	m_CurrentLives -= 1;
 	Notify(GetOwner(), GameEvent::playerDied);
 }
 
-void PlayerComponent::AddScore(int score)
+void PlayerComponent::PickupEvent(PickupItem item)
 {
-	m_Score += score;
-	Notify(GetOwner(), GameEvent::foundPickup);
+	switch (item)
+	{
+	case PickupItem::smallItem:
+		Notify(GetOwner(), GameEvent::foundSmallPickup);
+		break;
+	case PickupItem::bigItem:
+		Notify(GetOwner(), GameEvent::foundLargePickup);
+		break;
+	default:
+		break;
+	}
 }
 
 int PlayerComponent::GetPlayerIdx() const
 {
 	return m_PlayerIdx;
-}
-
-int PlayerComponent::GetScore() const
-{
-	return m_Score;
-}
-
-int PlayerComponent::GetLives() const
-{
-	return m_CurrentLives;
 }

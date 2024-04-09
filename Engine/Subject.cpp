@@ -2,7 +2,7 @@
 
 void Subject::RegisterObserver(Observer* observer)
 {
-	m_Observers.emplace_back(std::move(observer));
+	m_Observers.emplace_back(observer);
 }
 
 void Subject::UnRegisterObserver(Observer* observer)
