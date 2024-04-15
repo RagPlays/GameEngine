@@ -29,14 +29,13 @@ void PlayerStatsComponent::Update()
 				std::to_string(m_Score)
 				);
 		}
-
 		m_NeedsUpdate = false;
 	}
 }
 
 void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 {
-	if (PlayerComponent * playerComp{ gameObj->GetComponent<PlayerComponent>() })
+	if (PlayerComponent* playerComp{ gameObj->GetComponent<PlayerComponent>() })
 	{
 		m_PlayerIdx = playerComp->GetPlayerIdx();
 
@@ -47,19 +46,24 @@ void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 		case GameEvent::foundSmallPickup:
 			m_NeedsUpdate = true;
 			break;
+		default:
+			break;
 		}
 
-		switch (gameEvent)
+		if (m_NeedsUpdate)
 		{
-		case GameEvent::playerDied:
-			m_Lives -= 1;
-			break;
-		case GameEvent::foundLargePickup:
-			m_Score += 100;
-			break;
-		case GameEvent::foundSmallPickup:
-			m_Score += 10;
-			break;
+			switch (gameEvent)
+			{
+			case GameEvent::playerDied:
+				m_Lives -= 1;
+				break;
+			case GameEvent::foundLargePickup:
+				m_Score += 100;
+				break;
+			case GameEvent::foundSmallPickup:
+				m_Score += 10;
+				break;
+			}
 		}
 	}
 }
