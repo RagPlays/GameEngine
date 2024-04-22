@@ -5,6 +5,7 @@ template <typename T>
 class Singleton
 {
 public:
+
 	static T& Get()
 	{
 		static T instance{};
@@ -18,7 +19,9 @@ public:
 	Singleton& operator=(Singleton&& other) = delete;
 
 protected:
+
 	Singleton() = default;
+
 };
 
 #endif // !SINGLETON_H

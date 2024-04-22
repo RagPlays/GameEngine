@@ -10,9 +10,7 @@ class ImGuiRenderer final : public Singleton<ImGuiRenderer>
 {
 public:
 
-	ImGuiRenderer();
-	~ImGuiRenderer() = default;
-
+	virtual ~ImGuiRenderer() = default;
 	ImGuiRenderer(const ImGuiRenderer& other) = delete;
 	ImGuiRenderer(ImGuiRenderer&& other) noexcept = delete;
 	ImGuiRenderer& operator=(const ImGuiRenderer& other) = delete;
@@ -26,6 +24,9 @@ public:
 	bool IsEnabled() const;
 
 private:
+
+	friend class Singleton<ImGuiRenderer>;
+	ImGuiRenderer();
 
 	void StartImGuiRender();
 	void EndImGuiRender();

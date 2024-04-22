@@ -41,6 +41,7 @@ void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 
 		switch (gameEvent)
 		{
+		case GameEvent::playerJoined:
 		case GameEvent::playerDied:
 		case GameEvent::foundLargePickup:
 		case GameEvent::foundSmallPickup:

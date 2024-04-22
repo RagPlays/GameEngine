@@ -6,31 +6,34 @@
 
 class Scene final
 {
-	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
+
 	~Scene() = default;
+	Scene(const Scene& other) = delete;
+	Scene(Scene&& other) noexcept = delete;
+	Scene& operator=(const Scene& other) = delete;
+	Scene& operator=(Scene&& other) noexcept = delete;
 
 	void Add(std::unique_ptr<GameObject> object);
 
+	void GameStart();
 	void FixedUpdate();
 	void Update();
 	void LateUpdate();
 	void Render() const;
 
-	Scene(const Scene& other) = delete;
-	Scene(Scene&& other) = delete;
-	Scene& operator=(const Scene& other) = delete;
-	Scene& operator=(Scene&& other) = delete;
+	const std::string& GetName() const;
 
 private:
+
 	explicit Scene(const std::string& name);
+	friend Scene& SceneManager::CreateScene(const std::string& name);
 
-	void RemoveAllObjects();
+private:
 
-	std::string m_Name;
+	const std::string m_Name;
 	std::vector<std::unique_ptr<GameObject>> m_Objects;
 
-	static unsigned int m_IdCounter;
 };
 
 #endif // !SCENE_H

@@ -1,7 +1,5 @@
 #include "Scene.h"
 
-unsigned int Scene::m_IdCounter = 0;
-
 Scene::Scene(const std::string& name) 
 	: m_Name(name) 
 {
@@ -10,6 +8,14 @@ Scene::Scene(const std::string& name)
 void Scene::Add(std::unique_ptr<GameObject> object)
 {
 	m_Objects.emplace_back(std::move(object));
+}
+
+void Scene::GameStart()
+{
+	for (auto& object : m_Objects)
+	{
+		object->GameStart();
+	}
 }
 
 void Scene::FixedUpdate()
@@ -57,7 +63,7 @@ void Scene::Render() const
 	}
 }
 
-void Scene::RemoveAllObjects()
+const std::string& Scene::GetName() const
 {
-	m_Objects.clear();
+	return m_Name;
 }

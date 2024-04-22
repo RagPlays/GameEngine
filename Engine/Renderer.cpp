@@ -31,13 +31,6 @@ int GetOpenGLDriverIndex()
 	return openglIndex;
 }
 
-Renderer::Renderer()
-	: m_Window{}
-	, m_Renderer{}
-	, m_ClearColor{}
-{
-}
-
 // Init
 void Renderer::Init(SDL_Window* window)
 {
@@ -131,6 +124,15 @@ const SDL_Color& Renderer::GetBackgroundColor() const
 void Renderer::SetBackgroundColor(const SDL_Color& color)
 {
 	m_ClearColor = color;
+}
+
+// Private Functions //
+
+Renderer::Renderer()
+	: m_Window{}
+	, m_Renderer{}
+	, m_ClearColor{}
+{
 }
 
 void Renderer::InitImGui()

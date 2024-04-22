@@ -10,9 +10,7 @@ class InputManager final : public Singleton<InputManager>
 {
 public:
 
-	InputManager();
-	~InputManager() = default;
-
+	virtual ~InputManager() = default;
 	InputManager(const InputManager& other) = delete;
 	InputManager(InputManager&& other) noexcept = delete;
 	InputManager& operator=(const InputManager& other) = delete;
@@ -31,6 +29,9 @@ public:
 	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command, int controllerIdx);
 
 private:
+
+	friend class Singleton<InputManager>;
+	InputManager();
 
 	Controller* FindController(int controllerIdx);
 

@@ -2,11 +2,6 @@
 #include <backends/imgui_impl_sdl2.h>
 #include "ImGuiRenderer.h"
 
-ImGuiRenderer::ImGuiRenderer()
-	: m_Enabled{ false }
-{
-}
-
 void ImGuiRenderer::Render()
 {
 	// Check
@@ -39,6 +34,13 @@ void ImGuiRenderer::SetEnable(bool enable)
 bool ImGuiRenderer::IsEnabled() const
 {
 	return m_Enabled;
+}
+
+// Private Functions //
+ImGuiRenderer::ImGuiRenderer()
+	: m_Enabled{ false }
+{
+	if (m_Enabled) m_ImGuiComponents.reserve(2);
 }
 
 void ImGuiRenderer::StartImGuiRender()

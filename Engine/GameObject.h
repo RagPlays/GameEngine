@@ -20,6 +20,7 @@ public:
 	GameObject& operator=(GameObject&& other) noexcept  = delete;
 
 	// functions
+	void GameStart();
 	void FixedUpdate();
 	void Update();
 	void LateUpdate();

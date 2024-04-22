@@ -6,15 +6,12 @@
 
 struct SDL_Color;
 class Texture2D;
-/**
- * Simple RAII wrapper for the SDL renderer
- */
+
 class Renderer final : public Singleton<Renderer>
 {
 public:
 
-	Renderer();
-	~Renderer() = default;
+	virtual ~Renderer() = default;
 	Renderer(const Renderer& other) = delete;
 	Renderer(Renderer&& other) noexcept = delete;
 	Renderer& operator=(const Renderer& other) = delete;
@@ -38,6 +35,9 @@ public:
 	void SetBackgroundColor(const SDL_Color& color);
 
 private:
+
+	friend class Singleton<Renderer>;
+	Renderer();
 
 	void InitImGui();
 	void DestroyImGui();

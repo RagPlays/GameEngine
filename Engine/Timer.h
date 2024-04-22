@@ -8,7 +8,7 @@
 class Timer final :  public Singleton<Timer>
 {
 public:
-	explicit Timer();
+
 	virtual ~Timer() = default;
 
 	Timer(const Timer& other) = delete;
@@ -34,6 +34,11 @@ public:
 
 private:
 
+	friend class Singleton<Timer>;
+	Timer();
+
+private:
+
 	SDL_DisplayMode m_MonitorInfo;
 	
 	bool m_VSync;
@@ -46,6 +51,7 @@ private:
 	float m_Lag;
 	std::chrono::high_resolution_clock::time_point m_CurrentTime;
 	std::chrono::high_resolution_clock::time_point m_LastTime;
+
 };
 
 #endif // !TIME_H

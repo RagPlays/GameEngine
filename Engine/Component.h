@@ -15,7 +15,7 @@ public:
 	Component& operator=(const Component& other) = delete;
 	Component& operator=(Component&& other) noexcept = delete;
 
-	virtual void OnStart();
+	virtual void GameStart();
 	virtual void FixedUpdate();
 	virtual void Update();
 	virtual void LateUpdate();

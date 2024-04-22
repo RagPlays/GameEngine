@@ -1,28 +1,6 @@
 #include <thread>
 #include "Timer.h"
 
-Timer::Timer()
-	: m_VSync{ false }
-	, m_FixedTimeStep{ 0.02f }
-	, m_ElapsedSec{}
-	, m_FPS{}
-	, m_Lag{}
-	, m_LastTime{ std::chrono::high_resolution_clock::now() }
-	, m_FpsCapped{ false }
-	, m_MsPerFrame{ 16 }
-{
-	SDL_GetCurrentDisplayMode(0, &m_MonitorInfo);
-
-	if (m_VSync)
-	{
-		SDL_GL_SetSwapInterval(1);
-	}
-	else if(m_FpsCapped)
-	{
-		EnableFpsCap(m_MonitorInfo.refresh_rate);
-	}
-}
-
 void Timer::Update()
 {
 	m_CurrentTime = std::chrono::high_resolution_clock::now();
@@ -95,5 +73,28 @@ void Timer::DisableVSync()
 	{
 		m_VSync = false;
 		SDL_GL_SetSwapInterval(0);
+	}
+}
+
+// Private Functions //
+Timer::Timer()
+	: m_VSync{ false }
+	, m_FixedTimeStep{ 0.02f }
+	, m_ElapsedSec{}
+	, m_FPS{}
+	, m_Lag{}
+	, m_LastTime{ std::chrono::high_resolution_clock::now() }
+	, m_FpsCapped{ false }
+	, m_MsPerFrame{ 16 }
+{
+	SDL_GetCurrentDisplayMode(0, &m_MonitorInfo);
+
+	if (m_VSync)
+	{
+		SDL_GL_SetSwapInterval(1);
+	}
+	else if (m_FpsCapped)
+	{
+		EnableFpsCap(m_MonitorInfo.refresh_rate);
 	}
 }

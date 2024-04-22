@@ -3,13 +3,6 @@
 #include "ImGuiRenderer.h"
 #include "InputManager.h"
 
-InputManager::InputManager()
-	: m_HasQuit{ false }
-	, m_Event{ SDL_Event{} }
-	, m_KeyboardMouse{ std::make_unique<KeyboardMouse>() }
-{
-}
-
 void InputManager::ProcessInput()
 {
 	// Update the state of the keys
@@ -91,6 +84,15 @@ void InputManager::AddControllerBind(const ControllerInput& input, std::unique_p
 		}
 	}
 	std::cerr << "INPUTMANAGER::ADDCONTROLLERBIND::CONTROLLERIDX_NOT_FOUND\n";
+}
+
+// Private Functions //
+
+InputManager::InputManager()
+	: m_HasQuit{ false }
+	, m_Event{ SDL_Event{} }
+	, m_KeyboardMouse{ std::make_unique<KeyboardMouse>() }
+{
 }
 
 Controller* InputManager::FindController(int controllerIdx)

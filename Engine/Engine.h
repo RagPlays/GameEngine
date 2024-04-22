@@ -5,10 +5,11 @@
 #include <functional>
 #include <SDL.h>
 
-class Engine
+class Engine final
 {
 public:
-	explicit Engine(const std::string& dataPath, const std::string& title, int width, int height);
+
+	explicit Engine(const std::string& dataPath, int width, int height);
 	virtual ~Engine();
 	Engine(const Engine& other) = delete;
 	Engine(Engine&& other) noexcept = delete;
@@ -16,11 +17,14 @@ public:
 	Engine& operator=(Engine&& other) noexcept = delete;
 
 	void Run();
+	void SetGameTitle(const std::string& title);
 
 private:
+
 	const int m_WindowWidth;
 	const int m_WindowHeight;
 	SDL_Window* m_Window;
+
 };
 
 #endif // !ENGINE_H

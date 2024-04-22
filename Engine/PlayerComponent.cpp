@@ -12,6 +12,11 @@ PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 {
 }
 
+void PlayerComponent::GameStart()
+{
+	Notify(GetOwner(), GameEvent::playerJoined);
+}
+
 void PlayerComponent::Move(const glm::vec3& dir)
 {
 	GetOwner()->Translate(dir * m_PlayerSpeed * Timer::Get().GetElapsedSec());

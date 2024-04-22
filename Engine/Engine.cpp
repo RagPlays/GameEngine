@@ -1,5 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 
+#include <iostream>
 #include <stdexcept>
 #include <windows.h>
 #include <SDL_image.h>
@@ -44,7 +45,7 @@ void PrintSDLVersion()
 	printf("GAMEINFO:\n");
 }
 
-Engine::Engine(const std::string& dataPath, const std::string& title, int width, int height)
+Engine::Engine(const std::string& dataPath, int width, int height)
 	: m_WindowWidth{ width }
 	, m_WindowHeight{ height }
 	, m_Window{ nullptr }
@@ -57,7 +58,7 @@ Engine::Engine(const std::string& dataPath, const std::string& title, int width,
 	}
 
 	m_Window = SDL_CreateWindow(
-		title.c_str(),
+		"No_Title",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_WindowWidth,
@@ -90,6 +91,14 @@ void Engine::Run()
 	InputManager& inputManager{ InputManager::Get() };
 	Timer& timer{ Timer::Get() };
 
+	if (sceneManager.Empty())
+	{
+		std::cerr << "ERROR::ENGINE::NO_SCENES_ASSIGNED\n";
+		return;
+	}
+
+	sceneManager.GameStart();
+
 	while (!inputManager.HasQuit())
 	{
 		// Timer
@@ -116,4 +125,9 @@ void Engine::Run()
 		// FPS Cap
 		timer.UpdateFpsCap();
 	}
+}
+
+void Engine::SetGameTitle(const std::string& title)
+{
+	SDL_SetWindowTitle(m_Window, title.c_str());
 }

@@ -7,11 +7,24 @@
 #include "Singleton.h"
 
 class Scene;
+
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
+
+	virtual ~SceneManager() = default;
+	SceneManager(const SceneManager& other) = delete;
+	SceneManager(SceneManager&& other) noexcept = delete;
+	SceneManager& operator=(const SceneManager& other) = delete;
+	SceneManager& operator=(SceneManager&& other) noexcept = delete;
+
 	Scene& CreateScene(const std::string& name);
 
+	bool Empty() const;
+	void SetCurrentSceneByIndex(unsigned int idx);
+	void SetCurrentSceneByName(const std::string& name);
+
+	void GameStart();
 	void FixedUpdate();
 	void Update();
 	void LateUpdate();
@@ -20,8 +33,13 @@ public:
 private:
 
 	friend class Singleton<SceneManager>;
-	SceneManager() = default;
-	std::vector<std::shared_ptr<Scene>> m_scenes;
+	SceneManager();
+
+private:
+
+	unsigned int m_CurrentSceneIdx;
+	std::vector<std::shared_ptr<Scene>> m_Scenes;
+
 };
 
 #endif // !SCENEMANAGER_H

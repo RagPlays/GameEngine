@@ -14,6 +14,19 @@ GameObject::GameObject(const std::string& tag)
 	m_Children.clear();
 }
 
+void GameObject::GameStart()
+{
+	for (auto& component : m_Components)
+	{
+		component->GameStart();
+	}
+
+	for (auto& child : m_Children)
+	{
+		child->GameStart();
+	}
+}
+
 void GameObject::FixedUpdate()
 {
 	for (auto& component : m_Components)

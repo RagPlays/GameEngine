@@ -22,6 +22,8 @@ public:
 	PlayerComponent& operator=(const PlayerComponent& other) = delete;
 	PlayerComponent& operator=(PlayerComponent&& other) noexcept = delete;
 
+	virtual void GameStart() override;
+
 	void Move(const glm::vec3& dir);
 	void Killed();
 	void PickupEvent(PickupItem item);
