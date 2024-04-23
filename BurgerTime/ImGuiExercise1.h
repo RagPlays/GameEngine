@@ -2,7 +2,6 @@
 #define IMGUIEXERCISE1_H
 
 #include <vector>
-#include <imgui_plot.h>
 #include "ImGuiComponent.h"
 
 class ImGuiExercise1 final : public ImGuiComponent

@@ -1,7 +1,6 @@
 #ifndef IMGUIEXERCISE2_H
 #define IMGUIEXERCISE2_H
 
-#include <imgui_plot.h>
 #include "ImGuiComponent.h"
 
 class ImGuiExercise2 final : public ImGuiComponent

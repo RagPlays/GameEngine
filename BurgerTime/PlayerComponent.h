@@ -15,7 +15,7 @@ class PlayerComponent final : public Component, public Subject
 public:
 
 	explicit PlayerComponent(GameObject* const owner, float moveSpeed = 200.f);
-	virtual ~PlayerComponent() = default;
+	virtual ~PlayerComponent();
 
 	PlayerComponent(const PlayerComponent& other) = delete;
 	PlayerComponent(PlayerComponent&& other) noexcept = delete;
@@ -32,9 +32,9 @@ public:
 
 private:
 
-	static int s_playerCount;
+	static unsigned int s_PlayerCount;
 
-	const int m_PlayerIdx;
+	const unsigned int m_PlayerIdx;
 	float m_PlayerSpeed;
 };
 

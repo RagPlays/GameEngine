@@ -2,6 +2,8 @@
 #ifndef IMGUICOMPONENT_H
 #define IMGUICOMPONENT_H
 
+#include <imgui_plot.h>
+
 // This is a Blueprint class of a ImGuiComponent
 
 class ImGuiComponent
@@ -17,7 +19,9 @@ public:
 	virtual void Render() = 0;
 
 protected:
+
 	explicit ImGuiComponent() = default;
+
 };
 
 #endif // !IMGUICOMPONENT_H

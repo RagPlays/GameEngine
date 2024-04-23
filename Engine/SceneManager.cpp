@@ -4,48 +4,33 @@
 
 void SceneManager::GameStart()
 {
-	for (auto& scene : m_Scenes)
-	{
-		scene->GameStart();
-	}
+	m_Scenes[m_CurrentSceneIdx]->GameStart();
 }
 
 void SceneManager::FixedUpdate()
 {
-	for (auto& scene : m_Scenes)
-	{
-		scene->FixedUpdate();
-	}
+	m_Scenes[m_CurrentSceneIdx]->FixedUpdate();
 }
 
 void SceneManager::Update()
 {
-	for(auto& scene : m_Scenes)
-	{
-		scene->Update();
-	}
+	m_Scenes[m_CurrentSceneIdx]->Update();
 }
 
 void SceneManager::LateUpdate()
 {
-	for (auto& scene : m_Scenes)
-	{
-		scene->LateUpdate();
-	}
+	m_Scenes[m_CurrentSceneIdx]->LateUpdate();
 }
 
 void SceneManager::Render() const
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->Render();
-	}
+	m_Scenes[m_CurrentSceneIdx]->Render();
 }
 
 Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const std::shared_ptr<Scene>& scene{ std::shared_ptr<Scene>(new Scene{ name }) };
-	m_Scenes.push_back(scene);
+	m_Scenes.emplace_back(scene);
 	return *scene;
 }
 

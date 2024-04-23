@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GameSourceFiles">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="GameSourceFiles\GameComponents">
+      <UniqueIdentifier>{b9df6c9f-2cbd-4694-877c-93ac29035e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFiles\ImGuiComponents">
+      <UniqueIdentifier>{4ac8d8a7-d74d-42ab-a072-905ae9ed9927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFiles\Input">
+      <UniqueIdentifier>{78a75e69-5e8e-46ce-b52a-88b06b4c71e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFiles\GameComponents\Player">
+      <UniqueIdentifier>{b65c40cb-c852-43bd-b5ee-45aa622a571f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>GameSourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise1.cpp">
+      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExercise2.cpp">
+      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatsComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateAroundParentComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImGuiExercise1.h">
+      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExercise2.h">
+      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerKillCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPickupCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatsComponent.h">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateAroundParentComponent.h">
+      <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

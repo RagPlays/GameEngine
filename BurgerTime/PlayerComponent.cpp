@@ -2,14 +2,19 @@
 #include "GameObject.h"
 #include "Timer.h"
 
-int PlayerComponent::s_playerCount{ 0 };
+unsigned int PlayerComponent::s_PlayerCount{ 0 };
 
 PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerSpeed{ moveSpeed }
-	, m_PlayerIdx{ s_playerCount++ }
+	, m_PlayerIdx{ s_PlayerCount++ }
 {
+}
+
+PlayerComponent::~PlayerComponent()
+{
+	--s_PlayerCount;
 }
 
 void PlayerComponent::GameStart()

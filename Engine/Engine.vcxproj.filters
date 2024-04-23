@@ -28,15 +28,6 @@
     <Filter Include="HelperClasses">
       <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OutsideEngine">
-      <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OutsideEngine\GameComponents">
-      <UniqueIdentifier>{1809bd8c-f8b3-48a1-af0a-acba638e2dd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OutsideEngine\ImGuiComponents">
-      <UniqueIdentifier>{d1aade70-588b-4130-9ced-3a97d3b278f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EngineCore\Scenes">
       <UniqueIdentifier>{adad4fa5-199e-48b9-95de-23be5ed125f2}</UniqueIdentifier>
     </Filter>
@@ -49,14 +40,11 @@
     <Filter Include="EngineCore\Input\Structs">
       <UniqueIdentifier>{28e4b6d3-cbd0-4ab7-b9cb-d6371e8f5fff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OutsideEngine\InputCommands">
-      <UniqueIdentifier>{6fb75d06-c899-4ed6-882d-60b066d6f229}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EngineCore\Events">
       <UniqueIdentifier>{e0a6564c-4308-49f2-acdb-79cb438fc18f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OutsideEngine\GameComponents\Player">
-      <UniqueIdentifier>{ca09f010-6ffd-4404-8c76-cc64e61e68bc}</UniqueIdentifier>
+    <Filter Include="GameComponents">
+      <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,18 +53,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>EngineCore\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="FpsComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateAroundParentComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>HelperClasses</Filter>
@@ -132,12 +108,6 @@
     <ClInclude Include="KeyboardMouse.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiExercise1.h">
-      <Filter>OutsideEngine\ImGuiComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiExercise2.h">
-      <Filter>OutsideEngine\ImGuiComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>EngineCore\Scenes</Filter>
     </ClInclude>
@@ -156,9 +126,6 @@
     <ClInclude Include="Command.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCommand.h">
-      <Filter>OutsideEngine\InputCommands</Filter>
-    </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
@@ -168,23 +135,20 @@
     <ClInclude Include="GameEvents.h">
       <Filter>EngineCore\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPickupCommand.h">
-      <Filter>OutsideEngine\InputCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>OutsideEngine\GameComponents\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStatsComponent.h">
-      <Filter>OutsideEngine\GameComponents\Player</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiComponent.h">
       <Filter>ImGuiImpl</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>EngineCore\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -193,18 +157,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>EngineCore\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="FpsComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateAroundParentComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>HelperClasses</Filter>
@@ -251,17 +203,8 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>EngineCore\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>OutsideEngine</Filter>
-    </ClCompile>
     <ClCompile Include="KeyboardMouse.cpp">
       <Filter>EngineCore\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiExercise1.cpp">
-      <Filter>OutsideEngine\ImGuiComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiExercise2.cpp">
-      <Filter>OutsideEngine\ImGuiComponents</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>EngineCore\Scenes</Filter>
@@ -278,26 +221,20 @@
     <ClCompile Include="InputStructs.cpp">
       <Filter>EngineCore\Input\Structs</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMoveCommand.h">
-      <Filter>OutsideEngine\InputCommands</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>EngineCore\Input</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>OutsideEngine\GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerKillCommand.h">
-      <Filter>OutsideEngine\InputCommands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>OutsideEngine\GameComponents\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerStatsComponent.cpp">
-      <Filter>OutsideEngine\GameComponents\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>EngineCore\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
