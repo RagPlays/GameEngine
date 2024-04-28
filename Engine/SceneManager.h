@@ -19,6 +19,7 @@ public:
 	SceneManager& operator=(SceneManager&& other) noexcept = delete;
 
 	Scene& CreateScene(const std::string& name);
+	void Destroy();
 
 	bool Empty() const;
 	void SetCurrentSceneByIndex(unsigned int idx);
@@ -39,7 +40,6 @@ private:
 
 	unsigned int m_CurrentSceneIdx;
 	std::vector<std::shared_ptr<Scene>> m_Scenes;
-
 };
 
 #endif // !SCENEMANAGER_H

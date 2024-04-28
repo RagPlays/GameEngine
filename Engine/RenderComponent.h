@@ -28,12 +28,12 @@ public:
 	void SetTextureFromFileName(const std::string& fileName);
 	void SetTexture(std::shared_ptr<Texture2D> newTexture);
 
-	// Dimentions
-	void SetDefaultDimentions();
+	// Dimensions
+	void SetDefaultDimensions();
 	void SetTextureWidth(int width);
 	void SetTextureHeight(int height);
-	void SetTextureDimentions(int width, int height);
-	void SetTextureDimentions(const glm::ivec2& dimentions);
+	void SetTextureDimensions(int width, int height);
+	void SetTextureDimensions(const glm::ivec2& dimentions);
 
 	int GetTextureWidth() const;
 	int GetTextureHeight() const;
@@ -48,9 +48,10 @@ public:
 
 private:
 
-	glm::ivec2 m_RenderDimentions;
+	glm::ivec2 m_RenderDimensions;
 	std::shared_ptr<Texture2D> m_Texture;
 	bool m_SrcRectSet;
+	//SDL_Rect m_DestRect;
 	SDL_Rect m_SrcRect;
 
 };

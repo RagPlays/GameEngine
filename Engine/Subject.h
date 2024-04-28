@@ -24,7 +24,9 @@ protected:
 	void Notify(GameObject* gameObj, GameEvent gameEvent);
 
 private:
+
 	std::vector<Observer*> m_Observers;
+
 };
 
 #endif // !SUBJECT_H

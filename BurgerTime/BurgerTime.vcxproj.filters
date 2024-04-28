@@ -17,6 +17,9 @@
     <Filter Include="GameSourceFiles\GameComponents\Player">
       <UniqueIdentifier>{b65c40cb-c852-43bd-b5ee-45aa622a571f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFiles\EventHandlers">
+      <UniqueIdentifier>{37dea5e7-443f-468d-807d-a79ed50c4a1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="RotateAroundParentComponent.cpp">
       <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEventHandler.cpp">
+      <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="RotateAroundParentComponent.h">
       <Filter>GameSourceFiles\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEventHandler.h">
+      <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

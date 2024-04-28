@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <iostream>
+
 #include "TextComponent.h"
 #include "Renderer.h"
 #include "Font.h"

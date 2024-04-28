@@ -2,12 +2,6 @@
 #include <SDL_ttf.h>
 #include "Font.h"
 
-
-TTF_Font* Font::GetFont() const 
-{
-	return m_Font;
-}
-
 Font::Font(const std::string& filePath, unsigned int size)
 	: m_Font{ nullptr }
 	, m_FilePath{ filePath }
@@ -22,6 +16,11 @@ Font::~Font()
 	TTF_CloseFont(m_Font);
 }
 
+TTF_Font* Font::GetFont() const
+{
+	return m_Font;
+}
+
 void Font::SetSize(unsigned int newSize)
 {
 	_TTF_Font* tempFont{ nullptr };
@@ -30,12 +29,11 @@ void Font::SetSize(unsigned int newSize)
 	if (!tempFont)
 	{
 		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+		return;
 	}
-	else
-	{
-		TTF_CloseFont(m_Font);
-		m_Font = nullptr;
-		m_Size = newSize;
-		m_Font = tempFont;
-	}
+
+	TTF_CloseFont(m_Font);
+	m_Font = nullptr;
+	m_Size = newSize;
+	m_Font = tempFont;
 }

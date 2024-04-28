@@ -3,6 +3,8 @@
 
 enum class GameEvent
 {
+	gameStarts,
+	gameEnds,
 	playerJoined,
 	playerDied,
 	foundSmallPickup,

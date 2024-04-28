@@ -5,23 +5,19 @@
 
 struct _TTF_Font;
 
-/**
-* Simple RAII wrapper for a _TTF_Font
-*/
 class Font final
 {
 public:
+
 	explicit Font(const std::string& filePath, unsigned int size);
 	~Font();
-	Font(const Font&) = delete;
-	Font(Font&&) = delete;
-	Font& operator= (const Font&) = delete;
-	Font& operator= (const Font&&) = delete;
 
-	// Getters
+	Font(const Font& other) = delete;
+	Font(Font&& other) noexcept = delete;
+	Font& operator=(const Font& other) = delete;
+	Font& operator=(const Font&& other) noexcept = delete;
+
 	_TTF_Font* GetFont() const;
-
-	// Setters
 	void SetSize(unsigned int newSize);
 
 private:
@@ -29,6 +25,7 @@ private:
 	const std::string m_FilePath;
 	_TTF_Font* m_Font;
 	unsigned int m_Size;
+
 };
 
 #endif // !FONT_H

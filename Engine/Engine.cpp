@@ -3,11 +3,17 @@
 #include <iostream>
 #include <stdexcept>
 #include <windows.h>
+
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
+
 #include "Engine.h"
+
+// Singletons
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "EventQueue.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Timer.h"
@@ -52,9 +58,17 @@ Engine::Engine(const std::string& dataPath, int width, int height)
 {
 	PrintSDLVersion();
 	
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER))
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO))
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+	}
+	if (TTF_Init())
+	{
+		throw std::runtime_error(std::string("Failed to load support for fonts: ") + SDL_GetError());
+	}
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048))
+	{
+		throw std::runtime_error(std::string("Failed to load support for audio: ") + SDL_GetError());
 	}
 
 	m_Window = SDL_CreateWindow(
@@ -77,18 +91,24 @@ Engine::Engine(const std::string& dataPath, int width, int height)
 
 Engine::~Engine()
 {
+	SceneManager::Get().Destroy();
 	Renderer::Get().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
+	Mix_CloseAudio();
+	Mix_Quit();
+	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 
 void Engine::Run()
 {
-	// Get Instances
+	// Get Singleton Instances
 	Renderer& renderer{ Renderer::Get() };
 	SceneManager& sceneManager{ SceneManager::Get() };
 	InputManager& inputManager{ InputManager::Get() };
+	EventQueue& eventQueue{ EventQueue::Get() };
 	Timer& timer{ Timer::Get() };
 
 	if (sceneManager.Empty())
@@ -97,7 +117,9 @@ void Engine::Run()
 		return;
 	}
 
+	// Called Once When Game Starts
 	sceneManager.GameStart();
+	eventQueue.AddEvent(GameEvent::gameStarts);
 
 	while (!inputManager.HasQuit())
 	{
@@ -107,7 +129,7 @@ void Engine::Run()
 		// Input
 		inputManager.ProcessInput();
 
-		// Fixed Update -> only for physics / networking
+		// Fixed Update -> Only For Physics / Networking
 		while (timer.GetNeedFixedUpdate())
 		{
 			sceneManager.FixedUpdate();
@@ -118,6 +140,9 @@ void Engine::Run()
 
 		// LateUpdate
 		sceneManager.LateUpdate();
+
+		// EventQueue
+		eventQueue.Update();
 
 		// Render
 		renderer.Render();

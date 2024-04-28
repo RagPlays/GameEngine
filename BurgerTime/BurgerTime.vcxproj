@@ -162,6 +162,7 @@
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerStatsComponent.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
+    <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="PlayerPickupCommand.h" />
     <ClInclude Include="PlayerStatsComponent.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
+    <ClInclude Include="SoundEventHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

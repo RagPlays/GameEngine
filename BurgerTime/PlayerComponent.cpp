@@ -1,6 +1,7 @@
 #include "PlayerComponent.h"
 #include "GameObject.h"
 #include "Timer.h"
+#include "EventQueue.h"
 
 unsigned int PlayerComponent::s_PlayerCount{ 0 };
 
@@ -30,6 +31,7 @@ void PlayerComponent::Move(const glm::vec3& dir)
 void PlayerComponent::Killed()
 {
 	Notify(GetOwner(), GameEvent::playerDied);
+	EventQueue::Get().AddEvent(GameEvent::playerDied);
 }
 
 void PlayerComponent::PickupEvent(PickupItem item)
@@ -41,8 +43,6 @@ void PlayerComponent::PickupEvent(PickupItem item)
 		break;
 	case PickupItem::bigItem:
 		Notify(GetOwner(), GameEvent::foundLargePickup);
-		break;
-	default:
 		break;
 	}
 }

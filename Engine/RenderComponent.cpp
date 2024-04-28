@@ -17,13 +17,13 @@ RenderComponent::RenderComponent(GameObject* const owner, const std::string& fil
 RenderComponent::RenderComponent(GameObject* const owner, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }
 	, m_Texture{ texture }
-	, m_RenderDimentions{ glm::ivec2{} }
+	, m_RenderDimensions{ glm::ivec2{} }
 	, m_SrcRectSet{ false }
 	, m_SrcRect{}
 {
 	if (m_Texture.get())
 	{
-		SetDefaultDimentions();
+		SetDefaultDimensions();
 	}
 }
 
@@ -37,49 +37,49 @@ void RenderComponent::SetTexture(std::shared_ptr<Texture2D> newTexture)
 	if (newTexture.get())
 	{
 		m_Texture = newTexture;
-		SetDefaultDimentions();
+		SetDefaultDimensions();
 	}
 }
 
-void RenderComponent::SetDefaultDimentions()
+void RenderComponent::SetDefaultDimensions()
 {
-	SDL_QueryTexture(m_Texture->GetSDLTexture(), nullptr, nullptr, &m_RenderDimentions.x, &m_RenderDimentions.y);
+	SDL_QueryTexture(m_Texture->GetSDLTexture(), nullptr, nullptr, &m_RenderDimensions.x, &m_RenderDimensions.y);
 }
 
 void RenderComponent::SetTextureWidth(int width)
 {
-	m_RenderDimentions.x = width;
+	m_RenderDimensions.x = width;
 }
 
 void RenderComponent::SetTextureHeight(int height)
 {
-	m_RenderDimentions.y = height;
+	m_RenderDimensions.y = height;
 }
 
-void RenderComponent::SetTextureDimentions(int width, int height)
+void RenderComponent::SetTextureDimensions(int width, int height)
 {
-	m_RenderDimentions.x = width;
-	m_RenderDimentions.y = height;
+	m_RenderDimensions.x = width;
+	m_RenderDimensions.y = height;
 }
 
-void RenderComponent::SetTextureDimentions(const glm::ivec2& dimentions)
+void RenderComponent::SetTextureDimensions(const glm::ivec2& dimentions)
 {
-	SetTextureDimentions(dimentions.x, dimentions.y);
+	SetTextureDimensions(dimentions.x, dimentions.y);
 }
 
 int RenderComponent::GetTextureWidth() const
 {
-	return m_RenderDimentions.x;
+	return m_RenderDimensions.x;
 }
 
 int RenderComponent::GetTextureHeight() const
 {
-	return  m_RenderDimentions.y;
+	return  m_RenderDimensions.y;
 }
 
 const glm::ivec2& RenderComponent::GetTextureDimentions() const
 {
-	return m_RenderDimentions;
+	return m_RenderDimensions;
 }
 
 void RenderComponent::ClearSourceRect()
@@ -101,18 +101,17 @@ void RenderComponent::SetSourceRect(const SDL_Rect& srcRect)
 
 void RenderComponent::Render() const
 {
-	if (m_Texture)
-	{
-		const glm::vec3& renderPos{ GetOwner()->GetWorldPosition() };
-		const SDL_Rect destRect{ static_cast<int>(renderPos.x),  static_cast<int>(renderPos.y), m_RenderDimentions.x, m_RenderDimentions.y };
+	if (!m_Texture) return;
 
-		if (m_SrcRectSet)
-		{
-			Renderer::Get().RenderTexture(*m_Texture, m_SrcRect, destRect);
-		}
-		else
-		{
-			Renderer::Get().RenderTexture(*m_Texture, destRect);
-		}
+	const glm::vec3& renderPos{ GetOwner()->GetWorldPosition() };
+	const SDL_Rect destRect{ static_cast<int>(renderPos.x),  static_cast<int>(renderPos.y), m_RenderDimensions.x, m_RenderDimensions.y };
+
+	if (m_SrcRectSet)
+	{
+		Renderer::Get().RenderTexture(*m_Texture, m_SrcRect, destRect);
+	}
+	else
+	{
+		Renderer::Get().RenderTexture(*m_Texture, destRect);
 	}
 }

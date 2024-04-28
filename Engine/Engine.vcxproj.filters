@@ -46,6 +46,24 @@
     <Filter Include="GameComponents">
       <UniqueIdentifier>{2f57e005-ba1a-4c20-9e9e-637203b62661}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineCore\Events\EventQueue">
+      <UniqueIdentifier>{07504912-428b-4de2-9f1d-bcd9a7a5c43d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Events\ObserverSubject">
+      <UniqueIdentifier>{bf9174a9-a210-4031-99a9-f4ee10655771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Sound">
+      <UniqueIdentifier>{7698a76c-d79b-47a6-a5f5-0076d08070e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Font">
+      <UniqueIdentifier>{c760d6aa-6627-4234-be09-fdd195dc5d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Textures">
+      <UniqueIdentifier>{dcb597e6-a249-464d-ad0f-500adc7149ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Timer">
+      <UniqueIdentifier>{e13864a3-bbf0-4545-b925-188cc120b1c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -53,12 +71,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>EngineCore\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>HelperClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>HelperClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imconfig.h">
       <Filter>ImGuiLib</Filter>
@@ -83,12 +95,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.h">
       <Filter>ImGuiLib\Backends</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>HelperClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>HelperClasses</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>HelperClasses</Filter>
@@ -129,17 +135,11 @@
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>EngineCore\Events</Filter>
-    </ClInclude>
     <ClInclude Include="GameEvents.h">
       <Filter>EngineCore\Events</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiComponent.h">
       <Filter>ImGuiImpl</Filter>
-    </ClInclude>
-    <ClInclude Include="Subject.h">
-      <Filter>EngineCore\Events</Filter>
     </ClInclude>
     <ClInclude Include="FpsComponent.h">
       <Filter>GameComponents</Filter>
@@ -150,6 +150,36 @@
     <ClInclude Include="TextComponent.h">
       <Filter>GameComponents</Filter>
     </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>EngineCore\Events\EventQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>EngineCore\Events\ObserverSubject</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>EngineCore\Events\ObserverSubject</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>EngineCore\Events\EventQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>EngineCore\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicPlayer.h">
+      <Filter>EngineCore\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>EngineCore\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>EngineCore\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>EngineCore\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>EngineCore\Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -157,12 +187,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>EngineCore\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>HelperClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>HelperClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui.cpp">
       <Filter>ImGuiLib</Filter>
@@ -184,12 +208,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.cpp">
       <Filter>ImGuiLib\Backends</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>HelperClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>HelperClasses</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>EngineCore</Filter>
@@ -224,9 +242,6 @@
     <ClCompile Include="Controller.cpp">
       <Filter>EngineCore\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Subject.cpp">
-      <Filter>EngineCore\Events</Filter>
-    </ClCompile>
     <ClCompile Include="FpsComponent.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
@@ -235,6 +250,30 @@
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>EngineCore\Events\EventQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>EngineCore\Events\ObserverSubject</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>EngineCore\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicPlayer.cpp">
+      <Filter>EngineCore\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>EngineCore\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>EngineCore\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>EngineCore\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>EngineCore\Timer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

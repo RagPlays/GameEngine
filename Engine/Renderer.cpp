@@ -76,30 +76,6 @@ void Renderer::Destroy()
 }
 
 // Render Textures
-void Renderer::RenderTexture(const Texture2D& texture, float x, float y) const
-{
-	SDL_Rect destRect{ static_cast<int>(x), static_cast<int>(y), 0, 0 };
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
-	RenderTexture(texture, destRect);
-}
-
-void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const
-{
-	RenderTexture(texture, { static_cast<int>(x),static_cast<int>(y), static_cast<int>(width), static_cast<int>(height) });
-}
-
-void Renderer::RenderTexture(const Texture2D& texture, int x, int y) const
-{
-	SDL_Rect destRect{ x, y, 0, 0 };
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
-	RenderTexture(texture, destRect);
-}
-
-void Renderer::RenderTexture(const Texture2D& texture, int x, int y, int width, int height) const
-{
-	RenderTexture(texture, { x, y, width, height });
-}
-
 void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const
 {
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRect);

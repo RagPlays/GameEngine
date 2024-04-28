@@ -34,6 +34,15 @@ Scene& SceneManager::CreateScene(const std::string& name)
 	return *scene;
 }
 
+void SceneManager::Destroy()
+{
+	for (auto& scene : m_Scenes)
+	{
+		scene.reset();
+	}
+	m_Scenes.clear();
+}
+
 bool SceneManager::Empty() const
 {
 	return m_Scenes.empty();

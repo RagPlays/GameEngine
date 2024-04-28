@@ -7,6 +7,8 @@
 
 class Texture2D;
 class Font;
+class MusicPlayer;
+class SoundEffect;
 
 class ResourceManager final : public Singleton<ResourceManager>
 {
@@ -21,6 +23,8 @@ public:
 	void Init(const std::string& data);
 	std::shared_ptr<Texture2D> LoadTexture(const std::string& file) const;
 	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
+	std::shared_ptr<SoundEffect> LoadSoundEffect(const std::string& file) const;
+	std::shared_ptr<MusicPlayer> LoadMusicPlayer(const std::string& file) const;
 
 private:
 
