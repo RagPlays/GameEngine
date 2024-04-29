@@ -183,6 +183,9 @@
     <ClInclude Include="ServiceLocator.h">
       <Filter>EngineCore\Singletons</Filter>
     </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>EngineCore\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -277,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>EngineCore\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>EngineCore\Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

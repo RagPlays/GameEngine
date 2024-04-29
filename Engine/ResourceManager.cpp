@@ -13,6 +13,11 @@ void ResourceManager::Init(const std::string& dataPath)
 	m_DataPath = dataPath;
 }
 
+std::string ResourceManager::GetFullPath(const std::string& filename) const
+{
+	return std::string{ m_DataPath + filename };
+}
+
 std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file) const
 {
 	return std::make_shared<Texture2D>(m_DataPath + file);

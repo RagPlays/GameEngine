@@ -19,4 +19,20 @@ public:
 
 };
 
+class NullEventHandler final : EventHandler
+{
+public:
+
+	NullEventHandler() = default;
+	virtual ~NullEventHandler() = default;
+
+	NullEventHandler(const NullEventHandler& other) = delete;
+	NullEventHandler(NullEventHandler&& other) noexcept = delete;
+	NullEventHandler& operator=(const NullEventHandler& other) = delete;
+	NullEventHandler& operator=(NullEventHandler&& other) noexcept = delete;
+
+	virtual void HandleEvent(GameEvent) override {}
+
+};
+
 #endif // !EVENTHANDLER_H

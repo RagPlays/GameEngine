@@ -14,7 +14,7 @@ public:
 	Scene& operator=(const Scene& other) = delete;
 	Scene& operator=(Scene&& other) noexcept = delete;
 
-	void Add(std::unique_ptr<GameObject> object);
+	void Add(std::unique_ptr<GameObject>&& object);
 
 	void GameStart();
 	void FixedUpdate();

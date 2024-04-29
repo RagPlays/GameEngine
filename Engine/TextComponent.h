@@ -16,6 +16,7 @@ public:
 
 	explicit TextComponent(GameObject* const owner, std::shared_ptr<Font> font, const std::string& text = "Empty", SDL_Color textColor = {255, 255, 255} );
 	virtual ~TextComponent() = default;
+
 	TextComponent(const TextComponent& other) = delete;
 	TextComponent(TextComponent&& other) noexcept = delete;
 	TextComponent& operator=(const TextComponent& other) = delete;

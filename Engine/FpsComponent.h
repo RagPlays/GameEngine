@@ -16,6 +16,7 @@ public:
 
 	explicit FpsComponent(GameObject* const owner);
 	virtual ~FpsComponent() = default;
+
 	FpsComponent(const FpsComponent& other) = delete;
 	FpsComponent(FpsComponent&& other) noexcept = delete;
 	FpsComponent& operator=(const FpsComponent& other) = delete;

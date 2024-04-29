@@ -5,7 +5,7 @@ Scene::Scene(const std::string& name)
 {
 }
 
-void Scene::Add(std::unique_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<GameObject>&& object)
 {
 	m_Objects.emplace_back(std::move(object));
 }

@@ -7,8 +7,8 @@ class RotateAroundParentComponent final : public Component
 {
 public:
 
-	RotateAroundParentComponent(GameObject* const owner, float rotationSpeed = 1.57f);
-	~RotateAroundParentComponent() = default;
+	explicit RotateAroundParentComponent(GameObject* const owner, float rotationSpeed = 1.57f);
+	virtual ~RotateAroundParentComponent() = default;
 
 	RotateAroundParentComponent(const RotateAroundParentComponent& other) = delete;
 	RotateAroundParentComponent(RotateAroundParentComponent&& other) noexcept = delete;

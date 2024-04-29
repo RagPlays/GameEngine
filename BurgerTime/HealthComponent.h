@@ -7,8 +7,8 @@ class HealthComponent final : public Component
 {
 public:
 
-	HealthComponent(GameObject* const owner, float maxHealth);
-	~HealthComponent() = default;
+	explicit HealthComponent(GameObject* const owner, float maxHealth);
+	virtual ~HealthComponent() = default;
 
 	HealthComponent(const HealthComponent& other) = delete;
 	HealthComponent(HealthComponent&& other) noexcept = delete;
