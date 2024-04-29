@@ -1,9 +1,11 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "Scene.h"
+#include "EventQueue.h"
 
 void SceneManager::GameStart()
 {
+	EventQueue::Get().AddEvent(GameEvent::gameStarts);
 	m_Scenes[m_CurrentSceneIdx]->GameStart();
 }
 

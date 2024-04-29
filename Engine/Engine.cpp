@@ -66,7 +66,7 @@ Engine::Engine(const std::string& dataPath, int width, int height)
 	{
 		throw std::runtime_error(std::string("Failed to load support for fonts: ") + SDL_GetError());
 	}
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048))
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, SDL_GetNumAudioDevices(0), 2048))
 	{
 		throw std::runtime_error(std::string("Failed to load support for audio: ") + SDL_GetError());
 	}
@@ -119,7 +119,9 @@ void Engine::Run()
 
 	// Called Once When Game Starts
 	sceneManager.GameStart();
-	eventQueue.AddEvent(GameEvent::gameStarts);
+
+	// To REmove
+	std::cout << "There is a soundEffect when player gets killed\n";
 
 	while (!inputManager.HasQuit())
 	{

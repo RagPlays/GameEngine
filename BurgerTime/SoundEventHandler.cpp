@@ -1,7 +1,5 @@
 #include "SoundEventHandler.h"
-
 #include "ResourceManager.h"
-
 #include "SoundEffect.h"
 #include "MusicPlayer.h"
 
@@ -17,6 +15,10 @@ void SoundEventHandler::HandleEvent(GameEvent gameEvent)
 	{
 	case GameEvent::gameStarts:
 		m_Music->Play();
+		break;
+
+	case GameEvent::gameEnds:
+		m_Music->Stop();
 		break;
 
 	case GameEvent::playerJoined:

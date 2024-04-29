@@ -37,8 +37,8 @@ private:
 
 	std::unique_ptr<EventHandler> m_Handler;
 
-	std::queue<GameEvent> m_Events;
-	//std::array<GameEvent, m_MaxPending> m_Events;
+	//std::queue<GameEvent> m_Events;
+	std::array<GameEvent, m_MaxPending> m_Events;
 };
 
 

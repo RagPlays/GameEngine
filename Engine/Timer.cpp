@@ -60,6 +60,7 @@ void Timer::DisableFpsCap()
 
 void Timer::EnableVSync()
 {
+	// Only works when Graphics Card supports VSync and is not set off.
 	if (!m_VSync)
 	{
 		m_VSync = true;

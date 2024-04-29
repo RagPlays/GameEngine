@@ -25,9 +25,6 @@
     <Filter Include="EngineCore\GameObject\Component">
       <UniqueIdentifier>{0b2fe52c-c0aa-4b55-874f-bef34e75c584}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HelperClasses">
-      <UniqueIdentifier>{de32b929-3c6d-4b9e-8ec9-d27f4548979a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EngineCore\Scenes">
       <UniqueIdentifier>{adad4fa5-199e-48b9-95de-23be5ed125f2}</UniqueIdentifier>
     </Filter>
@@ -64,6 +61,9 @@
     <Filter Include="EngineCore\Timer">
       <UniqueIdentifier>{e13864a3-bbf0-4545-b925-188cc120b1c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineCore\Singletons">
+      <UniqueIdentifier>{cc528522-35aa-4a01-84a2-6dca101b69fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -95,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.h">
       <Filter>ImGuiLib\Backends</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>HelperClasses</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>EngineCore</Filter>
@@ -179,6 +176,12 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>EngineCore\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>EngineCore\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>EngineCore\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

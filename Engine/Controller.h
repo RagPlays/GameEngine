@@ -11,7 +11,7 @@ class Controller final
 {
 public:
 
-	Controller(int controllerIndx);
+	explicit Controller(int controllerIndx);
 	~Controller();
 
 	Controller(const Controller& other) = delete;

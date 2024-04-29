@@ -18,7 +18,7 @@ Controller::Controller(int controllerIndx)
 
 Controller::~Controller()
 {
-	SDL_GameControllerClose(m_GameController);
+	if(m_GameController) SDL_GameControllerClose(m_GameController);
 }
 
 void Controller::Update()
@@ -47,24 +47,15 @@ void Controller::ProcessInput()
         switch (input.inputType)
         {
         case InputType::ispressed:
-            if (IsPressed(input.button))
-            {
-                command->Execute();
-            }
+            if (IsPressed(input.button)) command->Execute();
             break;
 
         case InputType::wasPressedThisFrame:
-            if (WasPressedThisFrame(input.button))
-            {
-                command->Execute();
-            }
+            if (WasPressedThisFrame(input.button)) command->Execute();
             break;
 
         case InputType::wasReleasedThisFrame:
-            if (WasReleasedThisFrame(input.button))
-            {
-                command->Execute();
-            }
+            if (WasReleasedThisFrame(input.button)) command->Execute();
             break;
         }
     }
@@ -101,6 +92,5 @@ bool Controller::WasReleasedThisFrame(SDL_GameControllerButton button) const
 bool Controller::IsPressed(SDL_GameControllerButton button) const
 {
     if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
-
     return m_CurrentButtonStates[button];
 }
