@@ -10,7 +10,7 @@ void EventQueue::SetHandler(std::unique_ptr<EventHandler> handler)
 void EventQueue::AddEvent(GameEvent gameEvent)
 {
 	assert((m_Tail + 1) % m_MaxPending != m_Head);
-	if ((m_Tail + 1) % m_MaxPending != m_Head) return;
+	if ((m_Tail + 1) % m_MaxPending == m_Head) return;
 	m_Events[m_Tail] = gameEvent;
 	m_Tail = (m_Tail + 1) % m_MaxPending;
 }
