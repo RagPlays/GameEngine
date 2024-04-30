@@ -4,12 +4,31 @@
 #include <iostream>
 #include <memory>
 
+using SoundID = unsigned short;
+
+enum class SoundType
+{
+	SoundEffect,
+	Music
+};
+
+struct SoundInfo
+{
+	SoundID id;
+	int volume;
+	SoundType type;
+};
+
 class SoundSystem
 {
 public:
 
 	virtual ~SoundSystem() = default;
-	virtual void PlaySound() = 0;
+	virtual void AddSong(const std::string& filePath, SoundID id) = 0;
+	virtual void AddSoundEffect(const std::string& filePath, SoundID id) = 0;
+	virtual void Play(SoundID id, int volume, SoundType type) = 0;
+
+	virtual int MaxVolume() const = 0;
 
 };
 
@@ -18,26 +37,58 @@ class NullSoundSystem final : public SoundSystem
 public:
 
 	virtual ~NullSoundSystem() = default;
-	virtual void PlaySound() override {}
+	virtual void AddSong(const std::string&, SoundID)
+	{
+		std::cerr << "ERROR::NULLSOUNDSYSTEM::ASSIGN_FUNCTIONAL_SOUNDSYSTEM!\n";
+	};
+	virtual void AddSoundEffect(const std::string&, SoundID)
+	{
+		std::cerr << "ERROR::NULLSOUNDSYSTEM::ASSIGN_FUNCTIONAL_SOUNDSYSTEM!\n";
+	};
+	virtual void Play(SoundID, int, SoundType) override {};
 
+	virtual int MaxVolume() const override { return 0; }
 };
 
 class LoggingSoundSystem final : public SoundSystem
 {
 public:
 
-	LoggingSoundSystem(std::unique_ptr<SoundSystem>&& soundSystem)
+	explicit LoggingSoundSystem(std::unique_ptr<SoundSystem>&& soundSystem)
 	{
 		m_RealSS = std::move(soundSystem);
 	}
 	virtual ~LoggingSoundSystem() = default;
 
-	virtual void PlaySound() override
+	virtual void AddSong(const std::string& filePath, SoundID id)
 	{
-		m_RealSS->PlaySound();
-		std::cout << "LoggingMessage for sound: " << "\n";
+		std::cout << "Adding song with filename: " << filePath << " on id: " << id << ".\n";
+		m_RealSS->AddSong(filePath, id);
+	};
+	virtual void AddSoundEffect(const std::string& filePath, SoundID id)
+	{
+		std::cout << "Adding soundEffect with filename: " << filePath << " on id: " << id << ".\n";
+		m_RealSS->AddSoundEffect(filePath, id);
+	};
+	void Play(SoundID id, int volume, SoundType type) override
+	{
+		m_RealSS->Play(id, volume, type);
+		switch (type)
+		{
+		case SoundType::SoundEffect:
+			std::cout << "SoundEffect ";
+			break;
+		case SoundType::Music:
+			std::cout << "Music ";
+			break;
+		}
+		std::cout << "played with id: " << id << " with volume: " << volume << "\n";
 	}
-
+	virtual int MaxVolume() const override
+	{
+		return m_RealSS->MaxVolume();
+	}
+	
 private:
 
 	std::unique_ptr<SoundSystem> m_RealSS;

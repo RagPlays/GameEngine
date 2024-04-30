@@ -2,17 +2,61 @@
 #include "MusicPlayer.h"
 
 MusicPlayer::MusicPlayer(const std::string& filePath)
-	: m_Music{ Mix_LoadMUS(filePath.c_str()) }
+	: m_IsLoaded{ false }
+	, m_FilePath{ filePath }
+	, m_Music{ nullptr }
 {
-	if (!m_Music)
-	{
-		std::cerr << "ERROR::MUSICPLAYER::COULD_NOT_LOAD_MUSIC_FILE\n";
-	}
 }
 
 MusicPlayer::~MusicPlayer()
 {
-	if(m_Music) Mix_FreeMusic(m_Music);
+	UnLoad();
+}
+
+//MusicPlayer::MusicPlayer(MusicPlayer&& other) noexcept
+//	: m_IsLoaded{ other.m_IsLoaded }
+//	, m_FilePath{ std::move(other.m_FilePath) }
+//	, m_Music{ other.m_Music }
+//{
+//	other.m_Music = nullptr;
+//}
+//
+//MusicPlayer& MusicPlayer::operator=(MusicPlayer&& other) noexcept
+//{
+//	if (this != &other)
+//	{
+//		m_IsLoaded = other.m_IsLoaded;
+//		m_FilePath = std::move(other.m_FilePath);
+//		m_Music = other.m_Music;
+//		other.m_Music = nullptr;
+//	}
+//	return *this;
+//}
+
+void MusicPlayer::Load()
+{
+	m_Music = Mix_LoadMUS(m_FilePath.c_str());
+	if (!m_Music)
+	{
+		std::cerr << "ERROR::MUSICPLAYER::COULD_NOT_LOAD_MUSIC_FILE: " << m_FilePath << "\n";
+	}
+	m_IsLoaded = true;
+}
+
+void MusicPlayer::UnLoad()
+{
+	if (m_Music) Mix_FreeMusic(m_Music);
+	m_IsLoaded = false;
+}
+
+bool MusicPlayer::IsLoaded() const
+{
+	return m_IsLoaded;
+}
+
+void MusicPlayer::SetVolume(int volume)
+{
+	Mix_VolumeMusic(volume);
 }
 
 void MusicPlayer::Play()
@@ -33,4 +77,9 @@ void MusicPlayer::Resume()
 void MusicPlayer::Stop()
 {
 	Mix_HaltMusic();
+}
+
+int MusicPlayer::MaxVolume()
+{
+	return MIX_MAX_VOLUME;
 }

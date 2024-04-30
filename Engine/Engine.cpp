@@ -16,9 +16,12 @@
 #include "EventQueue.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 #include "Timer.h"
 
-void PrintSDLVersion()
+#include "SDLSoundSystem.h"
+
+static void PrintSDLVersion()
 {
 	printf("\nENGINE INFO:\n");
 
@@ -84,6 +87,12 @@ Engine::Engine(const std::string& dataPath, int width, int height)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
+
+#ifdef _DEBUG
+	ServiceLocator::RegisterSoundSystem(std::make_unique<LoggingSoundSystem>(std::make_unique<SDLSoundSystem>()));
+#else
+	ServiceLocator::RegisterSoundSystem(std::make_unique<SDLSoundSystem>());
+#endif
 
 	Renderer::Get().Init(m_Window);
 	ResourceManager::Get().Init(dataPath);

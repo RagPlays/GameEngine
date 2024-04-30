@@ -17,14 +17,24 @@ public:
 	MusicPlayer& operator=(const MusicPlayer& other) = delete;
 	MusicPlayer& operator=(MusicPlayer&& other) noexcept = delete;
 
+	bool IsLoaded() const;
+	void Load();
+	void UnLoad();
+
+	void SetVolume(int volume);
+
 	void Play();
 	void Pause();
 	void Resume();
 	void Stop();
 
+	static int MaxVolume();
+
 private:
 
-	Mix_Music* m_Music;
+	bool m_IsLoaded{ false };
+	std::string m_FilePath;
+	Mix_Music* m_Music{ nullptr };
 
 };
 

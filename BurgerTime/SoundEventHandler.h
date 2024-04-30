@@ -11,7 +11,7 @@ class SoundEventHandler final : public EventHandler
 {
 public:
 
-	SoundEventHandler();
+	SoundEventHandler() = default;
 	virtual ~SoundEventHandler() = default;
 
 	SoundEventHandler(const SoundEventHandler& other) = delete;
@@ -22,9 +22,6 @@ public:
 	virtual void HandleEvent(GameEvent gameEvent) override;
 
 private:
-
-	std::shared_ptr<MusicPlayer> m_Music;
-	std::shared_ptr<SoundEffect> m_DieSound;
 };
 
 #endif // !SOUNDEVENTHANDLER_H

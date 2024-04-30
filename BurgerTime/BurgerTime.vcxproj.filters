@@ -20,6 +20,9 @@
     <Filter Include="GameSourceFiles\EventHandlers">
       <UniqueIdentifier>{37dea5e7-443f-468d-807d-a79ed50c4a1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFiles\Sound">
+      <UniqueIdentifier>{6dc81e25-a306-4aba-9dd3-ef4120db942a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="SoundEventHandler.h">
       <Filter>GameSourceFiles\EventHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundIDStorage.h">
+      <Filter>GameSourceFiles\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

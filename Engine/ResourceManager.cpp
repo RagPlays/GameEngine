@@ -28,12 +28,12 @@ std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigne
 	return std::make_shared<Font>(m_DataPath + file, size);
 }
 
-std::shared_ptr<SoundEffect> ResourceManager::LoadSoundEffect(const std::string& file) const
+std::unique_ptr<SoundEffect> ResourceManager::LoadSoundEffect(const std::string& file) const
 {
-	return std::make_shared<SoundEffect>(m_DataPath + file);
+	return std::make_unique<SoundEffect>(m_DataPath + file);
 }
 
-std::shared_ptr<MusicPlayer> ResourceManager::LoadMusicPlayer(const std::string& file) const
+std::unique_ptr<MusicPlayer> ResourceManager::LoadMusicPlayer(const std::string& file) const
 {
-	return std::make_shared<MusicPlayer>(m_DataPath + file);
+	return std::make_unique<MusicPlayer>(m_DataPath + file);
 }

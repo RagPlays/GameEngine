@@ -64,6 +64,9 @@
     <Filter Include="EngineCore\Singletons">
       <UniqueIdentifier>{cc528522-35aa-4a01-84a2-6dca101b69fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineCore\Sound\SoundAbstractions">
+      <UniqueIdentifier>{34d7f648-33ff-4099-9d44-e233ed12d545}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -159,12 +162,6 @@
     <ClInclude Include="EventHandler.h">
       <Filter>EngineCore\Events\EventQueue</Filter>
     </ClInclude>
-    <ClInclude Include="SoundEffect.h">
-      <Filter>EngineCore\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicPlayer.h">
-      <Filter>EngineCore\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>EngineCore\GameObject</Filter>
     </ClInclude>
@@ -184,6 +181,15 @@
       <Filter>EngineCore\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="SoundSystem.h">
+      <Filter>EngineCore\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicPlayer.h">
+      <Filter>EngineCore\Sound\SoundAbstractions</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>EngineCore\Sound\SoundAbstractions</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSoundSystem.h">
       <Filter>EngineCore\Sound</Filter>
     </ClInclude>
   </ItemGroup>
@@ -263,12 +269,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>EngineCore\Events\ObserverSubject</Filter>
     </ClCompile>
-    <ClCompile Include="SoundEffect.cpp">
-      <Filter>EngineCore\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="MusicPlayer.cpp">
-      <Filter>EngineCore\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>EngineCore\GameObject</Filter>
     </ClCompile>
@@ -281,8 +281,17 @@
     <ClCompile Include="Timer.cpp">
       <Filter>EngineCore\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="SoundSystem.cpp">
+    <ClCompile Include="MusicPlayer.cpp">
+      <Filter>EngineCore\Sound\SoundAbstractions</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>EngineCore\Sound\SoundAbstractions</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSoundSystem.cpp">
       <Filter>EngineCore\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>EngineCore\Singletons</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

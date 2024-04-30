@@ -2,30 +2,28 @@
 #include "ResourceManager.h"
 #include "SoundEffect.h"
 #include "MusicPlayer.h"
+#include "ServiceLocator.h"
 
-SoundEventHandler::SoundEventHandler()
-{
-	m_Music = ResourceManager::Get().LoadMusicPlayer("Sound/Music/forestMusic.mp3");
-	m_DieSound = ResourceManager::Get().LoadSoundEffect("Sound/SoundEffect/dieSF.wav");
-}
+#include "SoundIDStorage.h"
 
 void SoundEventHandler::HandleEvent(GameEvent gameEvent)
 {
+	SoundSystem& soundSystem{ ServiceLocator::GetSoundSystem() };
+
 	switch (gameEvent)
 	{
 	case GameEvent::gameStarts:
-		m_Music->Play();
+		soundSystem.Play(MusicSoundID::calmMusic, soundSystem.MaxVolume(), SoundType::Music);
 		break;
 
 	case GameEvent::gameEnds:
-		m_Music->Stop();
 		break;
 
 	case GameEvent::playerJoined:
 		break;
 
 	case GameEvent::playerDied:
-		m_DieSound->Play();
+		soundSystem.Play(SoundEffectSoundID::die, soundSystem.MaxVolume(), SoundType::SoundEffect);
 		break;
 
 	case GameEvent::foundSmallPickup:
