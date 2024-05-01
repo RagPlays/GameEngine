@@ -182,6 +182,7 @@
     <ClInclude Include="PlayerMoveCommand.h" />
     <ClInclude Include="PlayerPickupCommand.h" />
     <ClInclude Include="PlayerStatsComponent.h" />
+    <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
     <ClInclude Include="SoundIDStorage.h" />

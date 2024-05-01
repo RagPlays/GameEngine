@@ -24,13 +24,18 @@ public:
 
 	virtual void GameStart() override;
 
-	void Move(const glm::vec3& dir);
+	virtual void FixedUpdate() override;
+
+	void Move(const glm::ivec2& dir);
+	void Stop(const glm::ivec2& stopDir);
 	void Killed();
 	void PickupEvent(PickupItem item);
 
 	int GetPlayerIdx() const;
 
 private:
+
+	glm::ivec2 m_MovementDir;
 
 	static unsigned int s_PlayerCount;
 

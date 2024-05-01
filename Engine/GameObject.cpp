@@ -187,6 +187,11 @@ void GameObject::Translate(const glm::vec3& translate)
 	SetLocalPosition(GetLocalPosition() + translate);
 }
 
+void GameObject::Translate(const glm::vec2& translate)
+{
+	SetLocalPosition(GetLocalPosition() + glm::vec3{translate.x, translate.y, 0.f});
+}
+
 // Getters
 bool GameObject::IsDestroyed() const
 {

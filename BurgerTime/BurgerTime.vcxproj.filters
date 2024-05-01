@@ -87,5 +87,8 @@
     <ClInclude Include="SoundIDStorage.h">
       <Filter>GameSourceFiles\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerStopCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

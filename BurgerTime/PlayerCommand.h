@@ -27,6 +27,7 @@ protected:
 private:
 
 	PlayerComponent* m_Player;
+
 };
 
 #endif // !PLAYERCOMMAND_H

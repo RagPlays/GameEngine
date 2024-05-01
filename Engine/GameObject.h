@@ -92,6 +92,7 @@ public:
 
 	// Translate
 	void Translate(const glm::vec3& translate);
+	void Translate(const glm::vec2& translate);
 
 	// Getters
 	bool IsDestroyed() const;
