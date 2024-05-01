@@ -36,6 +36,8 @@ private:
 	std::vector<Uint8> m_PreviousKeyStates;
 
 	std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
+
+	std::vector<SDL_Scancode> m_KeyStack;
 };
 
 #endif // !KEYBOARDMOUSE_H
