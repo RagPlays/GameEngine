@@ -60,10 +60,15 @@ SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
 SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
 {
 	m_SoundThreadRunning = false;
+	m_ConditionToRun.notify_one();
 	if (m_SoundThread.joinable())
 	{
 		m_SoundThread.join();
 	}
+
+	// delete all sounds
+	m_SoundEffects.clear();
+	m_Music.clear();
 }
 
 void SDLSoundSystem::SDLSoundSystemImpl::AddSong(const std::string& filePath, SoundID id)
