@@ -13,26 +13,6 @@ SoundEffect::~SoundEffect()
 	UnLoad();
 }
 
-//SoundEffect::SoundEffect(SoundEffect&& other) noexcept 
-//	: m_IsLoaded{ other.m_IsLoaded }
-//	, m_FilePath{ std::move(other.m_FilePath) }
-//	, m_SoundEffect{ other.m_SoundEffect }
-//{
-//	other.m_SoundEffect = nullptr;
-//}
-//
-//SoundEffect& SoundEffect::operator=(SoundEffect&& other) noexcept
-//{
-//	if (this != &other)
-//	{
-//		m_IsLoaded = other.m_IsLoaded;
-//		m_FilePath = std::move(other.m_FilePath);
-//		m_SoundEffect = other.m_SoundEffect;
-//		other.m_SoundEffect = nullptr;
-//	}
-//	return *this;
-//}
-
 bool SoundEffect::IsLoaded() const
 {
 	return m_IsLoaded;
@@ -44,12 +24,15 @@ void SoundEffect::Load()
 	if (!m_SoundEffect)
 	{
 		std::cerr << "ERROR::SOUNDEFFECT::COULD_NOT_LOAD_SOUNDEFFECT_FILE: " << m_FilePath << "\n";
+		return;
 	}
+	m_IsLoaded = true;
 }
 
 void SoundEffect::UnLoad()
 {
 	if (m_SoundEffect) Mix_FreeChunk(m_SoundEffect);
+	m_IsLoaded = false;
 }
 
 void SoundEffect::SetVolume(int volume)

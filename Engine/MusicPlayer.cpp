@@ -13,32 +13,13 @@ MusicPlayer::~MusicPlayer()
 	UnLoad();
 }
 
-//MusicPlayer::MusicPlayer(MusicPlayer&& other) noexcept
-//	: m_IsLoaded{ other.m_IsLoaded }
-//	, m_FilePath{ std::move(other.m_FilePath) }
-//	, m_Music{ other.m_Music }
-//{
-//	other.m_Music = nullptr;
-//}
-//
-//MusicPlayer& MusicPlayer::operator=(MusicPlayer&& other) noexcept
-//{
-//	if (this != &other)
-//	{
-//		m_IsLoaded = other.m_IsLoaded;
-//		m_FilePath = std::move(other.m_FilePath);
-//		m_Music = other.m_Music;
-//		other.m_Music = nullptr;
-//	}
-//	return *this;
-//}
-
 void MusicPlayer::Load()
 {
 	m_Music = Mix_LoadMUS(m_FilePath.c_str());
 	if (!m_Music)
 	{
 		std::cerr << "ERROR::MUSICPLAYER::COULD_NOT_LOAD_MUSIC_FILE: " << m_FilePath << "\n";
+		return;
 	}
 	m_IsLoaded = true;
 }

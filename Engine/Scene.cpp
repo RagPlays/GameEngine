@@ -46,7 +46,6 @@ void Scene::Update()
 	), m_Objects.end());
 }
 
-
 void Scene::LateUpdate()
 {
 	for (auto& object : m_Objects)
