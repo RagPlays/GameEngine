@@ -16,15 +16,15 @@
 int GetOpenGLDriverIndex()
 {
 	int openglIndex = -1;
-	const int driverCount = SDL_GetNumRenderDrivers();
-	for (int i{}; i < driverCount; i++)
+	const int driverCount{ SDL_GetNumRenderDrivers() };
+	for (int idx{}; idx < driverCount; ++idx)
 	{
 		SDL_RendererInfo info;
-		if (!SDL_GetRenderDriverInfo(i, &info))
+		if (!SDL_GetRenderDriverInfo(idx, &info))
 		{
 			if (!strcmp(info.name, "opengl"))
 			{
-				openglIndex = i;
+				openglIndex = idx;
 			}
 		}
 	}

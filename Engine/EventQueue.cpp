@@ -1,10 +1,9 @@
 #include <cassert>
 #include "EventQueue.h"
 
-void EventQueue::SetHandler(std::unique_ptr<EventHandler>&& handler)
+void EventQueue::AddHandler(std::unique_ptr<EventHandler>&& handler)
 {
-	m_Handler.reset();
-	m_Handler = std::move(handler);
+	m_Handlers.emplace_back(std::move(handler));
 }
 
 void EventQueue::AddEvent(GameEvent gameEvent)
@@ -16,13 +15,21 @@ void EventQueue::AddEvent(GameEvent gameEvent)
 	m_Tail = (m_Tail + 1) % s_MaxPending;
 }
 
+void EventQueue::ClearEvents()
+{
+	m_Head = m_Tail;
+}
+
 void EventQueue::Update()
 {
-	if (!m_Handler.get()) return;
+	if (m_Handlers.empty()) return;
 
 	for (unsigned int idx{ m_Head }; idx != m_Tail; idx = (idx + 1) % s_MaxPending)
 	{
-		m_Handler->HandleEvent(m_Events[idx]);
+		for (const auto& handler : m_Handlers)
+		{
+			handler->HandleEvent(m_Events[idx]);
+		}
 	}
 	m_Head = m_Tail;
 }
@@ -30,10 +37,10 @@ void EventQueue::Update()
 // PRIVATE FUNCTIONS //
 
 EventQueue::EventQueue()
-	: m_Handler{ nullptr }
+	: m_NullEventHandler{ nullptr }
 	, m_Head{ 0 }
 	, m_Tail{ 0 }
 	, m_Events{}
 {
-	//m_Handler = std::make_unique<NullEventHandler>();
+	m_NullEventHandler = std::make_unique<NullEventHandler>();
 }

@@ -19,9 +19,9 @@ public:
 	PlayerStatsComponent& operator=(const PlayerStatsComponent& other) = delete;
 	PlayerStatsComponent& operator=(PlayerStatsComponent&& other) noexcept = delete;
 
-	virtual void Update() override;
+	void Update() override;
 
-	virtual void OnNotify(GameObject* gameObj, GameEvent gameEvent) override;
+	void OnNotify(GameObject* gameObj, GameEvent gameEvent) override;
 
 private:
 
@@ -29,6 +29,7 @@ private:
 	int m_PlayerIdx;
 	int m_Lives;
 	int m_Score;
+
 };
 
 #endif // !PLAYERSTATE

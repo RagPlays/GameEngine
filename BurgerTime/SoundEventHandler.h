@@ -19,7 +19,7 @@ public:
 	SoundEventHandler& operator=(const SoundEventHandler& other) = delete;
 	SoundEventHandler& operator=(SoundEventHandler&& other) noexcept = delete;
 
-	virtual void HandleEvent(GameEvent gameEvent) override;
+	virtual void HandleEvent(GameEvent gameEvent) const override;
 
 private:
 };

@@ -1,8 +1,8 @@
 #ifndef TEXTURECOMPONENT_H
 #define TEXTURECOMPONENT_H
 
-#include <string>
 #include <memory>
+
 #include <glm.hpp>
 #include <SDL.h>
 #include "Component.h"
@@ -15,7 +15,6 @@ class RenderComponent final : public Component
 public:
 
 	explicit RenderComponent(GameObject* const owner);
-	explicit RenderComponent(GameObject* const owner, const std::string& fileName);
 	explicit RenderComponent(GameObject* const owner, std::shared_ptr<Texture2D> texture);
 	virtual ~RenderComponent() = default;
 
@@ -25,14 +24,13 @@ public:
 	RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
 
 	// Texture
-	void SetTextureFromFileName(const std::string& fileName);
-	void SetTexture(std::shared_ptr<Texture2D> newTexture);
+	void SetTexture(std::shared_ptr<Texture2D> texture);
+	void SetTexture(std::shared_ptr<Texture2D> texture, const glm::ivec2& dimentions);
 
 	// Dimensions
 	void SetDefaultDimensions();
 	void SetTextureWidth(int width);
 	void SetTextureHeight(int height);
-	void SetTextureDimensions(int width, int height);
 	void SetTextureDimensions(const glm::ivec2& dimentions);
 
 	int GetTextureWidth() const;
@@ -48,12 +46,10 @@ public:
 
 private:
 
-	glm::ivec2 m_RenderDimensions;
 	std::shared_ptr<Texture2D> m_Texture;
+	glm::ivec2 m_RenderDimensions;
 	bool m_SrcRectSet;
-	//SDL_Rect m_DestRect;
 	SDL_Rect m_SrcRect;
-
 };
 
 #endif // !TEXTURECOMPONENT_H

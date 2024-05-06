@@ -69,9 +69,6 @@
     <ClInclude Include="PlayerMoveCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerPickupCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerStatsComponent.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
@@ -84,7 +81,7 @@
     <ClInclude Include="SoundEventHandler.h">
       <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClInclude>
-    <ClInclude Include="SoundIDStorage.h">
+    <ClInclude Include="SoundIDs.h">
       <Filter>GameSourceFiles\Sound</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStopCommand.h">

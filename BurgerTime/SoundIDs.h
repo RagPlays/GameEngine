@@ -1,4 +1,3 @@
-
 enum MusicSoundID
 {
 	calmMusic = 0

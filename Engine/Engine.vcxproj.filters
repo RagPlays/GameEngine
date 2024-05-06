@@ -67,6 +67,9 @@
     <Filter Include="EngineCore\Sound\SoundAbstractions">
       <UniqueIdentifier>{34d7f648-33ff-4099-9d44-e233ed12d545}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineCore\StateMachine">
+      <UniqueIdentifier>{27afa3df-9fdd-47d7-b50e-68d4827a15e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="SDLSoundSystem.h">
       <Filter>EngineCore\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>EngineCore\StateMachine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

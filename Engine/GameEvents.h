@@ -5,6 +5,7 @@ enum class GameEvent
 {
 	gameStarts,
 	gameEnds,
+	levelLoaded,
 	playerJoined,
 	playerDied,
 	foundSmallPickup,

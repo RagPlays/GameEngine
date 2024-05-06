@@ -84,14 +84,13 @@ public:
 	void SetParent(GameObject* parent, bool keepWorldPos = false);
 
 	// Get/Set Transforms
-	const glm::vec3& GetLocalPosition() const;
-	void SetLocalPosition(const glm::vec3& pos);
-	const glm::vec3& GetWorldPosition();
-	void SetWorldPosition(const glm::vec3& pos);
+	const glm::vec2& GetLocalPosition() const;
+	void SetLocalPosition(const glm::vec2& pos);
+	const glm::vec2& GetWorldPosition();
+	void SetWorldPosition(const glm::vec2& pos);
 	void SetPositionDirty();
 
 	// Translate
-	void Translate(const glm::vec3& translate);
 	void Translate(const glm::vec2& translate);
 
 	// Getters

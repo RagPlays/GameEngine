@@ -64,12 +64,14 @@ public:
 	{
 		std::cout << "Adding song with filename: " << filePath << " on id: " << id << ".\n";
 		m_RealSS->AddSong(filePath, id);
-	};
+	}
+
 	virtual void AddSoundEffect(const std::string& filePath, SoundID id)
 	{
 		std::cout << "Adding soundEffect with filename: " << filePath << " on id: " << id << ".\n";
 		m_RealSS->AddSoundEffect(filePath, id);
-	};
+	}
+
 	void Play(SoundID id, int volume, SoundType type) override
 	{
 		m_RealSS->Play(id, volume, type);
@@ -82,8 +84,9 @@ public:
 			std::cout << "Music ";
 			break;
 		}
-		std::cout << "played with id: " << id << " with volume: " << volume << "\n";
+		std::cout << "played with id: " << id << " volume: " << volume << "\n";
 	}
+
 	virtual int MaxVolume() const override
 	{
 		return m_RealSS->MaxVolume();

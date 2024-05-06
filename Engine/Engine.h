@@ -9,7 +9,7 @@ class Engine final
 {
 public:
 
-	explicit Engine(const std::string& dataPath, int width, int height);
+	explicit Engine(const std::string& dataPath, unsigned int width, unsigned int height);
 	virtual ~Engine();
 	Engine(const Engine& other) = delete;
 	Engine(Engine&& other) noexcept = delete;
@@ -18,11 +18,14 @@ public:
 
 	void Run();
 	void SetGameTitle(const std::string& title);
+	void SetWindowSize(int width, int height);
+	void SetWindowPosition(int x, int y);
+
 
 private:
 
-	const int m_WindowWidth;
-	const int m_WindowHeight;
+	const unsigned int m_WindowWidth;
+	const unsigned int m_WindowHeight;
 	SDL_Window* m_Window;
 
 };

@@ -180,12 +180,11 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerKillCommand.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
-    <ClInclude Include="PlayerPickupCommand.h" />
     <ClInclude Include="PlayerStatsComponent.h" />
     <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
-    <ClInclude Include="SoundIDStorage.h" />
+    <ClInclude Include="SoundIDs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,17 +1,20 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <vector>
 #include <SDL.h>
 #include "Singleton.h"
 
 struct SDL_Color;
 class Texture2D;
+class RenderComponent;
 
 class Renderer final : public Singleton<Renderer>
 {
 public:
 
 	virtual ~Renderer() = default;
+
 	Renderer(const Renderer& other) = delete;
 	Renderer(Renderer&& other) noexcept = delete;
 	Renderer& operator=(const Renderer& other) = delete;

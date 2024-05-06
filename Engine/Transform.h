@@ -16,25 +16,25 @@ public:
 	Transform& operator=(Transform&& other) noexcept = default;
 
 	// Position
-	const glm::vec3& GetPosition() const;
-	void SetPosition(float x, float y, float z);
-	void SetPosition(const glm::vec3& position);
+	const glm::vec2& GetPosition() const;
+	void SetPosition(float x, float y);
+	void SetPosition(const glm::vec2& position);
 
 	// Rotation
-	const glm::vec3& GetRotation() const;
-	void SetRotation(float x, float y, float z);
-	void SetRotation(const glm::vec3& rotation);
+	const glm::vec2& GetRotation() const;
+	void SetRotation(float x, float y);
+	void SetRotation(const glm::vec2& rotation);
 
 	// Scale
-	const glm::vec3& GetScale() const;
-	void SetScale(float x, float y, float z);
-	void setScale(const glm::vec3& scale);
+	const glm::vec2& GetScale() const;
+	void SetScale(float x, float y);
+	void SetScale(const glm::vec2& scale);
 
 private:
 
-	glm::vec3 m_Position;
-	glm::vec3 m_Rotation; // in radians
-	glm::vec3 m_Scale;
+	glm::vec2 m_Position;
+	glm::vec2 m_Rotation; // in radians
+	glm::vec2 m_Scale;
 
 };
 

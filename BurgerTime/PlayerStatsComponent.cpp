@@ -37,34 +37,24 @@ void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 {
 	if (PlayerComponent* playerComp{ gameObj->GetComponent<PlayerComponent>() })
 	{
-		m_PlayerIdx = playerComp->GetPlayerIdx();
-
 		switch (gameEvent)
 		{
-		case GameEvent::playerJoined:
+		case GameEvent::gameStarts:
+			m_PlayerIdx = playerComp->GetPlayerIdx();
+			break;
 		case GameEvent::playerDied:
+			m_Lives -= 1;
+			break;
 		case GameEvent::foundLargePickup:
+			m_Score += 100;
+			break;
 		case GameEvent::foundSmallPickup:
-			m_NeedsUpdate = true;
+			m_Score += 10;
 			break;
 		default:
-			break;
+			return;
 		}
 
-		if (m_NeedsUpdate)
-		{
-			switch (gameEvent)
-			{
-			case GameEvent::playerDied:
-				m_Lives -= 1;
-				break;
-			case GameEvent::foundLargePickup:
-				m_Score += 100;
-				break;
-			case GameEvent::foundSmallPickup:
-				m_Score += 10;
-				break;
-			}
-		}
+		m_NeedsUpdate = true;
 	}
 }

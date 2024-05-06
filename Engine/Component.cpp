@@ -41,18 +41,18 @@ GameObject* Component::GetParent() const
 	return m_pOwner->GetParent();
 }
 
-const glm::vec3& Component::GetLocalPosition() const
+const glm::vec2& Component::GetLocalPosition() const
 {
 	return m_pOwner->GetLocalPosition();
 }
 
-const glm::vec3& Component::GetWorldPosition() const
+const glm::vec2& Component::GetWorldPosition() const
 {
 	return m_pOwner->GetWorldPosition();
 }
 
 // Sets
-void Component::SetLocalPosition(const glm::vec3& pos)
+void Component::SetLocalPosition(const glm::vec2& pos)
 {
 	m_pOwner->SetLocalPosition(pos);
 }

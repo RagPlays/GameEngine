@@ -20,7 +20,6 @@ public:
 protected:
 
 	Subject() = default;
-	
 	void Notify(GameObject* gameObj, GameEvent gameEvent);
 
 private:

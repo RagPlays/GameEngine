@@ -15,11 +15,11 @@ public:
 	EventHandler& operator=(const EventHandler& other) = delete;
 	EventHandler& operator=(EventHandler&& other) noexcept = delete;
 
-	virtual void HandleEvent(GameEvent gameEvent) = 0;
+	virtual void HandleEvent(GameEvent gameEvent) const = 0;
 
 };
 
-class NullEventHandler final : EventHandler
+class NullEventHandler final : public EventHandler
 {
 public:
 
@@ -31,7 +31,7 @@ public:
 	NullEventHandler& operator=(const NullEventHandler& other) = delete;
 	NullEventHandler& operator=(NullEventHandler&& other) noexcept = delete;
 
-	virtual void HandleEvent(GameEvent) override {}
+	virtual void HandleEvent(GameEvent) const override {}
 
 };
 

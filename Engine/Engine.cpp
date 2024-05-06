@@ -54,7 +54,7 @@ static void PrintSDLVersion()
 	printf("GAMEINFO:\n");
 }
 
-Engine::Engine(const std::string& dataPath, int width, int height)
+Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int height)
 	: m_WindowWidth{ width }
 	, m_WindowHeight{ height }
 	, m_Window{ nullptr }
@@ -129,9 +129,6 @@ void Engine::Run()
 	// Called Once When Game Starts
 	sceneManager.GameStart();
 
-	// To REmove
-	std::cout << "There is a soundEffect when player gets killed\n";
-
 	while (!inputManager.HasQuit())
 	{
 		// Timer
@@ -166,4 +163,14 @@ void Engine::Run()
 void Engine::SetGameTitle(const std::string& title)
 {
 	SDL_SetWindowTitle(m_Window, title.c_str());
+}
+
+void Engine::SetWindowSize(int width, int height)
+{
+	SDL_SetWindowSize(m_Window, width, height);
+}
+
+void Engine::SetWindowPosition(int x, int y)
+{
+	SDL_SetWindowPosition(m_Window, x, y);
 }

@@ -146,24 +146,24 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
 }
 
 // Get/Set Transform
-const glm::vec3& GameObject::GetLocalPosition() const
+const glm::vec2& GameObject::GetLocalPosition() const
 {
 	return m_LocalTransform.GetPosition();
 }
 
-void GameObject::SetLocalPosition(const glm::vec3& pos)
+void GameObject::SetLocalPosition(const glm::vec2& pos)
 {
 	m_LocalTransform.SetPosition(pos);
 	SetPositionDirty();
 }
 
-const glm::vec3& GameObject::GetWorldPosition()
+const glm::vec2& GameObject::GetWorldPosition()
 {
 	UpdateWorldPosition();
 	return m_WorldTransform.GetPosition();
 }
 
-void GameObject::SetWorldPosition(const glm::vec3& pos)
+void GameObject::SetWorldPosition(const glm::vec2& pos)
 {
 	if (m_Parent)
 	{
@@ -182,14 +182,9 @@ void GameObject::SetPositionDirty()
 	}
 }
 
-void GameObject::Translate(const glm::vec3& translate)
-{
-	SetLocalPosition(GetLocalPosition() + translate);
-}
-
 void GameObject::Translate(const glm::vec2& translate)
 {
-	SetLocalPosition(GetLocalPosition() + glm::vec3{translate.x, translate.y, 0.f});
+	SetLocalPosition(GetLocalPosition() + translate);
 }
 
 // Getters

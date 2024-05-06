@@ -4,9 +4,9 @@
 #include "MusicPlayer.h"
 #include "ServiceLocator.h"
 
-#include "SoundIDStorage.h"
+#include "SoundIDs.h"
 
-void SoundEventHandler::HandleEvent(GameEvent gameEvent)
+void SoundEventHandler::HandleEvent(GameEvent gameEvent) const
 {
 	SoundSystem& soundSystem{ ServiceLocator::GetSoundSystem() };
 	const int maxVol{ soundSystem.MaxVolume() };

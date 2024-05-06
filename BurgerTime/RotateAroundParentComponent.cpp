@@ -25,6 +25,6 @@ void RotateAroundParentComponent::Update()
 		const float radius{ glm::length(GetLocalPosition()) };
 		m_CurrentAngle += m_RotationSpeed * Timer::Get().GetElapsedSec();
 
-		SetLocalPosition({ radius * std::cosf(m_CurrentAngle), radius * std::sinf(m_CurrentAngle), 0.f });
+		SetLocalPosition({ radius * std::cosf(m_CurrentAngle), radius * std::sinf(m_CurrentAngle) });
 	}
 }

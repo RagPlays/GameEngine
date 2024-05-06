@@ -29,11 +29,11 @@ protected:
 	// Gets
 	GameObject* const GetOwner() const;
 	GameObject* GetParent() const;
-	const glm::vec3& GetLocalPosition() const;
-	const glm::vec3& GetWorldPosition() const;
+	const glm::vec2& GetLocalPosition() const;
+	const glm::vec2& GetWorldPosition() const;
 
 	// Sets
-	void SetLocalPosition(const glm::vec3& pos);
+	void SetLocalPosition(const glm::vec2& pos);
 
 private:
 

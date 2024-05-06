@@ -20,8 +20,9 @@ public:
 	EventQueue& operator=(const EventQueue& other) = delete;
 	EventQueue& operator=(EventQueue&& other) noexcept = delete;
 
-	void SetHandler(std::unique_ptr<EventHandler>&& handler);
+	void AddHandler(std::unique_ptr<EventHandler>&& handler);
 	void AddEvent(GameEvent gameEvent);
+	void ClearEvents();
 	void Update();
 
 private:
@@ -31,13 +32,13 @@ private:
 
 private:
 
+	static constexpr unsigned int s_MaxPending{ 100 };
 	unsigned int m_Head;
 	unsigned int m_Tail;
-	static constexpr unsigned int s_MaxPending{ 100 };
 
-	std::unique_ptr<EventHandler> m_Handler;
+	std::unique_ptr<NullEventHandler> m_NullEventHandler;
+	std::vector<std::unique_ptr<EventHandler>> m_Handlers;
 
-	//std::queue<GameEvent> m_Events;
 	std::array<GameEvent, s_MaxPending> m_Events;
 };
 

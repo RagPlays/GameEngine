@@ -3,51 +3,51 @@
 Transform::Transform()
 	: m_Position{}
 	, m_Rotation{}
-	, m_Scale{ 1.f, 1.f, 1.f }
+	, m_Scale{ 1.f, 1.f }
 {
 }
 
-const glm::vec3& Transform::GetPosition() const
+const glm::vec2& Transform::GetPosition() const
 {
 	return m_Position;
 }
 
-void Transform::SetPosition(float x, float y, float z)
+void Transform::SetPosition(float x, float y)
 {
-	m_Position = glm::vec3{ x, y, z };
+	m_Position = glm::vec2{ x, y };
 }
 
-void Transform::SetPosition(const glm::vec3& position)
+void Transform::SetPosition(const glm::vec2& position)
 {
 	m_Position = position;
 }
 
-const glm::vec3& Transform::GetRotation() const
+const glm::vec2& Transform::GetRotation() const
 {
 	return m_Rotation;
 }
 
-void Transform::SetRotation(float x, float y, float z)
+void Transform::SetRotation(float x, float y)
 {
-	m_Rotation = glm::vec3{ x, y, z };
+	m_Rotation = glm::vec2{ x, y };
 }
 
-void Transform::SetRotation(const glm::vec3& rotation)
+void Transform::SetRotation(const glm::vec2& rotation)
 {
 	m_Rotation = rotation;
 }
 
-const glm::vec3& Transform::GetScale() const
+const glm::vec2& Transform::GetScale() const
 {
 	return m_Scale;
 }
 
-void Transform::SetScale(float x, float y, float z)
+void Transform::SetScale(float x, float y)
 {
-	m_Scale = glm::vec3{ x, y, z };
+	m_Scale = glm::vec2{ x, y };
 }
 
-void Transform::setScale(const glm::vec3& scale)
+void Transform::SetScale(const glm::vec2& scale)
 {
 	m_Scale = scale;
 }
