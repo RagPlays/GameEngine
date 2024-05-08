@@ -27,6 +27,7 @@ public:
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
 	void FullStop();
+	void SetPosition(const glm::ivec2& pos);
 
 	// Health
 	void Killed();

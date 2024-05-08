@@ -165,9 +165,11 @@ void Engine::SetGameTitle(const std::string& title)
 	SDL_SetWindowTitle(m_Window, title.c_str());
 }
 
-void Engine::SetWindowSize(int width, int height)
+void Engine::SetWindowSize(unsigned int width, unsigned int height)
 {
 	SDL_SetWindowSize(m_Window, width, height);
+	m_WindowWidth = width;
+	m_WindowHeight = height;
 }
 
 void Engine::SetWindowPosition(int x, int y)

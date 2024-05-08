@@ -17,15 +17,15 @@ public:
 	Engine& operator=(Engine&& other) noexcept = delete;
 
 	void Run();
-	void SetGameTitle(const std::string& title);
-	void SetWindowSize(int width, int height);
-	void SetWindowPosition(int x, int y);
 
+	void SetGameTitle(const std::string& title);
+	void SetWindowSize(unsigned int width, unsigned int height);
+	void SetWindowPosition(int x, int y);
 
 private:
 
-	const unsigned int m_WindowWidth;
-	const unsigned int m_WindowHeight;
+	unsigned int m_WindowWidth;
+	unsigned int m_WindowHeight;
 	SDL_Window* m_Window;
 
 };

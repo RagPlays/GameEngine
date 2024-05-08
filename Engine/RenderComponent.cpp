@@ -106,6 +106,6 @@ void RenderComponent::Render() const
 		m_RenderDimensions.y
 	};
 
-	if (m_SrcRectSet) renderer.RenderTexture(*m_Texture, m_SrcRect, destRect);
+	if (m_SrcRectSet) renderer.RenderTexture(*m_Texture, destRect, m_SrcRect);
 	else renderer.RenderTexture(*m_Texture, destRect);
 }

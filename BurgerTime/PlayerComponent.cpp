@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Timer.h"
 #include "EventQueue.h"
+#include "RenderComponent.h"
 
 unsigned int PlayerComponent::s_PlayerCount{ 0 };
 
@@ -12,6 +13,11 @@ PlayerComponent::PlayerComponent(GameObject* const owner, float moveSpeed)
 	, m_PlayerSpeed{ moveSpeed }
 	, m_MovementDir{}
 {
+	if (RenderComponent* const renderComp{ GetOwner()->GetComponent<RenderComponent>() })
+	{
+		const glm::ivec2& dimentions{ renderComp->GetTextureDimentions() };
+		renderComp->SetTextureDimensions(dimentions * 3);
+	}
 }
 
 PlayerComponent::~PlayerComponent()
@@ -54,6 +60,11 @@ void PlayerComponent::Stop(const glm::ivec2& dir)
 void PlayerComponent::FullStop()
 {
 	m_MovementDir = glm::vec2{};
+}
+
+void PlayerComponent::SetPosition(const glm::ivec2& pos)
+{
+	GetOwner()->SetLocalPosition(static_cast<glm::vec2>(pos));
 }
 
 void PlayerComponent::Killed()

@@ -23,6 +23,12 @@
     <Filter Include="GameSourceFiles\Sound">
       <UniqueIdentifier>{6dc81e25-a306-4aba-9dd3-ef4120db942a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFiles\GameComponents\Components">
+      <UniqueIdentifier>{05905aed-ee9a-4020-9016-40fa061eca1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFiles\GameComponents\Level">
+      <UniqueIdentifier>{164bd2de-8825-4543-9753-f97bea553e38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -34,20 +40,23 @@
     <ClCompile Include="ImGuiExercise2.cpp">
       <Filter>GameSourceFiles\ImGuiComponents</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>GameSourceFiles\GameComponents</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerStatsComponent.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClCompile>
-    <ClCompile Include="RotateAroundParentComponent.cpp">
-      <Filter>GameSourceFiles\GameComponents</Filter>
-    </ClCompile>
     <ClCompile Include="SoundEventHandler.cpp">
       <Filter>GameSourceFiles\EventHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateAroundParentComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelRenderer.cpp">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +65,6 @@
     </ClInclude>
     <ClInclude Include="ImGuiExercise2.h">
       <Filter>GameSourceFiles\ImGuiComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>GameSourceFiles\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="PlayerKillCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
@@ -75,9 +81,6 @@
     <ClInclude Include="PlayerComponent.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
-    <ClInclude Include="RotateAroundParentComponent.h">
-      <Filter>GameSourceFiles\GameComponents</Filter>
-    </ClInclude>
     <ClInclude Include="SoundEventHandler.h">
       <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClInclude>
@@ -86,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="PlayerStopCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateAroundParentComponent.h">
+      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelRenderer.h">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

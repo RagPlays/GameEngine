@@ -166,6 +166,7 @@
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
     <ClCompile Include="ImGuiExercise2.cpp" />
+    <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerStatsComponent.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
     <ClInclude Include="ImGuiExercise2.h" />
+    <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerKillCommand.h" />
