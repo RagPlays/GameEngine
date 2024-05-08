@@ -4,9 +4,9 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLevelLoadPath, std::shared_ptr<Texture2D> texture)
+LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }
-	, m_LoadFilePath{ renderLevelLoadPath }
+	, m_FilePath{ renderLoadPath }
 	, m_TileMapTexture{ texture }
 	, m_IsLoaded{ false }
 {
@@ -28,8 +28,8 @@ void LevelRenderer::Render() const
 		};
 		SDL_Rect sourceRect
 		{
-			tileInfo.srcRectX * m_TileSourceSize,
-			tileInfo.srcRectY * m_TileSourceSize,
+			tileInfo.srcGridX * m_TileSourceSize,
+			tileInfo.srcGridY * m_TileSourceSize,
 			m_TileSourceSize,
 			m_TileSourceSize
 		};
@@ -53,7 +53,7 @@ void LevelRenderer::LoadLevel()
 	// .....
 	////////////////////////////
 
-	const std::string pathName{ ResourceManager::Get().GetFullPath(m_LoadFilePath) };
+	const std::string pathName{ ResourceManager::Get().GetFullPath(m_FilePath) };
 
 	if (std::ifstream inFile{ pathName }; !inFile.is_open())
 	{
@@ -94,8 +94,8 @@ void LevelRenderer::LoadLevel()
 					RenderTile{ 
 						static_cast<uint8_t>(gridX),
 						static_cast<uint8_t>(gridY),
-						static_cast<uint16_t>(srcRectX),
-						static_cast<uint16_t>(srcRectY)
+						static_cast<uint8_t>(srcRectX),
+						static_cast<uint8_t>(srcRectY)
 					}
 				);
 			}

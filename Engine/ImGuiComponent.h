@@ -20,7 +20,7 @@ public:
 
 protected:
 
-	explicit ImGuiComponent() = default;
+	ImGuiComponent() = default;
 
 };
 

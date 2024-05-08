@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -166,9 +166,11 @@
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
     <ClCompile Include="ImGuiExercise2.cpp" />
+    <ClCompile Include="LevelCollision.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerMovementComponent.cpp" />
     <ClCompile Include="PlayerStatsComponent.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
     <ClCompile Include="SoundEventHandler.cpp" />
@@ -177,11 +179,12 @@
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
     <ClInclude Include="ImGuiExercise2.h" />
+    <ClInclude Include="LevelCollision.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="PlayerComponent.h" />
-    <ClInclude Include="PlayerKillCommand.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
+    <ClInclude Include="PlayerMovementComponent.h" />
     <ClInclude Include="PlayerStatsComponent.h" />
     <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />

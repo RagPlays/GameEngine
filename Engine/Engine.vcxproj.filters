@@ -70,6 +70,9 @@
     <Filter Include="EngineCore\StateMachine">
       <UniqueIdentifier>{27afa3df-9fdd-47d7-b50e-68d4827a15e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{f2ce5a90-ca03-4b19-a717-459d8bfcb90e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="State.h">
       <Filter>EngineCore\StateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>EngineCore\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Structs.cpp">
+      <Filter>Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

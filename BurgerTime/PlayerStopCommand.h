@@ -1,15 +1,13 @@
 #ifndef PLAYERSTOPCOMMAND_H
 #define	PLAYERSTOPCOMMAND_H
 
-#include <glm.hpp>
 #include "PlayerCommand.h"
-#include "PlayerComponent.h"
 
 class PlayerStopCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerStopCommand(PlayerComponent* player, const glm::ivec2& dir)
+	explicit PlayerStopCommand(PlayerMovementComponent* player, const glm::ivec2& dir)
 		: PlayerCommand{ player }
 		, m_Direcion{ dir }
 	{

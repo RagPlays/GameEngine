@@ -39,19 +39,16 @@ private:
 
 private:
 
-	SDL_DisplayMode m_MonitorInfo;
-	
+	const float m_FixedTimeStep;
+	int m_MonitorRefreshRate;
+	int m_MsPerFrame;
+	float m_Lag;
+	float m_ElapsedSec;
+
 	bool m_VSync;
 	bool m_FpsCapped;
-	int m_MsPerFrame;
 
-	const float m_FixedTimeStep;
-	float m_ElapsedSec;
-	float m_FPS;
-	float m_Lag;
-	std::chrono::high_resolution_clock::time_point m_CurrentTime;
 	std::chrono::high_resolution_clock::time_point m_LastTime;
-
 };
 
 #endif // !TIME_H

@@ -32,7 +32,7 @@ private:
 
 private:
 
-	static constexpr unsigned int s_MaxPending{ 100 };
+	static constexpr unsigned int s_MaxPending{ 10 };
 	unsigned int m_Head;
 	unsigned int m_Tail;
 

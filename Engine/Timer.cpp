@@ -3,21 +3,20 @@
 
 void Timer::Update()
 {
-	m_CurrentTime = std::chrono::high_resolution_clock::now();
-	m_ElapsedSec = std::chrono::duration<float>(m_CurrentTime - m_LastTime).count();
-	m_LastTime = m_CurrentTime;
+	auto now{ std::chrono::high_resolution_clock::now() };
+	m_ElapsedSec = std::chrono::duration<float>(now - m_LastTime).count();
+	m_LastTime = now;
 	m_Lag += m_ElapsedSec;
-	m_FPS = 1.f / m_ElapsedSec;
 }
 
 void Timer::UpdateFpsCap()
 {
 	if (!m_FpsCapped) return;
 
-	const auto sleeptime{ m_CurrentTime + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now() };
+	const auto sleeptime{ m_LastTime + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now() };
 	if (sleeptime > std::chrono::nanoseconds::zero())
 	{
-		std::this_thread::sleep_for(sleeptime);
+		std::this_thread::sleep_for(sleeptime); // main thread
 	}
 }
 
@@ -33,7 +32,7 @@ float Timer::GetFixedElapsedSec() const
 
 float Timer::GetFPS() const
 {
-	return m_FPS;
+	return 1.f / m_ElapsedSec;
 }
 
 bool Timer::GetNeedFixedUpdate()
@@ -82,13 +81,14 @@ Timer::Timer()
 	: m_VSync{ false }
 	, m_FixedTimeStep{ 0.02f }
 	, m_ElapsedSec{}
-	, m_FPS{}
 	, m_Lag{}
-	, m_LastTime{ std::chrono::high_resolution_clock::now() }
 	, m_FpsCapped{ false }
 	, m_MsPerFrame{ 16 }
+	, m_LastTime{ std::chrono::high_resolution_clock::now() }
 {
-	SDL_GetCurrentDisplayMode(0, &m_MonitorInfo);
+	SDL_DisplayMode monitorInfo{};
+	SDL_GetCurrentDisplayMode(0, &monitorInfo);
+	m_MonitorRefreshRate = monitorInfo.refresh_rate;
 
 	if (m_VSync)
 	{
@@ -96,6 +96,6 @@ Timer::Timer()
 	}
 	else if (m_FpsCapped)
 	{
-		EnableFpsCap(m_MonitorInfo.refresh_rate);
+		EnableFpsCap(m_MonitorRefreshRate);
 	}
 }

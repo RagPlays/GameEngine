@@ -14,6 +14,7 @@ public:
 
 	explicit GameObject(const std::string& tag = "Empty");
 	~GameObject() = default;
+
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) noexcept = delete;
 	GameObject& operator=(const GameObject& other) = delete;
@@ -28,15 +29,15 @@ public:
 	void OnDestroy();
 
 	// Components
-	template <typename ComponentType>
-	void AddComponent(std::unique_ptr<Component> component)
+	template <class ComponentType>
+	void AddComponent(std::unique_ptr<ComponentType>&& component)
 	{
 		if (!HasComponent<ComponentType>())
 		{
 			m_Components.emplace_back(std::move(component));
 		}
 	}
-	template <typename ComponentType>
+	template <class ComponentType>
 	void RemoveComponent()
 	{
 		ComponentType* component = GetComponent<ComponentType>();
@@ -49,7 +50,7 @@ public:
 			), m_Components.end());
 		}
 	}
-	template <typename ComponentType>
+	template <class ComponentType>
 	ComponentType* GetComponent() const
 	{
 		for (auto& component : m_Components)
@@ -62,7 +63,7 @@ public:
 		}
 		return nullptr;
 	}
-	template <typename ComponentType>
+	template <class ComponentType>
 	bool HasComponent() const
 	{
 		for (auto& component : m_Components)

@@ -58,6 +58,12 @@
     <ClCompile Include="LevelRenderer.cpp">
       <Filter>GameSourceFiles\GameComponents\Level</Filter>
     </ClCompile>
+    <ClCompile Include="LevelCollision.cpp">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementComponent.cpp">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
@@ -65,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="ImGuiExercise2.h">
       <Filter>GameSourceFiles\ImGuiComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerKillCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
@@ -98,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="LevelRenderer.h">
       <Filter>GameSourceFiles\GameComponents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCollision.h">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementComponent.h">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

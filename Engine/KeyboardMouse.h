@@ -32,8 +32,8 @@ private:
 
 private:
 
-	std::vector<Uint8> m_CurrentKeyStates;
-	std::vector<Uint8> m_PreviousKeyStates;
+	std::vector<uint8_t> m_CurrentKeyStates;
+	std::vector<uint8_t> m_PreviousKeyStates;
 
 	std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
 

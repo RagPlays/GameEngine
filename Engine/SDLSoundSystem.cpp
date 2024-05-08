@@ -50,11 +50,10 @@ private:
 
 SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
 	: m_SoundThreadRunning{ true }
+	, m_SoundThread{ std::jthread{[this] { this->HandleEvents(); }}}
 {
 	m_SoundEffects.clear();
 	m_Music.clear();
-
-	m_SoundThread = std::jthread([this] { this->HandleEvents(); });
 }
 
 SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
