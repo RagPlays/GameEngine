@@ -33,7 +33,7 @@ LevelCollision::LevelCollision(GameObject* const owner, const std::string& colli
 void LevelCollision::GameStart()
 {
 	//GameObject::Destroy(GetOwner()); // Destroy itself
-	SceneManager::Get().SetCurrentSceneByIndex(1);
+	//SceneManager::Get().SetCurrentSceneByIndex(1);
 }
 
 bool LevelCollision::HitTopOrBot(const Linef& line, const Rectf& rect)

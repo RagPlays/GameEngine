@@ -83,6 +83,16 @@ void SceneManager::SetCurrentSceneByName(const std::string& name)
 	std::cerr << "ERROR::SCENEMANAGER::SCENE_NAME_NOT_VALID\n";
 }
 
+void SceneManager::GoNextScene()
+{
+	if ((m_CurrentSceneIdx + 1) >= m_Scenes.size())
+	{
+		assert(false);
+		std::cerr << "ERROR::SCENEMANAGER::SCENE_IDX_NOT_VALID\n";
+	}
+	m_ToSceneIdx = m_CurrentSceneIdx + 1;
+}
+
 Scene& SceneManager::GetCurrentScene() const
 {
 	return *m_Scenes[m_CurrentSceneIdx];

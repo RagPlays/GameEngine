@@ -29,6 +29,7 @@ public:
 	bool Empty() const;
 	void SetCurrentSceneByIndex(uint8_t idx);
 	void SetCurrentSceneByName(const std::string& name);
+	void GoNextScene();
 
 	Scene& GetCurrentScene() const;
 	uint8_t GetCurrentSceneIndex() const;
