@@ -4,26 +4,34 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "Singleton.h"
+#include <functional>
 
-class Scene;
+#include "Singleton.h"
+#include "Scene.h"
+
+//class Scene;
+class Engine;
 
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
 
 	virtual ~SceneManager() = default;
+
 	SceneManager(const SceneManager& other) = delete;
 	SceneManager(SceneManager&& other) noexcept = delete;
 	SceneManager& operator=(const SceneManager& other) = delete;
 	SceneManager& operator=(SceneManager&& other) noexcept = delete;
 
-	Scene& CreateScene(const std::string& name);
+	Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
 	void Destroy();
 
 	bool Empty() const;
-	void SetCurrentSceneByIndex(unsigned int idx);
+	void SetCurrentSceneByIndex(uint8_t idx);
 	void SetCurrentSceneByName(const std::string& name);
+
+	Scene& GetCurrentScene() const;
+	uint8_t GetCurrentSceneIndex() const;
 
 	void GameStart();
 	void FixedUpdate();
@@ -36,10 +44,13 @@ private:
 	friend class Singleton<SceneManager>;
 	SceneManager();
 
+	void CheckSceneSwap();
+
 private:
 
-	unsigned int m_CurrentSceneIdx;
-	std::vector<std::shared_ptr<Scene>> m_Scenes;
+	uint8_t m_ToSceneIdx;
+	uint8_t m_CurrentSceneIdx;
+	std::vector<std::unique_ptr<Scene>> m_Scenes;
 };
 
 #endif // !SCENEMANAGER_H

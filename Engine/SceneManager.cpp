@@ -1,10 +1,17 @@
 #include <iostream>
+#include <cassert>
+
 #include "SceneManager.h"
 #include "Scene.h"
 #include "EventQueue.h"
 
 void SceneManager::GameStart()
 {
+	if (!m_Scenes[m_CurrentSceneIdx]->IsLoaded())
+	{
+		m_Scenes[m_CurrentSceneIdx]->Load();
+	}
+
 	EventQueue::Get().AddEvent(GameEvent::gameStarts);
 	m_Scenes[m_CurrentSceneIdx]->GameStart();
 }
@@ -16,6 +23,7 @@ void SceneManager::FixedUpdate()
 
 void SceneManager::Update()
 {
+	CheckSceneSwap();
 	m_Scenes[m_CurrentSceneIdx]->Update();
 }
 
@@ -29,11 +37,12 @@ void SceneManager::Render() const
 	m_Scenes[m_CurrentSceneIdx]->Render();
 }
 
-Scene& SceneManager::CreateScene(const std::string& name)
+Scene& SceneManager::CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc)
 {
-	const std::shared_ptr<Scene>& scene{ std::shared_ptr<Scene>(new Scene{ name }) };
-	m_Scenes.emplace_back(scene);
-	return *scene;
+	std::unique_ptr<Scene> scene{ std::make_unique<Scene>(name, std::move(loadFunc)) };
+	Scene* scenePtr{ scene.get() };
+	m_Scenes.emplace_back(std::move(scene));
+	return *scenePtr;
 }
 
 void SceneManager::Destroy()
@@ -50,15 +59,14 @@ bool SceneManager::Empty() const
 	return m_Scenes.empty();
 }
 
-void SceneManager::SetCurrentSceneByIndex(unsigned int idx)
+void SceneManager::SetCurrentSceneByIndex(uint8_t idx)
 {
 	if (idx >= m_Scenes.size())
 	{
 		assert(false);
 		std::cerr << "ERROR::SCENEMANAGER::SCENE_IDX_NOT_VALID\n";
 	}
-
-	m_CurrentSceneIdx = idx;
+	m_ToSceneIdx = idx;
 }
 
 void SceneManager::SetCurrentSceneByName(const std::string& name)
@@ -67,7 +75,7 @@ void SceneManager::SetCurrentSceneByName(const std::string& name)
 	{
 		if (m_Scenes[idx]->GetName() == name)
 		{
-			m_CurrentSceneIdx = static_cast<unsigned int>(idx);
+			SetCurrentSceneByIndex(static_cast<uint8_t>(idx));
 			return;
 		}
 	}
@@ -75,9 +83,34 @@ void SceneManager::SetCurrentSceneByName(const std::string& name)
 	std::cerr << "ERROR::SCENEMANAGER::SCENE_NAME_NOT_VALID\n";
 }
 
+Scene& SceneManager::GetCurrentScene() const
+{
+	return *m_Scenes[m_CurrentSceneIdx];
+}
+
+uint8_t SceneManager::GetCurrentSceneIndex() const
+{
+	return m_CurrentSceneIdx;
+}
+
 // Private Functions //
 
 SceneManager::SceneManager()
 	: m_CurrentSceneIdx{ 0 }
+	, m_ToSceneIdx{ 0 }
 {
+	m_Scenes.clear();
+}
+
+void SceneManager::CheckSceneSwap()
+{
+	if (m_ToSceneIdx != m_CurrentSceneIdx)
+	{
+		if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
+		{
+			m_Scenes[m_CurrentSceneIdx]->UnLoad();
+		}
+		m_CurrentSceneIdx = m_ToSceneIdx;
+		m_Scenes[m_ToSceneIdx]->Load();
+	}
 }

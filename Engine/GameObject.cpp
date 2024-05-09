@@ -219,6 +219,11 @@ void GameObject::Destroy()
 	}
 }
 
+void GameObject::Destroy(GameObject* gameObj)
+{
+	gameObj->Destroy();
+}
+
 // Private functions
 void GameObject::AddChild(GameObject* child)
 {

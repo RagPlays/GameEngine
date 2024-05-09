@@ -1,5 +1,7 @@
 #include <iostream>
 #include "LevelCollision.h"
+#include "GameObject.h"
+#include "SceneManager.h"
 
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }
@@ -26,6 +28,12 @@ LevelCollision::LevelCollision(GameObject* const owner, const std::string& colli
 	if (line2) return;
 	if (line3) return;
 	if (line4) return;*/
+}
+
+void LevelCollision::GameStart()
+{
+	//GameObject::Destroy(GetOwner()); // Destroy itself
+	SceneManager::Get().SetCurrentSceneByIndex(1);
 }
 
 bool LevelCollision::HitTopOrBot(const Linef& line, const Rectf& rect)

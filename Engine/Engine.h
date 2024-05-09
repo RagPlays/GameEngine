@@ -21,6 +21,7 @@ public:
 	void SetGameTitle(const std::string& title);
 	void SetWindowSize(unsigned int width, unsigned int height);
 	void SetWindowPosition(int x, int y);
+	void SetShowCursor(bool showCursor);
 
 private:
 

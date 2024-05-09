@@ -176,3 +176,8 @@ void Engine::SetWindowPosition(int x, int y)
 {
 	SDL_SetWindowPosition(m_Window, x, y);
 }
+
+void Engine::SetShowCursor(bool showCursor)
+{
+	SDL_ShowCursor(showCursor);
+}

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+
 #include "Component.h"
 #include "Transform.h"
 
@@ -104,6 +105,7 @@ public:
 	// Other
 	bool CompareTag(const std::string& tag);
 	void Destroy();
+	static void Destroy(GameObject* gameObj);
 
 private:
 

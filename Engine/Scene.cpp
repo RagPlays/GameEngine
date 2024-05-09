@@ -1,13 +1,33 @@
 #include "Scene.h"
+#include "GameObject.h"
 
-Scene::Scene(const std::string& name) 
-	: m_Name(name) 
+Scene::Scene(const std::string& name, std::function<void(Scene&)> loadFunc)
+	: m_Name(name)
+	, m_LoadFunction{ std::move(loadFunc) }
+	, m_IsLoaded{ false }
 {
 }
 
 void Scene::Add(std::unique_ptr<GameObject>&& object)
 {
 	m_Objects.emplace_back(std::move(object));
+}
+
+void Scene::Load()
+{
+	m_LoadFunction(*this);
+	m_IsLoaded = true;
+}
+
+void Scene::UnLoad()
+{
+	m_Objects.clear();
+	m_IsLoaded = false;
+}
+
+bool Scene::IsLoaded() const
+{
+	return m_IsLoaded;
 }
 
 void Scene::GameStart()

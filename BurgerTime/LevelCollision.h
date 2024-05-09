@@ -14,6 +14,8 @@ public:
 	LevelCollision(GameObject* const owner, const std::string& collisionLoadPath);
 	~LevelCollision() = default;
 
+	virtual void GameStart() override;
+
 private:
 
 	bool HitTopOrBot(const Linef& line, const Rectf& rect);

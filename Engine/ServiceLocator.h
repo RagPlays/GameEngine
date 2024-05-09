@@ -4,6 +4,8 @@
 #include <memory>
 #include "SoundSystem.h"
 
+class SoundSystem;
+
 class ServiceLocator final
 {
 public:

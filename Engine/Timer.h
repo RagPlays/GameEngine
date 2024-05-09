@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <chrono>
+
 #include "Singleton.h"
 
 class Timer final :  public Singleton<Timer>
