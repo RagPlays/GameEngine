@@ -7,7 +7,7 @@ class PlayerStopCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerStopCommand(PlayerMovementComponent* player, const glm::ivec2& dir)
+	explicit PlayerStopCommand(PlayerMovement* player, const glm::ivec2& dir)
 		: PlayerCommand{ player }
 		, m_Direcion{ dir }
 	{

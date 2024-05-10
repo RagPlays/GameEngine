@@ -1,19 +1,21 @@
 #ifndef EVENTQUEUE_H
 #define EVENTQUEUE_H
 
+#include <vector>
 #include <array>
-#include <queue>
 #include <memory>
 
 #include "Singleton.h"
-#include "GameEvents.h"
-#include "EventHandler.h"
+
+class NullEventHandler;
+class EventHandler;
+enum class GameEvent;
 
 class EventQueue final : public Singleton<EventQueue>
 {
 public:
 
-	virtual ~EventQueue() = default;
+	virtual ~EventQueue();
 
 	EventQueue(const EventQueue& other) = delete;
 	EventQueue(EventQueue&& other) noexcept = delete;
@@ -38,9 +40,8 @@ private:
 
 	std::unique_ptr<NullEventHandler> m_NullEventHandler;
 	std::vector<std::unique_ptr<EventHandler>> m_Handlers;
-
 	std::array<GameEvent, s_MaxPending> m_Events;
-};
 
+};
 
 #endif // !EVENTQUEUE_H

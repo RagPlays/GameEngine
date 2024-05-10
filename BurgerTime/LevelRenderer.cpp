@@ -1,8 +1,11 @@
-#include <fstream>
 #include <iostream>
+#include <fstream>
+
+#include <SDL.h>
+
 #include "LevelRenderer.h"
-#include "Renderer.h"
 #include "ResourceManager.h"
+#include "Renderer.h"
 
 LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }

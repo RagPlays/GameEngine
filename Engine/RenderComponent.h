@@ -2,9 +2,10 @@
 #define TEXTURECOMPONENT_H
 
 #include <memory>
-
 #include <glm.hpp>
+
 #include <SDL.h>
+
 #include "Component.h"
 
 class GameObject;
@@ -50,6 +51,7 @@ private:
 	glm::ivec2 m_RenderDimensions;
 	bool m_SrcRectSet;
 	SDL_Rect m_SrcRect;
+
 };
 
 #endif // !TEXTURECOMPONENT_H

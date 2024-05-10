@@ -1,16 +1,16 @@
 #ifndef PLAYERCOMMAND_H
 #define PLAYERCOMMAND_H
 
-#include <glm.hpp>
 #include "Command.h"
-#include "PlayerMovementComponent.h"
+
+class PlayerMovement;
 
 class PlayerCommand : public Command
 {
 public:
 
-	explicit PlayerCommand(PlayerMovementComponent* player)
-		: m_Player{ player }
+	explicit PlayerCommand(PlayerMovement* player)
+		: m_pPlayer{ player }
 	{
 	}
 	virtual ~PlayerCommand() = default;
@@ -22,11 +22,14 @@ public:
 
 protected:
 
-	PlayerMovementComponent* GetPlayer() { return m_Player; }
+	PlayerMovement* GetPlayer()
+	{
+		return m_pPlayer;
+	}
 
 private:
 
-	PlayerMovementComponent* m_Player;
+	PlayerMovement* m_pPlayer;
 
 };
 

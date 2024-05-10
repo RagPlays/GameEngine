@@ -2,13 +2,7 @@
 #define FPSCOMPONENT_H
 
 #include <string>
-#include <memory>
-#include <SDL_ttf.h>
 #include "Component.h"
-
-class Font;
-class Texture2D;
-class GameObject;
 
 class FpsComponent final : public Component
 {
@@ -30,6 +24,7 @@ private:
 	int m_FrameCount;
 	float m_TotalWaitTime;
 	const float m_UpdateTickTime;
+
 };
 
 #endif // !FPSCOMPONENT_H

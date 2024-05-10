@@ -4,6 +4,9 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "EventQueue.h"
+#include "GameEvents.h"
+
+SceneManager::~SceneManager() = default;
 
 void SceneManager::GameStart()
 {

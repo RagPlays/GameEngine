@@ -3,9 +3,12 @@
 
 #include <memory>
 #include <unordered_map>
+
 #include "InputStructs.h"
 
 class Command;
+
+enum class KeyBoardButton;
 
 class KeyboardMouse final
 {
@@ -22,13 +25,13 @@ public:
 	void Update();
 	void ProcessInput();
 
-	void AddBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
+	void AddBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
 
 private:
 
-	bool WasPressedThisFrame(SDL_Scancode key) const;
-	bool WasReleasedThisFrame(SDL_Scancode key) const;
-	bool IsPressed(SDL_Scancode key) const;
+	bool WasPressedThisFrame(KeyBoardButton key) const;
+	bool WasReleasedThisFrame(KeyBoardButton key) const;
+	bool IsPressed(KeyBoardButton key) const;
 
 private:
 
@@ -37,7 +40,7 @@ private:
 
 	std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
 
-	std::vector<SDL_Scancode> m_KeyStack;
+	std::vector<KeyBoardButton> m_KeyStack;
 };
 
 #endif // !KEYBOARDMOUSE_H

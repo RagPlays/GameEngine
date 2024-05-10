@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+
 #include "Singleton.h"
 
 class Texture2D;
@@ -15,6 +16,7 @@ class ResourceManager final : public Singleton<ResourceManager>
 public:
 
 	virtual ~ResourceManager() = default;
+
 	ResourceManager(const ResourceManager& other) = delete;
 	ResourceManager(ResourceManager&& other) noexcept = delete;
 	ResourceManager& operator=(const ResourceManager& other) = delete;

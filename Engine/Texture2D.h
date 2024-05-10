@@ -23,7 +23,7 @@ public:
 
 private:
 
-	SDL_Texture* m_Texture;
+	SDL_Texture* m_pTexture;
 
 };
 

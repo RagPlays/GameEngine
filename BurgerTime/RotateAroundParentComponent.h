@@ -18,8 +18,10 @@ public:
 	virtual void Update() override;
 
 private:
+
 	float m_RotationSpeed;
 	float m_CurrentAngle;
+
 };
 
 #endif // !ROTATEAROUNDPARENTCOMPONENT_H

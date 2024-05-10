@@ -1,11 +1,11 @@
 #ifndef SOUNDEVENTHANDLER_H
 #define SOUNDEVENTHANDLER_H
 
-#include <memory>
 #include "EventHandler.h"
 
 class MusicPlayer;
 class SoundEffect;
+enum class GameEvent;
 
 class SoundEventHandler final : public EventHandler
 {
@@ -21,7 +21,6 @@ public:
 
 	virtual void HandleEvent(GameEvent gameEvent) const override;
 
-private:
 };
 
 #endif // !SOUNDEVENTHANDLER_H

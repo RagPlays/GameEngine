@@ -1,22 +1,24 @@
-#include <backends/imgui_impl_sdl2.h>
 #include <iostream>
-#include "ImGuiRenderer.h"
+#if defined _DEBUG || defined DEBUG
+#include <backends/imgui_impl_sdl2.h>
+#endif
+
 #include "InputManager.h"
+#include "ImGuiRenderer.h"
+#include "Controller.h"
+#include "KeyboardMouse.h"
+
+InputManager::~InputManager() = default;
 
 void InputManager::ProcessInput()
 {
-	// Update the state of the keys
-	SDL_PumpEvents();
-
-	// PC Game Inputs
 	while (SDL_PollEvent(&m_Event))
 	{
 		if (m_Event.type == SDL_QUIT) InputManager::Get().Quit();
-		
-		if (ImGuiRenderer::Get().IsEnabled())
-		{
-			ImGui_ImplSDL2_ProcessEvent(&m_Event);
-		}
+
+#if defined _DEBUG || defined DEBUG
+		ImGui_ImplSDL2_ProcessEvent(&m_Event);
+#endif
 	}
 
 	// Update all inputs 
@@ -54,26 +56,29 @@ void InputManager::AddController(int controllerIdx)
 	m_Controllers.emplace_back(std::make_unique<Controller>(controllerIdx));
 }
 
-const Controller* InputManager::GetController(int controllerIdx)
-{
-	Controller* controller{ FindController(controllerIdx) };
-
-	if(!controller) std::cerr << "INPUTMANAGER::GETCONTROLLER::CONTROLLERIDX_NOT_FOUND\n";
-
-	return controller;
-}
-
 bool InputManager::HasController(int controllerIdx)
 {
 	return FindController(controllerIdx) != nullptr;
 }
 
-void InputManager::AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command)
+const Controller* InputManager::GetController(int controllerIdx) const
+{
+	Controller* controller{ FindController(controllerIdx) };
+	if (!controller) std::cerr << "INPUTMANAGER::GETCONTROLLER::CONTROLLERIDX_NOT_FOUND\n";
+	return controller;
+}
+
+const KeyboardMouse* InputManager::GetKeyBoard() const
+{
+	return m_KeyboardMouse.get();
+}
+
+void InputManager::AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command)
 {
 	m_KeyboardMouse->AddBind(input, std::move(command));
 }
 
-void InputManager::AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command, int controllerIdx)
+void InputManager::AddControllerBind(const ControllerInput& input, std::unique_ptr<Command>&& command, int controllerIdx)
 {
 	for (size_t idx{}; idx < m_Controllers.size(); ++idx)
 	{
@@ -95,7 +100,7 @@ InputManager::InputManager()
 {
 }
 
-Controller* InputManager::FindController(int controllerIdx)
+Controller* InputManager::FindController(int controllerIdx) const
 {
 	for (const auto& controller : m_Controllers)
 	{

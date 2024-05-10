@@ -1,66 +1,48 @@
 #ifndef INPUTSTRUCTS_H
 #define INPUTSTRUCTS_H
 
-#include <functional>
-#include <SDL.h>
-
-enum class InputType
-{
-	ispressed,
-	wasPressedThisFrame,
-	wasReleasedThisFrame
-};
+enum class ControllerButton;
+enum class KeyBoardButton;
+enum class InputType;
 
 // KEYBOARD INPUT //
 struct KeyBoardInput
 {
-	explicit KeyBoardInput(SDL_Scancode scancode);
-	explicit KeyBoardInput(SDL_Scancode scancode, InputType inputType);
+	explicit KeyBoardInput(KeyBoardButton scancode);
+	explicit KeyBoardInput(KeyBoardButton scancode, InputType inputType);
 
-	SDL_Scancode scancode;
+	KeyBoardButton scancode;
 	InputType inputType;
 };
 
 struct KeyBoardInputHash
 {
-	size_t operator()(const KeyBoardInput& input) const
-	{
-		return std::hash<unsigned int>()(input.scancode) ^ std::hash<int>()(static_cast<int>(input.inputType));
-	}
+	size_t operator()(const KeyBoardInput& input) const;
 };
 
 struct KeyBoardInputEqual
 {
-	bool operator()(const KeyBoardInput& lhs, const KeyBoardInput& rhs) const
-	{
-		return lhs.scancode == rhs.scancode && lhs.inputType == rhs.inputType;
-	}
+	bool operator()(const KeyBoardInput& lhs, const KeyBoardInput& rhs) const;
 };
 
 // CONTROLLER INPUT //
 struct ControllerInput
 {
-	explicit ControllerInput(SDL_GameControllerButton controllerKey);
-	explicit ControllerInput(SDL_GameControllerButton, InputType inputType);
+	explicit ControllerInput(ControllerButton controllerKey);
+	explicit ControllerInput(ControllerButton, InputType inputType);
 
-	SDL_GameControllerButton button;
+	ControllerButton button;
 	InputType inputType;
 };
 
 struct ControllerInputHash
 {
-	size_t operator()(const ControllerInput& input) const
-	{
-		return std::hash<int>()(static_cast<int>(input.button)) ^ std::hash<int>()(static_cast<int>(input.inputType));
-	}
+	size_t operator()(const ControllerInput& input) const;
 };
 
 struct ControllerInputEqual
 {
-	bool operator()(const ControllerInput& lhs, const ControllerInput& rhs) const
-	{
-		return lhs.button == rhs.button && lhs.inputType == rhs.inputType;
-	}
+	bool operator()(const ControllerInput& lhs, const ControllerInput& rhs) const;
 };
 
 #endif // !INPUTSTRUCTS_H

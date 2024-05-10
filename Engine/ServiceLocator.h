@@ -2,16 +2,14 @@
 #define LOCATOR_H
 
 #include <memory>
-#include "SoundSystem.h"
 
 class SoundSystem;
 
 class ServiceLocator final
 {
 public:
-		
-	ServiceLocator() = default;
-	~ServiceLocator() = default;
+
+	~ServiceLocator();
 
 	ServiceLocator(const ServiceLocator& other) = delete;
 	ServiceLocator(ServiceLocator&& other) noexcept = delete;
@@ -21,6 +19,10 @@ public:
 	// Get / Set Audio
 	static SoundSystem& GetSoundSystem();
 	static void RegisterSoundSystem(std::unique_ptr<SoundSystem>&& ss);
+
+private:
+
+	ServiceLocator() = default;
 
 private:
 

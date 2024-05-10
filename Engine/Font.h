@@ -9,22 +9,19 @@ class Font final
 {
 public:
 
-	explicit Font(const std::string& filePath, unsigned int size);
+	explicit Font(const std::string& filePath, size_t size);
 	~Font();
 
 	Font(const Font& other) = delete;
 	Font(Font&& other) noexcept = delete;
 	Font& operator=(const Font& other) = delete;
-	Font& operator=(const Font&& other) noexcept = delete;
+	Font& operator=(Font&& other) noexcept = delete;
 
 	_TTF_Font* GetFont() const;
-	void SetSize(unsigned int newSize);
 
 private:
 
-	const std::string m_FilePath;
-	_TTF_Font* m_Font;
-	unsigned int m_Size;
+	_TTF_Font* m_pFont;
 
 };
 

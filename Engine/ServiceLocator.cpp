@@ -4,6 +4,8 @@
 
 std::unique_ptr<SoundSystem> ServiceLocator::s_SoundSystemInstance = std::make_unique<NullSoundSystem>();
 
+ServiceLocator::~ServiceLocator() = default;
+
 SoundSystem& ServiceLocator::GetSoundSystem()
 {
 	return *s_SoundSystemInstance;

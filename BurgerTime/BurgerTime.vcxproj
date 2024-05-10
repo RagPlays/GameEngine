@@ -166,12 +166,14 @@
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
     <ClCompile Include="ImGuiExercise2.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelCollision.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PlayerComponent.cpp" />
-    <ClCompile Include="PlayerMovementComponent.cpp" />
-    <ClCompile Include="PlayerStatsComponent.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerMovement.cpp" />
+    <ClCompile Include="PlayerStats.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
     <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
@@ -179,13 +181,15 @@
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
     <ClInclude Include="ImGuiExercise2.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LevelCollision.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="PlayerCommand.h" />
-    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
-    <ClInclude Include="PlayerMovementComponent.h" />
-    <ClInclude Include="PlayerStatsComponent.h" />
+    <ClInclude Include="PlayerMovement.h" />
+    <ClInclude Include="PlayerStats.h" />
     <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />

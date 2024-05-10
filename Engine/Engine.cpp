@@ -50,6 +50,14 @@ static void PrintSDLVersion()
 	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
 
+	SDL_MIXER_VERSION(&version);
+	printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
+		version.major, version.minor, version.patch);
+
+	version = *Mix_Linked_Version();
+	printf("We are linking against SDL_mixer version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
 	printf("\n");
 	printf("GAMEINFO:\n");
 }
@@ -57,7 +65,7 @@ static void PrintSDLVersion()
 Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int height)
 	: m_WindowWidth{ width }
 	, m_WindowHeight{ height }
-	, m_Window{ nullptr }
+	, m_pWindow{ nullptr }
 {
 	PrintSDLVersion();
 	
@@ -74,7 +82,7 @@ Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int hei
 		throw std::runtime_error(std::string("Failed to load support for audio: ") + SDL_GetError());
 	}
 
-	m_Window = SDL_CreateWindow(
+	m_pWindow = SDL_CreateWindow(
 		"No_Title",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -83,18 +91,19 @@ Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int hei
 		SDL_WINDOW_OPENGL
 	);
 
-	if (!m_Window)
+	if (!m_pWindow)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-#ifdef _DEBUG
+#if defined _DEBUG || defined DEBUG
 	ServiceLocator::RegisterSoundSystem(std::make_unique<LoggingSoundSystem>(std::make_unique<SDLSoundSystem>()));
 #else
+	SetShowCursor(false);
 	ServiceLocator::RegisterSoundSystem(std::make_unique<SDLSoundSystem>());
 #endif
 
-	Renderer::Get().Init(m_Window);
+	Renderer::Get().Init(m_pWindow);
 	ResourceManager::Get().Init(dataPath);
 }
 
@@ -102,8 +111,8 @@ Engine::~Engine()
 {
 	SceneManager::Get().Destroy();
 	Renderer::Get().Destroy();
-	SDL_DestroyWindow(m_Window);
-	m_Window = nullptr;
+	SDL_DestroyWindow(m_pWindow);
+	m_pWindow = nullptr;
 	Mix_CloseAudio();
 	Mix_Quit();
 	TTF_Quit();
@@ -162,19 +171,19 @@ void Engine::Run()
 
 void Engine::SetGameTitle(const std::string& title)
 {
-	SDL_SetWindowTitle(m_Window, title.c_str());
+	SDL_SetWindowTitle(m_pWindow, title.c_str());
 }
 
 void Engine::SetWindowSize(unsigned int width, unsigned int height)
 {
-	SDL_SetWindowSize(m_Window, width, height);
+	SDL_SetWindowSize(m_pWindow, width, height);
 	m_WindowWidth = width;
 	m_WindowHeight = height;
 }
 
 void Engine::SetWindowPosition(int x, int y)
 {
-	SDL_SetWindowPosition(m_Window, x, y);
+	SDL_SetWindowPosition(m_pWindow, x, y);
 }
 
 void Engine::SetShowCursor(bool showCursor)

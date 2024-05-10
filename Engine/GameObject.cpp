@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Component.h"
 
 GameObject::GameObject(const std::string& tag)
 	: m_PositionIsDirty{ true }
@@ -13,6 +14,8 @@ GameObject::GameObject(const std::string& tag)
 	m_Components.clear();
 	m_Children.clear();
 }
+
+GameObject::~GameObject() = default;
 
 void GameObject::GameStart()
 {

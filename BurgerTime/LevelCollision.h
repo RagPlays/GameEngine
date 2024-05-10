@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <string>
+
 #include "Component.h"
-#include "PlayerComponent.h"
 #include "Structs.h"
 
 class LevelCollision final : public Component

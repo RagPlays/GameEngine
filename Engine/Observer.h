@@ -1,9 +1,8 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include "GameEvents.h"
-
 class GameObject;
+enum class GameEvent;
 
 class Observer
 {

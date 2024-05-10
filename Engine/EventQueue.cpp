@@ -1,9 +1,13 @@
 #include <cassert>
 #include "EventQueue.h"
+#include "EventHandler.h"
+
+EventQueue::~EventQueue() = default;
 
 void EventQueue::AddHandler(std::unique_ptr<EventHandler>&& handler)
 {
 	m_Handlers.emplace_back(std::move(handler));
+	if (m_Handlers.size() == 1) m_NullEventHandler.reset();
 }
 
 void EventQueue::AddEvent(GameEvent gameEvent)

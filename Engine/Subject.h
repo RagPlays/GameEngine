@@ -3,10 +3,10 @@
 
 #include <memory>
 #include <vector>
-#include "Observer.h"
 
 class Observer;
 class GameObject;
+enum class GameEvent;
 
 class Subject
 {

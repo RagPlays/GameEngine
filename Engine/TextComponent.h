@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <SDL_ttf.h>
+
 #include "Component.h"
 
 class Font;
@@ -34,6 +35,7 @@ private:
 	std::string m_Text;
 	std::shared_ptr<Font> m_Font;
 	SDL_Color m_TextColor;
+
 };
 
 #endif // !TEXTCOMPONENT_H

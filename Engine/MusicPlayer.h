@@ -1,9 +1,10 @@
 #ifndef MUSICPLAYER_H
 #define MUSICPLAYER_H
 
-#include <SDL.h>
-#include <SDL_mixer.h>
 #include <string>
+
+struct _Mix_Music;
+typedef _Mix_Music Mix_Music;
 
 class MusicPlayer final
 {
@@ -32,9 +33,9 @@ public:
 
 private:
 
-	bool m_IsLoaded{ false };
+	bool m_IsLoaded;
 	std::string m_FilePath;
-	Mix_Music* m_Music{ nullptr };
+	Mix_Music* m_pMusic;
 
 };
 

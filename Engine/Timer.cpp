@@ -1,4 +1,6 @@
 #include <thread>
+#include <SDL.h>
+
 #include "Timer.h"
 
 void Timer::Update()

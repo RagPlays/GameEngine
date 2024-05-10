@@ -1,10 +1,13 @@
 #include <iostream>
+
+#include <SDL_mixer.h>
+
 #include "SoundEffect.h"
 
 SoundEffect::SoundEffect(const std::string& filePath)
 	: m_IsLoaded{ false }
 	, m_FilePath{ filePath }
-	, m_SoundEffect{ nullptr }
+	, m_pSoundEffect{ nullptr }
 {
 }
 
@@ -20,8 +23,8 @@ bool SoundEffect::IsLoaded() const
 
 void SoundEffect::Load()
 {
-	m_SoundEffect = Mix_LoadWAV(m_FilePath.c_str());
-	if (!m_SoundEffect)
+	m_pSoundEffect = Mix_LoadWAV(m_FilePath.c_str());
+	if (!m_pSoundEffect)
 	{
 		std::cerr << "ERROR::SOUNDEFFECT::COULD_NOT_LOAD_SOUNDEFFECT_FILE: " << m_FilePath << "\n";
 		return;
@@ -31,18 +34,18 @@ void SoundEffect::Load()
 
 void SoundEffect::UnLoad()
 {
-	if (m_SoundEffect) Mix_FreeChunk(m_SoundEffect);
+	if (m_pSoundEffect) Mix_FreeChunk(m_pSoundEffect);
 	m_IsLoaded = false;
 }
 
 void SoundEffect::SetVolume(int volume)
 {
-	Mix_VolumeChunk(m_SoundEffect, volume);
+	Mix_VolumeChunk(m_pSoundEffect, volume);
 }
 
 void SoundEffect::Play(int loops)
 {
-	Mix_PlayChannel(-1, m_SoundEffect, loops);
+	Mix_PlayChannel(-1, m_pSoundEffect, loops);
 }
 
 int SoundEffect::MaxVolume()

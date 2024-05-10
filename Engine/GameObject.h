@@ -6,15 +6,16 @@
 #include <vector>
 #include <memory>
 
-#include "Component.h"
 #include "Transform.h"
+
+class Component;
 
 class GameObject final
 {
 public:
 
 	explicit GameObject(const std::string& tag = "Empty");
-	~GameObject() = default;
+	~GameObject();
 
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) noexcept = delete;

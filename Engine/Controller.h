@@ -4,8 +4,15 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
+
 #include "InputStructs.h"
 #include "Command.h"
+
+class Command;
+
+enum class ControllerButton;
+enum class KeyBoardButton;
+enum class InputType;
 
 class Controller final
 {
@@ -22,23 +29,25 @@ public:
 	void Update();
 	void ProcessInput();
 
-	void AddBind(const ControllerInput& input, std::unique_ptr<Command> command);
+	void AddBind(const ControllerInput& input, std::unique_ptr<Command>&& command);
 
 	SDL_GameController* GetGameController() const;
 	int GetControllerIdx() const;
 
 private:
 
-	bool WasPressedThisFrame(SDL_GameControllerButton button) const;
-	bool WasReleasedThisFrame(SDL_GameControllerButton button) const;
-	bool IsPressed(SDL_GameControllerButton button) const;
+	bool WasPressedThisFrame(ControllerButton button) const;
+	bool WasReleasedThisFrame(ControllerButton button) const;
+	bool IsPressed(ControllerButton button) const;
+
+	static uint8_t GameControllerGetButton(SDL_GameController* gameController, ControllerButton controllerbutton);
 
 private:
 
 	SDL_GameController* m_GameController;
 	int m_ControllerIdx;
-	std::vector<Uint8> m_CurrentButtonStates;
-	std::vector<Uint8> m_PreviousButtonStates;
+	std::vector<uint8_t> m_CurrentButtonStates;
+	std::vector<uint8_t> m_PreviousButtonStates;
 	std::unordered_map<ControllerInput, std::unique_ptr<Command>, ControllerInputHash, ControllerInputEqual> m_Commands;
 
 };

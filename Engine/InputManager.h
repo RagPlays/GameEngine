@@ -1,16 +1,26 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include <SDL_events.h>
+#include <vector>
 #include <memory>
+
 #include "Singleton.h"
-#include "Controller.h"
-#include "KeyboardMouse.h"
+
+class Controller;
+class KeyboardMouse;
+class Command;
+
+struct KeyBoardInput;
+struct ControllerInput;
+
+union SDL_Event;
 
 class InputManager final : public Singleton<InputManager>
 {
 public:
 
-	virtual ~InputManager() = default;
+	virtual ~InputManager();
 	InputManager(const InputManager& other) = delete;
 	InputManager(InputManager&& other) noexcept = delete;
 	InputManager& operator=(const InputManager& other) = delete;
@@ -22,18 +32,19 @@ public:
 	void Quit();
 
 	void AddController(int controllerIdx);
-	const Controller* GetController(int controllerIdx);
 	bool HasController(int controllerIdx);
+	const Controller* GetController(int controllerIdx) const;
+	const KeyboardMouse* GetKeyBoard() const;
 
-	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command> command);
-	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command> command, int controllerIdx);
+	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
+	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command>&& command, int controllerIdx);
 
 private:
 
 	friend class Singleton<InputManager>;
 	InputManager();
 
-	Controller* FindController(int controllerIdx);
+	Controller* FindController(int controllerIdx) const;
 
 private:
 

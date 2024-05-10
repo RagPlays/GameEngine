@@ -1,7 +1,11 @@
 #include <cassert>
 #include <iostream>
 #include <algorithm>
+
+#include <SDL_events.h>
+
 #include "Controller.h"
+#include "InputCodes.h"
 
 Controller::Controller(int controllerIndx)
 	: m_ControllerIdx{ controllerIndx }
@@ -12,8 +16,10 @@ Controller::Controller(int controllerIndx)
         std::cerr << "CONTROLLER::CONTROLLER::COULD_NOT_FIND_CONTROLLER_ON_START_WITH_IDX_" << m_ControllerIdx << "\n";
     }
 
-    m_CurrentButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
-    m_PreviousButtonStates.resize(SDL_CONTROLLER_BUTTON_MAX, SDL_GameControllerGetButton(m_GameController, SDL_CONTROLLER_BUTTON_INVALID));
+    m_CurrentButtonStates.resize(
+        static_cast<uint8_t>(ControllerButton::CB_MAX), GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID));
+    m_PreviousButtonStates.resize(
+        static_cast<uint8_t>(ControllerButton::CB_MAX), GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID));
 }
 
 Controller::~Controller()
@@ -64,7 +70,7 @@ void Controller::ProcessInput()
     std::swap(m_PreviousButtonStates, m_CurrentButtonStates);
 }
 
-void Controller::AddBind(const ControllerInput& input, std::unique_ptr<Command> command)
+void Controller::AddBind(const ControllerInput& input, std::unique_ptr<Command>&& command)
 {
     m_Commands[input] = std::move(command);
 }
@@ -79,18 +85,32 @@ int Controller::GetControllerIdx() const
 	return m_ControllerIdx;
 }
 
-bool Controller::WasPressedThisFrame(SDL_GameControllerButton button) const
+bool Controller::WasPressedThisFrame(ControllerButton button) const
 {
-    return m_CurrentButtonStates[button] && !m_PreviousButtonStates[button];
+    const int buttonIdx{static_cast<int>(button) };
+    return m_CurrentButtonStates[buttonIdx] && !m_PreviousButtonStates[buttonIdx];
 }
 
-bool Controller::WasReleasedThisFrame(SDL_GameControllerButton button) const
+bool Controller::WasReleasedThisFrame(ControllerButton button) const
 {
-    return !m_CurrentButtonStates[button] && m_PreviousButtonStates[button];
+    const int buttonIdx{ static_cast<int>(button) };
+    return !m_CurrentButtonStates[buttonIdx] && m_PreviousButtonStates[buttonIdx];
 }
 
-bool Controller::IsPressed(SDL_GameControllerButton button) const
+bool Controller::IsPressed(ControllerButton button) const
 {
-    if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
-    return m_CurrentButtonStates[button];
+    if (button == ControllerButton::CB_INVALID) return false;
+    const int buttonIdx{ static_cast<int>(button) };
+    return m_CurrentButtonStates[buttonIdx];
+}
+
+uint8_t Controller::GameControllerGetButton(SDL_GameController* gameController, ControllerButton controllerbutton)
+{
+    return static_cast<uint8_t>
+        (
+            SDL_GameControllerGetButton(
+                gameController,
+                static_cast<SDL_GameControllerButton>(controllerbutton)
+            )
+        );
 }

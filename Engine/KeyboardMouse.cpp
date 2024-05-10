@@ -1,5 +1,8 @@
 #include "KeyboardMouse.h"
 #include "InputManager.h"
+#include "Command.h"
+
+#include "InputCodes.h"
 
 KeyboardMouse::KeyboardMouse()
 {
@@ -53,23 +56,26 @@ void KeyboardMouse::ProcessInput()
 	std::swap(m_PreviousKeyStates, m_CurrentKeyStates);
 }
 
-void KeyboardMouse::AddBind(const KeyBoardInput& input, std::unique_ptr<Command> command)
+void KeyboardMouse::AddBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command)
 {
 	m_Commands[input] = std::move(command);
 }
 
 // Private functions //
-bool KeyboardMouse::WasPressedThisFrame(SDL_Scancode key) const
+bool KeyboardMouse::WasPressedThisFrame(KeyBoardButton key) const
 {
-	return m_CurrentKeyStates[key] && !m_PreviousKeyStates[key];
+	const int keyIdx{ static_cast<int>(key) };
+	return m_CurrentKeyStates[keyIdx] && !m_PreviousKeyStates[keyIdx];
 }
 
-bool KeyboardMouse::WasReleasedThisFrame(SDL_Scancode key) const
+bool KeyboardMouse::WasReleasedThisFrame(KeyBoardButton key) const
 {
-	return !m_CurrentKeyStates[key] && m_PreviousKeyStates[key];
+	const int keyIdx{ static_cast<int>(key) };
+	return !m_CurrentKeyStates[keyIdx] && m_PreviousKeyStates[keyIdx];
 }
 
-bool KeyboardMouse::IsPressed(SDL_Scancode key) const
+bool KeyboardMouse::IsPressed(KeyBoardButton key) const
 {
-	return m_CurrentKeyStates[key];
+	const int keyIdx{ static_cast<int>(key) };
+	return m_CurrentKeyStates[keyIdx];
 }

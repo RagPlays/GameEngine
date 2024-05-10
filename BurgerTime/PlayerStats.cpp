@@ -1,10 +1,12 @@
 #include <iostream>
-#include "PlayerStatsComponent.h"
-#include "GameObject.h"
-#include "PlayerComponent.h"
-#include "TextComponent.h"
 
-PlayerStatsComponent::PlayerStatsComponent(GameObject* const owner)
+#include "PlayerStats.h"
+#include "GameObject.h"
+#include "Player.h"
+#include "TextComponent.h"
+#include "GameEvents.h"
+
+PlayerStats::PlayerStats(GameObject* const owner)
 	: Component{ owner }
 	, Observer{}
 	, m_NeedsUpdate{ true }
@@ -14,7 +16,7 @@ PlayerStatsComponent::PlayerStatsComponent(GameObject* const owner)
 {
 }
 
-void PlayerStatsComponent::Update()
+void PlayerStats::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -33,9 +35,9 @@ void PlayerStatsComponent::Update()
 	}
 }
 
-void PlayerStatsComponent::OnNotify(GameObject* gameObj, GameEvent gameEvent)
+void PlayerStats::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 {
-	if (PlayerComponent* playerComp{ gameObj->GetComponent<PlayerComponent>() })
+	if (Player* playerComp{ gameObj->GetComponent<Player>() })
 	{
 		switch (gameEvent)
 		{

@@ -1,7 +1,9 @@
 #include <iostream>
+
 #include "LevelCollision.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "Structs.h"
 
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }

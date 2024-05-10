@@ -1,9 +1,9 @@
 #ifndef SOUNDEFFECT_H
 #define SOUNDEFFECT_H
 
-#include <SDL.h>
-#include <SDL_mixer.h>
 #include <string>
+
+struct Mix_Chunk;
 
 class SoundEffect final
 {
@@ -30,8 +30,8 @@ public:
 private:
 
 	bool m_IsLoaded;
-	std::string m_FilePath;
-	Mix_Chunk* m_SoundEffect;
+	const std::string m_FilePath;
+	Mix_Chunk* m_pSoundEffect;
 
 };
 

@@ -3,7 +3,8 @@
 
 #include <string>
 #include <functional>
-#include <SDL.h>
+
+struct SDL_Window;
 
 class Engine final
 {
@@ -27,7 +28,7 @@ private:
 
 	unsigned int m_WindowWidth;
 	unsigned int m_WindowHeight;
-	SDL_Window* m_Window;
+	SDL_Window* m_pWindow;
 
 };
 

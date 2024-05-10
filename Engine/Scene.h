@@ -6,16 +6,16 @@
 #include <memory>
 #include <functional>
 
-#include "GameObject.h"
-
 class SceneManager;
+class GameObject;
 
 class Scene final
 {
 public:
 
 	explicit Scene(const std::string& name, std::function<void(Scene&)> loadFunc);
-	~Scene() = default;
+	~Scene();
+
 	Scene(const Scene& other) = delete;
 	Scene(Scene&& other) noexcept = delete;
 	Scene& operator=(const Scene& other) = delete;

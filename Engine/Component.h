@@ -22,13 +22,14 @@ public:
 	virtual void Render() const;
 	virtual void OnDestroy();
 
+	GameObject* const GetOwner() const;
+	GameObject* GetParent() const;
+
 protected:
 
 	explicit Component(GameObject* const owner);
 
 	// Gets
-	GameObject* const GetOwner() const;
-	GameObject* GetParent() const;
 	const glm::vec2& GetLocalPosition() const;
 	const glm::vec2& GetWorldPosition() const;
 

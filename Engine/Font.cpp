@@ -1,39 +1,34 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
+
 #include "Font.h"
 
-Font::Font(const std::string& filePath, unsigned int size)
-	: m_Font{ nullptr }
-	, m_FilePath{ filePath }
-	, m_Size{ size }
+Font::Font(const std::string& filePath, size_t size)
+	: m_pFont{ nullptr }
 {
-	m_Font = TTF_OpenFont(m_FilePath.c_str(), m_Size);
-	if (!m_Font) throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+	if (m_pFont = TTF_OpenFont(filePath.c_str(), static_cast<int>(size)); !m_pFont)
+	{
+		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+	}
 }
 
 Font::~Font()
 {
-	TTF_CloseFont(m_Font);
+	if (m_pFont) TTF_CloseFont(m_pFont);
 }
 
 TTF_Font* Font::GetFont() const
 {
-	return m_Font;
+	return m_pFont;
 }
 
-void Font::SetSize(unsigned int newSize)
-{
-	_TTF_Font* tempFont{ nullptr };
-	tempFont = TTF_OpenFont(m_FilePath.c_str(), newSize);
-
-	if (!tempFont)
-	{
-		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
-		return;
-	}
-
-	TTF_CloseFont(m_Font);
-	m_Font = nullptr;
-	m_Size = newSize;
-	m_Font = tempFont;
-}
+//void Font::SetSize(size_t newSize)
+//{
+//	if (_TTF_Font* tempFont{ TTF_OpenFont(m_FilePath.c_str(), static_cast<int>(newSize)) }; tempFont)
+//	{
+//		TTF_CloseFont(m_pFont);
+//		m_pFont = tempFont;
+//		return;
+//	}
+//	throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+//}

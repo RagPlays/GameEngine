@@ -204,6 +204,9 @@
     <ClInclude Include="Structs.h">
       <Filter>Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="InputCodes.h">
+      <Filter>EngineCore\Input\Structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">

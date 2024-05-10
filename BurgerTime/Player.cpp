@@ -1,12 +1,12 @@
-#include "PlayerComponent.h"
+#include "Player.h"
 #include "GameObject.h"
-#include "Timer.h"
 #include "EventQueue.h"
 #include "RenderComponent.h"
+#include "GameEvents.h"
 
-unsigned int PlayerComponent::s_PlayerCount{ 0 };
+unsigned int Player::s_PlayerCount{ 0 };
 
-PlayerComponent::PlayerComponent(GameObject* const owner)
+Player::Player(GameObject* const owner)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
@@ -18,23 +18,23 @@ PlayerComponent::PlayerComponent(GameObject* const owner)
 	}
 }
 
-PlayerComponent::~PlayerComponent()
+Player::~Player()
 {
 	--s_PlayerCount;
 }
 
-void PlayerComponent::GameStart()
+void Player::GameStart()
 {
 	Notify(GetOwner(), GameEvent::playerJoined);
 }
 
-void PlayerComponent::Killed()
+void Player::Killed()
 {
 	Notify(GetOwner(), GameEvent::playerDied);
 	EventQueue::Get().AddEvent(GameEvent::playerDied);
 }
 
-int PlayerComponent::GetPlayerIdx() const
+int Player::GetPlayerIdx() const
 {
 	return m_PlayerIdx;
 }

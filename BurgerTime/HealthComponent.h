@@ -32,6 +32,7 @@ private:
 	bool m_IsDead;
 	float m_CurrentHealth;
 	float m_MaxHealth;
+
 };
 
 #endif // !HEALTHCOMPONENT_H

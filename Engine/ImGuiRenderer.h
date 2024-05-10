@@ -1,16 +1,19 @@
+#if defined _DEBUG || defined DEBUG
 #ifndef IMGUIRENDERER_H
 #define IMGUIRENDERER_H
 
 #include <memory>
 #include <vector>
+
 #include "Singleton.h"
-#include "ImGuiComponent.h"
+
+class ImGuiComponent;
 
 class ImGuiRenderer final : public Singleton<ImGuiRenderer>
 {
 public:
 
-	virtual ~ImGuiRenderer() = default;
+	virtual ~ImGuiRenderer();
 	ImGuiRenderer(const ImGuiRenderer& other) = delete;
 	ImGuiRenderer(ImGuiRenderer&& other) noexcept = delete;
 	ImGuiRenderer& operator=(const ImGuiRenderer& other) = delete;
@@ -18,10 +21,7 @@ public:
 
 	void Render();
 
-	void AddImGuiComponent(std::unique_ptr<ImGuiComponent> component);
-
-	void SetEnable(bool enable);
-	bool IsEnabled() const;
+	void AddImGuiComponent(std::unique_ptr<ImGuiComponent>&& component);
 
 private:
 
@@ -33,8 +33,8 @@ private:
 
 private:
 
-	bool m_Enabled;
 	std::vector<std::unique_ptr<ImGuiComponent>> m_ImGuiComponents;
 };
 
 #endif // !IMGUIRENDERER_H
+#endif // _DEBUG || defined DEBUG

@@ -1,12 +1,15 @@
+#if defined _DEBUG || defined DEBUG
+
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl2.h>
+
 #include "ImGuiRenderer.h"
+#include "ImGuiComponent.h"
+
+ImGuiRenderer::~ImGuiRenderer() = default;
 
 void ImGuiRenderer::Render()
 {
-	// Check
-	if (!m_Enabled) return;
-
 	// Start
 	StartImGuiRender();
 
@@ -21,27 +24,14 @@ void ImGuiRenderer::Render()
 	EndImGuiRender();
 }
 
-void ImGuiRenderer::AddImGuiComponent(std::unique_ptr<ImGuiComponent> component)
+void ImGuiRenderer::AddImGuiComponent(std::unique_ptr<ImGuiComponent>&& component)
 {
 	m_ImGuiComponents.emplace_back(std::move(component));
 }
 
-void ImGuiRenderer::SetEnable(bool enable)
-{
-	m_Enabled = enable;
-}
+// Private //
 
-bool ImGuiRenderer::IsEnabled() const
-{
-	return m_Enabled;
-}
-
-// Private Functions //
-ImGuiRenderer::ImGuiRenderer()
-	: m_Enabled{ false }
-{
-	if (m_Enabled) m_ImGuiComponents.reserve(2);
-}
+ImGuiRenderer::ImGuiRenderer() = default;
 
 void ImGuiRenderer::StartImGuiRender()
 {
@@ -55,3 +45,5 @@ void ImGuiRenderer::EndImGuiRender()
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
+
+#endif

@@ -2,6 +2,7 @@
 #define SDLSOUNDSYSTEM_H
 
 #include <memory>
+
 #include "SoundSystem.h"
 
 class SDLSoundSystem final : public SoundSystem

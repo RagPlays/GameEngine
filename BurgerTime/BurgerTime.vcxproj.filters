@@ -17,9 +17,6 @@
     <Filter Include="GameSourceFiles\GameComponents\Player">
       <UniqueIdentifier>{b65c40cb-c852-43bd-b5ee-45aa622a571f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\EventHandlers">
-      <UniqueIdentifier>{37dea5e7-443f-468d-807d-a79ed50c4a1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameSourceFiles\Sound">
       <UniqueIdentifier>{6dc81e25-a306-4aba-9dd3-ef4120db942a}</UniqueIdentifier>
     </Filter>
@@ -28,6 +25,9 @@
     </Filter>
     <Filter Include="GameSourceFiles\GameComponents\Level">
       <UniqueIdentifier>{164bd2de-8825-4543-9753-f97bea553e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFiles\Managers">
+      <UniqueIdentifier>{40c4646a-7d94-48c7-9e5b-37efecbe46a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,14 +40,11 @@
     <ClCompile Include="ImGuiExercise2.cpp">
       <Filter>GameSourceFiles\ImGuiComponents</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStatsComponent.cpp">
+    <ClCompile Include="PlayerStats.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundEventHandler.cpp">
-      <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>GameSourceFiles\GameComponents\Components</Filter>
@@ -61,8 +58,17 @@
     <ClCompile Include="LevelCollision.cpp">
       <Filter>GameSourceFiles\GameComponents\Level</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovementComponent.cpp">
+    <ClCompile Include="PlayerMovement.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>GameSourceFiles\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEventHandler.cpp">
+      <Filter>GameSourceFiles\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,14 +84,11 @@
     <ClInclude Include="PlayerMoveCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStatsComponent.h">
+    <ClInclude Include="PlayerStats.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
+    <ClInclude Include="Player.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundEventHandler.h">
-      <Filter>GameSourceFiles\EventHandlers</Filter>
     </ClInclude>
     <ClInclude Include="SoundIDs.h">
       <Filter>GameSourceFiles\Sound</Filter>
@@ -105,8 +108,17 @@
     <ClInclude Include="LevelCollision.h">
       <Filter>GameSourceFiles\GameComponents\Level</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerMovementComponent.h">
+    <ClInclude Include="PlayerMovement.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>GameSourceFiles\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEventHandler.h">
+      <Filter>GameSourceFiles\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,12 +2,16 @@
 #define RENDERER_H
 
 #include <vector>
-#include <SDL.h>
+
 #include "Singleton.h"
 
-struct SDL_Color;
 class Texture2D;
 class RenderComponent;
+
+struct SDL_Rect;
+struct SDL_Color;
+struct SDL_Window;
+struct SDL_Renderer;
 
 class Renderer final : public Singleton<Renderer>
 {
@@ -29,22 +33,20 @@ public:
 
 	SDL_Renderer* GetSDLRenderer() const;
 
-	const SDL_Color& GetBackgroundColor() const;
-	void SetBackgroundColor(const SDL_Color& color);
-
 private:
 
 	friend class Singleton<Renderer>;
 	Renderer();
+
+	int GetOpenGLDriverIndex();
 
 	void InitImGui();
 	void DestroyImGui();
 
 private:
 
-	SDL_Renderer* m_Renderer;
-	SDL_Window* m_Window;
-	SDL_Color m_ClearColor;
+	SDL_Renderer* m_pRenderer;
+	SDL_Window* m_pWindow;
 };
 
 #endif // !RENDERER_H

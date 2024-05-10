@@ -7,16 +7,15 @@
 #include <functional>
 
 #include "Singleton.h"
-#include "Scene.h"
 
-//class Scene;
+class Scene;
 class Engine;
 
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
 
-	virtual ~SceneManager() = default;
+	virtual ~SceneManager();
 
 	SceneManager(const SceneManager& other) = delete;
 	SceneManager(SceneManager&& other) noexcept = delete;

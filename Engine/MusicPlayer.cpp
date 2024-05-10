@@ -1,10 +1,13 @@
 #include <iostream>
+
+#include <SDL_mixer.h>
+
 #include "MusicPlayer.h"
 
 MusicPlayer::MusicPlayer(const std::string& filePath)
 	: m_IsLoaded{ false }
 	, m_FilePath{ filePath }
-	, m_Music{ nullptr }
+	, m_pMusic{ nullptr }
 {
 }
 
@@ -15,8 +18,8 @@ MusicPlayer::~MusicPlayer()
 
 void MusicPlayer::Load()
 {
-	m_Music = Mix_LoadMUS(m_FilePath.c_str());
-	if (!m_Music)
+	m_pMusic = Mix_LoadMUS(m_FilePath.c_str());
+	if (!m_pMusic)
 	{
 		std::cerr << "ERROR::MUSICPLAYER::COULD_NOT_LOAD_MUSIC_FILE: " << m_FilePath << "\n";
 		return;
@@ -26,7 +29,7 @@ void MusicPlayer::Load()
 
 void MusicPlayer::UnLoad()
 {
-	if (m_Music) Mix_FreeMusic(m_Music);
+	if (m_pMusic) Mix_FreeMusic(m_pMusic);
 	m_IsLoaded = false;
 }
 
@@ -42,7 +45,7 @@ void MusicPlayer::SetVolume(int volume)
 
 void MusicPlayer::Play()
 {
-	Mix_PlayMusic(m_Music, -1);
+	Mix_PlayMusic(m_pMusic, -1);
 }
 
 void MusicPlayer::Pause()

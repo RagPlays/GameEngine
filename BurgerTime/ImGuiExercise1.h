@@ -2,6 +2,7 @@
 #define IMGUIEXERCISE1_H
 
 #include <vector>
+
 #include "ImGuiComponent.h"
 
 class ImGuiExercise1 final : public ImGuiComponent
@@ -19,6 +20,7 @@ public:
 	virtual void Render() override;
 
 private:
+
 	void LoadData();
 
 private:
@@ -28,6 +30,7 @@ private:
 	ImGui::PlotConfig m_PlotConfig;
 	std::vector<float> m_XData;
 	std::vector<float> m_YData;
+
 };
 
 #endif // !IMGUIEXERCISE1_H

@@ -1,7 +1,7 @@
 #ifndef EVENTHANDLER_H
 #define EVENTHANDLER_H
 
-#include "GameEvents.h"
+enum class GameEvent;
 
 class EventHandler
 {

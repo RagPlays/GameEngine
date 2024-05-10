@@ -8,6 +8,8 @@ Scene::Scene(const std::string& name, std::function<void(Scene&)> loadFunc)
 {
 }
 
+Scene::~Scene() = default;
+
 void Scene::Add(std::unique_ptr<GameObject>&& object)
 {
 	m_Objects.emplace_back(std::move(object));

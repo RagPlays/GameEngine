@@ -1,9 +1,9 @@
 #include "SoundEventHandler.h"
-#include "ResourceManager.h"
-#include "SoundEffect.h"
-#include "MusicPlayer.h"
-#include "ServiceLocator.h"
 
+#include "GameEvents.h"
+
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 #include "SoundIDs.h"
 
 void SoundEventHandler::HandleEvent(GameEvent gameEvent) const
@@ -17,20 +17,8 @@ void SoundEventHandler::HandleEvent(GameEvent gameEvent) const
 		soundSystem.Play(MusicSoundID::calmMusic, maxVol, SoundType::Music);
 		break;
 
-	case GameEvent::gameEnds:
-		break;
-
-	case GameEvent::playerJoined:
-		break;
-
 	case GameEvent::playerDied:
 		soundSystem.Play(SoundEffectSoundID::die, maxVol / 10, SoundType::SoundEffect);
-		break;
-
-	case GameEvent::foundSmallPickup:
-		break;
-
-	case GameEvent::foundLargePickup:
 		break;
 	}
 }

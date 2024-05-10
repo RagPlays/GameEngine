@@ -3,12 +3,12 @@
 
 #include "Component.h"
 
-class PlayerMovementComponent final : public Component
+class PlayerMovement final : public Component
 {
 public:
 
-	PlayerMovementComponent(GameObject* const owner, float movementSpeed);
-	~PlayerMovementComponent() = default;
+	PlayerMovement(GameObject* const owner, float movementSpeed);
+	~PlayerMovement() = default;
 
 	virtual void FixedUpdate() override;
 
@@ -21,6 +21,7 @@ private:
 
 	float m_PlayerSpeed;
 	glm::ivec2 m_MovementDir;
+
 };
 
 #endif // !PLAYERMOVEMENTCOMPONENT_H

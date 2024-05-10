@@ -1,11 +1,10 @@
 #ifndef LEVELRENDERER_H
 #define LEVELRENDERER_H
 
-#include <cstdint>
 #include <string>
 #include <vector>
-#include <glm.hpp>
 #include <memory>
+
 #include "Component.h"
 
 class GameObject;
@@ -13,12 +12,14 @@ class Texture2D;
 
 struct RenderTile
 {
+
 	// maximum grid size of 256x256
 	uint8_t gridX;
 	uint8_t gridY;
 	// maximum texture size of (256*TileSourceSize)x(256*TileSourceSize)
 	uint8_t srcGridX;
 	uint8_t srcGridY;
+
 };
 
 class LevelRenderer final : public Component
