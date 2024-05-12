@@ -88,7 +88,7 @@ void SceneManager::SetCurrentSceneByName(const std::string& name)
 
 void SceneManager::GoNextScene()
 {
-	if ((m_CurrentSceneIdx + 1) >= m_Scenes.size())
+	if (static_cast<size_t>(m_CurrentSceneIdx + 1) >= m_Scenes.size())
 	{
 		assert(false);
 		std::cerr << "ERROR::SCENEMANAGER::SCENE_IDX_NOT_VALID\n";
