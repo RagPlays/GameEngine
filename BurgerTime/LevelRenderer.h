@@ -7,8 +7,11 @@
 
 #include "Component.h"
 
-class GameObject;
-class Texture2D;
+namespace MoE
+{
+	class GameObject;
+	class Texture2D;
+}
 
 struct RenderTile
 {
@@ -22,11 +25,11 @@ struct RenderTile
 
 };
 
-class LevelRenderer final : public Component
+class LevelRenderer final : public MoE::Component
 {
 public:
 
-	explicit LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture);
+	explicit LevelRenderer(MoE::GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<MoE::Texture2D> texture);
 	virtual ~LevelRenderer() = default;
 
 	virtual void Render() const override;
@@ -40,7 +43,7 @@ private:
 	uint8_t m_TileDrawSize;
 	uint8_t m_TileSourceSize;
 	std::vector<RenderTile> m_LevelTiles;
-	std::shared_ptr<Texture2D> m_TileMapTexture;
+	std::shared_ptr<MoE::Texture2D> m_TileMapTexture;
 
 };
 

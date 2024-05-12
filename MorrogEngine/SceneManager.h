@@ -8,49 +8,53 @@
 
 #include "Singleton.h"
 
-class Scene;
-class Engine;
-
-class SceneManager final : public Singleton<SceneManager>
+namespace MoE
 {
-public:
+	class Scene;
+	class Engine;
 
-	virtual ~SceneManager();
+	class SceneManager final : public Singleton<SceneManager>
+	{
+	public:
 
-	SceneManager(const SceneManager& other) = delete;
-	SceneManager(SceneManager&& other) noexcept = delete;
-	SceneManager& operator=(const SceneManager& other) = delete;
-	SceneManager& operator=(SceneManager&& other) noexcept = delete;
+		virtual ~SceneManager();
 
-	Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
-	void Destroy();
+		SceneManager(const SceneManager& other) = delete;
+		SceneManager(SceneManager&& other) noexcept = delete;
+		SceneManager& operator=(const SceneManager& other) = delete;
+		SceneManager& operator=(SceneManager&& other) noexcept = delete;
 
-	bool Empty() const;
-	void SetCurrentSceneByIndex(uint8_t idx);
-	void SetCurrentSceneByName(const std::string& name);
-	void GoNextScene();
+		Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
+		void Destroy();
 
-	Scene& GetCurrentScene() const;
-	uint8_t GetCurrentSceneIndex() const;
+		bool Empty() const;
+		void SetCurrentSceneByIndex(uint8_t idx);
+		void SetCurrentSceneByName(const std::string& name);
+		void GoNextScene();
 
-	void GameStart();
-	void FixedUpdate();
-	void Update();
-	void LateUpdate();
-	void Render() const;
+		Scene& GetCurrentScene() const;
+		uint8_t GetCurrentSceneIndex() const;
 
-private:
+		void GameStart();
+		void FixedUpdate();
+		void Update();
+		void LateUpdate();
+		void Render() const;
 
-	friend class Singleton<SceneManager>;
-	SceneManager();
+	private:
 
-	void CheckSceneSwap();
+		friend class MoE::Singleton<SceneManager>;
+		SceneManager();
 
-private:
+		void CheckSceneSwap();
 
-	uint8_t m_ToSceneIdx;
-	uint8_t m_CurrentSceneIdx;
-	std::vector<std::unique_ptr<Scene>> m_Scenes;
-};
+	private:
+
+		uint8_t m_ToSceneIdx;
+		uint8_t m_CurrentSceneIdx;
+		std::vector<std::unique_ptr<Scene>> m_Scenes;
+
+	};
+}
 
 #endif // !SCENEMANAGER_H

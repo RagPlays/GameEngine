@@ -126,5 +126,8 @@
     <ClInclude Include="GameManager.h">
       <Filter>GameSourceFiles\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="NextLevelCommand.h">
+      <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 
 #include "ImGuiComponent.h"
 
-class ImGuiExercise2 final : public ImGuiComponent
+class ImGuiExercise2 final : public MoE::ImGuiComponent
 {
 public:
 

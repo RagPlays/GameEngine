@@ -4,24 +4,25 @@
 
 #include <imgui_plot.h>
 
-// This is a Blueprint class of a ImGuiComponent
-
-class ImGuiComponent
+namespace MoE
 {
-public:
+	class ImGuiComponent
+	{
+	public:
 
-	virtual ~ImGuiComponent() = default;
-	ImGuiComponent(const ImGuiComponent& other) = delete;
-	ImGuiComponent(ImGuiComponent&& other) noexcept = delete;
-	ImGuiComponent& operator=(const ImGuiComponent& other) = delete;
-	ImGuiComponent& operator=(ImGuiComponent&& other) = delete;
+		virtual ~ImGuiComponent() = default;
+		ImGuiComponent(const ImGuiComponent& other) = delete;
+		ImGuiComponent(ImGuiComponent&& other) noexcept = delete;
+		ImGuiComponent& operator=(const ImGuiComponent& other) = delete;
+		ImGuiComponent& operator=(ImGuiComponent&& other) = delete;
 
-	virtual void Render() = 0;
+		virtual void Render() = 0;
 
-protected:
+	protected:
 
-	ImGuiComponent() = default;
+		ImGuiComponent() = default;
 
-};
+	};
+}
 
 #endif // !IMGUICOMPONENT_H

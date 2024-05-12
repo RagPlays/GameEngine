@@ -3,56 +3,59 @@
 #include "InputStructs.h"
 #include "InputCodes.h"
 
-//*****************//
-//  KeyBoardInput  //
-//*****************//
-
-KeyBoardInput::KeyBoardInput(KeyBoardButton scancode)
-	: scancode{ scancode }
-	, inputType{ InputType::ispressed }
+namespace MoE
 {
-}
+	//*****************//
+	//  KeyBoardInput  //
+	//*****************//
 
-KeyBoardInput::KeyBoardInput(KeyBoardButton scancode, InputType inputType)
-	: scancode{ scancode }
-	, inputType{ inputType }
-{
-}
+	KeyBoardInput::KeyBoardInput(KeyBoardButton scancode)
+		: scancode{ scancode }
+		, inputType{ InputType::ispressed }
+	{
+	}
 
-size_t KeyBoardInputHash::operator()(const KeyBoardInput& input) const
-{
-	return std::hash<unsigned int>()
-		(static_cast<unsigned int>(input.scancode)) ^ std::hash<unsigned int>()(static_cast<int>(input.inputType));
-}
+	KeyBoardInput::KeyBoardInput(KeyBoardButton scancode, InputType inputType)
+		: scancode{ scancode }
+		, inputType{ inputType }
+	{
+	}
 
-bool KeyBoardInputEqual::operator()(const KeyBoardInput& lhs, const KeyBoardInput& rhs) const
-{
-	return lhs.scancode == rhs.scancode && lhs.inputType == rhs.inputType;
-}
+	size_t KeyBoardInputHash::operator()(const KeyBoardInput& input) const
+	{
+		return std::hash<unsigned int>()
+			(static_cast<unsigned int>(input.scancode)) ^ std::hash<unsigned int>()(static_cast<int>(input.inputType));
+	}
 
-//*******************//
-//  ControllerInput  //
-//*******************//
+	bool KeyBoardInputEqual::operator()(const KeyBoardInput& lhs, const KeyBoardInput& rhs) const
+	{
+		return lhs.scancode == rhs.scancode && lhs.inputType == rhs.inputType;
+	}
 
-ControllerInput::ControllerInput(ControllerButton button)
-	: button{ button }
-	, inputType{ InputType::ispressed }
-{
-}
+	//*******************//
+	//  ControllerInput  //
+	//*******************//
 
-ControllerInput::ControllerInput(ControllerButton button, InputType inputType)
-	: button{ button }
-	, inputType{ inputType }
-{
-}
+	ControllerInput::ControllerInput(ControllerButton button)
+		: button{ button }
+		, inputType{ InputType::ispressed }
+	{
+	}
 
-size_t ControllerInputHash::operator()(const ControllerInput& input) const
-{
-	return std::hash<unsigned int>()
-		(static_cast<unsigned int>(input.button)) ^ std::hash<unsigned int>()(static_cast<int>(input.inputType));
-}
+	ControllerInput::ControllerInput(ControllerButton button, InputType inputType)
+		: button{ button }
+		, inputType{ inputType }
+	{
+	}
 
-bool ControllerInputEqual::operator()(const ControllerInput& lhs, const ControllerInput& rhs) const
-{
-	return lhs.button == rhs.button && lhs.inputType == rhs.inputType;
+	size_t ControllerInputHash::operator()(const ControllerInput& input) const
+	{
+		return std::hash<unsigned int>()
+			(static_cast<unsigned int>(input.button)) ^ std::hash<unsigned int>()(static_cast<int>(input.inputType));
+	}
+
+	bool ControllerInputEqual::operator()(const ControllerInput& lhs, const ControllerInput& rhs) const
+	{
+		return lhs.button == rhs.button && lhs.inputType == rhs.inputType;
+	}
 }

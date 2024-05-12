@@ -1,6 +1,8 @@
 #include "Level.h"
 #include "LevelManager.h"
 
+using namespace MoE;
+
 Level::Level(GameObject* const owner)
 	: Component{ owner }
 {

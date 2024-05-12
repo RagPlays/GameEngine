@@ -1,26 +1,29 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-class GameObject;
-enum class GameEvent;
-
-class Observer
+namespace MoE
 {
-public:
+	class GameObject;
+	enum class GameEvent;
 
-	virtual ~Observer() = default;
+	class Observer
+	{
+	public:
 
-	Observer(const Observer& other) = delete;
-	Observer(Observer&& other) noexcept = delete;
-	Observer& operator=(const Observer& other) = delete;
-	Observer& operator=(Observer&& other) noexcept = delete;
+		virtual ~Observer() = default;
 
-	virtual void OnNotify(GameObject* gameObj, GameEvent event) = 0;
+		Observer(const Observer& other) = delete;
+		Observer(Observer&& other) noexcept = delete;
+		Observer& operator=(const Observer& other) = delete;
+		Observer& operator=(Observer&& other) noexcept = delete;
 
-protected:
+		virtual void OnNotify(GameObject* gameObj, GameEvent event) = 0;
 
-	Observer() = default;
+	protected:
 
-};
+		Observer() = default;
+
+	};
+}
 
 #endif // !OBSERVER_H

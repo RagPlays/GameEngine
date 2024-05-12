@@ -3,15 +3,19 @@
 
 #include "Component.h"
 
+namespace MoE
+{
+	class GameObject;
+}
+
 class LevelCollision;
 class LevelRenderer;
-class GameObject;
 
-class Level final : public Component
+class Level final : public MoE::Component
 {
 public:
 
-	explicit Level(GameObject* const owner);
+	explicit Level(MoE::GameObject* const owner);
 	virtual ~Level();
 
 	Level(const Level& other) = delete;

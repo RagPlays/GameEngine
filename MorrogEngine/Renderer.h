@@ -5,48 +5,52 @@
 
 #include "Singleton.h"
 
-class Texture2D;
-class RenderComponent;
-
 struct SDL_Rect;
 struct SDL_Color;
 struct SDL_Window;
 struct SDL_Renderer;
 
-class Renderer final : public Singleton<Renderer>
+namespace MoE
 {
-public:
+	class Texture2D;
+	class RenderComponent;
 
-	virtual ~Renderer() = default;
+	class Renderer final : public Singleton<Renderer>
+	{
+	public:
 
-	Renderer(const Renderer& other) = delete;
-	Renderer(Renderer&& other) noexcept = delete;
-	Renderer& operator=(const Renderer& other) = delete;
-	Renderer& operator=(Renderer&& other) noexcept = delete;
+		virtual ~Renderer() = default;
 
-	void Init(SDL_Window* window);
-	void Render() const;
-	void Destroy();
+		Renderer(const Renderer& other) = delete;
+		Renderer(Renderer&& other) noexcept = delete;
+		Renderer& operator=(const Renderer& other) = delete;
+		Renderer& operator=(Renderer&& other) noexcept = delete;
 
-	void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const;
-	void RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, const SDL_Rect& destRect) const;
+		void Init(SDL_Window* window);
+		void Render() const;
+		void Destroy();
 
-	SDL_Renderer* GetSDLRenderer() const;
+		void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const;
+		void RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, const SDL_Rect& destRect) const;
 
-private:
+		SDL_Renderer* GetSDLRenderer() const;
 
-	friend class Singleton<Renderer>;
-	Renderer();
+	private:
 
-	int GetOpenGLDriverIndex();
+		friend class MoE::Singleton<Renderer>;
+		Renderer();
 
-	void InitImGui();
-	void DestroyImGui();
+		int GetOpenGLDriverIndex();
 
-private:
+		void InitImGui();
+		void DestroyImGui();
 
-	SDL_Renderer* m_pRenderer;
-	SDL_Window* m_pWindow;
-};
+	private:
+
+		SDL_Renderer* m_pRenderer;
+		SDL_Window* m_pWindow;
+
+	};
+}
 
 #endif // !RENDERER_H

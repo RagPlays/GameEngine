@@ -3,31 +3,34 @@
 
 #include <memory>
 
-class SoundSystem;
-
-class ServiceLocator final
+namespace MoE
 {
-public:
+	class SoundSystem;
 
-	~ServiceLocator();
+	class ServiceLocator final
+	{
+	public:
 
-	ServiceLocator(const ServiceLocator& other) = delete;
-	ServiceLocator(ServiceLocator&& other) noexcept = delete;
-	ServiceLocator& operator=(const ServiceLocator& other) = delete;
-	ServiceLocator& operator=(ServiceLocator&& other) noexcept = delete;
+		~ServiceLocator();
 
-	// Get / Set Audio
-	static SoundSystem& GetSoundSystem();
-	static void RegisterSoundSystem(std::unique_ptr<SoundSystem>&& ss);
+		ServiceLocator(const ServiceLocator& other) = delete;
+		ServiceLocator(ServiceLocator&& other) noexcept = delete;
+		ServiceLocator& operator=(const ServiceLocator& other) = delete;
+		ServiceLocator& operator=(ServiceLocator&& other) noexcept = delete;
 
-private:
+		// Get / Set Audio
+		static SoundSystem& GetSoundSystem();
+		static void RegisterSoundSystem(std::unique_ptr<SoundSystem>&& ss);
 
-	ServiceLocator() = default;
+	private:
 
-private:
+		ServiceLocator() = default;
 
-	static std::unique_ptr<SoundSystem> s_SoundSystemInstance;
+	private:
 
-};
+		static std::unique_ptr<SoundSystem> s_SoundSystemInstance;
+
+	};
+}
 
 #endif // !LOCATOR_H

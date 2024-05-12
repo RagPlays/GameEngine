@@ -8,48 +8,51 @@
 #include "InputStructs.h"
 #include "Command.h"
 
-class Command;
-
-enum class ControllerButton;
-enum class KeyBoardButton;
-enum class InputType;
-
-class Controller final
+namespace MoE
 {
-public:
+	class Command;
 
-	explicit Controller(int controllerIndx);
-	~Controller();
+	enum class ControllerButton;
+	enum class KeyBoardButton;
+	enum class InputType;
 
-	Controller(const Controller& other) = delete;
-	Controller(Controller&& other) noexcept = delete;
-	Controller& operator=(const Controller& other) = delete;
-	Controller& operator=(Controller&& other) = delete;
+	class Controller final
+	{
+	public:
 
-	void Update();
-	void ProcessInput();
+		explicit Controller(int controllerIndx);
+		~Controller();
 
-	void AddBind(const ControllerInput& input, std::unique_ptr<Command>&& command);
+		Controller(const Controller& other) = delete;
+		Controller(Controller&& other) noexcept = delete;
+		Controller& operator=(const Controller& other) = delete;
+		Controller& operator=(Controller&& other) = delete;
 
-	SDL_GameController* GetGameController() const;
-	int GetControllerIdx() const;
+		void Update();
+		void ProcessInput();
 
-private:
+		void AddBind(const ControllerInput& input, std::unique_ptr<Command>&& command);
 
-	bool WasPressedThisFrame(ControllerButton button) const;
-	bool WasReleasedThisFrame(ControllerButton button) const;
-	bool IsPressed(ControllerButton button) const;
+		SDL_GameController* GetGameController() const;
+		int GetControllerIdx() const;
 
-	static uint8_t GameControllerGetButton(SDL_GameController* gameController, ControllerButton controllerbutton);
+	private:
 
-private:
+		bool WasPressedThisFrame(ControllerButton button) const;
+		bool WasReleasedThisFrame(ControllerButton button) const;
+		bool IsPressed(ControllerButton button) const;
 
-	SDL_GameController* m_GameController;
-	int m_ControllerIdx;
-	std::vector<uint8_t> m_CurrentButtonStates;
-	std::vector<uint8_t> m_PreviousButtonStates;
-	std::unordered_map<ControllerInput, std::unique_ptr<Command>, ControllerInputHash, ControllerInputEqual> m_Commands;
+		static uint8_t GameControllerGetButton(SDL_GameController* gameController, ControllerButton controllerbutton);
 
-};
+	private:
+
+		SDL_GameController* m_GameController;
+		int m_ControllerIdx;
+		std::vector<uint8_t> m_CurrentButtonStates;
+		std::vector<uint8_t> m_PreviousButtonStates;
+		std::unordered_map<ControllerInput, std::unique_ptr<Command>, ControllerInputHash, ControllerInputEqual> m_Commands;
+
+	};
+}
 
 #endif // !CONTROLLER_H

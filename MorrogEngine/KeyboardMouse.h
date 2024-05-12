@@ -6,41 +6,45 @@
 
 #include "InputStructs.h"
 
-class Command;
-
-enum class KeyBoardButton;
-
-class KeyboardMouse final
+namespace MoE
 {
-public:
+	class Command;
 
-	KeyboardMouse();
-	~KeyboardMouse() = default;
+	enum class KeyBoardButton;
 
-	KeyboardMouse(const KeyboardMouse& other) = delete;
-	KeyboardMouse(KeyboardMouse&& other) noexcept = delete;
-	KeyboardMouse& operator=(const KeyboardMouse& other) = delete;
-	KeyboardMouse& operator=(KeyboardMouse&& other) noexcept = delete;
+	class KeyboardMouse final
+	{
+	public:
 
-	void Update();
-	void ProcessInput();
+		KeyboardMouse();
+		~KeyboardMouse() = default;
 
-	void AddBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
+		KeyboardMouse(const KeyboardMouse& other) = delete;
+		KeyboardMouse(KeyboardMouse&& other) noexcept = delete;
+		KeyboardMouse& operator=(const KeyboardMouse& other) = delete;
+		KeyboardMouse& operator=(KeyboardMouse&& other) noexcept = delete;
 
-private:
+		void Update();
+		void ProcessInput();
 
-	bool WasPressedThisFrame(KeyBoardButton key) const;
-	bool WasReleasedThisFrame(KeyBoardButton key) const;
-	bool IsPressed(KeyBoardButton key) const;
+		void AddBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
 
-private:
+	private:
 
-	std::vector<uint8_t> m_CurrentKeyStates;
-	std::vector<uint8_t> m_PreviousKeyStates;
+		bool WasPressedThisFrame(KeyBoardButton key) const;
+		bool WasReleasedThisFrame(KeyBoardButton key) const;
+		bool IsPressed(KeyBoardButton key) const;
 
-	std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
+	private:
 
-	std::vector<KeyBoardButton> m_KeyStack;
-};
+		std::vector<uint8_t> m_CurrentKeyStates;
+		std::vector<uint8_t> m_PreviousKeyStates;
+
+		std::unordered_map<KeyBoardInput, std::unique_ptr<Command>, KeyBoardInputHash, KeyBoardInputEqual> m_Commands;
+
+		std::vector<KeyBoardButton> m_KeyStack;
+
+	};
+}
 
 #endif // !KEYBOARDMOUSE_H

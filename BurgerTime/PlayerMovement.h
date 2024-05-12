@@ -3,11 +3,11 @@
 
 #include "Component.h"
 
-class PlayerMovement final : public Component
+class PlayerMovement final : public MoE::Component
 {
 public:
 
-	PlayerMovement(GameObject* const owner);
+	PlayerMovement(MoE::GameObject* const owner);
 	~PlayerMovement() = default;
 
 	virtual void GameStart() override;

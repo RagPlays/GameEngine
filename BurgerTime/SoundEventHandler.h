@@ -3,11 +3,14 @@
 
 #include "EventHandler.h"
 
-class MusicPlayer;
-class SoundEffect;
-enum class GameEvent;
+namespace MoE
+{
+	class MusicPlayer;
+	class SoundEffect;
+	enum class GameEvent;
+}
 
-class SoundEventHandler final : public EventHandler
+class SoundEventHandler final : public MoE::EventHandler
 {
 public:
 
@@ -19,7 +22,7 @@ public:
 	SoundEventHandler& operator=(const SoundEventHandler& other) = delete;
 	SoundEventHandler& operator=(SoundEventHandler&& other) noexcept = delete;
 
-	virtual void HandleEvent(GameEvent gameEvent) const override;
+	virtual void HandleEvent(MoE::GameEvent gameEvent) const override;
 
 };
 

@@ -9,6 +9,8 @@
 #include "GameManager.h"
 #include "LevelManager.h"
 
+using namespace MoE;
+
 PlayerMovement::PlayerMovement(GameObject* const owner)
 	: Component{ owner }
 	, m_PlayerSpeed{ 42, 22 }

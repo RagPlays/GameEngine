@@ -3,43 +3,47 @@
 
 #include <glm.hpp>
 
-class GameObject;
-
-class Component
+namespace MoE
 {
-public:
+	class GameObject;
 
-	virtual ~Component() = default;
-	Component(const Component& other) = delete;
-	Component(Component&& other) noexcept = delete;
-	Component& operator=(const Component& other) = delete;
-	Component& operator=(Component&& other) noexcept = delete;
+	class Component
+	{
+	public:
 
-	virtual void GameStart();
-	virtual void FixedUpdate();
-	virtual void Update();
-	virtual void LateUpdate();
-	virtual void Render() const;
-	virtual void OnDestroy();
+		virtual ~Component() = default;
 
-	GameObject* const GetOwner() const;
-	GameObject* GetParent() const;
+		Component(const Component& other) = delete;
+		Component(Component&& other) noexcept = delete;
+		Component& operator=(const Component& other) = delete;
+		Component& operator=(Component&& other) noexcept = delete;
 
-protected:
+		virtual void GameStart();
+		virtual void FixedUpdate();
+		virtual void Update();
+		virtual void LateUpdate();
+		virtual void Render() const;
+		virtual void OnDestroy();
 
-	explicit Component(GameObject* const owner);
+		GameObject* const GetOwner() const;
+		GameObject* GetParent() const;
 
-	// Gets
-	const glm::vec2& GetLocalPosition() const;
-	const glm::vec2& GetWorldPosition() const;
+	protected:
 
-	// Sets
-	void SetLocalPosition(const glm::vec2& pos);
+		explicit Component(GameObject* const owner);
 
-private:
+		// Gets
+		const glm::vec2& GetLocalPosition() const;
+		const glm::vec2& GetWorldPosition() const;
 
-	GameObject* const m_pOwner;
+		// Sets
+		void SetLocalPosition(const glm::vec2& pos);
 
-};
+	private:
+
+		GameObject* const m_pOwner;
+
+	};
+}
 
 #endif // !COMPONENT_H

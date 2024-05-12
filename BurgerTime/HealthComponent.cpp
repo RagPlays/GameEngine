@@ -1,5 +1,7 @@
 #include "HealthComponent.h"
 
+using namespace MoE;
+
 HealthComponent::HealthComponent(GameObject* const owner, float maxHealth)
 	: Component{ owner }
 	, m_CurrentHealth{ maxHealth }

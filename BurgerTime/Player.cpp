@@ -3,6 +3,8 @@
 #include "EventQueue.h"
 #include "GameEvents.h"
 
+using namespace MoE;
+
 unsigned int Player::s_PlayerCount{ 0 };
 
 Player::Player(GameObject* const owner)

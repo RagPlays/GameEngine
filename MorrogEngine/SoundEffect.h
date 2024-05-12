@@ -5,34 +5,37 @@
 
 struct Mix_Chunk;
 
-class SoundEffect final
+namespace MoE
 {
-public:
+	class SoundEffect final
+	{
+	public:
 
-	explicit SoundEffect(const std::string& filePath);
-	~SoundEffect();
+		explicit SoundEffect(const std::string& filePath);
+		~SoundEffect();
 
-	SoundEffect(const SoundEffect& other) = delete;
-	SoundEffect(SoundEffect&& other) noexcept = delete;
-	SoundEffect& operator=(const SoundEffect& other) = delete;
-	SoundEffect& operator=(SoundEffect&& other) noexcept = delete;
+		SoundEffect(const SoundEffect& other) = delete;
+		SoundEffect(SoundEffect&& other) noexcept = delete;
+		SoundEffect& operator=(const SoundEffect& other) = delete;
+		SoundEffect& operator=(SoundEffect&& other) noexcept = delete;
 
-	bool IsLoaded() const;
-	void Load();
-	void UnLoad();
+		bool IsLoaded() const;
+		void Load();
+		void UnLoad();
 
-	void SetVolume(int volume);
+		void SetVolume(int volume);
 
-	void Play(int loops = 0);
+		void Play(int loops = 0);
 
-	static int MaxVolume();
+		static int MaxVolume();
 
-private:
+	private:
 
-	bool m_IsLoaded;
-	const std::string m_FilePath;
-	Mix_Chunk* m_pSoundEffect;
+		bool m_IsLoaded;
+		const std::string m_FilePath;
+		Mix_Chunk* m_pSoundEffect;
 
-};
+	};
+}
 
 #endif // !SOUNDEFFECT_H

@@ -1,23 +1,26 @@
 #ifndef STATE_H
 #define STATE_H
 
-class State
+namespace MoE
 {
-public:
+	class State
+	{
+	public:
 
-	virtual ~State() = default;
+		virtual ~State() = default;
 
-	virtual void OnEnter() = 0;
-	virtual void OnExit() = 0;
+		virtual void OnEnter() = 0;
+		virtual void OnExit() = 0;
 
-	// ????
+		// ????
 
-	virtual void Update() = 0;
+		virtual void Update() = 0;
 
-private:
+	private:
 
-	State() = default;
+		State() = default;
 
-};
+	};
+}
 
 #endif // !STATE_H

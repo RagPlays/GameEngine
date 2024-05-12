@@ -4,11 +4,11 @@
 #include "Component.h"
 #include "Subject.h"
 
-class Player final : public Component, public Subject
+class Player final : public MoE::Component, public MoE::Subject
 {
 public:
 
-	explicit Player(GameObject* const owner);
+	explicit Player(MoE::GameObject* const owner);
 	virtual ~Player();
 
 	Player(const Player& other) = delete;

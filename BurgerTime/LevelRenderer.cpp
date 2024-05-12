@@ -9,6 +9,8 @@
 #include "GameManager.h"
 #include "LevelManager.h"
 
+using namespace MoE;
+
 LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }
 	, m_TileMapTexture{ texture }

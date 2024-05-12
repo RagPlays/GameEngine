@@ -9,6 +9,9 @@
 #include "GameManager.h"
 #include "LevelManager.h"
 
+using namespace MoE;
+
+
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }
 {

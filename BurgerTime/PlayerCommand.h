@@ -5,7 +5,7 @@
 
 class PlayerMovement;
 
-class PlayerCommand : public Command
+class PlayerCommand : public MoE::Command
 {
 public:
 

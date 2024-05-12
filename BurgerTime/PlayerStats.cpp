@@ -6,6 +6,8 @@
 #include "TextComponent.h"
 #include "GameEvents.h"
 
+using namespace MoE;
+
 PlayerStats::PlayerStats(GameObject* const owner)
 	: Component{ owner }
 	, Observer{}

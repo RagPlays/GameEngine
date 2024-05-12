@@ -6,6 +6,8 @@
 #include "SoundSystem.h"
 #include "SoundIDs.h"
 
+using namespace MoE;
+
 void SoundEventHandler::HandleEvent(GameEvent gameEvent) const
 {
 	SoundSystem& soundSystem{ ServiceLocator::GetSoundSystem() };

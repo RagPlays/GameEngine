@@ -7,51 +7,55 @@
 
 #include "Singleton.h"
 
-class Controller;
-class KeyboardMouse;
-class Command;
-
-struct KeyBoardInput;
-struct ControllerInput;
-
 union SDL_Event;
 
-class InputManager final : public Singleton<InputManager>
+namespace MoE
 {
-public:
+	class Controller;
+	class KeyboardMouse;
+	class Command;
 
-	virtual ~InputManager();
-	InputManager(const InputManager& other) = delete;
-	InputManager(InputManager&& other) noexcept = delete;
-	InputManager& operator=(const InputManager& other) = delete;
-	InputManager& operator=(InputManager&& other) noexcept = delete;
+	struct KeyBoardInput;
+	struct ControllerInput;
 
-	void ProcessInput();
+	class InputManager final : public Singleton<InputManager>
+	{
+	public:
 
-	bool HasQuit() const;
-	void Quit();
+		virtual ~InputManager();
+		InputManager(const InputManager& other) = delete;
+		InputManager(InputManager&& other) noexcept = delete;
+		InputManager& operator=(const InputManager& other) = delete;
+		InputManager& operator=(InputManager&& other) noexcept = delete;
 
-	void AddController(int controllerIdx);
-	bool HasController(int controllerIdx);
-	const Controller* GetController(int controllerIdx) const;
-	const KeyboardMouse* GetKeyBoard() const;
+		void ProcessInput();
 
-	void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
-	void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command>&& command, int controllerIdx);
+		bool HasQuit() const;
+		void Quit();
 
-private:
+		void AddController(int controllerIdx);
+		bool HasController(int controllerIdx);
+		const Controller* GetController(int controllerIdx) const;
+		const KeyboardMouse* GetKeyBoard() const;
 
-	friend class Singleton<InputManager>;
-	InputManager();
+		void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
+		void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command>&& command, int controllerIdx);
 
-	Controller* FindController(int controllerIdx) const;
+	private:
 
-private:
+		friend class MoE::Singleton<InputManager>;
+		InputManager();
 
-	SDL_Event m_Event;
-	bool m_HasQuit;
-	std::unique_ptr<KeyboardMouse> m_KeyboardMouse;
-	std::vector<std::unique_ptr<Controller>> m_Controllers;
-};
+		Controller* FindController(int controllerIdx) const;
+
+	private:
+
+		SDL_Event m_Event;
+		bool m_HasQuit;
+		std::unique_ptr<KeyboardMouse> m_KeyboardMouse;
+		std::vector<std::unique_ptr<Controller>> m_Controllers;
+
+	};
+}
 
 #endif // !INPUTMANAGER_H

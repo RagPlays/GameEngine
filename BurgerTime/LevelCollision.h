@@ -9,11 +9,11 @@
 
 class PlayerMovement;
 
-class LevelCollision final : public Component
+class LevelCollision final : public MoE::Component
 {
 public:
 
-	explicit LevelCollision(GameObject* const owner, const std::string& collisionLoadPath);
+	explicit LevelCollision(MoE::GameObject* const owner, const std::string& collisionLoadPath);
 	virtual ~LevelCollision() = default;
 
 	const glm::vec2& GetStartPos() const;
@@ -24,16 +24,16 @@ private:
 
 	void LoadCollision(const std::string& filePath);
 
-	bool CanMoveX(const Linei& leftOrRight, PlayerMovement* playerMovement) const;
-	bool CanMoveY(const Linei& topOrBot, PlayerMovement* playerMovement) const;
-	bool LineHitLine(const Linei& firstLine, const Linei& secondLine) const;
+	bool CanMoveX(const MoE::Linei& leftOrRight, PlayerMovement* playerMovement) const;
+	bool CanMoveY(const MoE::Linei& topOrBot, PlayerMovement* playerMovement) const;
+	bool LineHitLine(const MoE::Linei& firstLine, const MoE::Linei& secondLine) const;
 
 private:
 
 	int m_MoveOffset;
 	glm::vec2 m_StartPos;
-	std::vector<Linei> m_LinesX;
-	std::vector<Linei> m_LinesY;
+	std::vector<MoE::Linei> m_LinesX;
+	std::vector<MoE::Linei> m_LinesY;
 
 };
 

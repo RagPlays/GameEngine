@@ -6,40 +6,43 @@
 
 #include "Singleton.h"
 
-class Texture2D;
-class Font;
-class MusicPlayer;
-class SoundEffect;
-
-class ResourceManager final : public Singleton<ResourceManager>
+namespace MoE
 {
-public:
+	class Texture2D;
+	class Font;
+	class MusicPlayer;
+	class SoundEffect;
 
-	virtual ~ResourceManager() = default;
+	class ResourceManager final : public Singleton<ResourceManager>
+	{
+	public:
 
-	ResourceManager(const ResourceManager& other) = delete;
-	ResourceManager(ResourceManager&& other) noexcept = delete;
-	ResourceManager& operator=(const ResourceManager& other) = delete;
-	ResourceManager& operator=(ResourceManager&& other) noexcept = delete;
+		virtual ~ResourceManager() = default;
 
-	void Init(const std::string& data);
+		ResourceManager(const ResourceManager& other) = delete;
+		ResourceManager(ResourceManager&& other) noexcept = delete;
+		ResourceManager& operator=(const ResourceManager& other) = delete;
+		ResourceManager& operator=(ResourceManager&& other) noexcept = delete;
 
-	std::string GetFullPath(const std::string& filename) const;
+		void Init(const std::string& data);
 
-	std::shared_ptr<Texture2D> LoadTexture(const std::string& file) const;
-	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
-	std::unique_ptr<SoundEffect> LoadSoundEffect(const std::string& file) const;
-	std::unique_ptr<MusicPlayer> LoadMusicPlayer(const std::string& file) const;
+		std::string GetFullPath(const std::string& filename) const;
 
-private:
+		std::shared_ptr<Texture2D> LoadTexture(const std::string& file) const;
+		std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
+		std::unique_ptr<SoundEffect> LoadSoundEffect(const std::string& file) const;
+		std::unique_ptr<MusicPlayer> LoadMusicPlayer(const std::string& file) const;
 
-	friend class Singleton<ResourceManager>;
-	ResourceManager() = default;
+	private:
 
-private:
+		friend class MoE::Singleton<ResourceManager>;
+		ResourceManager() = default;
 
-	std::string m_DataPath;
+	private:
 
-};
+		std::string m_DataPath;
+
+	};
+}
 
 #endif // !RESOURCEMANAGER_H

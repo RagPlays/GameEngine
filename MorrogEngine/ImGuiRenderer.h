@@ -7,34 +7,38 @@
 
 #include "Singleton.h"
 
-class ImGuiComponent;
-
-class ImGuiRenderer final : public Singleton<ImGuiRenderer>
+namespace MoE
 {
-public:
+	class ImGuiComponent;
 
-	virtual ~ImGuiRenderer();
-	ImGuiRenderer(const ImGuiRenderer& other) = delete;
-	ImGuiRenderer(ImGuiRenderer&& other) noexcept = delete;
-	ImGuiRenderer& operator=(const ImGuiRenderer& other) = delete;
-	ImGuiRenderer& operator=(ImGuiRenderer&& other) = delete;
+	class ImGuiRenderer final : public Singleton<ImGuiRenderer>
+	{
+	public:
 
-	void Render();
+		virtual ~ImGuiRenderer();
+		ImGuiRenderer(const ImGuiRenderer& other) = delete;
+		ImGuiRenderer(ImGuiRenderer&& other) noexcept = delete;
+		ImGuiRenderer& operator=(const ImGuiRenderer& other) = delete;
+		ImGuiRenderer& operator=(ImGuiRenderer&& other) = delete;
 
-	void AddImGuiComponent(std::unique_ptr<ImGuiComponent>&& component);
+		void Render();
 
-private:
+		void AddImGuiComponent(std::unique_ptr<ImGuiComponent>&& component);
 
-	friend class Singleton<ImGuiRenderer>;
-	ImGuiRenderer();
+	private:
 
-	void StartImGuiRender();
-	void EndImGuiRender();
+		friend class Singleton<ImGuiRenderer>;
+		ImGuiRenderer();
 
-private:
+		void StartImGuiRender();
+		void EndImGuiRender();
 
-	std::vector<std::unique_ptr<ImGuiComponent>> m_ImGuiComponents;
-};
+	private:
+
+		std::vector<std::unique_ptr<ImGuiComponent>> m_ImGuiComponents;
+
+	};
+}
 
 #endif // !IMGUIRENDERER_H
 #endif // _DEBUG || defined DEBUG

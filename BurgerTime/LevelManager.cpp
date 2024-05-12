@@ -6,6 +6,9 @@
 #include "LevelRenderer.h"
 #include "Level.h"
 #include "GameObject.h"
+#include "SceneManager.h"
+
+using namespace MoE;
 
 void LevelManager::RegisterLevel(Level* level)
 {
@@ -28,6 +31,17 @@ void LevelManager::UnRegisterLevel(Level* level)
     }
     std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_UNREGISTER_LEVEL\n";
     assert(false);
+}
+
+void LevelManager::NextLevel()
+{
+    if (m_CurrentLevel != -1)
+    {
+        const uint8_t currentLevel{ static_cast<uint8_t>(m_CurrentLevel) };
+        const uint8_t nextLevelIdx{ static_cast<uint8_t>((currentLevel + 1) % m_NrLevelsCount) };
+        SceneManager::Get().SetCurrentSceneByIndex(nextLevelIdx);
+        m_CurrentLevel = nextLevelIdx;
+    }
 }
 
 uint8_t LevelManager::GetTileSize() const
@@ -62,6 +76,9 @@ LevelManager::LevelManager()
     : m_pCurrentLevel{ nullptr }
     , m_pCurrentLevelRenderer{ nullptr }
     , m_pCurrentLevelCollision{ nullptr }
+    , m_CurrentLevel{ 0 }
+    , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }
 {
+    assert(m_NrLevelsCount);
 }

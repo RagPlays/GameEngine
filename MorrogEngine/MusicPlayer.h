@@ -6,37 +6,40 @@
 struct _Mix_Music;
 typedef _Mix_Music Mix_Music;
 
-class MusicPlayer final
+namespace MoE
 {
-public:
+	class MusicPlayer final
+	{
+	public:
 
-	explicit MusicPlayer(const std::string& filePath);
-	~MusicPlayer();
+		explicit MusicPlayer(const std::string& filePath);
+		~MusicPlayer();
 
-	MusicPlayer(const MusicPlayer& other) = delete;
-	MusicPlayer(MusicPlayer&& other) noexcept = delete;
-	MusicPlayer& operator=(const MusicPlayer& other) = delete;
-	MusicPlayer& operator=(MusicPlayer&& other) noexcept = delete;
+		MusicPlayer(const MusicPlayer& other) = delete;
+		MusicPlayer(MusicPlayer&& other) noexcept = delete;
+		MusicPlayer& operator=(const MusicPlayer& other) = delete;
+		MusicPlayer& operator=(MusicPlayer&& other) noexcept = delete;
 
-	bool IsLoaded() const;
-	void Load();
-	void UnLoad();
+		bool IsLoaded() const;
+		void Load();
+		void UnLoad();
 
-	void SetVolume(int volume);
+		void SetVolume(int volume);
 
-	void Play();
-	void Pause();
-	void Resume();
-	void Stop();
+		void Play();
+		void Pause();
+		void Resume();
+		void Stop();
 
-	static int MaxVolume();
+		static int MaxVolume();
 
-private:
+	private:
 
-	bool m_IsLoaded;
-	std::string m_FilePath;
-	Mix_Music* m_pMusic;
+		bool m_IsLoaded;
+		std::string m_FilePath;
+		Mix_Music* m_pMusic;
 
-};
+	};
+}
 
 #endif // !MUSICPLAYER_H

@@ -4,28 +4,31 @@
 #include <memory>
 #include <vector>
 
-class Observer;
-class GameObject;
-enum class GameEvent;
-
-class Subject
+namespace MoE
 {
-public:
+	class Observer;
+	class GameObject;
+	enum class GameEvent;
 
-	virtual ~Subject() = default;
+	class Subject
+	{
+	public:
 
-	void RegisterObserver(Observer* observer);
-	void UnRegisterObserver(Observer* observer);
+		virtual ~Subject() = default;
 
-protected:
+		void RegisterObserver(Observer* observer);
+		void UnRegisterObserver(Observer* observer);
 
-	Subject() = default;
-	void Notify(GameObject* gameObj, GameEvent gameEvent);
+	protected:
 
-private:
+		Subject() = default;
+		void Notify(GameObject* gameObj, GameEvent gameEvent);
 
-	std::vector<Observer*> m_Observers;
+	private:
 
-};
+		std::vector<Observer*> m_Observers;
+
+	};
+}
 
 #endif // !SUBJECT_H

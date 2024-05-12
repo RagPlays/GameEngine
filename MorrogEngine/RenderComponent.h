@@ -3,55 +3,57 @@
 
 #include <memory>
 #include <glm.hpp>
-
 #include <SDL.h>
 
 #include "Component.h"
 
-class GameObject;
-class Texture2D;
-
-class RenderComponent final : public Component
+namespace MoE
 {
-public:
+	class GameObject;
+	class Texture2D;
 
-	explicit RenderComponent(GameObject* const owner);
-	explicit RenderComponent(GameObject* const owner, std::shared_ptr<Texture2D> texture);
-	virtual ~RenderComponent() = default;
+	class RenderComponent final : public Component
+	{
+	public:
 
-	RenderComponent(const RenderComponent& other) = delete;
-	RenderComponent(RenderComponent&& other) noexcept = delete;
-	RenderComponent& operator=(const RenderComponent& other) = delete;
-	RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
+		explicit RenderComponent(GameObject* const owner);
+		explicit RenderComponent(GameObject* const owner, std::shared_ptr<Texture2D> texture);
+		virtual ~RenderComponent() = default;
 
-	// Texture
-	void SetTexture(std::shared_ptr<Texture2D> texture);
-	void SetTexture(std::shared_ptr<Texture2D> texture, const glm::ivec2& dimentions);
+		RenderComponent(const RenderComponent& other) = delete;
+		RenderComponent(RenderComponent&& other) noexcept = delete;
+		RenderComponent& operator=(const RenderComponent& other) = delete;
+		RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
 
-	// Dimensions
-	void SetDefaultDimensions();
-	void SetTextureWidth(int width);
-	void SetTextureHeight(int height);
-	void SetTextureDimensions(const glm::ivec2& dimentions);
+		// Texture
+		void SetTexture(std::shared_ptr<Texture2D> texture);
+		void SetTexture(std::shared_ptr<Texture2D> texture, const glm::ivec2& dimentions);
 
-	int GetTextureWidth() const;
-	int GetTextureHeight() const;
-	const glm::ivec2& GetTextureDimentions() const;
+		// Dimensions
+		void SetDefaultDimensions();
+		void SetTextureWidth(int width);
+		void SetTextureHeight(int height);
+		void SetTextureDimensions(const glm::ivec2& dimentions);
 
-	// SrcRect
-	void ClearSourceRect();
-	void SetSourceRect(int x, int y, int width, int height);
-	void SetSourceRect(const SDL_Rect& srcRect);
+		int GetTextureWidth() const;
+		int GetTextureHeight() const;
+		const glm::ivec2& GetTextureDimentions() const;
 
-	virtual void Render() const override;
+		// SrcRect
+		void ClearSourceRect();
+		void SetSourceRect(int x, int y, int width, int height);
+		void SetSourceRect(const SDL_Rect& srcRect);
 
-private:
+		virtual void Render() const override;
 
-	std::shared_ptr<Texture2D> m_Texture;
-	glm::ivec2 m_RenderDimensions;
-	bool m_SrcRectSet;
-	SDL_Rect m_SrcRect;
+	private:
 
-};
+		std::shared_ptr<Texture2D> m_Texture;
+		glm::ivec2 m_RenderDimensions;
+		bool m_SrcRectSet;
+		SDL_Rect m_SrcRect;
+
+	};
+}
 
 #endif // !TEXTURECOMPONENT_H

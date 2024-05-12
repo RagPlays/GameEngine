@@ -3,11 +3,11 @@
 
 #include "Component.h"
 
-class HealthComponent final : public Component
+class HealthComponent final : public MoE::Component
 {
 public:
 
-	explicit HealthComponent(GameObject* const owner, float maxHealth);
+	explicit HealthComponent(MoE::GameObject* const owner, float maxHealth);
 	virtual ~HealthComponent() = default;
 
 	HealthComponent(const HealthComponent& other) = delete;

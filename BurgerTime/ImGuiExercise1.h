@@ -5,7 +5,7 @@
 
 #include "ImGuiComponent.h"
 
-class ImGuiExercise1 final : public ImGuiComponent
+class ImGuiExercise1 final : public MoE::ImGuiComponent
 {
 public:
 

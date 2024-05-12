@@ -189,6 +189,7 @@
     <ClInclude Include="LevelCollision.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
+    <ClInclude Include="NextLevelCommand.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveCommand.h" />

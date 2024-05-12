@@ -4,14 +4,17 @@
 #include "Component.h"
 #include "Observer.h"
 
+namespace MoE
+{
+	class GameObject;
+}
 class Player;
-class GameObject;
 
-class PlayerStats final : public Component, public Observer
+class PlayerStats final : public MoE::Component, public MoE::Observer
 {
 public:
 
-	explicit PlayerStats(GameObject* const owner);
+	explicit PlayerStats(MoE::GameObject* const owner);
 	virtual ~PlayerStats() = default;
 
 	PlayerStats(const PlayerStats& other) = delete;
@@ -21,7 +24,7 @@ public:
 
 	void Update() override;
 
-	void OnNotify(GameObject* gameObj, GameEvent gameEvent) override;
+	void OnNotify(MoE::GameObject* gameObj, MoE::GameEvent gameEvent) override;
 
 private:
 

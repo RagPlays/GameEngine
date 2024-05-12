@@ -1,38 +1,41 @@
 #ifndef EVENTHANDLER_H
 #define EVENTHANDLER_H
 
-enum class GameEvent;
-
-class EventHandler
+namespace MoE
 {
-public:
+	enum class GameEvent;
 
-	EventHandler() = default;
-	virtual ~EventHandler() = default;
+	class EventHandler
+	{
+	public:
 
-	EventHandler(const EventHandler& other) = delete;
-	EventHandler(EventHandler&& other) noexcept = delete;
-	EventHandler& operator=(const EventHandler& other) = delete;
-	EventHandler& operator=(EventHandler&& other) noexcept = delete;
+		EventHandler() = default;
+		virtual ~EventHandler() = default;
 
-	virtual void HandleEvent(GameEvent gameEvent) const = 0;
+		EventHandler(const EventHandler& other) = delete;
+		EventHandler(EventHandler&& other) noexcept = delete;
+		EventHandler& operator=(const EventHandler& other) = delete;
+		EventHandler& operator=(EventHandler&& other) noexcept = delete;
 
-};
+		virtual void HandleEvent(GameEvent gameEvent) const = 0;
 
-class NullEventHandler final : public EventHandler
-{
-public:
+	};
 
-	NullEventHandler() = default;
-	virtual ~NullEventHandler() = default;
+	class NullEventHandler final : public EventHandler
+	{
+	public:
 
-	NullEventHandler(const NullEventHandler& other) = delete;
-	NullEventHandler(NullEventHandler&& other) noexcept = delete;
-	NullEventHandler& operator=(const NullEventHandler& other) = delete;
-	NullEventHandler& operator=(NullEventHandler&& other) noexcept = delete;
+		NullEventHandler() = default;
+		virtual ~NullEventHandler() = default;
 
-	virtual void HandleEvent(GameEvent) const override {}
+		NullEventHandler(const NullEventHandler& other) = delete;
+		NullEventHandler(NullEventHandler&& other) noexcept = delete;
+		NullEventHandler& operator=(const NullEventHandler& other) = delete;
+		NullEventHandler& operator=(NullEventHandler&& other) noexcept = delete;
 
-};
+		virtual void HandleEvent(GameEvent) const override {}
+
+	};
+}
 
 #endif // !EVENTHANDLER_H

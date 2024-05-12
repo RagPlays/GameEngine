@@ -3,11 +3,11 @@
 
 #include "Component.h"
 
-class RotateAroundParentComponent final : public Component
+class RotateAroundParentComponent final : public MoE::Component
 {
 public:
 
-	explicit RotateAroundParentComponent(GameObject* const owner, float rotationSpeed = 1.57f);
+	explicit RotateAroundParentComponent(MoE::GameObject* const owner, float rotationSpeed = 1.57f);
 	virtual ~RotateAroundParentComponent() = default;
 
 	RotateAroundParentComponent(const RotateAroundParentComponent& other) = delete;

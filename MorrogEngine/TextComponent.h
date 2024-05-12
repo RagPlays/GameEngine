@@ -7,35 +7,38 @@
 
 #include "Component.h"
 
-class Font;
-class Texture2D;
-class GameObject;
-
-class TextComponent final : public Component
+namespace MoE
 {
-public:
+	class Font;
+	class Texture2D;
+	class GameObject;
 
-	explicit TextComponent(GameObject* const owner, std::shared_ptr<Font> font, const std::string& text = "Empty", SDL_Color textColor = {255, 255, 255} );
-	virtual ~TextComponent() = default;
+	class TextComponent final : public Component
+	{
+	public:
 
-	TextComponent(const TextComponent& other) = delete;
-	TextComponent(TextComponent&& other) noexcept = delete;
-	TextComponent& operator=(const TextComponent& other) = delete;
-	TextComponent& operator=(TextComponent&& other) noexcept = delete;
+		explicit TextComponent(GameObject* const owner, std::shared_ptr<Font> font, const std::string& text = "Empty", SDL_Color textColor = { 255, 255, 255 });
+		virtual ~TextComponent() = default;
 
-	virtual void Update() override;
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) noexcept = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent& operator=(TextComponent&& other) noexcept = delete;
 
-	void SetText(const std::string& newText);
-	void SetFont(std::shared_ptr<Font> newFont);
-	void SetColor(SDL_Color newColor);
+		virtual void Update() override;
 
-private:
+		void SetText(const std::string& newText);
+		void SetFont(std::shared_ptr<Font> newFont);
+		void SetColor(SDL_Color newColor);
 
-	bool m_NeedsUpdate;
-	std::string m_Text;
-	std::shared_ptr<Font> m_Font;
-	SDL_Color m_TextColor;
+	private:
 
-};
+		bool m_NeedsUpdate;
+		std::string m_Text;
+		std::shared_ptr<Font> m_Font;
+		SDL_Color m_TextColor;
+
+	};
+}
 
 #endif // !TEXTCOMPONENT_H

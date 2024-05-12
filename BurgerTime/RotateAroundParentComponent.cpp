@@ -1,8 +1,11 @@
 #include <numbers>
 #include <glm.hpp>
+
 #include "RotateAroundParentComponent.h"
 #include "GameObject.h"
 #include "Timer.h"
+
+using namespace MoE;
 
 RotateAroundParentComponent::RotateAroundParentComponent(GameObject* const owner, float rotationSpeed)
 	: Component{ owner }

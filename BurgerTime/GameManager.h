@@ -7,7 +7,7 @@
 
 class Engine;
 
-class GameManager final : public Singleton<GameManager>
+class GameManager final : public MoE::Singleton<GameManager>
 {
 public:
 
@@ -18,7 +18,7 @@ public:
 
 private:
 
-	friend Singleton<GameManager>;
+	friend MoE::Singleton<GameManager>;
 	GameManager();
 
 private:

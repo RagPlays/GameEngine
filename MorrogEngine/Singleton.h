@@ -1,27 +1,30 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-template <typename T>
-class Singleton
+namespace MoE
 {
-public:
-
-	static T& Get()
+	template <typename T>
+	class Singleton
 	{
-		static T instance{};
-		return instance;
-	}
+	public:
 
-	virtual ~Singleton() = default;
-	Singleton(const Singleton& other) = delete;
-	Singleton(Singleton&& other) = delete;
-	Singleton& operator=(const Singleton& other) = delete;
-	Singleton& operator=(Singleton&& other) = delete;
+		static T& Get()
+		{
+			static T instance{};
+			return instance;
+		}
 
-protected:
+		virtual ~Singleton() = default;
+		Singleton(const Singleton& other) = delete;
+		Singleton(Singleton&& other) = delete;
+		Singleton& operator=(const Singleton& other) = delete;
+		Singleton& operator=(Singleton&& other) = delete;
 
-	Singleton() = default;
+	protected:
 
-};
+		Singleton() = default;
+
+	};
+}
 
 #endif // !SINGLETON_H
