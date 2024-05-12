@@ -5,19 +5,19 @@
 
 class LevelCollision;
 class LevelRenderer;
+class GameObject;
 
 class Level final : public Component
 {
 public:
 
-	Level() = default;
-	~Level() = default;
+	explicit Level(GameObject* const owner);
+	virtual ~Level();
 
-private:
-
-	Level* m_pLevel;
-	LevelCollision* m_pLevelCollision;
-	LevelRenderer* m_pLevelRenderer;
+	Level(const Level& other) = delete;
+	Level(Level&& other) noexcept = delete;
+	Level& operator=(const Level& other) = delete;
+	Level& operator=(Level&& other) noexcept = delete;
 
 };
 

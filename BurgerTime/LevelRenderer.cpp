@@ -6,14 +6,14 @@
 #include "LevelRenderer.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "GameManager.h"
+#include "LevelManager.h"
 
 LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }
-	, m_FilePath{ renderLoadPath }
 	, m_TileMapTexture{ texture }
-	, m_IsLoaded{ false }
 {
-	LoadLevel();
+	LoadTiles(renderLoadPath);
 }
 
 void LevelRenderer::Render() const
@@ -40,7 +40,7 @@ void LevelRenderer::Render() const
 	}
 }
 
-void LevelRenderer::LoadLevel()
+void LevelRenderer::LoadTiles(const std::string& filePath)
 {
 	m_LevelTiles.clear();
 
@@ -56,26 +56,24 @@ void LevelRenderer::LoadLevel()
 	// .....
 	////////////////////////////
 
-	const std::string pathName{ ResourceManager::Get().GetFullPath(m_FilePath) };
+	const std::string pathName{ ResourceManager::Get().GetFullPath(filePath) };
 
 	if (std::ifstream inFile{ pathName }; !inFile.is_open())
 	{
 		std::cerr << "ERROR::LEVELRENDERER::COULD_NOT_LOAD_TILEMAP_FROM_FILE: " << pathName << "\n";
-		m_IsLoaded = false;
 		return;
 	}
 	else
 	{
+		const uint8_t tileSize{ LevelManager::Get().GetTileSize() };
 		int mapWidth{};
 		int mapHeight{};
-		int tileDrawSize{};
-		int tileSourceSize{};
 
-		if (inFile >> mapWidth >> mapHeight >> tileDrawSize >> tileSourceSize)
+		if (inFile >> mapWidth >> mapHeight)
 		{
 			m_LevelTiles.reserve(static_cast<size_t>(mapWidth * mapHeight));
-			m_TileDrawSize = static_cast<uint8_t>(tileDrawSize); // source x 3 ?
-			m_TileSourceSize = static_cast<uint8_t>(tileSourceSize); // 16x16 ?
+			m_TileSourceSize = tileSize; // 16x16 ?  
+			m_TileDrawSize = static_cast<uint8_t>(tileSize * GameManager::Get().GetGameScale()); // source x 3 ?
 		}
 		else return;
 
@@ -86,28 +84,20 @@ void LevelRenderer::LoadLevel()
 
 		while (inFile >> gridX >> gridY >> srcRectX >> srcRectY)
 		{
-			if (inFile)
+			if (gridX >= mapWidth || gridY >= mapHeight)
 			{
-				if (gridX >= mapWidth || gridY >= mapHeight)
-				{
-					std::cerr << "ERROR::LEVELRENDERER::LEVELFILE_NOT_SET_CORRECTLY!\n";
-					return;
-				}
-				m_LevelTiles.emplace_back(
-					RenderTile{ 
-						static_cast<uint8_t>(gridX),
-						static_cast<uint8_t>(gridY),
-						static_cast<uint8_t>(srcRectX),
-						static_cast<uint8_t>(srcRectY)
-					}
-				);
+				std::cerr << "ERROR::LEVELRENDERER::LEVELFILE_NOT_SET_CORRECTLY!\n";
+				return;
 			}
-			else return;
+			m_LevelTiles.emplace_back(
+				RenderTile
+				{
+					static_cast<uint8_t>(gridX),
+					static_cast<uint8_t>(gridY),
+					static_cast<uint8_t>(srcRectX),
+					static_cast<uint8_t>(srcRectY)
+				}
+			);
 		}
-	}
-
-	if (!m_LevelTiles.empty())
-	{
-		m_IsLoaded = true;
 	}
 }

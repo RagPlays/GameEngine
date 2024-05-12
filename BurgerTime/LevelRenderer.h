@@ -27,20 +27,18 @@ class LevelRenderer final : public Component
 public:
 
 	explicit LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture);
-	~LevelRenderer() = default;
+	virtual ~LevelRenderer() = default;
 
 	virtual void Render() const override;
 
 private:
 
-	void LoadLevel();
+	void LoadTiles(const std::string& filePath);
 
 private:
 
 	uint8_t m_TileDrawSize;
 	uint8_t m_TileSourceSize;
-	bool m_IsLoaded;
-	std::string m_FilePath;
 	std::vector<RenderTile> m_LevelTiles;
 	std::shared_ptr<Texture2D> m_TileMapTexture;
 

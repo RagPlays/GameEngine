@@ -114,6 +114,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)\3rdParty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +153,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)\3rdParty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
     <ClCompile Include="ImGuiExercise2.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
     <ClInclude Include="ImGuiExercise2.h" />

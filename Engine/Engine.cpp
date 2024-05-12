@@ -21,53 +21,14 @@
 
 #include "SDLSoundSystem.h"
 
-static void PrintSDLVersion()
-{
-	printf("\nENGINE INFO:\n");
-
-	SDL_version version;
-	SDL_VERSION(&version);
-	printf("We compiled against SDL version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	SDL_GetVersion(&version);
-	printf("We are linking against SDL version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_IMAGE_VERSION(&version);
-	printf("We compiled against SDL_image version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *IMG_Linked_Version();
-	printf("We are linking against SDL_image version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *TTF_Linked_Version();
-	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_MIXER_VERSION(&version);
-	printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *Mix_Linked_Version();
-	printf("We are linking against SDL_mixer version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	printf("\n");
-	printf("GAMEINFO:\n");
-}
-
 Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int height)
 	: m_WindowWidth{ width }
 	, m_WindowHeight{ height }
 	, m_pWindow{ nullptr }
 {
+#if defined _DEBUG || DEBUG
 	PrintSDLVersion();
+#endif
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO))
 	{
@@ -99,7 +60,6 @@ Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int hei
 #if defined _DEBUG || defined DEBUG
 	ServiceLocator::RegisterSoundSystem(std::make_unique<LoggingSoundSystem>(std::make_unique<SDLSoundSystem>()));
 #else
-	SetShowCursor(false);
 	ServiceLocator::RegisterSoundSystem(std::make_unique<SDLSoundSystem>());
 #endif
 
@@ -189,4 +149,46 @@ void Engine::SetWindowPosition(int x, int y)
 void Engine::SetShowCursor(bool showCursor)
 {
 	SDL_ShowCursor(showCursor);
+}
+
+void Engine::PrintSDLVersion()
+{
+	printf("\nENGINE INFO:\n");
+
+	SDL_version version{};
+
+	SDL_VERSION(&version);
+	printf("We compiled against SDL version %u.%u.%u ...\n",
+		version.major, version.minor, version.patch);
+
+	SDL_GetVersion(&version);
+	printf("We are linking against SDL version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
+	SDL_IMAGE_VERSION(&version);
+	printf("We compiled against SDL_image version %u.%u.%u ...\n",
+		version.major, version.minor, version.patch);
+
+	version = *IMG_Linked_Version();
+	printf("We are linking against SDL_image version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
+	SDL_TTF_VERSION(&version)
+		printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
+			version.major, version.minor, version.patch);
+
+	version = *TTF_Linked_Version();
+	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
+	SDL_MIXER_VERSION(&version);
+	printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
+		version.major, version.minor, version.patch);
+
+	version = *Mix_Linked_Version();
+	printf("We are linking against SDL_mixer version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
+	printf("\n");
+	printf("GAMEINFO:\n");
 }

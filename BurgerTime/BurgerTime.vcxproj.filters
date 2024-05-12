@@ -70,6 +70,9 @@
     <ClCompile Include="SoundEventHandler.cpp">
       <Filter>GameSourceFiles\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>GameSourceFiles\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="SoundEventHandler.h">
       <Filter>GameSourceFiles\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>GameSourceFiles\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

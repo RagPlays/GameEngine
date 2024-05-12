@@ -26,6 +26,10 @@ public:
 
 private:
 
+	static void PrintSDLVersion();
+
+private:
+
 	unsigned int m_WindowWidth;
 	unsigned int m_WindowHeight;
 	SDL_Window* m_pWindow;

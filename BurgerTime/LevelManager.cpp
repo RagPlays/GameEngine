@@ -9,31 +9,12 @@
 
 void LevelManager::RegisterLevel(Level* level)
 {
-    if (m_pCurrentLevel == nullptr)
+    if (m_pCurrentLevel)
     {
-        m_pCurrentLevel = level;
-
-        GameObject* gameObj{ level->GetOwner() };
-        if (LevelCollision* coll{ gameObj->GetComponent<LevelCollision>() }; coll)
-        {
-            m_pCurrentLevelCollision = coll;
-        }
-        else
-        {
-            std::cerr << "ERROR::LEVELMANAGER::NO_COLLISION_IN_LEVEL\n";
-        }
-        if (LevelRenderer* rend{ gameObj->GetComponent<LevelRenderer>() }; rend)
-        {
-            m_pCurrentLevelRenderer = rend;
-        }
-        else
-        {
-            std::cerr << "ERROR::LEVELMANAGER::NO_RENDERER_IN_LEVEL\n";
-        }
+        std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_REGISTER_LEVEL\n";
         return;
     }
-    std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_REGISTER_LEVEL\n";
-    assert(false);
+    m_pCurrentLevel = level;
 }
 
 void LevelManager::UnRegisterLevel(Level* level)
@@ -49,17 +30,38 @@ void LevelManager::UnRegisterLevel(Level* level)
     assert(false);
 }
 
+uint8_t LevelManager::GetTileSize() const
+{
+    return m_TileSize;
+}
+
 Level* LevelManager::GetLevel() const
 {
     return m_pCurrentLevel;
 }
 
-LevelRenderer* LevelManager::GetRenderer() const
+LevelRenderer* LevelManager::GetRenderer()
 {
+    if (!m_pCurrentLevelRenderer && m_pCurrentLevel)
+    {
+        m_pCurrentLevelRenderer = m_pCurrentLevel->GetOwner()->GetComponent<LevelRenderer>();
+    }
     return m_pCurrentLevelRenderer;
 }
 
-LevelCollision* LevelManager::GetCollision() const
+LevelCollision* LevelManager::GetCollision()
 {
+    if (!m_pCurrentLevelCollision && m_pCurrentLevel)
+    {
+        m_pCurrentLevelCollision = m_pCurrentLevel->GetOwner()->GetComponent<LevelCollision>();
+    }
     return m_pCurrentLevelCollision;
+}
+
+LevelManager::LevelManager()
+    : m_pCurrentLevel{ nullptr }
+    , m_pCurrentLevelRenderer{ nullptr }
+    , m_pCurrentLevelCollision{ nullptr }
+    , m_TileSize{ 16 }
+{
 }
