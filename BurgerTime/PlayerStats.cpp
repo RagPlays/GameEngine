@@ -43,7 +43,7 @@ void PlayerStats::OnNotify(GameObject* gameObj, GameEvent gameEvent)
 	{
 		switch (gameEvent)
 		{
-		case GameEvent::gameStarts:
+		case GameEvent::sceneStarts:
 			m_PlayerIdx = playerComp->GetPlayerIdx();
 			break;
 		case GameEvent::playerDied:

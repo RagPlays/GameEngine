@@ -6,6 +6,7 @@
 #include <SDL.h>
 
 #include "Component.h"
+#include "Structs.h"
 
 namespace MoE
 {

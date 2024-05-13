@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "PlayerMovement.h"
-#include "RenderComponent.h"
 #include "Timer.h"
 #include "GameObject.h"
 #include "LevelManager.h"
@@ -16,6 +15,7 @@ PlayerMovement::PlayerMovement(GameObject* const owner)
 	, m_PlayerSpeed{ 42, 22 }
 	, m_MovementDir{}
 	, m_HitBoxSize{}
+	, m_IsMoving{ false }
 {
 	const int tileSize{ LevelManager::Get().GetTileSize() };
 	const int gameScale{ GameManager::Get().GetGameScale() };
@@ -23,12 +23,8 @@ PlayerMovement::PlayerMovement(GameObject* const owner)
 	m_HitBoxSize = glm::ivec2{ gameScale * tileSize, gameScale * tileSize };
 }
 
-void PlayerMovement::GameStart()
+void PlayerMovement::SceneStart()
 {
-	if (RenderComponent* const renderComp{ GetOwner()->GetComponent<RenderComponent>() })
-	{
-		renderComp->SetTextureDimensions(m_HitBoxSize);
-	}
 	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
 		GetOwner()->SetLocalPosition(coll->GetStartPos());
@@ -37,9 +33,10 @@ void PlayerMovement::GameStart()
 
 void PlayerMovement::FixedUpdate()
 {
+	m_IsMoving = false;
 	if (!m_MovementDir.x && !m_MovementDir.y) return;
 
-	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() })
 	{
 		GameObject* owner{ GetOwner() };
 		const float fixedTime{ Timer::Get().GetFixedElapsedSec() };
@@ -52,7 +49,9 @@ void PlayerMovement::FixedUpdate()
 		if (!coll->CanMove(this))
 		{
 			owner->SetLocalPosition(originalPos);
+			return;
 		}
+		m_IsMoving = true;
 	}
 }
 

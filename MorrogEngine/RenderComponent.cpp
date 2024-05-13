@@ -85,7 +85,7 @@ namespace MoE
 
 	void RenderComponent::SetSourceRect(int x, int y, int width, int height)
 	{
-		SetSourceRect({ x, y, width, height });
+		SetSourceRect(SDL_Rect{ x, y, width, height });
 	}
 
 	void RenderComponent::SetSourceRect(const SDL_Rect& srcRect)

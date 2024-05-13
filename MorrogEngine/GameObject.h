@@ -25,12 +25,13 @@ namespace MoE
 		GameObject& operator=(GameObject&& other) noexcept = delete;
 
 		// functions
-		void GameStart();
+		void SceneStart();
 		void FixedUpdate();
 		void Update();
 		void LateUpdate();
 		void Render() const;
 		void OnDestroy();
+		void SceneEnd();
 
 		// Components
 		template <class ComponentType>

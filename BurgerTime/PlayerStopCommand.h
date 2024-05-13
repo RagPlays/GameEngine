@@ -3,11 +3,13 @@
 
 #include "PlayerCommand.h"
 
+#include "Player.h"
+
 class PlayerStopCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerStopCommand(PlayerMovement* player, const glm::ivec2& dir)
+	explicit PlayerStopCommand(Player* player, const glm::ivec2& dir)
 		: PlayerCommand{ player }
 		, m_Direcion{ dir }
 	{

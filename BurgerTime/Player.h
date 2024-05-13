@@ -4,6 +4,15 @@
 #include "Component.h"
 #include "Subject.h"
 
+#include "PlayerStates.h"
+
+namespace MoE
+{
+	class RenderComponent;
+}
+
+class PlayerMovement;
+
 class Player final : public MoE::Component, public MoE::Subject
 {
 public:
@@ -17,19 +26,37 @@ public:
 	Player& operator=(Player&& other) noexcept = delete;
 	
 	// Overrides
-	virtual void GameStart() override;
+	virtual void SceneStart() override;
+
+	void Move(const glm::ivec2& dir);
+	void Stop(const glm::ivec2& dir);
 
 	// Player Info
 	int GetPlayerIdx() const;
 
-	// Health
-	void Killed();
+	// States
+	void SetState(PlayerState* playerState);
+
+	// Components
+	PlayerMovement* GetMovementComponent() const;
+	MoE::RenderComponent* GetRenderComponent() const;
+
+private:
+
+	void UpdatePlayerState();
 
 private:
 
 	// Player Info
 	static unsigned int s_PlayerCount;
 	const unsigned int m_PlayerIdx;
+
+	// Player States
+	PlayerState* m_pCurrentState;
+
+	// Player Components
+	PlayerMovement* m_pPlayerMovement;
+	MoE::RenderComponent* m_pRenderComponent;
 
 };
 

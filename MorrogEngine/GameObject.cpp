@@ -19,16 +19,16 @@ namespace MoE
 
 	GameObject::~GameObject() = default;
 
-	void GameObject::GameStart()
+	void GameObject::SceneStart()
 	{
 		for (auto& component : m_Components)
 		{
-			component->GameStart();
+			component->SceneStart();
 		}
 
 		for (auto& child : m_Children)
 		{
-			child->GameStart();
+			child->SceneStart();
 		}
 	}
 
@@ -94,6 +94,19 @@ namespace MoE
 		for (auto& child : m_Children)
 		{
 			child->OnDestroy();
+		}
+	}
+
+	void GameObject::SceneEnd()
+	{
+		for (auto& component : m_Components)
+		{
+			component->SceneEnd();
+		}
+
+		for (auto& child : m_Children)
+		{
+			child->SceneEnd();
 		}
 	}
 

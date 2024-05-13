@@ -15,7 +15,7 @@ void SoundEventHandler::HandleEvent(GameEvent gameEvent) const
 
 	switch (gameEvent)
 	{
-	case GameEvent::gameStarts:
+	case GameEvent::sceneStarts:
 		soundSystem.Play(MusicSoundID::calmMusic, maxVol, SoundType::Music);
 		break;
 

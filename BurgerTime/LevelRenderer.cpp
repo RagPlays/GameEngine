@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <SDL.h>
-
 #include "LevelRenderer.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
@@ -22,23 +20,9 @@ void LevelRenderer::Render() const
 {
 	const Renderer& renderer{ Renderer::Get() };
 
-	for (auto& tileInfo : m_LevelTiles)
+	for (const auto& tileInfo : m_LevelTiles)
 	{
-		SDL_Rect destRect
-		{
-			tileInfo.gridX * m_TileDrawSize,
-			tileInfo.gridY * m_TileDrawSize,
-			m_TileDrawSize,
-			m_TileDrawSize
-		};
-		SDL_Rect sourceRect
-		{
-			tileInfo.srcGridX * m_TileSourceSize,
-			tileInfo.srcGridY * m_TileSourceSize,
-			m_TileSourceSize,
-			m_TileSourceSize
-		};
-		renderer.RenderTexture(*m_TileMapTexture, destRect, sourceRect);
+		renderer.RenderTexture(*m_TileMapTexture, tileInfo.destRect, tileInfo.srcRect);
 	}
 }
 
@@ -81,23 +65,34 @@ void LevelRenderer::LoadTiles(const std::string& filePath)
 
 		int gridX{};
 		int gridY{};
-		int srcRectX{};
-		int srcRectY{};
+		int srcGridX{};
+		int srcGridY{};
 
-		while (inFile >> gridX >> gridY >> srcRectX >> srcRectY)
+		while (inFile >> gridX >> gridY >> srcGridX >> srcGridY)
 		{
 			if (gridX >= mapWidth || gridY >= mapHeight)
 			{
 				std::cerr << "ERROR::LEVELRENDERER::LEVELFILE_NOT_SET_CORRECTLY!\n";
 				return;
 			}
-			m_LevelTiles.emplace_back(
+			m_LevelTiles.emplace_back
+			(
 				RenderTile
 				{
-					static_cast<uint8_t>(gridX),
-					static_cast<uint8_t>(gridY),
-					static_cast<uint8_t>(srcRectX),
-					static_cast<uint8_t>(srcRectY)
+					SDL_Rect
+					{
+						gridX * m_TileDrawSize,
+						gridY * m_TileDrawSize,
+						m_TileDrawSize,
+						m_TileDrawSize
+					},
+					SDL_Rect
+					{
+						srcGridX * m_TileSourceSize,
+						srcGridY * m_TileSourceSize,
+						m_TileSourceSize,
+						m_TileSourceSize
+					}
 				}
 			);
 		}

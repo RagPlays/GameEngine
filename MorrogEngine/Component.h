@@ -18,12 +18,13 @@ namespace MoE
 		Component& operator=(const Component& other) = delete;
 		Component& operator=(Component&& other) noexcept = delete;
 
-		virtual void GameStart();
+		virtual void SceneStart();
 		virtual void FixedUpdate();
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render() const;
 		virtual void OnDestroy();
+		virtual void SceneEnd();
 
 		GameObject* const GetOwner() const;
 		GameObject* GetParent() const;

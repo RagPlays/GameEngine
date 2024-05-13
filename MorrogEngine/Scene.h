@@ -28,11 +28,12 @@ namespace MoE
 		void UnLoad();
 		bool IsLoaded() const;
 
-		void GameStart();
+		void SceneStart();
 		void FixedUpdate();
 		void Update();
 		void LateUpdate();
 		void Render() const;
+		void SceneEnd();
 
 		const std::string& GetName() const;
 

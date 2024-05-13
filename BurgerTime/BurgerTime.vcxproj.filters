@@ -73,6 +73,9 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>GameSourceFiles\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStates.cpp">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="NextLevelCommand.h">
       <Filter>GameSourceFiles\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStates.h">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

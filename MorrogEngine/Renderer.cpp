@@ -34,9 +34,10 @@ namespace MoE
 		assert(m_pRenderer);
 
 		// Clear Screen With ClearColor
-		SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 1);
+		SetBackgroundColor();
 		SDL_RenderClear(m_pRenderer);
 		SDL_RenderFlush(m_pRenderer);
+		SetCurrentColor();
 
 		// Render All Objects
 		SceneManager::Get().Render();
@@ -61,15 +62,81 @@ namespace MoE
 		}
 	}
 
+	const Color& Renderer::GetCurrentDrawColor() const
+	{
+		return m_CurrentDrawColor;
+	}
+
+	void Renderer::SetCurrentDrawColor(const Color& color)
+	{
+		m_CurrentDrawColor = color;
+		SetCurrentColor();
+	}
+
 	// Render Textures
 	void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& destRect) const
 	{
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destRect);
+		SDL_RenderCopy(m_pRenderer, texture.GetSDLTexture(), nullptr, &destRect);
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, const SDL_FRect& destRect) const
+	{
+		SDL_RenderCopyF(m_pRenderer, texture.GetSDLTexture(), nullptr, &destRect);
 	}
 
 	void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect) const
 	{
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &destRect);
+		SDL_RenderCopy(m_pRenderer, texture.GetSDLTexture(), &srcRect, &destRect);
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, const SDL_FRect& destRect, const SDL_Rect& srcRect) const
+	{
+		SDL_RenderCopyF(m_pRenderer, texture.GetSDLTexture(), &srcRect, &destRect);
+	}
+
+	//// Assuming renderer is your SDL_Renderer* and texture is your SDL_Texture*
+	//SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL; // Use SDL_FLIP_VERTICAL for vertical flip
+	//SDL_Rect srcRect; // Define your source rectangle here
+	//SDL_Rect dstRect; // Define your destination rectangle here
+	//double angle = 0; // Rotate the texture by this angle
+	//SDL_Point* center = NULL; // This is the point around which texture will be rotated
+
+	//// Render the texture
+	//SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, center, flip);
+
+
+	void Renderer::RenderPoint(const Pointf& point)
+	{
+		SDL_RenderDrawPointF(m_pRenderer, point.x, point.y);
+	}
+
+	void Renderer::RenderPoint(const Pointi& point)
+	{
+		SDL_RenderDrawPoint(m_pRenderer, point.x, point.y);
+	}
+
+	void Renderer::RenderLine(const Linef& line)
+	{
+		SDL_RenderDrawLineF(m_pRenderer, line.pointOne.x, line.pointOne.y, line.pointTwo.x, line.pointTwo.y);
+	}
+
+	void Renderer::RenderLine(const Linei& line)
+	{
+		SDL_RenderDrawLine(m_pRenderer, line.pointOne.x, line.pointOne.y, line.pointTwo.x, line.pointTwo.y);
+	}
+
+	void Renderer::RenderRect(const Rectf& rect, bool filled)
+	{
+		const SDL_FRect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
+		if (filled) SDL_RenderFillRectF(m_pRenderer, &sdlRect);
+		else SDL_RenderDrawRectF(m_pRenderer, &sdlRect);
+	}
+
+	void Renderer::RenderRect(const Recti& rect, bool filled)
+	{
+		const SDL_Rect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
+		if (filled) SDL_RenderFillRect(m_pRenderer, &sdlRect);
+		else SDL_RenderDrawRect(m_pRenderer, &sdlRect);
 	}
 
 	// Getters / Setters
@@ -83,6 +150,8 @@ namespace MoE
 	Renderer::Renderer()
 		: m_pWindow{}
 		, m_pRenderer{}
+		, m_BackgroundColor{ 0, 0, 0, 255 }
+		, m_CurrentDrawColor{ 0, 0, 0, 255 }
 	{
 	}
 
@@ -121,5 +190,15 @@ namespace MoE
 		ImGui_ImplSDL2_Shutdown();
 		ImGui::DestroyContext();
 #endif
+	}
+
+	void Renderer::SetCurrentColor() const
+	{
+		SDL_SetRenderDrawColor(m_pRenderer, m_CurrentDrawColor.r, m_CurrentDrawColor.g, m_CurrentDrawColor.b, m_CurrentDrawColor.a);
+	}
+
+	void Renderer::SetBackgroundColor() const
+	{
+		SDL_SetRenderDrawColor(m_pRenderer, m_BackgroundColor.r, m_BackgroundColor.g, m_BackgroundColor.b, m_BackgroundColor.a);
 	}
 }

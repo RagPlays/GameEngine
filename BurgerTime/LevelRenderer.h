@@ -4,26 +4,16 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <SDL.h>
 
 #include "Component.h"
+#include "Structs.h"
 
 namespace MoE
 {
 	class GameObject;
 	class Texture2D;
 }
-
-struct RenderTile
-{
-
-	// maximum grid size of 256x256
-	uint8_t gridX;
-	uint8_t gridY;
-	// maximum texture size of (256*TileSourceSize)x(256*TileSourceSize)
-	uint8_t srcGridX;
-	uint8_t srcGridY;
-
-};
 
 class LevelRenderer final : public MoE::Component
 {
@@ -39,6 +29,21 @@ private:
 	void LoadTiles(const std::string& filePath);
 
 private:
+
+	struct RenderTile
+	{
+
+		//// maximum grid size of 256x256
+		//uint8_t gridX;
+		//uint8_t gridY;
+		//// maximum texture size of (256*TileSourceSize)x(256*TileSourceSize)
+		//uint8_t srcGridX;
+		//uint8_t srcGridY;
+
+		SDL_Rect destRect;
+		SDL_Rect srcRect;
+
+	};
 
 	uint8_t m_TileDrawSize;
 	uint8_t m_TileSourceSize;

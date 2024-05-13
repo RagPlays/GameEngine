@@ -176,6 +176,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMovement.cpp" />
+    <ClCompile Include="PlayerStates.cpp" />
     <ClCompile Include="PlayerStats.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
     <ClCompile Include="SoundEventHandler.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
     <ClInclude Include="PlayerMovement.h" />
+    <ClInclude Include="PlayerStates.h" />
     <ClInclude Include="PlayerStats.h" />
     <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />

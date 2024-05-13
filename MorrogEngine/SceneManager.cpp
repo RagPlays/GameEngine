@@ -4,7 +4,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "EventQueue.h"
-#include "GameEvents.h"
 
 namespace MoE
 {
@@ -12,13 +11,7 @@ namespace MoE
 
 	void SceneManager::GameStart()
 	{
-		if (!m_Scenes[m_CurrentSceneIdx]->IsLoaded())
-		{
-			m_Scenes[m_CurrentSceneIdx]->Load();
-		}
-
-		EventQueue::Get().AddEvent(GameEvent::gameStarts);
-		m_Scenes[m_CurrentSceneIdx]->GameStart();
+		CheckSceneSwap();
 	}
 
 	void SceneManager::FixedUpdate()
@@ -84,7 +77,6 @@ namespace MoE
 				return;
 			}
 		}
-
 		std::cerr << "ERROR::SCENEMANAGER::SCENE_NAME_NOT_VALID\n";
 	}
 
@@ -111,7 +103,7 @@ namespace MoE
 	// Private Functions //
 
 	SceneManager::SceneManager()
-		: m_CurrentSceneIdx{ 0 }
+		: m_CurrentSceneIdx{ 255 }
 		, m_ToSceneIdx{ 0 }
 	{
 		m_Scenes.clear();
@@ -121,12 +113,17 @@ namespace MoE
 	{
 		if (m_ToSceneIdx != m_CurrentSceneIdx)
 		{
-			if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
+			if (m_CurrentSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
 			{
-				m_Scenes[m_CurrentSceneIdx]->UnLoad();
+				if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
+				{
+					m_Scenes[m_CurrentSceneIdx]->SceneEnd();
+					m_Scenes[m_CurrentSceneIdx]->UnLoad();
+				}
 			}
 			m_CurrentSceneIdx = m_ToSceneIdx;
 			m_Scenes[m_ToSceneIdx]->Load();
+			m_Scenes[m_ToSceneIdx]->SceneStart();
 		}
 	}
 }

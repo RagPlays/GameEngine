@@ -3,13 +3,13 @@
 
 #include "Command.h"
 
-class PlayerMovement;
+class Player;
 
 class PlayerCommand : public MoE::Command
 {
 public:
 
-	explicit PlayerCommand(PlayerMovement* player)
+	explicit PlayerCommand(Player* player)
 		: m_pPlayer{ player }
 	{
 	}
@@ -22,14 +22,14 @@ public:
 
 protected:
 
-	PlayerMovement* GetPlayer()
+	Player* GetPlayer()
 	{
 		return m_pPlayer;
 	}
 
 private:
 
-	PlayerMovement* m_pPlayer;
+	Player* m_pPlayer;
 
 };
 

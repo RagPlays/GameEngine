@@ -26,7 +26,7 @@ namespace MoE
 
 		Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
 		void Destroy();
-
+		
 		bool Empty() const;
 		void SetCurrentSceneByIndex(uint8_t idx);
 		void SetCurrentSceneByName(const std::string& name);

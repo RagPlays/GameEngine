@@ -8,7 +8,7 @@ namespace MoE
 	{
 	}
 
-	void Component::GameStart()
+	void Component::SceneStart()
 	{
 	}
 
@@ -29,6 +29,10 @@ namespace MoE
 	}
 
 	void Component::OnDestroy()
+	{
+	}
+
+	void Component::SceneEnd()
 	{
 	}
 

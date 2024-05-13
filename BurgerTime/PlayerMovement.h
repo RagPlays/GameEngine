@@ -7,10 +7,10 @@ class PlayerMovement final : public MoE::Component
 {
 public:
 
-	PlayerMovement(MoE::GameObject* const owner);
-	~PlayerMovement() = default;
+	explicit PlayerMovement(MoE::GameObject* const owner);
+	virtual ~PlayerMovement() = default;
 
-	virtual void GameStart() override;
+	virtual void SceneStart() override;
 	virtual void FixedUpdate() override;
 
 	// Getters
@@ -26,6 +26,7 @@ public:
 
 private:
 
+	bool m_IsMoving;
 	glm::ivec2 m_PlayerSpeed;
 	glm::ivec2 m_MovementDir;
 	glm::ivec2 m_HitBoxSize;

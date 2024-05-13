@@ -2,13 +2,14 @@
 #define PLAYERMOVECOMMAND_H
 
 #include "PlayerCommand.h"
-#include "PlayerMovement.h"
+
+#include "Player.h"
 
 class PlayerMoveCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerMoveCommand(PlayerMovement* player, const glm::ivec2& dir)
+	explicit PlayerMoveCommand(Player* player, const glm::ivec2& dir)
 		: PlayerCommand{ player }
 		, m_Direcion{ dir }
 	{

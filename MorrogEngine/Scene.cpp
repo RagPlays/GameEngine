@@ -34,11 +34,11 @@ namespace MoE
 		return m_IsLoaded;
 	}
 
-	void Scene::GameStart()
+	void Scene::SceneStart()
 	{
 		for (auto& object : m_Objects)
 		{
-			object->GameStart();
+			object->SceneStart();
 		}
 	}
 
@@ -83,6 +83,14 @@ namespace MoE
 		for (const auto& object : m_Objects)
 		{
 			object->Render();
+		}
+	}
+
+	void Scene::SceneEnd()
+	{
+		for (const auto& object : m_Objects)
+		{
+			object->SceneEnd();
 		}
 	}
 

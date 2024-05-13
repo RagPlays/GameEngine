@@ -97,7 +97,6 @@ namespace MoE
 			return;
 		}
 
-		// Called Once When Game Starts
 		sceneManager.GameStart();
 
 		while (!inputManager.HasQuit())

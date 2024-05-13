@@ -5,7 +5,7 @@ namespace MoE
 {
 	enum class GameEvent
 	{
-		gameStarts,
+		sceneStarts,
 		gameEnds,
 		levelLoaded,
 		playerJoined,
