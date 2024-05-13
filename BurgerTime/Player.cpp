@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Player.h"
+#include "PlayerStateHandler.h"
 #include "GameObject.h"
 #include "EventQueue.h"
 #include "GameEvents.h"
@@ -15,12 +16,10 @@ Player::Player(GameObject* const owner)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
-	, m_pCurrentState{ nullptr }
 	, m_pPlayerMovement{ nullptr }
 	, m_pRenderComponent{ nullptr }
+	, m_StateHandler{ this }
 {
-	m_pCurrentState = PlayerState::m_IdleState.get();
-	if (m_pCurrentState) m_pCurrentState->OnEnter();
 }
 
 Player::~Player()
@@ -71,17 +70,6 @@ int Player::GetPlayerIdx() const
 	return m_PlayerIdx;
 }
 
-void Player::SetState(PlayerState* playerState)
-{
-	if (!playerState) return;
-	if (m_pCurrentState)
-	{
-		m_pCurrentState->OnExit();
-	}
-	m_pCurrentState = playerState;
-	m_pCurrentState->OnEnter();
-}
-
 PlayerMovement* Player::GetMovementComponent() const
 {
 	return m_pPlayerMovement;
@@ -94,5 +82,5 @@ MoE::RenderComponent* Player::GetRenderComponent() const
 
 void Player::UpdatePlayerState()
 {
-	if(m_pCurrentState) m_pCurrentState->Update(this);
+	m_StateHandler.Update();
 }

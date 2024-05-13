@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "Subject.h"
 
-#include "PlayerStates.h"
+#include "PlayerStateHandler.h"
 
 namespace MoE
 {
@@ -34,9 +34,6 @@ public:
 	// Player Info
 	int GetPlayerIdx() const;
 
-	// States
-	void SetState(PlayerState* playerState);
-
 	// Components
 	PlayerMovement* GetMovementComponent() const;
 	MoE::RenderComponent* GetRenderComponent() const;
@@ -52,7 +49,7 @@ private:
 	const unsigned int m_PlayerIdx;
 
 	// Player States
-	PlayerState* m_pCurrentState;
+	PlayerStateHandler m_StateHandler;
 
 	// Player Components
 	PlayerMovement* m_pPlayerMovement;

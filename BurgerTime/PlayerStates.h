@@ -2,14 +2,16 @@
 #define PLAYERSTATE_H
 
 #include <memory>
+#include <State.h>
 
 class Player;
+class PlayerStateHandler;
 
-class PlayerState
+class PlayerState : public MoE::State
 {
 public:
 
-	PlayerState() = default;
+	explicit PlayerState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerState() = default;
 
 	PlayerState(const PlayerState& other) = delete;
@@ -19,15 +21,16 @@ public:
 
 	virtual void OnEnter() = 0;
 	virtual void OnExit() = 0;
-	virtual void Update(Player* const player) = 0;
+	virtual void Update() = 0;
 
-public:
+protected:
 
-	static std::unique_ptr<PlayerState> m_IdleState;
-	static std::unique_ptr<PlayerState> m_MoveUpState;
-	static std::unique_ptr<PlayerState> m_MoveDownState;
-	static std::unique_ptr<PlayerState> m_MoveLeftState;
-	static std::unique_ptr<PlayerState> m_MoveRightState;
+	void SetState(PlayerState* playerState);
+
+protected:
+
+	Player* const m_pPlayer;
+	PlayerStateHandler* const m_pHandler;
 
 };
 
@@ -35,7 +38,7 @@ class PlayerIdleState final : public PlayerState
 {
 public:
 
-	PlayerIdleState() = default;
+	explicit PlayerIdleState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerIdleState() = default;
 
 	PlayerIdleState(const PlayerIdleState& other) = delete;
@@ -45,9 +48,7 @@ public:
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
-	virtual void Update(Player* const player) override;
-
-private:
+	virtual void Update() override;
 
 };
 
@@ -55,7 +56,7 @@ class PlayerMoveUpState final : public PlayerState
 {
 public:
 
-	PlayerMoveUpState() = default;
+	explicit PlayerMoveUpState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerMoveUpState() = default;
 
 	PlayerMoveUpState(const PlayerMoveUpState& other) = delete;
@@ -65,7 +66,7 @@ public:
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
-	virtual void Update(Player* const player) override;
+	virtual void Update() override;
 
 private:
 
@@ -75,7 +76,7 @@ class PlayerMoveDownState final : public PlayerState
 {
 public:
 
-	PlayerMoveDownState() = default;
+	explicit PlayerMoveDownState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerMoveDownState() = default;
 
 	PlayerMoveDownState(const PlayerMoveDownState& other) = delete;
@@ -85,7 +86,7 @@ public:
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
-	virtual void Update(Player* const player) override;
+	virtual void Update() override;
 
 private:
 
@@ -95,7 +96,7 @@ class PlayerMoveLeftState final : public PlayerState
 {
 public:
 
-	PlayerMoveLeftState() = default;
+	explicit PlayerMoveLeftState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerMoveLeftState() = default;
 
 	PlayerMoveLeftState(const PlayerMoveLeftState& other) = delete;
@@ -105,7 +106,7 @@ public:
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
-	virtual void Update(Player* const player) override;
+	virtual void Update() override;
 
 private:
 
@@ -115,7 +116,7 @@ class PlayerMoveRightState final : public PlayerState
 {
 public:
 
-	PlayerMoveRightState() = default;
+	explicit PlayerMoveRightState(Player* const player, PlayerStateHandler* handler);
 	virtual ~PlayerMoveRightState() = default;
 
 	PlayerMoveRightState(const PlayerMoveRightState& other) = delete;
@@ -125,7 +126,7 @@ public:
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
-	virtual void Update(Player* const player) override;
+	virtual void Update() override;
 
 private:
 

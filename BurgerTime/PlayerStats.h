@@ -8,6 +8,7 @@ namespace MoE
 {
 	class GameObject;
 }
+
 class Player;
 
 class PlayerStats final : public MoE::Component, public MoE::Observer

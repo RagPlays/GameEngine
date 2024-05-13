@@ -76,6 +76,9 @@
     <ClCompile Include="PlayerStates.cpp">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStateHandler.cpp">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
@@ -133,6 +136,9 @@
       <Filter>GameSourceFiles\Input</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStates.h">
+      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateHandler.h">
       <Filter>GameSourceFiles\GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
