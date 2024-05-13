@@ -28,10 +28,10 @@ PlayerIdleState::PlayerIdleState(Player* const player, PlayerStateHandler* handl
 
 void PlayerIdleState::OnEnter()
 {
-	if (MoE::RenderComponent* const renderComp{ m_pPlayer->GetRenderComponent() })
+	/*if (MoE::RenderComponent* const renderComp{ m_pPlayer->GetRenderComponent() })
 	{
 		renderComp->SetSourceRect(16, 0, 16, 16);
-	}
+	}*/
 }
 
 void PlayerIdleState::OnExit()

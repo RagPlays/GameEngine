@@ -7,9 +7,8 @@ PlayerStateHandler::PlayerStateHandler(Player* const player)
 	, m_MoveDownState{ std::make_unique<PlayerMoveDownState>(player, this) }
 	, m_MoveLeftState{ std::make_unique<PlayerMoveLeftState>(player, this) }
 	, m_MoveRightState{ std::make_unique<PlayerMoveRightState>(player, this) }
+	, m_pCurrentState{ nullptr }
 {
-	m_pCurrentState = m_IdleState.get();
-	m_pCurrentState->OnEnter();
 }
 
 PlayerStateHandler::~PlayerStateHandler() = default;
@@ -27,7 +26,18 @@ void PlayerStateHandler::SetState(PlayerState* playerState)
 
 void PlayerStateHandler::Update()
 {
-	m_pCurrentState->Update();
+	if(m_pCurrentState) m_pCurrentState->Update();
+}
+
+void PlayerStateHandler::SceneStart()
+{
+	if (m_pCurrentState)
+	{
+		// This should not happen
+		m_pCurrentState->OnExit();
+	}
+	m_pCurrentState = m_IdleState.get();
+	m_pCurrentState->OnEnter();
 }
 
 PlayerIdleState* PlayerStateHandler::GetIdleState() const

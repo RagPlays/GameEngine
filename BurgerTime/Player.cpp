@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "PlayerStateHandler.h"
+#include "PlayerStates.h"
 #include "GameObject.h"
 #include "EventQueue.h"
 #include "GameEvents.h"
@@ -29,20 +30,28 @@ Player::~Player()
 
 void Player::SceneStart()
 {
-	if (PlayerMovement* pMovementComp{ GetOwner()->GetComponent<PlayerMovement>() })
+	if (RenderComponent* pRenderComp{ GetOwner()->GetComponent<RenderComponent>() }; pRenderComp)
+	{
+		m_pRenderComponent = pRenderComp;
+		pRenderComp->SetSourceRect(16, 0, 16, 16);
+	}
+	if (PlayerMovement* pMovementComp{ GetOwner()->GetComponent<PlayerMovement>() }; pMovementComp)
 	{
 		m_pPlayerMovement = pMovementComp;
-		if (RenderComponent* const pRenderComp{ GetOwner()->GetComponent<RenderComponent>() })
-		{
-			m_pRenderComponent = pRenderComp;
-			pRenderComp->SetTextureDimensions(pMovementComp->GetHitBox());
-		}
-		else assert(false);
+		if(m_pRenderComponent) m_pRenderComponent->SetTextureDimensions(m_pPlayerMovement->GetHitBox());
 	}
-	else
+	if(!m_pRenderComponent)
+	{
+		std::cerr << "ERROR::PLAYER::RENDERCOMPONENT_NOT_SET!\n";
+		assert(false);
+	}
+	if (!m_pPlayerMovement)
 	{
 		std::cerr << "ERROR::PLAYER::PLAYERMOVEMENT_NOT_SET!\n";
+		assert(false);
 	}
+
+	m_StateHandler.SceneStart();
 
 	Notify(GetOwner(), GameEvent::playerJoined);
 }

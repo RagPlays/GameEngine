@@ -24,6 +24,8 @@ public:
 	PlayerStateHandler& operator=(const PlayerStateHandler& other) = delete;
 	PlayerStateHandler& operator=(PlayerStateHandler&& other) noexcept = delete;
 
+	void SceneStart();
+
 	PlayerIdleState* GetIdleState() const;
 	PlayerMoveUpState* GetMoveUpState() const;
 	PlayerMoveDownState* GetMoveDownState() const;

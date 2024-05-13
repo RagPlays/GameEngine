@@ -28,6 +28,7 @@ public:
 	// Overrides
 	virtual void SceneStart() override;
 
+	// Movements
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
 
