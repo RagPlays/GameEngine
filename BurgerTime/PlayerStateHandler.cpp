@@ -16,7 +16,7 @@ PlayerStateHandler::~PlayerStateHandler() = default;
 
 void PlayerStateHandler::SetState(PlayerState* playerState)
 {
-	if (!playerState) return;
+	if (!playerState || m_pCurrentState == playerState) return;
 	if (m_pCurrentState)
 	{
 		m_pCurrentState->OnExit();
