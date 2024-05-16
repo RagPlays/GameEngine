@@ -17,6 +17,8 @@ public:
 	const glm::ivec2& GetHitBox() const;
 	const glm::ivec2& GetMoveDir() const;
 	const glm::vec2& GetPosition() const;
+
+	// Setters
 	void SetPosition(const glm::vec2& pos);
 
 	// Movement
@@ -26,9 +28,9 @@ public:
 
 private:
 
-	bool m_IsMoving;
 	glm::ivec2 m_PlayerSpeed;
 	glm::ivec2 m_MovementDir;
+	glm::ivec2 m_PreviousMoveDir;
 	glm::ivec2 m_HitBoxSize;
 
 };

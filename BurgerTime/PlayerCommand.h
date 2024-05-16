@@ -9,7 +9,7 @@ class PlayerCommand : public MoE::Command
 {
 public:
 
-	explicit PlayerCommand(Player* player)
+	explicit PlayerCommand(Player* const player)
 		: m_pPlayer{ player }
 	{
 	}
@@ -22,14 +22,14 @@ public:
 
 protected:
 
-	Player* GetPlayer()
+	Player* const GetPlayer()
 	{
 		return m_pPlayer;
 	}
 
 private:
 
-	Player* m_pPlayer;
+	Player* const m_pPlayer;
 
 };
 

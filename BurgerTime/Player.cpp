@@ -19,7 +19,6 @@ Player::Player(GameObject* const owner)
 	, m_PlayerIdx{ s_PlayerCount++ }
 	, m_pPlayerMovement{ nullptr }
 	, m_pRenderComponent{ nullptr }
-	, m_StateHandler{ this }
 {
 }
 
@@ -51,8 +50,6 @@ void Player::SceneStart()
 		assert(false);
 	}
 
-	m_StateHandler.SceneStart();
-
 	Notify(GetOwner(), GameEvent::playerJoined);
 }
 
@@ -61,7 +58,6 @@ void Player::Move(const glm::ivec2& dir)
 	if (m_pPlayerMovement)
 	{
 		m_pPlayerMovement->Move(dir);
-		UpdatePlayerState();
 	}
 }
 
@@ -70,7 +66,6 @@ void Player::Stop(const glm::ivec2& dir)
 	if (m_pPlayerMovement)
 	{
 		m_pPlayerMovement->Stop(dir);
-		UpdatePlayerState();
 	}
 }
 
@@ -87,9 +82,4 @@ PlayerMovement* Player::GetMovementComponent() const
 MoE::RenderComponent* Player::GetRenderComponent() const
 {
 	return m_pRenderComponent;
-}
-
-void Player::UpdatePlayerState()
-{
-	m_StateHandler.Update();
 }

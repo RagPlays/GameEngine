@@ -9,7 +9,7 @@ class PlayerMoveCommand final : public PlayerCommand
 {
 public:
 
-	explicit PlayerMoveCommand(Player* player, const glm::ivec2& dir)
+	explicit PlayerMoveCommand(Player* const player, const glm::ivec2& dir)
 		: PlayerCommand{ player }
 		, m_Direcion{ dir }
 	{
@@ -31,7 +31,7 @@ public:
 
 private:
 
-	glm::ivec2 m_Direcion;
+	const glm::ivec2 m_Direcion;
 
 };
 

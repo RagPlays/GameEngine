@@ -15,7 +15,6 @@ PlayerMovement::PlayerMovement(GameObject* const owner)
 	, m_PlayerSpeed{ 42, 22 }
 	, m_MovementDir{}
 	, m_HitBoxSize{}
-	, m_IsMoving{ false }
 {
 	const int tileSize{ LevelManager::Get().GetTileSize() };
 	const int gameScale{ GameManager::Get().GetGameScale() };
@@ -33,7 +32,6 @@ void PlayerMovement::SceneStart()
 
 void PlayerMovement::FixedUpdate()
 {
-	m_IsMoving = false;
 	if (!m_MovementDir.x && !m_MovementDir.y) return;
 
 	if (LevelCollision* coll{ LevelManager::Get().GetCollision() })
@@ -51,7 +49,6 @@ void PlayerMovement::FixedUpdate()
 			owner->SetLocalPosition(originalPos);
 			return;
 		}
-		m_IsMoving = true;
 	}
 }
 

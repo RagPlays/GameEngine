@@ -28,9 +28,10 @@ public:
 	// Overrides
 	virtual void SceneStart() override;
 
-	// Movements
+	// Movement
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
+
 
 	// Player Info
 	int GetPlayerIdx() const;
@@ -41,16 +42,12 @@ public:
 
 private:
 
-	void UpdatePlayerState();
-
-private:
-
 	// Player Info
 	static unsigned int s_PlayerCount;
 	const unsigned int m_PlayerIdx;
 
 	// Player States
-	PlayerStateHandler m_StateHandler;
+	//PlayerStateHandler m_StateHandler;
 
 	// Player Components
 	PlayerMovement* m_pPlayerMovement;
