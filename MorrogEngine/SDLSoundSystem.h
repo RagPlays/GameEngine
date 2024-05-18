@@ -22,6 +22,7 @@ namespace MoE
 		virtual void AddSong(const std::string& filePath, SoundID id) override;
 		virtual void AddSoundEffect(const std::string& filePath, SoundID id) override;
 		virtual void Play(SoundID id, int volume, SoundType type) override;
+		virtual void ClearSounds() override;
 		virtual int MaxVolume() const override;
 
 	private:

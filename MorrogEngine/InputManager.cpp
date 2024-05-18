@@ -93,6 +93,12 @@ namespace MoE
 		std::cerr << "INPUTMANAGER::ADDCONTROLLERBIND::CONTROLLERIDX_NOT_FOUND\n";
 	}
 
+	void InputManager::ClearBinds()
+	{
+		m_KeyboardMouse->ClearBinds();
+		m_Controllers.clear();
+	}
+
 	// Private Functions //
 
 	InputManager::InputManager()

@@ -13,10 +13,6 @@ namespace MoE
 
 	void EventQueue::ClearHandlers()
 	{
-		for (auto& handler : m_Handlers)
-		{
-			handler.reset();
-		}
 		m_Handlers.clear();
 	}
 
@@ -38,7 +34,7 @@ namespace MoE
 	{
 		if (m_Handlers.empty())
 		{
-			m_Head = m_Tail;
+			ClearEvents();
 			return;
 		}
 

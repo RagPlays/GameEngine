@@ -12,7 +12,7 @@ namespace MoE
 	public:
 
 		explicit Texture2D(const std::string& filePath);
-		explicit Texture2D(SDL_Texture* texture);
+		explicit Texture2D(SDL_Texture* const texture);
 		~Texture2D();
 
 		Texture2D(const Texture2D& other) = delete;
@@ -21,11 +21,12 @@ namespace MoE
 		Texture2D& operator=(const Texture2D&& other) noexcept = delete;
 
 		SDL_Texture* GetSDLTexture() const;
-		glm::ivec2 GetSize() const;
+		const glm::ivec2& GetSize() const;
 
 	private:
 
-		SDL_Texture* m_pTexture;
+		SDL_Texture* const m_pTexture;
+		glm::ivec2 m_Size;
 
 	};
 }

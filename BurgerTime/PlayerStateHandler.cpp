@@ -7,7 +7,7 @@
 
 #include "GameManager.h"
 #include "GameObject.h"
-#include "RenderComponent.h"
+#include "TextureRenderer.h"
 
 PlayerStateHandler::PlayerStateHandler(MoE::GameObject* const owner, Player* const player)
 	: Component{ owner }
@@ -23,7 +23,7 @@ PlayerStateHandler::~PlayerStateHandler() = default;
 
 void PlayerStateHandler::SceneStart()
 {
-	if (MoE::RenderComponent * pRenderComp{ GetOwner()->GetComponent<MoE::RenderComponent>() })
+	if (MoE::TextureRenderer * pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() })
 	{
 		int gameScale{ GameManager::Get().GetGameScale() };
 		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });

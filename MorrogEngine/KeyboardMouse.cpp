@@ -63,6 +63,12 @@ namespace MoE
 		m_Commands[input] = std::move(command);
 	}
 
+	void KeyboardMouse::ClearBinds()
+	{
+		m_Commands.clear();
+		m_KeyStack.clear();
+	}
+
 	// Private functions //
 	bool KeyboardMouse::WasPressedThisFrame(KeyBoardButton key) const
 	{

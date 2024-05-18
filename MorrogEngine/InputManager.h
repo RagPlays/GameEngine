@@ -41,6 +41,8 @@ namespace MoE
 		void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
 		void AddControllerBind(const ControllerInput& input, std::unique_ptr<Command>&& command, int controllerIdx);
 
+		void ClearBinds();
+
 	private:
 
 		friend class MoE::Singleton<InputManager>;

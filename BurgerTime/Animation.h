@@ -7,7 +7,7 @@
 
 namespace MoE
 {
-	class RenderComponent;
+	class TextureRenderer;
 
 	struct Recti;
 }
@@ -16,7 +16,7 @@ class Animation final
 {
 public:
 
-	explicit Animation(MoE::RenderComponent* renderComponent, uint8_t nrOfFrames, uint8_t fps);
+	explicit Animation(MoE::TextureRenderer* renderComponent, uint8_t nrOfFrames, uint8_t fps);
 	~Animation() = default;
 
 	Animation(const Animation& other) = delete;
@@ -36,7 +36,7 @@ private:
 	uint8_t m_CurrentFrame;
 	uint8_t m_NrOfFrames;
 	uint8_t m_FPS;
-	MoE::RenderComponent* m_pRenderComponent;
+	MoE::TextureRenderer* m_pRenderComponent;
 	float m_LastFrameTime;
 	std::vector<SDL_Rect> m_SrcRects;
 

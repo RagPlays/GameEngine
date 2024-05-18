@@ -6,7 +6,7 @@
 #include "EventQueue.h"
 #include "GameEvents.h"
 #include "PlayerMovement.h"
-#include "RenderComponent.h"
+#include "TextureRenderer.h"
 #include "LevelManager.h"
 #include "LevelCollision.h"
 
@@ -28,7 +28,7 @@ Player::~Player()
 
 void Player::SceneStart()
 {
-	if (MoE::RenderComponent* pRenderComp{ GetOwner()->GetComponent<MoE::RenderComponent>() }; pRenderComp)
+	if (MoE::TextureRenderer* pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() }; pRenderComp)
 	{
 		m_pRenderComponent = pRenderComp;
 		pRenderComp->SetSourceRect(16, 0, 16, 16);
@@ -73,7 +73,7 @@ int Player::GetPlayerIdx() const
 	return m_PlayerIdx;
 }
 
-MoE::RenderComponent* Player::GetRenderComponent() const
+MoE::TextureRenderer* Player::GetRenderComponent() const
 {
 	return m_pRenderComponent;
 }

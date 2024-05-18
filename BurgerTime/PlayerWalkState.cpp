@@ -1,5 +1,5 @@
 #include "PlayerWalkState.h"
-#include "RenderComponent.h"
+#include "TextureRenderer.h"
 #include "Player.h"
 #include "GameObject.h"
 #include "Animation.h"
@@ -27,7 +27,7 @@ void PlayerWalkState::OnEnter()
 {
 	if (!m_pRenderComp)
 	{
-		if (MoE::RenderComponent * pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::RenderComponent>() })
+		if (MoE::TextureRenderer * pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::TextureRenderer>() })
 		{
 			m_pRenderComp = pRenderComp;
 			InitAnimations();

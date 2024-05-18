@@ -30,6 +30,8 @@ namespace MoE
 		virtual void AddSoundEffect(const std::string& filePath, SoundID id) override;
 		virtual void Play(const SoundID id, int volume, SoundType type) override;
 
+		virtual void ClearSounds() override;
+		
 		virtual int MaxVolume() const override;
 
 	private:
@@ -106,6 +108,12 @@ namespace MoE
 		m_ConditionToRun.notify_one();
 	}
 
+	void SDLSoundSystem::SDLSoundSystemImpl::ClearSounds()
+	{
+		m_SoundEffects.clear();
+		m_Music.clear();
+	}
+
 	int SDLSoundSystem::SDLSoundSystemImpl::MaxVolume() const
 	{
 		return SoundEffect::MaxVolume();
@@ -176,6 +184,11 @@ namespace MoE
 	void SDLSoundSystem::Play(SoundID id, int volume, SoundType type)
 	{
 		m_SoundSystem->Play(id, volume, type);
+	}
+
+	void SDLSoundSystem::ClearSounds()
+	{
+		m_SoundSystem->ClearSounds();
 	}
 
 	int SDLSoundSystem::MaxVolume() const

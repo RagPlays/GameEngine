@@ -8,7 +8,7 @@
 
 namespace MoE
 {
-	class RenderComponent;
+	class TextureRenderer;
 }
 
 class Player final : public MoE::Component, public MoE::Subject
@@ -35,7 +35,7 @@ public:
 	int GetPlayerIdx() const;
 
 	// Components
-	MoE::RenderComponent* GetRenderComponent() const;
+	MoE::TextureRenderer* GetRenderComponent() const;
 
 private:
 
@@ -47,7 +47,7 @@ private:
 	glm::ivec2 m_MovementDir;
 
 	// Player Components
-	MoE::RenderComponent* m_pRenderComponent;
+	MoE::TextureRenderer* m_pRenderComponent;
 
 };
 

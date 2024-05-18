@@ -53,9 +53,9 @@ namespace MoE
 		{
 			std::cerr << "ERROR::NULLSOUNDSYSTEM::ASSIGN_FUNCTIONAL_SOUNDSYSTEM!\n";
 		};
-		virtual void Play(SoundID, int, SoundType) override {};
+		virtual void Play(SoundID, int, SoundType) override {}
 
-		virtual void ClearSounds() override {};
+		virtual void ClearSounds() override {}
 
 		virtual int MaxVolume() const override { return 0; }
 	};
@@ -95,6 +95,11 @@ namespace MoE
 				break;
 			}
 			std::cout << "played with id: " << id << " volume: " << volume << "\n";
+		}
+
+		virtual void ClearSounds() override
+		{
+			m_RealSS->ClearSounds();
 		}
 
 		virtual int MaxVolume() const override

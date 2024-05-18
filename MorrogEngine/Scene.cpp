@@ -29,15 +29,17 @@ namespace MoE
 
 	void Scene::UnLoad()
 	{
+		// Unload GameObjects
 		m_Objects.clear();
 		// Unload Events
 		EventQueue::Get().ClearEvents();
 		// Unload EventHandlers
 		EventQueue::Get().ClearHandlers();
 		// Unload Sounds 
-		//ServiceLocator::GetSoundSystem(). // doesnt really need to
+		ServiceLocator::GetSoundSystem().ClearSounds();
 		// Unload Inputs 
-		//InputManager::Get()
+		InputManager::Get().ClearBinds();
+
 		m_IsLoaded = false;
 	}
 

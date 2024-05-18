@@ -6,7 +6,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include "GameObject.h"
-#include "RenderComponent.h"
+#include "TextureRenderer.h"
 
 namespace MoE
 {
@@ -23,13 +23,13 @@ namespace MoE
 	{
 		if (m_NeedsUpdate)
 		{
-			if (RenderComponent * renderComp{ GetOwner()->GetComponent<RenderComponent>() })
+			if (TextureRenderer * renderComp{ GetOwner()->GetComponent<TextureRenderer>() })
 			{
 				//SDL_Surface* surface{ TTF_RenderText_Blended_Wrapped(m_Font->GetFont(), m_Text.c_str(), m_TextColor, 9999)}; // \n inside text
-				SDL_Surface* surface{ TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_TextColor) };
+				SDL_Surface* const surface{ TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_TextColor) };
 				if (!surface) throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 
-				SDL_Texture* texture{ SDL_CreateTextureFromSurface(Renderer::Get().GetSDLRenderer(), surface) };
+				SDL_Texture* const texture{ SDL_CreateTextureFromSurface(Renderer::Get().GetSDLRenderer(), surface) };
 				if (!texture) throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 
 				renderComp->SetTexture(std::make_shared<Texture2D>(texture));

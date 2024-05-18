@@ -150,7 +150,7 @@
     <ClInclude Include="FpsComponent.h">
       <Filter>GameComponents</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
+    <ClInclude Include="TextureRenderer.h">
       <Filter>GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
@@ -206,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="InputCodes.h">
       <Filter>EngineCore\Input\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRenderer.h">
+      <Filter>GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +275,7 @@
     <ClCompile Include="FpsComponent.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
+    <ClCompile Include="TextureRenderer.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
@@ -310,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="Structs.cpp">
       <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRenderer.cpp">
+      <Filter>GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

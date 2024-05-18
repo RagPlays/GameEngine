@@ -1,5 +1,5 @@
-#ifndef TEXTURECOMPONENT_H
-#define TEXTURECOMPONENT_H
+#ifndef TEXTURERENDERER_H
+#define TEXTURERENDERER_H
 
 #include <memory>
 
@@ -14,18 +14,18 @@ namespace MoE
 	class GameObject;
 	class Texture2D;
 
-	class RenderComponent final : public Component
+	class TextureRenderer final : public Component
 	{
 	public:
 
-		explicit RenderComponent(GameObject* const owner);
-		explicit RenderComponent(GameObject* const owner, std::shared_ptr<Texture2D> texture);
-		virtual ~RenderComponent() = default;
+		explicit TextureRenderer(GameObject* const owner);
+		explicit TextureRenderer(GameObject* const owner, std::shared_ptr<Texture2D> texture);
+		virtual ~TextureRenderer() = default;
 
-		RenderComponent(const RenderComponent& other) = delete;
-		RenderComponent(RenderComponent&& other) noexcept = delete;
-		RenderComponent& operator=(const RenderComponent& other) = delete;
-		RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
+		TextureRenderer(const TextureRenderer& other) = delete;
+		TextureRenderer(TextureRenderer&& other) noexcept = delete;
+		TextureRenderer& operator=(const TextureRenderer& other) = delete;
+		TextureRenderer& operator=(TextureRenderer&& other) noexcept = delete;
 
 		// Texture
 		void SetTexture(std::shared_ptr<Texture2D> texture);
@@ -54,6 +54,7 @@ namespace MoE
 
 	private:
 
+
 		std::shared_ptr<Texture2D> m_Texture;
 		glm::ivec2 m_RenderDimensions;
 		SDL_Rect m_SrcRect;
@@ -62,4 +63,4 @@ namespace MoE
 	};
 }
 
-#endif // !TEXTURECOMPONENT_H
+#endif // !TEXTURERENDERER_H

@@ -7,7 +7,7 @@
 
 namespace MoE
 {
-	class RenderComponent;
+	class TextureRenderer;
 }
 class Animation;
 
@@ -38,7 +38,7 @@ private:
 private:
 
 	// Components
-	MoE::RenderComponent* m_pRenderComp;
+	MoE::TextureRenderer* m_pRenderComp;
 
 	// Movement
 	glm::ivec2 m_MovementSpeed;

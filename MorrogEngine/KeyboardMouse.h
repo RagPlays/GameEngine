@@ -28,6 +28,7 @@ namespace MoE
 		void ProcessInput();
 
 		void AddBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);
+		void ClearBinds();
 
 	private:
 

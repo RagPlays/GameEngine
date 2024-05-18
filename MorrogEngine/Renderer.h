@@ -17,7 +17,7 @@ struct SDL_Renderer;
 namespace MoE
 {
 	class Texture2D;
-	class RenderComponent;
+	class TextureRenderer;
 
 	struct Rectf;
 	struct Recti;

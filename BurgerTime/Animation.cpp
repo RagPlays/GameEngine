@@ -1,8 +1,8 @@
 #include "Animation.h"
-#include "RenderComponent.h"
 #include "Timer.h"
+#include "TextureRenderer.h"
 
-Animation::Animation(MoE::RenderComponent* renderComponent, uint8_t nrOfFrames, uint8_t fps)
+Animation::Animation(MoE::TextureRenderer* renderComponent, uint8_t nrOfFrames, uint8_t fps)
 	: m_pRenderComponent{ renderComponent }
 	, m_CurrentFrame{ 0 }
 	, m_NrOfFrames{ nrOfFrames }
