@@ -1,145 +1,180 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="GameSourceFiles">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="GameSourceFile">
+      <UniqueIdentifier>{fd8ef3e1-f490-4eb6-ab12-eedf275fec16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\GameComponents">
+    <Filter Include="GameSourceFile\GameComponents">
       <UniqueIdentifier>{b9df6c9f-2cbd-4694-877c-93ac29035e28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\ImGuiComponents">
-      <UniqueIdentifier>{4ac8d8a7-d74d-42ab-a072-905ae9ed9927}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameSourceFiles\Input">
-      <UniqueIdentifier>{78a75e69-5e8e-46ce-b52a-88b06b4c71e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameSourceFiles\GameComponents\Player">
+    <Filter Include="GameSourceFile\GameComponents\Player">
       <UniqueIdentifier>{b65c40cb-c852-43bd-b5ee-45aa622a571f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\Sound">
-      <UniqueIdentifier>{6dc81e25-a306-4aba-9dd3-ef4120db942a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameSourceFiles\GameComponents\Components">
+    <Filter Include="GameSourceFile\GameComponents\Components">
       <UniqueIdentifier>{05905aed-ee9a-4020-9016-40fa061eca1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\GameComponents\Level">
+    <Filter Include="GameSourceFile\GameComponents\Level">
       <UniqueIdentifier>{164bd2de-8825-4543-9753-f97bea553e38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFiles\Managers">
+    <Filter Include="GameSourceFile\ImGuiComponents">
+      <UniqueIdentifier>{4ac8d8a7-d74d-42ab-a072-905ae9ed9927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\Input">
+      <UniqueIdentifier>{78a75e69-5e8e-46ce-b52a-88b06b4c71e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\Managers">
       <UniqueIdentifier>{40c4646a-7d94-48c7-9e5b-37efecbe46a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\Sound">
+      <UniqueIdentifier>{6dc81e25-a306-4aba-9dd3-ef4120db942a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Player\States">
+      <UniqueIdentifier>{25a55148-919e-460f-94d1-3a797a4728a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Player\States\Basics">
+      <UniqueIdentifier>{b633d08e-507a-4713-845e-091e4347f304}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>GameSourceFiles</Filter>
-    </ClCompile>
     <ClCompile Include="ImGuiExercise1.cpp">
-      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+      <Filter>GameSourceFile\ImGuiComponents</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiExercise2.cpp">
-      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+      <Filter>GameSourceFile\ImGuiComponents</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStats.cpp">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClCompile>
     <ClCompile Include="RotateAroundParentComponent.cpp">
-      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClCompile>
     <ClCompile Include="LevelRenderer.cpp">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
     <ClCompile Include="LevelCollision.cpp">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMovement.cpp">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
     <ClCompile Include="LevelManager.cpp">
-      <Filter>GameSourceFiles\Managers</Filter>
+      <Filter>GameSourceFile\Managers</Filter>
     </ClCompile>
     <ClCompile Include="SoundEventHandler.cpp">
-      <Filter>GameSourceFiles\Sound</Filter>
+      <Filter>GameSourceFile\Sound</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>GameSourceFiles\Managers</Filter>
+      <Filter>GameSourceFile\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStates.cpp">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    <ClCompile Include="Animation.cpp">
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>GameSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWalkState.cpp">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackState.cpp">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDieState.cpp">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWinState.cpp">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStateHandler.cpp">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
-      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+      <Filter>GameSourceFile\ImGuiComponents</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiExercise2.h">
-      <Filter>GameSourceFiles\ImGuiComponents</Filter>
+      <Filter>GameSourceFile\ImGuiComponents</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
+      <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMoveCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
+      <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStats.h">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="SoundIDs.h">
-      <Filter>GameSourceFiles\Sound</Filter>
+      <Filter>GameSourceFile\Sound</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStopCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
+      <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
-      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClInclude>
     <ClInclude Include="RotateAroundParentComponent.h">
-      <Filter>GameSourceFiles\GameComponents\Components</Filter>
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelRenderer.h">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClInclude>
     <ClInclude Include="LevelCollision.h">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMovement.h">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
-      <Filter>GameSourceFiles\GameComponents\Level</Filter>
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClInclude>
     <ClInclude Include="LevelManager.h">
-      <Filter>GameSourceFiles\Managers</Filter>
+      <Filter>GameSourceFile\Managers</Filter>
     </ClInclude>
     <ClInclude Include="SoundEventHandler.h">
-      <Filter>GameSourceFiles\Sound</Filter>
+      <Filter>GameSourceFile\Sound</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>GameSourceFiles\Managers</Filter>
+      <Filter>GameSourceFile\Managers</Filter>
     </ClInclude>
     <ClInclude Include="NextLevelCommand.h">
-      <Filter>GameSourceFiles\Input</Filter>
+      <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStates.h">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+    <ClInclude Include="Animation.h">
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWalkState.h">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackState.h">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDieState.h">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWinState.h">
+      <Filter>GameSourceFile\GameComponents\Player\States</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStateHandler.h">
-      <Filter>GameSourceFiles\GameComponents\Player</Filter>
+      <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
@@ -175,14 +176,19 @@
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAttackState.cpp" />
+    <ClCompile Include="PlayerDieState.cpp" />
     <ClCompile Include="PlayerMovement.cpp" />
     <ClCompile Include="PlayerStateHandler.cpp" />
-    <ClCompile Include="PlayerStates.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerStats.cpp" />
+    <ClCompile Include="PlayerWalkState.cpp" />
+    <ClCompile Include="PlayerWinState.cpp" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
     <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
@@ -192,14 +198,18 @@
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="NextLevelCommand.h" />
+    <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDieState.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
     <ClInclude Include="PlayerMovement.h" />
     <ClInclude Include="PlayerStateHandler.h" />
-    <ClInclude Include="PlayerStates.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerStats.h" />
     <ClInclude Include="PlayerStopCommand.h" />
+    <ClInclude Include="PlayerWalkState.h" />
+    <ClInclude Include="PlayerWinState.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
     <ClInclude Include="SoundIDs.h" />

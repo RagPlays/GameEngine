@@ -11,8 +11,6 @@ namespace MoE
 	class RenderComponent;
 }
 
-class PlayerMovement;
-
 class Player final : public MoE::Component, public MoE::Subject
 {
 public:
@@ -31,13 +29,12 @@ public:
 	// Movement
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
-
+	const glm::ivec2& GetMoveDir() const;
 
 	// Player Info
 	int GetPlayerIdx() const;
 
 	// Components
-	PlayerMovement* GetMovementComponent() const;
 	MoE::RenderComponent* GetRenderComponent() const;
 
 private:
@@ -46,11 +43,10 @@ private:
 	static unsigned int s_PlayerCount;
 	const unsigned int m_PlayerIdx;
 
-	// Player States
-	//PlayerStateHandler m_StateHandler;
+	// Movement
+	glm::ivec2 m_MovementDir;
 
 	// Player Components
-	PlayerMovement* m_pPlayerMovement;
 	MoE::RenderComponent* m_pRenderComponent;
 
 };

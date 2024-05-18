@@ -7,7 +7,7 @@
 #include "Component.h"
 #include "Structs.h" // 'Linef' and 'Rectf'
 
-class PlayerMovement;
+class Player;
 
 class LevelCollision final : public MoE::Component
 {
@@ -18,14 +18,14 @@ public:
 
 	const glm::vec2& GetStartPos() const;
 
-	bool CanMove(PlayerMovement* playerMovement);
+	bool CanMove(Player* player, const glm::ivec2& moveHitBox);
 
 private:
 
 	void LoadCollision(const std::string& filePath);
 
-	bool CanMoveX(const MoE::Linei& leftOrRight, PlayerMovement* playerMovement) const;
-	bool CanMoveY(const MoE::Linei& topOrBot, PlayerMovement* playerMovement) const;
+	bool CanMoveX(const MoE::Linei& leftOrRight, Player* player, const glm::ivec2& hitbox) const;
+	bool CanMoveY(const MoE::Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const;
 	bool LineHitLine(const MoE::Linei& firstLine, const MoE::Linei& secondLine) const;
 
 private:

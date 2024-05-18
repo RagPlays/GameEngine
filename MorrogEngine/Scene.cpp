@@ -1,5 +1,9 @@
 #include "Scene.h"
 #include "GameObject.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
+#include "InputManager.h"
+#include "EventQueue.h"
 
 namespace MoE
 {
@@ -26,6 +30,14 @@ namespace MoE
 	void Scene::UnLoad()
 	{
 		m_Objects.clear();
+		// Unload Events
+		EventQueue::Get().ClearEvents();
+		// Unload EventHandlers
+		EventQueue::Get().ClearHandlers();
+		// Unload Sounds 
+		//ServiceLocator::GetSoundSystem(). // doesnt really need to
+		// Unload Inputs 
+		//InputManager::Get()
 		m_IsLoaded = false;
 	}
 

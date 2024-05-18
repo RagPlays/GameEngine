@@ -25,6 +25,7 @@ namespace MoE
 		EventQueue& operator=(EventQueue&& other) noexcept = delete;
 
 		void AddHandler(std::unique_ptr<EventHandler>&& handler);
+		void ClearHandlers();
 		void AddEvent(GameEvent gameEvent);
 		void ClearEvents();
 		void Update();
@@ -40,7 +41,6 @@ namespace MoE
 		unsigned int m_Head;
 		unsigned int m_Tail;
 
-		std::unique_ptr<NullEventHandler> m_NullEventHandler;
 		std::vector<std::unique_ptr<EventHandler>> m_Handlers;
 		std::array<GameEvent, s_MaxPending> m_Events;
 

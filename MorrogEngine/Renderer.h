@@ -1,6 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <SDL.h>
 #include <vector>
 
 #include "Singleton.h"
@@ -46,6 +47,7 @@ namespace MoE
 		void RenderTexture(const Texture2D& texture, const SDL_FRect& destRect) const;
 		void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect) const;
 		void RenderTexture(const Texture2D& texture, const SDL_FRect& destRect, const SDL_Rect& srcRect) const;
+		void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect, SDL_RendererFlip flip) const;
 
 		void RenderPoint(const Pointf& point);
 		void RenderPoint(const Pointi& point);

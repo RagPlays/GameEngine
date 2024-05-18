@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <SDL.h>
 
 #include "Renderer.h"
 
@@ -94,17 +93,12 @@ namespace MoE
 		SDL_RenderCopyF(m_pRenderer, texture.GetSDLTexture(), &srcRect, &destRect);
 	}
 
-	//// Assuming renderer is your SDL_Renderer* and texture is your SDL_Texture*
-	//SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL; // Use SDL_FLIP_VERTICAL for vertical flip
-	//SDL_Rect srcRect; // Define your source rectangle here
-	//SDL_Rect dstRect; // Define your destination rectangle here
-	//double angle = 0; // Rotate the texture by this angle
-	//SDL_Point* center = NULL; // This is the point around which texture will be rotated
+	void Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect, SDL_RendererFlip flip) const
+	{
+		SDL_RenderCopyEx(m_pRenderer, texture.GetSDLTexture(), &srcRect, &destRect, 0.0, nullptr, flip);
+	}
 
-	//// Render the texture
-	//SDL_RenderCopyEx(renderer, texture, &srcRect, &dstRect, angle, center, flip);
-
-
+	// Render Shapes
 	void Renderer::RenderPoint(const Pointf& point)
 	{
 		SDL_RenderDrawPointF(m_pRenderer, point.x, point.y);

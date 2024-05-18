@@ -16,12 +16,13 @@ namespace MoE
 		: Component{ owner }
 		, m_Texture{ texture }
 		, m_RenderDimensions{}
-		, m_SrcRectSet{ false }
 		, m_SrcRect{}
+		, m_FlipMode{ SDL_RendererFlip::SDL_FLIP_NONE }
 	{
 		if (m_Texture != nullptr)
 		{
 			SetDefaultDimensions();
+			SetDefaultSourceRect();
 		}
 	}
 
@@ -41,6 +42,11 @@ namespace MoE
 			m_Texture = texture;
 			SetTextureDimensions(dimentions);
 		}
+	}
+
+	void RenderComponent::SetFlipMode(SDL_RendererFlip flip)
+	{
+		m_FlipMode = flip;
 	}
 
 	void RenderComponent::SetDefaultDimensions()
@@ -63,6 +69,11 @@ namespace MoE
 		m_RenderDimensions = dimentions;
 	}
 
+	void RenderComponent::ScaleTextureDimensions(float scale)
+	{
+		m_RenderDimensions *= scale;
+	}
+
 	int RenderComponent::GetTextureWidth() const
 	{
 		return m_RenderDimensions.x;
@@ -78,9 +89,12 @@ namespace MoE
 		return m_RenderDimensions;
 	}
 
-	void RenderComponent::ClearSourceRect()
+	void RenderComponent::SetDefaultSourceRect()
 	{
-		m_SrcRectSet = false;
+		int textureWidth{};
+		int textureHeight{};
+		SDL_QueryTexture(m_Texture->GetSDLTexture(), nullptr, nullptr, &textureWidth, &textureHeight);
+		m_SrcRect = SDL_Rect{ 0, 0, textureWidth, textureHeight };
 	}
 
 	void RenderComponent::SetSourceRect(int x, int y, int width, int height)
@@ -91,7 +105,6 @@ namespace MoE
 	void RenderComponent::SetSourceRect(const SDL_Rect& srcRect)
 	{
 		m_SrcRect = srcRect;
-		m_SrcRectSet = true;
 	}
 
 	void RenderComponent::Render() const
@@ -108,7 +121,6 @@ namespace MoE
 			m_RenderDimensions.y
 		};
 
-		if (m_SrcRectSet) renderer.RenderTexture(*m_Texture, destRect, m_SrcRect);
-		else renderer.RenderTexture(*m_Texture, destRect);
+		renderer.RenderTexture(*m_Texture, destRect, m_SrcRect, m_FlipMode);
 	}
 }

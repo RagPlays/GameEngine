@@ -5,12 +5,11 @@
 #include "ResourceManager.h"
 #include "GameObject.h"
 #include "SceneManager.h"
-#include "PlayerMovement.h"
+#include "Player.h"
 #include "GameManager.h"
 #include "LevelManager.h"
 
 using namespace MoE;
-
 
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }
@@ -23,11 +22,11 @@ const glm::vec2& LevelCollision::GetStartPos() const
 	return m_StartPos;
 }
 
-bool LevelCollision::CanMove(PlayerMovement* playerMovement)
+bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 {
-	const glm::ivec2& moveDir{ playerMovement->GetMoveDir() };
-	const glm::ivec2& hitbox{ playerMovement->GetHitBox() };
-	const glm::vec2& playerPos{ playerMovement->GetPosition() };
+	const glm::ivec2& moveDir{ player->GetMoveDir() };
+	const glm::ivec2& hitbox{ moveHitBox };
+	const glm::vec2& playerPos{ player->GetOwner()->GetLocalPosition() };
 
 	Recti playerMoveCheckRect
 	{
@@ -49,7 +48,7 @@ bool LevelCollision::CanMove(PlayerMovement* playerMovement)
 			start,
 			start + glm::ivec2{ 0, playerMoveCheckRect.size.y }
 		};
-		return CanMoveX(line, playerMovement);
+		return CanMoveX(line, player, hitbox);
 	}
 	else if (moveDir.y)
 	{
@@ -65,7 +64,7 @@ bool LevelCollision::CanMove(PlayerMovement* playerMovement)
 			start,
 			start + glm::ivec2{ playerMoveCheckRect.size.x, 0 }
 		};
-		return CanMoveY(line, playerMovement);
+		return CanMoveY(line, player, hitbox);
 	}
 	return false;
 }
@@ -158,16 +157,15 @@ void LevelCollision::LoadCollision(const std::string& filePath)
 	}
 }
 
-bool LevelCollision::CanMoveX(const Linei& leftOrRight, PlayerMovement* playerMovement) const
+bool LevelCollision::CanMoveX(const Linei& leftOrRight, Player* player, const glm::ivec2& hitbox) const
 {
-	const glm::ivec2& hitbox{ playerMovement->GetHitBox() };
-	const glm::vec2& pos{ playerMovement->GetPosition() };
+	const glm::vec2& pos{ player->GetOwner()->GetLocalPosition() };
 
 	for (const auto& line : m_LinesX)
 	{
 		if (LineHitLine(leftOrRight, line))
 		{
-			playerMovement->SetPosition(
+			player->GetOwner()->SetLocalPosition(
 				glm::vec2
 				{
 					pos.x,
@@ -180,16 +178,15 @@ bool LevelCollision::CanMoveX(const Linei& leftOrRight, PlayerMovement* playerMo
 	return false;
 }
 
-bool LevelCollision::CanMoveY(const Linei& topOrBot, PlayerMovement* playerMovement) const
+bool LevelCollision::CanMoveY(const Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const
 {
-	const glm::ivec2& hitbox{ playerMovement->GetHitBox() };
-	const glm::vec2& pos{ playerMovement->GetPosition() };
+	const glm::vec2& pos{ player->GetOwner()->GetLocalPosition() };
 
 	for (const auto& line : m_LinesY)
 	{
 		if (LineHitLine(topOrBot, line))
 		{
-			playerMovement->SetPosition(
+			player->GetOwner()->SetLocalPosition(
 				glm::vec2
 				{ 
 					static_cast<float>(line.pointOne.x) - static_cast<float>(hitbox.x) * 0.5f,

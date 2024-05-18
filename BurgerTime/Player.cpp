@@ -2,22 +2,21 @@
 
 #include "Player.h"
 #include "PlayerStateHandler.h"
-#include "PlayerStates.h"
 #include "GameObject.h"
 #include "EventQueue.h"
 #include "GameEvents.h"
 #include "PlayerMovement.h"
 #include "RenderComponent.h"
-
-using namespace MoE;
+#include "LevelManager.h"
+#include "LevelCollision.h"
 
 unsigned int Player::s_PlayerCount{ 0 };
 
-Player::Player(GameObject* const owner)
+Player::Player(MoE::GameObject* const owner)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
-	, m_pPlayerMovement{ nullptr }
+	, m_MovementDir{}
 	, m_pRenderComponent{ nullptr }
 {
 }
@@ -29,54 +28,49 @@ Player::~Player()
 
 void Player::SceneStart()
 {
-	if (RenderComponent* pRenderComp{ GetOwner()->GetComponent<RenderComponent>() }; pRenderComp)
+	if (MoE::RenderComponent* pRenderComp{ GetOwner()->GetComponent<MoE::RenderComponent>() }; pRenderComp)
 	{
 		m_pRenderComponent = pRenderComp;
 		pRenderComp->SetSourceRect(16, 0, 16, 16);
-	}
-	if (PlayerMovement* pMovementComp{ GetOwner()->GetComponent<PlayerMovement>() }; pMovementComp)
-	{
-		m_pPlayerMovement = pMovementComp;
-		if(m_pRenderComponent) m_pRenderComponent->SetTextureDimensions(m_pPlayerMovement->GetHitBox());
 	}
 	if(!m_pRenderComponent)
 	{
 		std::cerr << "ERROR::PLAYER::RENDERCOMPONENT_NOT_SET!\n";
 		assert(false);
 	}
-	if (!m_pPlayerMovement)
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
-		std::cerr << "ERROR::PLAYER::PLAYERMOVEMENT_NOT_SET!\n";
-		assert(false);
+		GetOwner()->SetLocalPosition(coll->GetStartPos());
 	}
 
-	Notify(GetOwner(), GameEvent::playerJoined);
+	Notify(GetOwner(), MoE::GameEvent::playerJoined);
 }
 
 void Player::Move(const glm::ivec2& dir)
 {
-	if (m_pPlayerMovement)
-	{
-		m_pPlayerMovement->Move(dir);
-	}
+	m_MovementDir = dir;
 }
 
 void Player::Stop(const glm::ivec2& dir)
 {
-	if (m_pPlayerMovement)
+	if (dir.y * m_MovementDir.y > 0)
 	{
-		m_pPlayerMovement->Stop(dir);
+		m_MovementDir.y = 0;
 	}
+	else if (dir.x * m_MovementDir.x > 0)
+	{
+		m_MovementDir.x = 0;
+	}
+}
+
+const glm::ivec2& Player::GetMoveDir() const
+{
+	return m_MovementDir;
 }
 
 int Player::GetPlayerIdx() const
 {
 	return m_PlayerIdx;
-}
-
-PlayerMovement* Player::GetMovementComponent() const
-{
-	return m_pPlayerMovement;
 }
 
 MoE::RenderComponent* Player::GetRenderComponent() const

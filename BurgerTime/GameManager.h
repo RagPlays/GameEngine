@@ -5,6 +5,13 @@
 
 #include "Singleton.h"
 
+enum class GameMode
+{
+	none,
+	singlePlayer,
+	multiplayer
+};
+
 class Engine;
 
 class GameManager final : public MoE::Singleton<GameManager>
@@ -24,7 +31,6 @@ private:
 private:
 
 	// Game Specs //
-
 	const int m_GameScale;
 	const glm::ivec2 m_DefaultWindowSize;
 	const glm::ivec2 m_WindowSize;

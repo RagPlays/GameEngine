@@ -1,66 +1,80 @@
-//#include "PlayerStateHandler.h"
-//#include "PlayerStates.h"
-//
-//PlayerStateHandler::PlayerStateHandler(Player* const player)
-//	: m_IdleState{ std::make_unique<PlayerIdleState>(player, this) }
-//	, m_MoveUpState{ std::make_unique<PlayerMoveUpState>(player, this) }
-//	, m_MoveDownState{ std::make_unique<PlayerMoveDownState>(player, this) }
-//	, m_MoveLeftState{ std::make_unique<PlayerMoveLeftState>(player, this) }
-//	, m_MoveRightState{ std::make_unique<PlayerMoveRightState>(player, this) }
-//	, m_pCurrentState{ nullptr }
-//{
-//}
-//
-//PlayerStateHandler::~PlayerStateHandler() = default;
-//
-//void PlayerStateHandler::SetState(PlayerState* playerState)
-//{
-//	if (!playerState || m_pCurrentState == playerState) return;
-//	if (m_pCurrentState)
-//	{
-//		m_pCurrentState->OnExit();
-//	}
-//	m_pCurrentState = playerState;
-//	m_pCurrentState->OnEnter();
-//}
-//
-//void PlayerStateHandler::Update()
-//{
-//	if(m_pCurrentState) m_pCurrentState->Update();
-//}
-//
-//void PlayerStateHandler::SceneStart()
-//{
-//	if (m_pCurrentState)
-//	{
-//		// This should not happen
-//		m_pCurrentState->OnExit();
-//	}
-//	m_pCurrentState = m_IdleState.get();
-//	m_pCurrentState->OnEnter();
-//}
-//
-//PlayerIdleState* PlayerStateHandler::GetIdleState() const
-//{
-//	return m_IdleState.get();
-//}
-//
-//PlayerMoveUpState* PlayerStateHandler::GetMoveUpState() const
-//{
-//	return m_MoveUpState.get();
-//}
-//
-//PlayerMoveDownState* PlayerStateHandler::GetMoveDownState() const
-//{
-//	return m_MoveDownState.get();
-//}
-//
-//PlayerMoveLeftState* PlayerStateHandler::GetMoveLeftState() const
-//{
-//	return m_MoveLeftState.get();
-//}
-//
-//PlayerMoveRightState* PlayerStateHandler::GetMoveRightState() const
-//{
-//	return m_MoveRightState.get();
-//}
+#include "PlayerStateHandler.h"
+
+#include "PlayerWalkState.h"
+#include "PlayerAttackState.h"
+#include "PlayerWinState.h"
+#include "PlayerDieState.h"
+
+#include "GameManager.h"
+#include "GameObject.h"
+#include "RenderComponent.h"
+
+PlayerStateHandler::PlayerStateHandler(MoE::GameObject* const owner, Player* const player)
+	: Component{ owner }
+	, m_pCurrentState{ nullptr }
+	, m_WalkState{ std::make_unique<PlayerWalkState>(player, this) }
+	, m_AttackState{ std::make_unique<PlayerAttackState>(player, this) }
+	, m_WinState{ std::make_unique<PlayerWinState>(player, this) }
+	, m_DieState{ std::make_unique<PlayerDieState>(player, this) }
+{
+}
+
+PlayerStateHandler::~PlayerStateHandler() = default;
+
+void PlayerStateHandler::SceneStart()
+{
+	if (MoE::RenderComponent * pRenderComp{ GetOwner()->GetComponent<MoE::RenderComponent>() })
+	{
+		int gameScale{ GameManager::Get().GetGameScale() };
+		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });
+		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
+	}
+	m_pCurrentState = m_WalkState.get();
+	m_pCurrentState->OnEnter();
+}
+
+void PlayerStateHandler::FixedUpdate()
+{
+	if (m_pCurrentState) m_pCurrentState->FixedUpdate();
+}
+
+void PlayerStateHandler::Update()
+{
+	if(m_pCurrentState) m_pCurrentState->Update();
+}
+
+void PlayerStateHandler::LateUpdate()
+{
+	if (m_pCurrentState) m_pCurrentState->LateUpdate();
+}
+
+void PlayerStateHandler::SetState(PlayerState* playerState)
+{
+	if (!playerState || m_pCurrentState == playerState) return;
+	if (m_pCurrentState)
+	{
+		m_pCurrentState->OnExit();
+	}
+	m_pCurrentState = playerState;
+	m_pCurrentState->OnEnter();
+}
+
+void PlayerStateHandler::SetWalkState()
+{
+	SetState(m_WalkState.get());
+}
+
+void PlayerStateHandler::SetAttackState()
+{
+	SetState(m_AttackState.get());
+}
+
+void PlayerStateHandler::SetWinState()
+{
+	SetState(m_WinState.get());
+}
+
+void PlayerStateHandler::SetDieState()
+{
+	SetState(m_DieState.get());
+}

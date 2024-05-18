@@ -9,7 +9,15 @@ namespace MoE
 	void EventQueue::AddHandler(std::unique_ptr<EventHandler>&& handler)
 	{
 		m_Handlers.emplace_back(std::move(handler));
-		if (m_Handlers.size() == 1) m_NullEventHandler.reset();
+	}
+
+	void EventQueue::ClearHandlers()
+	{
+		for (auto& handler : m_Handlers)
+		{
+			handler.reset();
+		}
+		m_Handlers.clear();
 	}
 
 	void EventQueue::AddEvent(GameEvent gameEvent)
@@ -28,7 +36,11 @@ namespace MoE
 
 	void EventQueue::Update()
 	{
-		if (m_Handlers.empty()) return;
+		if (m_Handlers.empty())
+		{
+			m_Head = m_Tail;
+			return;
+		}
 
 		for (unsigned int idx{ m_Head }; idx != m_Tail; idx = (idx + 1) % s_MaxPending)
 		{
@@ -43,11 +55,9 @@ namespace MoE
 	// PRIVATE FUNCTIONS //
 
 	EventQueue::EventQueue()
-		: m_NullEventHandler{ nullptr }
-		, m_Head{ 0 }
+		: m_Head{ 0 }
 		, m_Tail{ 0 }
 		, m_Events{}
 	{
-		m_NullEventHandler = std::make_unique<NullEventHandler>();
 	}
 }
