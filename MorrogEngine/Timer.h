@@ -43,7 +43,7 @@ namespace MoE
 
 		const float m_FixedTimeStep;
 		int m_MonitorRefreshRate;
-		int m_MsPerFrame;
+		int m_MillSecPerFrame;
 		float m_Lag;
 		float m_ElapsedSec;
 

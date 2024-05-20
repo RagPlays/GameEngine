@@ -18,12 +18,12 @@ namespace MoE
 		FpsComponent(FpsComponent&& other) noexcept = delete;
 		FpsComponent& operator=(const FpsComponent& other) = delete;
 		FpsComponent& operator=(FpsComponent&& other) noexcept = delete;
-
+		
+		virtual void SceneStart() override;
 		virtual void Update() override;
 
 	private:
 
-		bool m_NeedsUpdate;
 		int m_FrameCount;
 		float m_TotalWaitTime;
 		const float m_UpdateTickTime;

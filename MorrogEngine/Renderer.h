@@ -49,8 +49,8 @@ namespace MoE
 		void RenderTexture(const Texture2D& texture, const SDL_FRect& destRect, const SDL_Rect& srcRect) const;
 		void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect, SDL_RendererFlip flip) const;
 
-		void RenderPoint(const Pointf& point);
-		void RenderPoint(const Pointi& point);
+		void RenderPoint(const Point2f& point);
+		void RenderPoint(const Point2i& point);
 
 		void RenderLine(const Linef& line);
 		void RenderLine(const Linei& line);
@@ -59,6 +59,7 @@ namespace MoE
 		void RenderRect(const Recti& rect, bool filled);
 
 		SDL_Renderer* GetSDLRenderer() const;
+		//SDL_Surface* GetSDLSurface() const;
 
 	private:
 

@@ -20,7 +20,6 @@ namespace MoE
 
 	void KeyboardMouse::ProcessInput()
 	{
-		// Go over all commands
 		for (const auto& [input, command] : m_Commands)
 		{
 			switch (input.inputType)
@@ -29,9 +28,12 @@ namespace MoE
 				if (WasPressedThisFrame(input.scancode)) m_KeyStack.emplace_back(input.scancode);
 				if (IsPressed(input.scancode))
 				{
-					if (input.scancode == m_KeyStack.back())
+					if (!m_KeyStack.empty())
 					{
-						command->Execute();
+						if (input.scancode == m_KeyStack.back())
+						{
+							command->Execute();
+						}
 					}
 				}
 				break;
@@ -54,7 +56,6 @@ namespace MoE
 			}
 		}
 
-		// swap the values
 		std::swap(m_PreviousKeyStates, m_CurrentKeyStates);
 	}
 
@@ -67,6 +68,9 @@ namespace MoE
 	{
 		m_Commands.clear();
 		m_KeyStack.clear();
+		m_CurrentKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
+		m_PreviousKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
+		m_KeyStack.reserve(4);
 	}
 
 	// Private functions //

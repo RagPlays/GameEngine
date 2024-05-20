@@ -26,6 +26,23 @@ namespace MoE
 		}
 	}
 
+	void TextureRenderer::Render() const
+	{
+		if (!m_Texture) return;
+
+		const Renderer& renderer{ Renderer::Get() };
+		const glm::vec2& renderPos{ GetOwner()->GetWorldPosition() };
+		const SDL_Rect destRect
+		{
+			static_cast<int>(renderPos.x),
+			static_cast<int>(renderPos.y),
+			m_RenderDimensions.x,
+			m_RenderDimensions.y
+		};
+
+		renderer.RenderTexture(*m_Texture, destRect, m_SrcRect, m_FlipMode);
+	}
+
 	void TextureRenderer::SetTexture(std::shared_ptr<Texture2D> texture)
 	{
 		if (texture != nullptr)
@@ -103,22 +120,5 @@ namespace MoE
 	void TextureRenderer::SetSourceRect(const SDL_Rect& srcRect)
 	{
 		m_SrcRect = srcRect;
-	}
-
-	void TextureRenderer::Render() const
-	{
-		if (!m_Texture) return;
-
-		const Renderer& renderer{ Renderer::Get() };
-		const glm::vec2& renderPos{ GetOwner()->GetWorldPosition() };
-		const SDL_Rect destRect
-		{
-			static_cast<int>(renderPos.x),
-			static_cast<int>(renderPos.y),
-			m_RenderDimensions.x,
-			m_RenderDimensions.y
-		};
-
-		renderer.RenderTexture(*m_Texture, destRect, m_SrcRect, m_FlipMode);
 	}
 }

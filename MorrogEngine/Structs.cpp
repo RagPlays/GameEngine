@@ -54,6 +54,42 @@ namespace MoE
 	{
 	}
 
+	// CIRCLEF / CIRCLEI //
+
+	Circlef::Circlef()
+		: Circlef{ 0.f, 0.f, 0.f }
+	{
+	}
+
+	Circlef::Circlef(const Point2f& center, float radius)
+		: center{ center }
+		, radius{ radius }
+	{
+	}
+
+	Circlef::Circlef(float centerX, float centerY, float radius)
+		: center{ centerX, centerY }
+		, radius{ radius }
+	{
+	}
+
+	Circlei::Circlei()
+		: Circlei{ 0, 0, 0 }
+	{
+	}
+
+	Circlei::Circlei(const Point2i& center, float radius)
+		: center{ center }
+		, radius{ radius }
+	{
+	}
+
+	Circlei::Circlei(float centerX, float centerY, float radius)
+		: center{ centerX, centerY }
+		, radius{ radius }
+	{
+	}
+
 	// COLOR //
 
 	Color::Color(uint8_t r, uint8_t g, uint8_t b)

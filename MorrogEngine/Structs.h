@@ -7,8 +7,8 @@ namespace MoE
 {
 	//////// SHAPES ////////
 
-	using Pointf = glm::vec2;
-	using Pointi = glm::ivec2;
+	using Point2f = glm::vec2;
+	using Point2i = glm::ivec2;
 
 	struct Linef
 	{
@@ -48,6 +48,26 @@ namespace MoE
 
 		glm::ivec2 pos;
 		glm::ivec2 size;
+	};
+
+	struct Circlef
+	{
+		Circlef();
+		explicit Circlef(const Point2f& center, float radius);
+		explicit Circlef(float centerX, float centerY, float radius);
+
+		Point2f center;
+		float radius;
+	};
+
+	struct Circlei
+	{
+		Circlei();
+		explicit Circlei(const Point2i& center, float radius);
+		explicit Circlei(float centerX, float centerY, float radius);
+
+		Point2i center;
+		float radius;
 	};
 
 	///////// OTHER	/////////

@@ -3,7 +3,7 @@
 #include "PlayerStats.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "TextComponent.h"
+#include "FontRenderer.h"
 #include "GameEvents.h"
 
 using namespace MoE;
@@ -22,9 +22,9 @@ void PlayerStats::Update()
 {
 	if (m_NeedsUpdate)
 	{
-		if (TextComponent* textComponent{ GetOwner()->GetComponent<TextComponent>() })
+		if (FontRenderer * fontRenderer{ GetOwner()->GetComponent<FontRenderer>() })
 		{
-			textComponent->SetText(
+			fontRenderer->SetText(
 				"/ PLAYER: " + 
 				std::to_string(m_PlayerIdx) + 
 				" / Lives: " + 

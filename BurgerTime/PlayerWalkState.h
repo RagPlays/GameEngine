@@ -23,17 +23,20 @@ public:
 	PlayerWalkState& operator=(const PlayerWalkState& other) = delete;
 	PlayerWalkState& operator=(PlayerWalkState&& other) noexcept = delete;
 
+	virtual void OnSceneStart() override;
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
-	virtual void LateUpdate() override;
 
 private:
 
 	void InitAnimations();
 	void ChangeAnimation();
 	void SetAnimation(Animation* animation, bool flipped = false);
+
+	void UpdateMovement();
+	void UpdateAnimation();
 
 private:
 
@@ -47,7 +50,6 @@ private:
 
 	// Animations
 	Animation* m_pCurrentAnimation;
-
 	std::unique_ptr<Animation> m_UpAnimation;
 	std::unique_ptr<Animation> m_DownAnimation;
 	std::unique_ptr<Animation> m_SidewayAnimation;

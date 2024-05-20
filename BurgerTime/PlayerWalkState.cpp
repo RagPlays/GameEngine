@@ -14,7 +14,7 @@ PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handl
 	, m_PreviousDir{}
 	, m_pCurrentAnimation{ nullptr }
 	, m_MovementSpeed{ 42, 22 }
-{
+{  
 	const int tileSize{ LevelManager::Get().GetTileSize() };
 	const int gameScale{ GameManager::Get().GetGameScale() };
 	m_MovementSpeed *= gameScale;
@@ -23,16 +23,18 @@ PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handl
 
 PlayerWalkState::~PlayerWalkState() = default;
 
+void PlayerWalkState::OnSceneStart()
+{
+	if (MoE::TextureRenderer * pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::TextureRenderer>() })
+	{
+		m_pRenderComp = pRenderComp;
+		InitAnimations();
+	}
+}
+
 void PlayerWalkState::OnEnter()
 {
-	if (!m_pRenderComp)
-	{
-		if (MoE::TextureRenderer * pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::TextureRenderer>() })
-		{
-			m_pRenderComp = pRenderComp;
-			InitAnimations();
-		}
-	}
+	SetAnimation(m_DownAnimation.get());
 }
 
 void PlayerWalkState::OnExit()
@@ -46,43 +48,17 @@ void PlayerWalkState::FixedUpdate()
 	// Animations
 	if (m_PreviousDir != moveDir)
 	{
-		m_PreviousDir = moveDir;
 		ChangeAnimation();
+		m_PreviousDir = moveDir;
 	}
 
 	// Movement
-	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
-
-	if (LevelCollision * coll{ LevelManager::Get().GetCollision() })
-	{
-		MoE::GameObject* owner{ m_pPlayer->GetOwner() };
-		const float fixedTime{ MoE::Timer::Get().GetFixedElapsedSec() };
-		const glm::vec2 moveScale{ static_cast<glm::vec2>(m_MovementSpeed) * fixedTime };
-		const glm::vec2 translation{ static_cast<glm::vec2>(m_PreviousDir) * moveScale };
-		const glm::vec2 originalPos{ owner->GetLocalPosition() };
-
-		owner->Translate(translation);
-
-		if (!coll->CanMove(m_pPlayer, m_HitBoxSize))
-		{
-			owner->SetLocalPosition(originalPos);
-			if (m_pCurrentAnimation)
-			{
-				m_pCurrentAnimation->Stop();
-			}
-			return;
-		}
-	}
+	UpdateMovement();
 }
 
 void PlayerWalkState::Update()
 {
-	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
-	if (m_pCurrentAnimation) m_pCurrentAnimation->Update();
-}
-
-void PlayerWalkState::LateUpdate()
-{
+	UpdateAnimation();
 }
 
 // Private //
@@ -116,37 +92,22 @@ void PlayerWalkState::InitAnimations()
 	m_SidewayAnimation->AddFrame(side1Rect);
 	m_SidewayAnimation->AddFrame(side2Rect);
 	m_SidewayAnimation->AddFrame(side3Rect);
-
-	m_pCurrentAnimation = m_DownAnimation.get();
 }
 
 void PlayerWalkState::ChangeAnimation()
 {
-	if (m_PreviousDir.x)
+	const glm::ivec2& moveDir{ m_pPlayer->GetMoveDir() };
+	if (moveDir.x != 0)
 	{
-		if (m_PreviousDir.x > 0)
-		{
-			// right
-			SetAnimation(m_SidewayAnimation.get(), true);
-		}
-		else
-		{
-			// left
-			SetAnimation(m_SidewayAnimation.get());
-		}
+		SetAnimation(m_SidewayAnimation.get(), moveDir.x > 0);
 	}
-	else if (m_PreviousDir.y)
+	else if (moveDir.y != 0)
 	{
-		if (m_PreviousDir.y > 0)
-		{
-			// down
-			SetAnimation(m_DownAnimation.get());
-		}
-		else
-		{
-			// up
-			SetAnimation(m_UpAnimation.get());
-		}
+		SetAnimation(moveDir.y > 0 ? m_DownAnimation.get() : m_UpAnimation.get());
+	}
+	else if (m_PreviousDir.x != 0 || m_PreviousDir.y != 0)
+	{
+		SetAnimation(m_PreviousDir.y < 0 ? m_UpAnimation.get() : m_DownAnimation.get());
 	}
 }
 
@@ -154,13 +115,41 @@ void PlayerWalkState::SetAnimation(Animation* animation, bool flipped)
 {
 	if (!animation) return;
 
-	if(m_pCurrentAnimation)
-	{
-		m_pCurrentAnimation->Stop();
-	}
+	if(m_pCurrentAnimation) m_pCurrentAnimation->Stop();
 	m_pCurrentAnimation = animation;
 	m_pCurrentAnimation->Play();
 
 	if (flipped) m_pRenderComp->SetFlipMode(SDL_FLIP_HORIZONTAL);
 	else m_pRenderComp->SetFlipMode(SDL_FLIP_NONE);
+}
+
+void PlayerWalkState::UpdateMovement()
+{
+	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
+
+	if (LevelCollision * coll{ LevelManager::Get().GetCollision() })
+	{
+		MoE::GameObject* owner{ m_pPlayer->GetOwner() };
+		const float fixedTime{ MoE::Timer::Get().GetFixedElapsedSec() };
+		const glm::vec2 moveScale{ static_cast<glm::vec2>(m_MovementSpeed) * fixedTime };
+		const glm::vec2 translation{ static_cast<glm::vec2>(m_PreviousDir) * moveScale };
+		const glm::vec2 originalPos{ owner->GetLocalPosition() };
+
+		owner->Translate(translation);
+
+		if (!coll->CanMove(m_pPlayer, m_HitBoxSize))
+		{
+			owner->SetLocalPosition(originalPos);
+			if (m_pCurrentAnimation)
+			{
+				m_pCurrentAnimation->Stop();
+			}
+		}
+	}
+}
+
+void PlayerWalkState::UpdateAnimation()
+{
+	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
+	if (m_pCurrentAnimation) m_pCurrentAnimation->Update();
 }

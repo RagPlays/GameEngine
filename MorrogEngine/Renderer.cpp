@@ -99,12 +99,12 @@ namespace MoE
 	}
 
 	// Render Shapes
-	void Renderer::RenderPoint(const Pointf& point)
+	void Renderer::RenderPoint(const Point2f& point)
 	{
 		SDL_RenderDrawPointF(m_pRenderer, point.x, point.y);
 	}
 
-	void Renderer::RenderPoint(const Pointi& point)
+	void Renderer::RenderPoint(const Point2i& point)
 	{
 		SDL_RenderDrawPoint(m_pRenderer, point.x, point.y);
 	}
@@ -138,6 +138,11 @@ namespace MoE
 	{
 		return m_pRenderer;
 	}
+
+	/*SDL_Surface* Renderer::GetSDLSurface() const
+	{
+		return SDL_GetWindowSurface(m_pWindow);
+	}*/
 
 	// Private Functions //
 

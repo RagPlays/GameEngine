@@ -153,9 +153,6 @@
     <ClInclude Include="TextureRenderer.h">
       <Filter>GameComponents</Filter>
     </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>GameComponents</Filter>
-    </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>EngineCore\Events\EventQueue</Filter>
     </ClInclude>
@@ -209,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="FontRenderer.h">
       <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,9 +276,6 @@
       <Filter>GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="TextureRenderer.cpp">
-      <Filter>GameComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
     <ClCompile Include="EventQueue.cpp">

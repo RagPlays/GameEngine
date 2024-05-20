@@ -17,10 +17,13 @@ namespace MoE
 	{
 		if (!m_FpsCapped) return;
 
-		const auto sleeptime{ m_LastTime + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now() };
+		const auto sleeptime
+		{
+			m_LastTime + std::chrono::milliseconds(m_MillSecPerFrame) - std::chrono::high_resolution_clock::now() 
+		};
 		if (sleeptime > std::chrono::nanoseconds::zero())
 		{
-			std::this_thread::sleep_for(sleeptime); // main thread
+			std::this_thread::sleep_for(sleeptime);
 		}
 	}
 
@@ -51,8 +54,11 @@ namespace MoE
 
 	void Timer::EnableFpsCap(int newFps)
 	{
-		m_FpsCapped = true;
-		m_MsPerFrame = static_cast<int>(1.f / newFps * 1000.f);
+		if (newFps)
+		{
+			m_FpsCapped = true;
+			m_MillSecPerFrame = static_cast<int>(1000.f / static_cast<float>(newFps));
+		}
 	}
 
 	void Timer::DisableFpsCap()
@@ -87,7 +93,7 @@ namespace MoE
 		, m_ElapsedSec{}
 		, m_Lag{}
 		, m_FpsCapped{ false }
-		, m_MsPerFrame{ 16 }
+		, m_MillSecPerFrame{ 16 }
 		, m_LastTime{ std::chrono::high_resolution_clock::now() }
 	{
 		SDL_DisplayMode monitorInfo{};

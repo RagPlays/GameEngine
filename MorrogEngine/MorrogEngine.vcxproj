@@ -189,6 +189,7 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="Collisions.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
@@ -220,7 +221,6 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="Subject.h" />
-    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="Timer.h" />
@@ -257,7 +257,6 @@
     <ClCompile Include="SoundEffect.cpp" />
     <ClCompile Include="Structs.cpp" />
     <ClCompile Include="Subject.cpp" />
-    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureRenderer.cpp" />
     <ClCompile Include="Timer.cpp" />

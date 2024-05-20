@@ -3,34 +3,41 @@
 #include "FpsComponent.h"
 #include "GameObject.h"
 #include "Timer.h"
-#include "TextComponent.h"
+#include "FontRenderer.h"
 
 namespace MoE
 {
 	FpsComponent::FpsComponent(GameObject* const owner)
 		: Component{ owner }
-		, m_NeedsUpdate{ true }
 		, m_FrameCount{}
 		, m_TotalWaitTime{}
 		, m_UpdateTickTime{ 0.5f }
 	{
 	}
 
+	void FpsComponent::SceneStart()
+	{
+		if (FontRenderer* const textComponent{ GetOwner()->GetComponent<FontRenderer>() })
+		{
+			textComponent->SetRenderForQuality(true);
+			textComponent->SetText("Loading...");
+		}
+	}
+
 	void FpsComponent::Update()
 	{
 		++m_FrameCount;
-		m_TotalWaitTime += Timer::Get().GetElapsedSec();
+		const float thisFrameTime{ Timer::Get().GetElapsedSec() };
+		m_TotalWaitTime += thisFrameTime;
 
 		if (m_TotalWaitTime >= m_UpdateTickTime)
 		{
 			const float fpsAverage{ 1.f / (m_TotalWaitTime / m_FrameCount) };
 
-			if (TextComponent * textComponent{ GetOwner()->GetComponent<TextComponent>() })
+			if (FontRenderer* const textComponent{ GetOwner()->GetComponent<FontRenderer>() })
 			{
 				textComponent->SetText(std::format("{:.1f}", fpsAverage) + " FPS");
 			}
-
-			m_NeedsUpdate = false;
 
 			m_TotalWaitTime -= m_UpdateTickTime;
 			m_FrameCount = 0;

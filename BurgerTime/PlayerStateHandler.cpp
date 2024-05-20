@@ -29,6 +29,12 @@ void PlayerStateHandler::SceneStart()
 		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });
 		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
 	}
+
+	m_WalkState->OnSceneStart();
+	m_AttackState->OnSceneStart();
+	m_WinState->OnSceneStart();
+	m_DieState->OnSceneStart();
+
 	m_pCurrentState = m_WalkState.get();
 	m_pCurrentState->OnEnter();
 }

@@ -36,8 +36,8 @@ private:
 	uint8_t m_CurrentFrame;
 	uint8_t m_NrOfFrames;
 	uint8_t m_FPS;
-	MoE::TextureRenderer* m_pRenderComponent;
 	float m_LastFrameTime;
+	MoE::TextureRenderer* m_pRenderComponent;
 	std::vector<SDL_Rect> m_SrcRects;
 
 };

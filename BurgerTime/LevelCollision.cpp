@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "LevelCollision.h"
+#include "Collisions.h"
 #include "ResourceManager.h"
 #include "GameObject.h"
 #include "SceneManager.h"
@@ -9,12 +10,33 @@
 #include "GameManager.h"
 #include "LevelManager.h"
 
+#if defined DEBUG || defined _DEBUG
+#include "Renderer.h"
+#endif
+
 using namespace MoE;
 
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }
 {
 	LoadCollision(collisionLoadPath);
+}
+
+void LevelCollision::Render() const
+{
+#if defined DEBUG || defined _DEBUG
+	Renderer& renderer{ Renderer::Get() };
+	renderer.SetCurrentDrawColor(MoE::Color{ 255, 0, 0, 255 });
+	for (auto& linex : m_LinesX)
+	{
+		renderer.RenderLine(linex);
+	}
+	renderer.SetCurrentDrawColor(MoE::Color{ 255, 255, 0, 255 });
+	for (auto& liney : m_LinesY)
+	{
+		renderer.RenderLine(liney);
+	}
+#endif
 }
 
 const glm::vec2& LevelCollision::GetStartPos() const
@@ -28,43 +50,40 @@ bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 	const glm::ivec2& hitbox{ moveHitBox };
 	const glm::vec2& playerPos{ player->GetOwner()->GetLocalPosition() };
 
-	Recti playerMoveCheckRect
+	Recti moveRect
 	{
 		static_cast<glm::ivec2>((playerPos + (static_cast<glm::vec2>(hitbox) * 0.5f)) - static_cast<float>(m_MoveOffset) * 0.5f),
 		glm::ivec2{ m_MoveOffset, m_MoveOffset }
 	};
 
+	glm::ivec2 start{};
+	Linei line{};
+
 	if (moveDir.x)
 	{
-		playerMoveCheckRect.pos.x = static_cast<int>(playerPos.x);
-		playerMoveCheckRect.size.x = hitbox.x;
-		const glm::ivec2 start
-		{ 
-			playerMoveCheckRect.pos.x + (moveDir.x > 0 ? playerMoveCheckRect.size.x : 0),
-			playerMoveCheckRect.pos.y
-		};
-		const Linei line
-		{
-			start,
-			start + glm::ivec2{ 0, playerMoveCheckRect.size.y }
-		};
+		moveRect.pos.x = static_cast<int>(playerPos.x);
+		moveRect.size.x = hitbox.x;
+		start = { moveRect.pos.x + (moveDir.x > 0 ? moveRect.size.x : 0), moveRect.pos.y };
+		line = Linei{ start, start + glm::ivec2{ 0, moveRect.size.y } };
 		return CanMoveX(line, player, hitbox);
 	}
 	else if (moveDir.y)
 	{
-		playerMoveCheckRect.pos.y = static_cast<int>(playerPos.y);
-		playerMoveCheckRect.size.y = hitbox.y;
-		const glm::ivec2 start
+		const MoE::Linei checkLine
 		{
-			playerMoveCheckRect.pos.x,
-			playerMoveCheckRect.pos.y + (moveDir.y > 0 ? playerMoveCheckRect.size.y : 0)
+			moveDir.y < 0 ? moveRect.pos : glm::ivec2{ moveRect.pos.x, moveRect.pos.y + moveRect.size.y },
+			glm::ivec2{ moveRect.pos.x + moveRect.size.x, moveRect.pos.y + (moveDir.y < 0 ? 0 : moveRect.size.y) }
 		};
-		const Linei line
-		{
-			start,
-			start + glm::ivec2{ playerMoveCheckRect.size.x, 0 }
-		};
-		return CanMoveY(line, player, hitbox);
+
+		Linei hitLine{};
+
+		if (!CanMoveY(checkLine, hitLine)) return false;
+
+		moveRect.pos.y = static_cast<int>(playerPos.y);
+		moveRect.size.y = hitbox.y;
+		start = { moveRect.pos.x, moveRect.pos.y + (moveDir.y > 0 ? moveRect.size.y : 0) };
+		line = Linei{ start, start + glm::ivec2{ moveRect.size.x, 0 } };
+		return CanMoveY(hitLine, line, player, hitbox);
 	}
 	return false;
 }
@@ -161,15 +180,15 @@ bool LevelCollision::CanMoveX(const Linei& leftOrRight, Player* player, const gl
 {
 	const glm::vec2& pos{ player->GetOwner()->GetLocalPosition() };
 
-	for (const auto& line : m_LinesX)
+	for (const Linei& linex : m_LinesX)
 	{
-		if (LineHitLine(leftOrRight, line))
+		if (Coll::LinesIntersecting(linex, leftOrRight))
 		{
 			player->GetOwner()->SetLocalPosition(
 				glm::vec2
 				{
 					pos.x,
-					static_cast<float>(line.pointOne.y) - static_cast<float>(hitbox.y) * 0.5f
+					static_cast<float>(linex.pointOne.y) - static_cast<float>(hitbox.y) * 0.5f
 				}
 			);
 			return true;
@@ -178,49 +197,59 @@ bool LevelCollision::CanMoveX(const Linei& leftOrRight, Player* player, const gl
 	return false;
 }
 
-bool LevelCollision::CanMoveY(const Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const
+bool LevelCollision::CanMoveY(const MoE::Linei& line, MoE::Linei& hitLine) const
+{
+	for (const Linei& liney : m_LinesY)
+	{
+		if (Coll::LinesIntersecting(liney, line))
+		{
+			hitLine = liney;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool LevelCollision::CanMoveY(const Linei& hitLine, const Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const
 {
 	const glm::vec2& pos{ player->GetOwner()->GetLocalPosition() };
 
-	for (const auto& line : m_LinesY)
+	if (Coll::LinesIntersecting(hitLine, topOrBot))
 	{
-		if (LineHitLine(topOrBot, line))
-		{
-			player->GetOwner()->SetLocalPosition(
-				glm::vec2
-				{ 
-					static_cast<float>(line.pointOne.x) - static_cast<float>(hitbox.x) * 0.5f,
-					pos.y 
-				}
-			);
-			return true;
-		}
+		player->GetOwner()->SetLocalPosition(
+			glm::vec2
+			{
+				static_cast<float>(hitLine.pointOne.x) - static_cast<float>(hitbox.x) * 0.5f,
+				pos.y
+			}
+		);
+		return true;
 	}
 	return false;
 }
 
-bool LevelCollision::LineHitLine(const Linei& firstLine, const Linei& secondLine) const
-{
-	const glm::ivec2& p1{ firstLine.pointOne };
-	const glm::ivec2& p2{ firstLine.pointTwo };
-	const glm::ivec2& p3{ secondLine.pointOne };
-	const glm::ivec2& p4{ secondLine.pointTwo };
-
-	const float denominator{ 1.f / static_cast<float>((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y)) };
-
-	const float uA
-	{
-		static_cast<float>((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x))
-		*
-		denominator
-	};
-
-	const float uB
-	{
-		static_cast<float>((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x))
-		*
-		denominator
-	};
-
-	return (uA >= 0.f && uA <= 1.f && uB >= 0.f && uB <= 1.f);
-}
+//bool LevelCollision::LineHitLine(const Linei& firstLine, const Linei& secondLine) const
+//{
+//	const glm::ivec2& p1{ firstLine.pointOne };
+//	const glm::ivec2& p2{ firstLine.pointTwo };
+//	const glm::ivec2& p3{ secondLine.pointOne };
+//	const glm::ivec2& p4{ secondLine.pointTwo };
+//
+//	const float denominator{ 1.f / static_cast<float>((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y)) };
+//
+//	const float uA
+//	{
+//		static_cast<float>((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x))
+//		*
+//		denominator
+//	};
+//
+//	const float uB
+//	{
+//		static_cast<float>((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x))
+//		*
+//		denominator
+//	};
+//
+//	return (uA >= 0.f && uA <= 1.f && uB >= 0.f && uB <= 1.f);
+//}

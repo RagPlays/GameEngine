@@ -18,11 +18,12 @@ public:
 	PlayerState& operator=(const PlayerState& other) = delete;
 	PlayerState& operator=(PlayerState&& other) noexcept = delete;
 
-	virtual void OnEnter() = 0;
-	virtual void OnExit() = 0;
-	virtual void FixedUpdate() = 0;
-	virtual void Update() = 0;
-	virtual void LateUpdate() = 0;
+	virtual void OnSceneStart() override{};
+	virtual void OnEnter() override{};
+	virtual void OnExit() override{};
+	virtual void FixedUpdate() override{};
+	virtual void Update() override{};
+	virtual void LateUpdate() override{};
 
 protected:
 

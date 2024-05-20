@@ -27,6 +27,8 @@ namespace MoE
 		TextureRenderer& operator=(const TextureRenderer& other) = delete;
 		TextureRenderer& operator=(TextureRenderer&& other) noexcept = delete;
 
+		virtual void Render() const override;
+
 		// Texture
 		void SetTexture(std::shared_ptr<Texture2D> texture);
 		void SetTexture(std::shared_ptr<Texture2D> texture, const glm::ivec2& dimentions);
@@ -50,10 +52,7 @@ namespace MoE
 		void SetSourceRect(int x, int y, int width, int height);
 		void SetSourceRect(const SDL_Rect& srcRect);
 
-		virtual void Render() const override;
-
 	private:
-
 
 		std::shared_ptr<Texture2D> m_Texture;
 		glm::ivec2 m_RenderDimensions;

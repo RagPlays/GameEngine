@@ -11,7 +11,7 @@ namespace MoE
 	{
 	public:
 
-		explicit Font(const std::string& filePath, size_t size);
+		explicit Font(const std::string& filePath, unsigned int size);
 		~Font();
 
 		Font(const Font& other) = delete;
@@ -20,6 +20,8 @@ namespace MoE
 		Font& operator=(Font&& other) noexcept = delete;
 
 		_TTF_Font* GetFont() const;
+
+		void SetFontSize(unsigned int size);
 
 	private:
 
