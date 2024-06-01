@@ -18,6 +18,11 @@ namespace MoE
 		), m_Observers.end());
 	}
 
+	Subject::Subject()
+		: m_Observers{}
+	{
+	}
+
 	void Subject::Notify(GameObject* gameObj, GameEvent gameEvent)
 	{
 		for (const auto& observer : m_Observers)

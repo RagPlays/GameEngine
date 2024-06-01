@@ -16,7 +16,7 @@ namespace MoE
 	{
 	public:
 
-		explicit GameObject(const std::string& tag = "Empty");
+		GameObject();
 		~GameObject();
 
 		GameObject(const GameObject& other) = delete;
@@ -101,30 +101,27 @@ namespace MoE
 
 		// Getters
 		bool IsDestroyed() const;
-		const std::string& GetTag() const;
-
-		// Setters
-		void SetTag(const std::string& tag);
 
 		// Other
-		bool CompareTag(const std::string& tag);
 		void Destroy();
 		static void Destroy(GameObject* gameObj);
 
 	private:
 
-		bool m_PositionIsDirty;
-		bool m_IsDestroyed;
-		std::string m_Tag;
+		void AddChild(GameObject* child);
+		void RemoveChild(GameObject* child);
+		void UpdateWorldPosition();
+
+	private:
+
 		Transform m_LocalTransform;
 		Transform m_WorldTransform;
 		std::vector<std::unique_ptr<Component>> m_Components;
 		std::vector<std::unique_ptr<GameObject>> m_Children;
 		GameObject* m_Parent;
+		bool m_PositionIsDirty;
+		bool m_IsDestroyed;
 
-		void AddChild(GameObject* child);
-		void RemoveChild(GameObject* child);
-		void UpdateWorldPosition();
 	};
 }
 

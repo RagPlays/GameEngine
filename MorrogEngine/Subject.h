@@ -21,7 +21,8 @@ namespace MoE
 
 	protected:
 
-		Subject() = default;
+		Subject();
+
 		void Notify(GameObject* gameObj, GameEvent gameEvent);
 
 	private:

@@ -53,6 +53,7 @@ namespace MoE
 	EventQueue::EventQueue()
 		: m_Head{ 0 }
 		, m_Tail{ 0 }
+		, m_Handlers{}
 		, m_Events{}
 	{
 	}

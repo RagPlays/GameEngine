@@ -14,16 +14,10 @@ namespace MoE
 
 	Texture2D::Texture2D(SDL_Texture* const texture)
 		: m_pTexture{ texture }
-		, m_Size{ 0, 0 }
+		, m_Size{}
 	{
-		if (!m_pTexture)
-		{
-			std::cerr << "ERROR::TEXTURE2D::COULD_NOT_LOAD_TEXTURE2D_FROM_FILE\n";
-		}
-		else
-		{
-			SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_Size.x, &m_Size.y);
-		}
+		if (!m_pTexture) std::cerr << "ERROR::TEXTURE2D::COULD_NOT_LOAD_TEXTURE2D_FROM_FILE\n";
+		else SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_Size.x, &m_Size.y);
 	}
 
 	Texture2D::~Texture2D()

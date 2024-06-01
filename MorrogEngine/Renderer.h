@@ -49,17 +49,16 @@ namespace MoE
 		void RenderTexture(const Texture2D& texture, const SDL_FRect& destRect, const SDL_Rect& srcRect) const;
 		void RenderTexture(const Texture2D& texture, const SDL_Rect& destRect, const SDL_Rect& srcRect, SDL_RendererFlip flip) const;
 
-		void RenderPoint(const Point2f& point);
-		void RenderPoint(const Point2i& point);
+		void RenderPoint(const Point2f& point) const;
+		void RenderPoint(const Point2i& point) const;
 
-		void RenderLine(const Linef& line);
-		void RenderLine(const Linei& line);
+		void RenderLine(const Linef& line) const;
+		void RenderLine(const Linei& line) const;
 
-		void RenderRect(const Rectf& rect, bool filled);
-		void RenderRect(const Recti& rect, bool filled);
+		void RenderRect(const Rectf& rect, bool filled = false) const;
+		void RenderRect(const Recti& rect, bool filled = false) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
-		//SDL_Surface* GetSDLSurface() const;
 
 	private:
 
@@ -81,6 +80,7 @@ namespace MoE
 
 		Color m_BackgroundColor;
 		Color m_CurrentDrawColor;
+
 	};
 }
 

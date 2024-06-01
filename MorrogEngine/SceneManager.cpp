@@ -59,12 +59,13 @@ namespace MoE
 
 	void SceneManager::SetCurrentSceneByIndex(uint8_t idx)
 	{
-		if (idx >= m_Scenes.size())
+		if (static_cast<size_t>(idx) >= m_Scenes.size())
 		{
 			assert(false);
 			std::cerr << "ERROR::SCENEMANAGER::SCENE_IDX_NOT_VALID\n";
 		}
 		m_ToSceneIdx = idx;
+		m_NeedSceneChange = true;
 	}
 
 	void SceneManager::SetCurrentSceneByName(const std::string& name)
@@ -73,21 +74,20 @@ namespace MoE
 		{
 			if (m_Scenes[idx]->GetName() == name)
 			{
-				SetCurrentSceneByIndex(static_cast<uint8_t>(idx));
-				return;
+				return SetCurrentSceneByIndex(static_cast<uint8_t>(idx));
 			}
 		}
 		std::cerr << "ERROR::SCENEMANAGER::SCENE_NAME_NOT_VALID\n";
 	}
 
+	void SceneManager::ReloadScene()
+	{
+		m_NeedSceneChange = true;
+	}
+
 	void SceneManager::GoNextScene()
 	{
-		if (static_cast<size_t>(m_CurrentSceneIdx + 1) >= m_Scenes.size())
-		{
-			assert(false);
-			std::cerr << "ERROR::SCENEMANAGER::SCENE_IDX_NOT_VALID\n";
-		}
-		m_ToSceneIdx = m_CurrentSceneIdx + 1;
+		SetCurrentSceneByIndex(m_CurrentSceneIdx + 1);
 	}
 
 	Scene& SceneManager::GetCurrentScene() const
@@ -103,27 +103,33 @@ namespace MoE
 	// Private Functions //
 
 	SceneManager::SceneManager()
-		: m_CurrentSceneIdx{ 255 }
-		, m_ToSceneIdx{ 0 }
+		: m_NeedSceneChange{ true }
+		, m_ToSceneIdx{}
+		, m_CurrentSceneIdx{ 255 }
+		, m_Scenes{}
 	{
 		m_Scenes.clear();
 	}
 
 	void SceneManager::CheckSceneSwap()
 	{
-		if (m_ToSceneIdx != m_CurrentSceneIdx)
+		if (!m_NeedSceneChange) return;
+
+		if (m_CurrentSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
 		{
-			if (m_CurrentSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
+			if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
 			{
-				if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
-				{
-					m_Scenes[m_CurrentSceneIdx]->SceneEnd();
-					m_Scenes[m_CurrentSceneIdx]->UnLoad();
-				}
+				m_Scenes[m_CurrentSceneIdx]->SceneEnd();
+				m_Scenes[m_CurrentSceneIdx]->UnLoad();
 			}
+		}
+		if (m_ToSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
+		{
 			m_CurrentSceneIdx = m_ToSceneIdx;
 			m_Scenes[m_ToSceneIdx]->Load();
 			m_Scenes[m_ToSceneIdx]->SceneStart();
 		}
+		else m_ToSceneIdx = m_CurrentSceneIdx;
+		m_NeedSceneChange = false;
 	}
 }

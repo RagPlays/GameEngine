@@ -23,6 +23,7 @@ namespace MoE
 	public:
 
 		virtual ~InputManager();
+
 		InputManager(const InputManager& other) = delete;
 		InputManager(InputManager&& other) noexcept = delete;
 		InputManager& operator=(const InputManager& other) = delete;

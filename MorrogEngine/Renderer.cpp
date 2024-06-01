@@ -99,34 +99,34 @@ namespace MoE
 	}
 
 	// Render Shapes
-	void Renderer::RenderPoint(const Point2f& point)
+	void Renderer::RenderPoint(const Point2f& point) const
 	{
 		SDL_RenderDrawPointF(m_pRenderer, point.x, point.y);
 	}
 
-	void Renderer::RenderPoint(const Point2i& point)
+	void Renderer::RenderPoint(const Point2i& point) const
 	{
 		SDL_RenderDrawPoint(m_pRenderer, point.x, point.y);
 	}
 
-	void Renderer::RenderLine(const Linef& line)
+	void Renderer::RenderLine(const Linef& line) const
 	{
 		SDL_RenderDrawLineF(m_pRenderer, line.pointOne.x, line.pointOne.y, line.pointTwo.x, line.pointTwo.y);
 	}
 
-	void Renderer::RenderLine(const Linei& line)
+	void Renderer::RenderLine(const Linei& line) const
 	{
 		SDL_RenderDrawLine(m_pRenderer, line.pointOne.x, line.pointOne.y, line.pointTwo.x, line.pointTwo.y);
 	}
 
-	void Renderer::RenderRect(const Rectf& rect, bool filled)
+	void Renderer::RenderRect(const Rectf& rect, bool filled) const
 	{
 		const SDL_FRect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
 		if (filled) SDL_RenderFillRectF(m_pRenderer, &sdlRect);
 		else SDL_RenderDrawRectF(m_pRenderer, &sdlRect);
 	}
 
-	void Renderer::RenderRect(const Recti& rect, bool filled)
+	void Renderer::RenderRect(const Recti& rect, bool filled) const
 	{
 		const SDL_Rect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
 		if (filled) SDL_RenderFillRect(m_pRenderer, &sdlRect);
@@ -138,11 +138,6 @@ namespace MoE
 	{
 		return m_pRenderer;
 	}
-
-	/*SDL_Surface* Renderer::GetSDLSurface() const
-	{
-		return SDL_GetWindowSurface(m_pWindow);
-	}*/
 
 	// Private Functions //
 

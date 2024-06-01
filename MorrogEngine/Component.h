@@ -27,7 +27,7 @@ namespace MoE
 		virtual void SceneEnd();
 
 		GameObject* const GetOwner() const;
-		GameObject* GetParent() const;
+		GameObject* const GetParent() const;
 
 	protected:
 

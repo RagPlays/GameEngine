@@ -3,15 +3,14 @@
 
 namespace MoE
 {
-	GameObject::GameObject(const std::string& tag)
-		: m_PositionIsDirty{ true }
-		, m_IsDestroyed{ false }
-		, m_Tag{ tag }
-		, m_LocalTransform{}
+	GameObject::GameObject()
+		: m_LocalTransform{}
 		, m_WorldTransform{}
 		, m_Components{}
 		, m_Children{}
 		, m_Parent{}
+		, m_PositionIsDirty{}
+		, m_IsDestroyed{}
 	{
 		m_Components.clear();
 		m_Children.clear();
@@ -209,23 +208,6 @@ namespace MoE
 	bool GameObject::IsDestroyed() const
 	{
 		return m_IsDestroyed;
-	}
-
-	const std::string& GameObject::GetTag() const
-	{
-		return m_Tag;
-	}
-
-	// Setters
-	void GameObject::SetTag(const std::string& tag)
-	{
-		m_Tag = tag;
-	}
-
-	// Other
-	bool GameObject::CompareTag(const std::string& tag)
-	{
-		return m_Tag == tag;
 	}
 
 	void GameObject::Destroy()

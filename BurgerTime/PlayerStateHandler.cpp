@@ -30,10 +30,10 @@ void PlayerStateHandler::SceneStart()
 		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
 	}
 
-	m_WalkState->OnSceneStart();
-	m_AttackState->OnSceneStart();
-	m_WinState->OnSceneStart();
-	m_DieState->OnSceneStart();
+	m_WalkState->SceneStart();
+	m_AttackState->SceneStart();
+	m_WinState->SceneStart();
+	m_DieState->SceneStart();
 
 	m_pCurrentState = m_WalkState.get();
 	m_pCurrentState->OnEnter();

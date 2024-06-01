@@ -16,9 +16,12 @@ public:
 	explicit LevelCollision(MoE::GameObject* const owner, const std::string& collisionLoadPath);
 	virtual ~LevelCollision() = default;
 
+#if defined _DEBUG || defined DEBUG
 	virtual void Render() const override;
+#endif
 
 	const glm::vec2& GetStartPos() const;
+	int GetMoveOffset() const;
 
 	bool CanMove(Player* player, const glm::ivec2& moveHitBox);
 
@@ -29,7 +32,6 @@ private:
 	bool CanMoveX(const MoE::Linei& leftOrRight, Player* player, const glm::ivec2& hitbox) const;
 	bool CanMoveY(const MoE::Linei& line, MoE::Linei& hitLine) const;
 	bool CanMoveY(const MoE::Linei& hitLine, const MoE::Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const;
-	//bool LineHitLine(const MoE::Linei& firstLine, const MoE::Linei& secondLine) const;
 
 private:
 

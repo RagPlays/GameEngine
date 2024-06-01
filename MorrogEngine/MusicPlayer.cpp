@@ -7,9 +7,9 @@
 namespace MoE
 {
 	MusicPlayer::MusicPlayer(const std::string& filePath)
-		: m_IsLoaded{ false }
+		: m_IsLoaded{ }
 		, m_FilePath{ filePath }
-		, m_pMusic{ nullptr }
+		, m_pMusic{}
 	{
 	}
 

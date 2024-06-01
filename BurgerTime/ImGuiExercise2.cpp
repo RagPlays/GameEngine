@@ -3,8 +3,15 @@
 
 ImGuiExercise2::ImGuiExercise2()
 	: m_SampleSize{ 10 }
-	, m_LoadingGameObj3D{ false }
-	, m_LoadingGameObj3DAlt{ false }
+	, m_LoadingGameObj3D{}
+	, m_LoadingGameObj3DAlt{}
+	, m_PlotConfigGameObj3D{}
+	, m_PlotConfigGameObj3DAlt{}
+	, m_PlotConfigCombined{}
+	, m_XData3D{}
+	, m_YData3D{}
+	, m_XData3DAlt{}
+	, m_YData3DAlt{}
 {
 	// setting defaults
 	m_PlotConfigGameObj3D.line_thickness = 2.f;

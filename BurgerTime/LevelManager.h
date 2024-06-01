@@ -13,7 +13,7 @@ class LevelManager final : public MoE::Singleton<LevelManager>
 {
 public:
 
-	~LevelManager() = default;
+	virtual ~LevelManager() = default;
 
 	void RegisterLevel(Level* level);
 	void UnRegisterLevel(Level* level);

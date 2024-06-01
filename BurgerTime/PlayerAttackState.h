@@ -15,13 +15,12 @@ public:
 	PlayerAttackState& operator=(const PlayerAttackState& other) = delete;
 	PlayerAttackState& operator=(PlayerAttackState&& other) noexcept = delete;
 
+	virtual void SceneStart() override;
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void LateUpdate() override;
-
-private:
 
 };
 

@@ -8,9 +8,10 @@
 namespace MoE
 {
 	Scene::Scene(const std::string& name, std::function<void(Scene&)> loadFunc)
-		: m_Name(name)
+		: m_IsLoaded{}
 		, m_LoadFunction{ std::move(loadFunc) }
-		, m_IsLoaded{ false }
+		, m_Name{ name }
+		, m_Objects{}
 	{
 	}
 

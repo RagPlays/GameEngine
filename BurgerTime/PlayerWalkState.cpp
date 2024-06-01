@@ -10,20 +10,24 @@
 
 PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
-	, m_pRenderComp{ nullptr }
+	, m_pRenderComp{}
+	, m_MovementSpeed{ glm::ivec2{42, 22} * GameManager::Get().GetGameScale() }
 	, m_PreviousDir{}
-	, m_pCurrentAnimation{ nullptr }
-	, m_MovementSpeed{ 42, 22 }
-{  
-	const int tileSize{ LevelManager::Get().GetTileSize() };
-	const int gameScale{ GameManager::Get().GetGameScale() };
-	m_MovementSpeed *= gameScale;
-	m_HitBoxSize = glm::ivec2{ gameScale * tileSize, gameScale * tileSize };
+	, m_HitBoxSize
+	{ 
+		GameManager::Get().GetGameScale() * LevelManager::Get().GetTileSize(),
+		GameManager::Get().GetGameScale()* LevelManager::Get().GetTileSize()
+	}
+	, m_pCurrentAnimation{}
+	, m_UpAnimation{}
+	, m_DownAnimation{}
+	, m_SidewayAnimation{}
+{
 }
 
 PlayerWalkState::~PlayerWalkState() = default;
 
-void PlayerWalkState::OnSceneStart()
+void PlayerWalkState::SceneStart()
 {
 	if (MoE::TextureRenderer * pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::TextureRenderer>() })
 	{
@@ -58,7 +62,11 @@ void PlayerWalkState::FixedUpdate()
 
 void PlayerWalkState::Update()
 {
+	// Animations
 	UpdateAnimation();
+
+	// Update Other State
+	UpdateStateChange();
 }
 
 // Private //
@@ -68,27 +76,27 @@ void PlayerWalkState::InitAnimations()
 	constexpr int tileSize{ 16 };
 	// UP
 	m_UpAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect up1Rect{ 1 * tileSize, 1 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect up2Rect{ 2 * tileSize, 1 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect up3Rect{ 0 * tileSize, 1 * tileSize, 1 * tileSize, 1 * tileSize };
+	SDL_Rect up1Rect{ 1 * tileSize, 1 * tileSize, tileSize, tileSize };
+	SDL_Rect up2Rect{ 2 * tileSize, 1 * tileSize, tileSize, tileSize };
+	SDL_Rect up3Rect{ 0 * tileSize, 1 * tileSize, tileSize, tileSize };
 	m_UpAnimation->AddFrame(up1Rect);
 	m_UpAnimation->AddFrame(up2Rect);
 	m_UpAnimation->AddFrame(up3Rect);
 
 	// DOWN
 	m_DownAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect down1Rect{ 1 * tileSize, 0 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect down2Rect{ 2 * tileSize, 0 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect down3Rect{ 0 * tileSize, 0 * tileSize, 1 * tileSize, 1 * tileSize };
+	SDL_Rect down1Rect{ 1 * tileSize, 0 * tileSize, tileSize, tileSize };
+	SDL_Rect down2Rect{ 2 * tileSize, 0 * tileSize, tileSize, tileSize };
+	SDL_Rect down3Rect{ 0 * tileSize, 0 * tileSize, tileSize, tileSize };
 	m_DownAnimation->AddFrame(down1Rect);
 	m_DownAnimation->AddFrame(down2Rect);
 	m_DownAnimation->AddFrame(down3Rect);
 
 	// SIDEWAY
 	m_SidewayAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect side1Rect{ 1 * tileSize, 2 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect side2Rect{ 2 * tileSize, 2 * tileSize, 1 * tileSize, 1 * tileSize };
-	SDL_Rect side3Rect{ 0 * tileSize, 2 * tileSize, 1 * tileSize, 1 * tileSize };
+	SDL_Rect side1Rect{ 1 * tileSize, 2 * tileSize, tileSize, tileSize };
+	SDL_Rect side2Rect{ 2 * tileSize, 2 * tileSize, tileSize, tileSize };
+	SDL_Rect side3Rect{ 0 * tileSize, 2 * tileSize, tileSize, tileSize };
 	m_SidewayAnimation->AddFrame(side1Rect);
 	m_SidewayAnimation->AddFrame(side2Rect);
 	m_SidewayAnimation->AddFrame(side3Rect);
@@ -114,7 +122,6 @@ void PlayerWalkState::ChangeAnimation()
 void PlayerWalkState::SetAnimation(Animation* animation, bool flipped)
 {
 	if (!animation) return;
-
 	if(m_pCurrentAnimation) m_pCurrentAnimation->Stop();
 	m_pCurrentAnimation = animation;
 	m_pCurrentAnimation->Play();
@@ -152,4 +159,22 @@ void PlayerWalkState::UpdateAnimation()
 {
 	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
 	if (m_pCurrentAnimation) m_pCurrentAnimation->Update();
+}
+
+void PlayerWalkState::UpdateStateChange()
+{
+	if (m_pPlayer->IsDead())
+	{
+		m_pHandler->SetDieState();
+	}
+	else if (m_pPlayer->IsAttacking())
+	{
+		m_pHandler->SetAttackState();
+	}
+
+	// check if won
+	/*if (won)
+	{
+		m_pHandler->SetWinState();
+	}*/
 }

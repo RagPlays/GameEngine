@@ -73,12 +73,12 @@ LevelCollision* LevelManager::GetCollision()
 }
 
 LevelManager::LevelManager()
-    : m_pCurrentLevel{ nullptr }
-    , m_pCurrentLevelRenderer{ nullptr }
-    , m_pCurrentLevelCollision{ nullptr }
-    , m_CurrentLevel{ 0 }
+    : m_CurrentLevel{}
     , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }
+    , m_pCurrentLevel{}
+    , m_pCurrentLevelRenderer{}
+    , m_pCurrentLevelCollision{}
 {
     assert(m_NrLevelsCount);
 }

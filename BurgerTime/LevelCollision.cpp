@@ -18,13 +18,17 @@ using namespace MoE;
 
 LevelCollision::LevelCollision(GameObject* const owner, const std::string& collisionLoadPath)
 	: Component{ owner }
+	, m_MoveOffset{}
+	, m_StartPos{}
+	, m_LinesX{}
+	, m_LinesY{}
 {
 	LoadCollision(collisionLoadPath);
 }
 
+#if defined _DEBUG || defined DEBUG
 void LevelCollision::Render() const
 {
-#if defined DEBUG || defined _DEBUG
 	Renderer& renderer{ Renderer::Get() };
 	renderer.SetCurrentDrawColor(MoE::Color{ 255, 0, 0, 255 });
 	for (auto& linex : m_LinesX)
@@ -36,12 +40,17 @@ void LevelCollision::Render() const
 	{
 		renderer.RenderLine(liney);
 	}
-#endif
 }
+#endif
 
 const glm::vec2& LevelCollision::GetStartPos() const
 {
 	return m_StartPos;
+}
+
+int LevelCollision::GetMoveOffset() const
+{
+	return m_MoveOffset;
 }
 
 bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
@@ -63,7 +72,7 @@ bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 	{
 		moveRect.pos.x = static_cast<int>(playerPos.x);
 		moveRect.size.x = hitbox.x;
-		start = { moveRect.pos.x + (moveDir.x > 0 ? moveRect.size.x : 0), moveRect.pos.y };
+		start = glm::ivec2{ moveRect.pos.x + (moveDir.x > 0 ? moveRect.size.x : 0), moveRect.pos.y };
 		line = Linei{ start, start + glm::ivec2{ 0, moveRect.size.y } };
 		return CanMoveX(line, player, hitbox);
 	}
@@ -77,13 +86,14 @@ bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 
 		Linei hitLine{};
 
-		if (!CanMoveY(checkLine, hitLine)) return false;
-
-		moveRect.pos.y = static_cast<int>(playerPos.y);
-		moveRect.size.y = hitbox.y;
-		start = { moveRect.pos.x, moveRect.pos.y + (moveDir.y > 0 ? moveRect.size.y : 0) };
-		line = Linei{ start, start + glm::ivec2{ moveRect.size.x, 0 } };
-		return CanMoveY(hitLine, line, player, hitbox);
+		if (CanMoveY(checkLine, hitLine))
+		{
+			moveRect.pos.y = static_cast<int>(playerPos.y);
+			moveRect.size.y = hitbox.y;
+			start = glm::ivec2{ moveRect.pos.x, moveRect.pos.y + (moveDir.y > 0 ? moveRect.size.y : 0) };
+			line = Linei{ start, start + glm::ivec2{ moveRect.size.x, 0 } };
+			return CanMoveY(hitLine, line, player, hitbox);
+		}
 	}
 	return false;
 }
@@ -126,7 +136,8 @@ void LevelCollision::LoadCollision(const std::string& filePath)
 
 		if (inFile >> startTileX >> startTileY >> approximateLineXSize >> approximateLineYSize >> moveOffset)
 		{
-			tileSize = static_cast<int>(LevelManager::Get().GetTileSize() * GameManager::Get().GetGameScale());
+			const int scale{ GameManager::Get().GetGameScale() };
+			tileSize = static_cast<int>(LevelManager::Get().GetTileSize()) * scale;
 			m_StartPos = glm::vec2
 			{
 				startTileX * static_cast<float>(tileSize),
@@ -227,29 +238,3 @@ bool LevelCollision::CanMoveY(const Linei& hitLine, const Linei& topOrBot, Playe
 	}
 	return false;
 }
-
-//bool LevelCollision::LineHitLine(const Linei& firstLine, const Linei& secondLine) const
-//{
-//	const glm::ivec2& p1{ firstLine.pointOne };
-//	const glm::ivec2& p2{ firstLine.pointTwo };
-//	const glm::ivec2& p3{ secondLine.pointOne };
-//	const glm::ivec2& p4{ secondLine.pointTwo };
-//
-//	const float denominator{ 1.f / static_cast<float>((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y)) };
-//
-//	const float uA
-//	{
-//		static_cast<float>((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x))
-//		*
-//		denominator
-//	};
-//
-//	const float uB
-//	{
-//		static_cast<float>((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x))
-//		*
-//		denominator
-//	};
-//
-//	return (uA >= 0.f && uA <= 1.f && uB >= 0.f && uB <= 1.f);
-//}

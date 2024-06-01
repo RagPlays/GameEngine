@@ -65,8 +65,8 @@ namespace MoE
 	public:
 
 		explicit LoggingSoundSystem(std::unique_ptr<SoundSystem>&& soundSystem)
+			: m_RealSS{ std::move(soundSystem) }
 		{
-			m_RealSS = std::move(soundSystem);
 		}
 		virtual ~LoggingSoundSystem() = default;
 

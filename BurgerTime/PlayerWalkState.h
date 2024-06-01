@@ -23,7 +23,7 @@ public:
 	PlayerWalkState& operator=(const PlayerWalkState& other) = delete;
 	PlayerWalkState& operator=(PlayerWalkState&& other) noexcept = delete;
 
-	virtual void OnSceneStart() override;
+	virtual void SceneStart() override;
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual void FixedUpdate() override;
@@ -37,6 +37,7 @@ private:
 
 	void UpdateMovement();
 	void UpdateAnimation();
+	void UpdateStateChange();
 
 private:
 
@@ -44,9 +45,9 @@ private:
 	MoE::TextureRenderer* m_pRenderComp;
 
 	// Movement
-	glm::ivec2 m_MovementSpeed;
+	const glm::ivec2 m_MovementSpeed;
 	glm::ivec2 m_PreviousDir;
-	glm::ivec2 m_HitBoxSize;
+	const glm::ivec2 m_HitBoxSize;
 
 	// Animations
 	Animation* m_pCurrentAnimation;

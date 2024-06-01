@@ -4,9 +4,9 @@ using namespace MoE;
 
 HealthComponent::HealthComponent(GameObject* const owner, float maxHealth)
 	: Component{ owner }
+	, m_IsDead{ false }
 	, m_CurrentHealth{ maxHealth }
 	, m_MaxHealth{ maxHealth }
-	, m_IsDead{ false }
 {
 }
 

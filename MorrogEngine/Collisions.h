@@ -39,8 +39,6 @@ namespace MoE
 
 			const float denominator{ 1.f / static_cast<float>(p4y_p3y * p2x_p1x - p4x_p3x * p2y_p1y) };
 
-			if (denominator == 0.f) return false;
-
 			const float uA{ static_cast<float>(p4x_p3x * p1y_p3y - p4y_p3y * p1x_p3x) * denominator };
 			const float uB{ static_cast<float>(p2x_p1x * p1y_p3y - p2y_p1y * p1x_p3x) * denominator };
 

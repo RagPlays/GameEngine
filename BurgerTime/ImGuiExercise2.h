@@ -8,7 +8,7 @@ class ImGuiExercise2 final : public MoE::ImGuiComponent
 public:
 
 	ImGuiExercise2();
-	~ImGuiExercise2() = default;
+	virtual ~ImGuiExercise2() = default;
 
 	ImGuiExercise2(const ImGuiExercise2& other) = delete;
 	ImGuiExercise2(ImGuiExercise2&& other) noexcept = delete;

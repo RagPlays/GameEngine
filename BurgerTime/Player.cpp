@@ -5,10 +5,17 @@
 #include "GameObject.h"
 #include "EventQueue.h"
 #include "GameEvents.h"
-#include "PlayerMovement.h"
 #include "TextureRenderer.h"
 #include "LevelManager.h"
 #include "LevelCollision.h"
+
+#if  defined _DEBUG || defined DEBUG
+#include "GameManager.h"
+#include "Renderer.h"
+#include "LevelCollision.h"
+#endif
+
+using namespace MoE;
 
 unsigned int Player::s_PlayerCount{ 0 };
 
@@ -17,7 +24,9 @@ Player::Player(MoE::GameObject* const owner)
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
 	, m_MovementDir{}
-	, m_pRenderComponent{ nullptr }
+	, m_IsDead{}
+	, m_IsAttacking{}
+	, m_pRenderComponent{}
 {
 }
 
@@ -46,6 +55,33 @@ void Player::SceneStart()
 	Notify(GetOwner(), MoE::GameEvent::playerJoined);
 }
 
+#if  defined _DEBUG || defined DEBUG
+void Player::Render() const
+{
+	const int tileSize{ LevelManager::Get().GetTileSize() };
+	const int gameScale{ GameManager::Get().GetGameScale() };
+	const glm::ivec2 hitBox{ glm::ivec2{ gameScale * tileSize, gameScale * tileSize } };
+	const glm::vec2& position{ GetOwner()->GetLocalPosition() };
+
+	MoE::Renderer& renderer{ MoE::Renderer::Get() };
+
+	renderer.SetCurrentDrawColor(Color{ 255, 0, 255 });
+	renderer.RenderRect(Rectf{ position, static_cast<glm::vec2>(hitBox) });
+
+	if (LevelCollision * coll{ LevelManager::Get().GetCollision() })
+	{
+		const int moveOffset{ coll->GetMoveOffset() };
+		Recti moveRect
+		{
+			static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(hitBox) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
+			glm::ivec2{ moveOffset, moveOffset }
+		};
+		renderer.SetCurrentDrawColor(Color{ 0, 255, 0 });
+		renderer.RenderRect(moveRect);
+	}
+}
+#endif
+
 void Player::Move(const glm::ivec2& dir)
 {
 	m_MovementDir = dir;
@@ -66,6 +102,28 @@ void Player::Stop(const glm::ivec2& dir)
 const glm::ivec2& Player::GetMoveDir() const
 {
 	return m_MovementDir;
+}
+
+void Player::Kill()
+{
+	if (m_IsDead) return;
+	m_IsDead = true;
+	Notify(GetOwner(), MoE::GameEvent::playerDied);
+}
+
+bool Player::IsDead() const
+{
+	return m_IsDead;
+}
+
+void Player::Attack()
+{
+	m_IsAttacking = true;
+}
+
+bool Player::IsAttacking() const
+{
+	return m_IsAttacking;
 }
 
 int Player::GetPlayerIdx() const

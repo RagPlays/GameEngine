@@ -16,6 +16,7 @@ namespace MoE
 	public:
 
 		virtual ~ImGuiRenderer();
+
 		ImGuiRenderer(const ImGuiRenderer& other) = delete;
 		ImGuiRenderer(ImGuiRenderer&& other) noexcept = delete;
 		ImGuiRenderer& operator=(const ImGuiRenderer& other) = delete;

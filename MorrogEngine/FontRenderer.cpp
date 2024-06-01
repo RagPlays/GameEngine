@@ -18,10 +18,11 @@ namespace MoE
 
 	FontRenderer::FontRenderer(GameObject* const owner, std::shared_ptr<Font> font, const std::string& text)
 		: Component{ owner }
-		, m_Font{ font }
 		, m_Text{ text }
 		, m_TextColor{ 255, 255, 255, 255 }
-		, m_RenderForQuality{ false }
+		, m_RenderForQuality{}
+		, m_Font{ font }
+		, m_FontTexture{}
 	{
 		RemakeFontTexture();
 	}
@@ -108,12 +109,10 @@ namespace MoE
 		SDL_Texture* texture{ SDL_CreateTextureFromSurface(Renderer::Get().GetSDLRenderer(), surface) };
 		if (!texture)
 		{
+			SDL_FreeSurface(surface);
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
-		else
-		{
-			m_FontTexture = std::make_unique<Texture2D>(texture);
-		}
+		m_FontTexture = std::make_unique<Texture2D>(texture);
 		
 		SDL_FreeSurface(surface);
 	}

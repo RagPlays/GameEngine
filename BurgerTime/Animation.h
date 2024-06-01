@@ -27,7 +27,7 @@ public:
 	void AddFrame(const SDL_Rect& srcRect);
 
 	void Play();
-	void Update();
+	bool Update();
 	void Stop(bool reset = true);
 
 private:

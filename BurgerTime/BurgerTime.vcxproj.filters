@@ -60,9 +60,6 @@
     <ClCompile Include="LevelCollision.cpp">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovement.cpp">
-      <Filter>GameSourceFile\GameComponents\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="ReloadSceneCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     <ClInclude Include="LevelCollision.h">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerMovement.h">
-      <Filter>GameSourceFile\GameComponents\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClInclude>
@@ -175,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="KillPlayerCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -53,8 +53,13 @@ namespace MoE
 	};
 
 	SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
-		: m_SoundThreadRunning{ true }
-	, m_SoundThread{ std::jthread{[this] { this->HandleEvents(); }} }
+		: m_SoundEffects{}
+		, m_Music{}
+		, m_Queue{}
+		, m_SoundThreadRunning{ true }
+		, m_ConditionToRun{}
+		, m_Mutex{}
+		, m_SoundThread{ std::jthread{[this] { this->HandleEvents(); }} }
 	{
 		m_SoundEffects.clear();
 		m_Music.clear();
@@ -69,7 +74,6 @@ namespace MoE
 			m_SoundThread.join();
 		}
 
-		// delete all sounds
 		m_SoundEffects.clear();
 		m_Music.clear();
 	}

@@ -33,7 +33,10 @@ namespace MoE
 
 	// Private //
 
-	ImGuiRenderer::ImGuiRenderer() = default;
+	ImGuiRenderer::ImGuiRenderer()
+		: m_ImGuiComponents{}
+	{
+	}
 
 	void ImGuiRenderer::StartImGuiRender()
 	{

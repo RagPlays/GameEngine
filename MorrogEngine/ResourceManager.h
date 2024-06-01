@@ -36,7 +36,7 @@ namespace MoE
 	private:
 
 		friend class MoE::Singleton<ResourceManager>;
-		ResourceManager() = default;
+		ResourceManager();
 
 	private:
 

@@ -9,7 +9,7 @@ class NextLevelCommand final : public MoE::Command
 public:
 
 	NextLevelCommand() = default;
-	~NextLevelCommand() = default;
+	virtual ~NextLevelCommand() = default;
 
 	NextLevelCommand(const NextLevelCommand& other) = delete;
 	NextLevelCommand(NextLevelCommand&& other) noexcept = delete;

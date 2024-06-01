@@ -5,6 +5,9 @@
 ImGuiExercise1::ImGuiExercise1()
 	: m_SampleSize{ 10 }
 	, m_IsLoading{ false }
+	, m_PlotConfig{}
+	, m_XData{}
+	, m_YData{}
 {
 	m_XData.clear();
 	m_YData.clear();

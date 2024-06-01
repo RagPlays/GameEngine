@@ -41,7 +41,7 @@ namespace MoE
 
 	private:
 
-		const float m_FixedTimeStep;
+		static const float s_FixedTimeStep;
 		int m_MonitorRefreshRate;
 		int m_MillSecPerFrame;
 		float m_Lag;

@@ -25,11 +25,19 @@ public:
 	
 	// Overrides
 	virtual void SceneStart() override;
+#if defined _DEBUG || defined DEBUG
+	virtual void Render() const override;
+#endif
 
 	// Movement
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
 	const glm::ivec2& GetMoveDir() const;
+
+	void Kill();
+	bool IsDead() const;
+	void Attack();
+	bool IsAttacking() const;
 
 	// Player Info
 	int GetPlayerIdx() const;
@@ -45,6 +53,9 @@ private:
 
 	// Movement
 	glm::ivec2 m_MovementDir;
+	
+	bool m_IsDead;
+	bool m_IsAttacking;
 
 	// Player Components
 	MoE::TextureRenderer* m_pRenderComponent;

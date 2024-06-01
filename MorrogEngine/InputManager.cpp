@@ -102,9 +102,10 @@ namespace MoE
 	// Private Functions //
 
 	InputManager::InputManager()
-		: m_HasQuit{ false }
-		, m_Event{ SDL_Event{} }
+		: m_Event{}
+		, m_HasQuit{}
 		, m_KeyboardMouse{ std::make_unique<KeyboardMouse>() }
+		, m_Controllers{}
 	{
 	}
 

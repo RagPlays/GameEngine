@@ -5,9 +5,11 @@
 
 namespace MoE
 {
+	const float Timer::s_FixedTimeStep{ 0.02f };
+
 	void Timer::Update()
 	{
-		auto now{ std::chrono::high_resolution_clock::now() };
+		const auto now{ std::chrono::high_resolution_clock::now() };
 		m_ElapsedSec = std::chrono::duration<float>(now - m_LastTime).count();
 		m_LastTime = now;
 		m_Lag += m_ElapsedSec;
@@ -21,10 +23,8 @@ namespace MoE
 		{
 			m_LastTime + std::chrono::milliseconds(m_MillSecPerFrame) - std::chrono::high_resolution_clock::now() 
 		};
-		if (sleeptime > std::chrono::nanoseconds::zero())
-		{
-			std::this_thread::sleep_for(sleeptime);
-		}
+
+		if (sleeptime > std::chrono::nanoseconds::zero()) std::this_thread::sleep_for(sleeptime);
 	}
 
 	float Timer::GetElapsedSec() const
@@ -34,7 +34,7 @@ namespace MoE
 
 	float Timer::GetFixedElapsedSec() const
 	{
-		return m_FixedTimeStep;
+		return s_FixedTimeStep;
 	}
 
 	float Timer::GetFPS() const
@@ -44,9 +44,9 @@ namespace MoE
 
 	bool Timer::GetNeedFixedUpdate()
 	{
-		if (m_Lag >= m_FixedTimeStep)
+		if (m_Lag >= s_FixedTimeStep)
 		{
-			m_Lag -= m_FixedTimeStep;
+			m_Lag -= s_FixedTimeStep;
 			return true;
 		}
 		return false;
@@ -88,12 +88,12 @@ namespace MoE
 
 	// Private Functions //
 	Timer::Timer()
-		: m_VSync{ false }
-		, m_FixedTimeStep{ 0.02f }
-		, m_ElapsedSec{}
-		, m_Lag{}
-		, m_FpsCapped{ false }
+		: m_MonitorRefreshRate{}
 		, m_MillSecPerFrame{ 16 }
+		, m_Lag{}
+		, m_ElapsedSec{}
+		, m_VSync{}
+		, m_FpsCapped{}
 		, m_LastTime{ std::chrono::high_resolution_clock::now() }
 	{
 		SDL_DisplayMode monitorInfo{};

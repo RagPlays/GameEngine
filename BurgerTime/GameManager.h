@@ -20,7 +20,7 @@ public:
 
 	virtual ~GameManager() = default;
 
-	const int GetGameScale() const;
+	int GetGameScale() const;
 	const glm::ivec2& GetWindowSize() const;
 
 private:

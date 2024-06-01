@@ -18,7 +18,7 @@ public:
 	PlayerState& operator=(const PlayerState& other) = delete;
 	PlayerState& operator=(PlayerState&& other) noexcept = delete;
 
-	virtual void OnSceneStart() override{};
+	virtual void SceneStart() override{};
 	virtual void OnEnter() override{};
 	virtual void OnExit() override{};
 	virtual void FixedUpdate() override{};

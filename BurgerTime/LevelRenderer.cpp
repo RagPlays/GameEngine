@@ -11,6 +11,9 @@ using namespace MoE;
 
 LevelRenderer::LevelRenderer(GameObject* const owner, const std::string& renderLoadPath, std::shared_ptr<Texture2D> texture)
 	: Component{ owner }
+	, m_TileDrawSize{}
+	, m_TileSourceSize{}
+	, m_LevelTiles{}
 	, m_TileMapTexture{ texture }
 {
 	LoadTiles(renderLoadPath);

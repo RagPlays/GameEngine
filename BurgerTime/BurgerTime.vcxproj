@@ -178,12 +178,12 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerDieState.cpp" />
-    <ClCompile Include="PlayerMovement.cpp" />
     <ClCompile Include="PlayerStateHandler.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerStats.cpp" />
     <ClCompile Include="PlayerWalkState.cpp" />
     <ClCompile Include="PlayerWinState.cpp" />
+    <ClCompile Include="ReloadSceneCommand.h" />
     <ClCompile Include="RotateAroundParentComponent.cpp" />
     <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
@@ -193,6 +193,7 @@
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
     <ClInclude Include="ImGuiExercise2.h" />
+    <ClInclude Include="KillPlayerCommand.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelCollision.h" />
     <ClInclude Include="LevelManager.h" />
@@ -203,7 +204,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDieState.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
-    <ClInclude Include="PlayerMovement.h" />
     <ClInclude Include="PlayerStateHandler.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerStats.h" />

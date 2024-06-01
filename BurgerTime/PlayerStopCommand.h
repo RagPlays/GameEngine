@@ -31,7 +31,7 @@ public:
 
 private:
 
-	glm::ivec2 m_Direcion;
+	const glm::ivec2 m_Direcion;
 
 };
 

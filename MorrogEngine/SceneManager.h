@@ -30,6 +30,7 @@ namespace MoE
 		bool Empty() const;
 		void SetCurrentSceneByIndex(uint8_t idx);
 		void SetCurrentSceneByName(const std::string& name);
+		void ReloadScene();
 		void GoNextScene();
 
 		Scene& GetCurrentScene() const;
@@ -50,6 +51,7 @@ namespace MoE
 
 	private:
 
+		bool m_NeedSceneChange;
 		uint8_t m_ToSceneIdx;
 		uint8_t m_CurrentSceneIdx;
 		std::vector<std::unique_ptr<Scene>> m_Scenes;

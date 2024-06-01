@@ -7,9 +7,9 @@
 namespace MoE
 {
 	SoundEffect::SoundEffect(const std::string& filePath)
-		: m_IsLoaded{ false }
+		: m_IsLoaded{}
 		, m_FilePath{ filePath }
-		, m_pSoundEffect{ nullptr }
+		, m_pSoundEffect{}
 	{
 	}
 

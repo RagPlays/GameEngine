@@ -42,7 +42,7 @@ namespace MoE
 		return m_pOwner;
 	}
 
-	GameObject* Component::GetParent() const
+	GameObject* const Component::GetParent() const
 	{
 		return m_pOwner->GetParent();
 	}

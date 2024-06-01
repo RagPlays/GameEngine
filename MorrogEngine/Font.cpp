@@ -6,7 +6,7 @@
 namespace MoE
 {
 	Font::Font(const std::string& filePath, unsigned int size)
-		: m_pFont{ nullptr }
+		: m_pFont{}
 	{
 		if (m_pFont = TTF_OpenFont(filePath.c_str(), static_cast<int>(size)); !m_pFont)
 		{

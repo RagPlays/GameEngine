@@ -33,10 +33,10 @@ private:
 	struct RenderTile
 	{
 
-		//// maximum grid size of 256x256
+		// maximum grid size of 256x256
 		//uint8_t gridX;
 		//uint8_t gridY;
-		//// maximum texture size of (256*TileSourceSize)x(256*TileSourceSize)
+		// maximum texture size of (256*TileSourceSize)x(256*TileSourceSize)
 		//uint8_t srcGridX;
 		//uint8_t srcGridY;
 

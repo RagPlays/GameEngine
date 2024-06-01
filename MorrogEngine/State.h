@@ -14,7 +14,7 @@ namespace MoE
 		State& operator=(const State& other) = delete;
 		State& operator=(State&& other) noexcept = delete;
 
-		virtual void OnSceneStart() = 0;
+		virtual void SceneStart() = 0;
 		virtual void OnEnter() = 0;
 		virtual void OnExit() = 0;
 		virtual void Update() = 0;

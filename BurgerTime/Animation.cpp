@@ -3,14 +3,14 @@
 #include "TextureRenderer.h"
 
 Animation::Animation(MoE::TextureRenderer* renderComponent, uint8_t nrOfFrames, uint8_t fps)
-	: m_pRenderComponent{ renderComponent }
+	: m_IsPlaying{ false }
 	, m_CurrentFrame{ 0 }
 	, m_NrOfFrames{ nrOfFrames }
 	, m_FPS{ fps }
 	, m_LastFrameTime{ 0.f }
-	, m_IsPlaying{ false }
+	, m_pRenderComponent{ renderComponent }
+	, m_SrcRects{ static_cast<size_t>(nrOfFrames) }
 {
-	m_SrcRects.reserve(static_cast<size_t>(nrOfFrames));
 }
 
 void Animation::AddFrame(const SDL_Rect& srcRect)
@@ -27,27 +27,25 @@ void Animation::Play()
 	m_IsPlaying = true;
 }
 
-void Animation::Update()
+bool Animation::Update()
 {
 	if (m_IsPlaying)
 	{
-		if (m_SrcRects.empty()) return;
-		else if (m_SrcRects.size() == 1)
-		{
-			m_pRenderComponent->SetSourceRect(m_SrcRects[0]);
-			return;
-		}
+		if (m_SrcRects.empty()) return false;
+		else if (m_SrcRects.size() == 1) return false;
 
 		m_LastFrameTime += MoE::Timer::Get().GetElapsedSec();
 
-		const float secPerFrame = (1.f / static_cast<float>(m_FPS));
+		const float secPerFrame{ 1.f / static_cast<float>(m_FPS) };
 		if (m_LastFrameTime > secPerFrame)
 		{
 			m_CurrentFrame = (m_CurrentFrame + 1) % m_NrOfFrames;
 			m_pRenderComponent->SetSourceRect(m_SrcRects[m_CurrentFrame]);
 			m_LastFrameTime -= secPerFrame;
+			if (m_CurrentFrame == 0) return true;
 		}
 	}
+	return false;
 }
 
 void Animation::Stop(bool reset)

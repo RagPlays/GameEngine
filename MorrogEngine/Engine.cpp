@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <windows.h>
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -26,7 +25,7 @@ namespace MoE
 	Engine::Engine(const std::string& dataPath, unsigned int width, unsigned int height)
 		: m_WindowWidth{ width }
 		, m_WindowHeight{ height }
-		, m_pWindow{ nullptr }
+		, m_pWindow{}
 	{
 #if defined _DEBUG || DEBUG
 		PrintSDLVersion();

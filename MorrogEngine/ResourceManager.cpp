@@ -39,4 +39,9 @@ namespace MoE
 	{
 		return std::make_unique<MusicPlayer>(m_DataPath + file);
 	}
+
+	ResourceManager::ResourceManager()
+		: m_DataPath{ "Empty" }
+	{
+	}
 }

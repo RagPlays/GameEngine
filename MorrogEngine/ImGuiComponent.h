@@ -11,6 +11,7 @@ namespace MoE
 	public:
 
 		virtual ~ImGuiComponent() = default;
+
 		ImGuiComponent(const ImGuiComponent& other) = delete;
 		ImGuiComponent(ImGuiComponent&& other) noexcept = delete;
 		ImGuiComponent& operator=(const ImGuiComponent& other) = delete;

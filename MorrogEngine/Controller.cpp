@@ -10,23 +10,30 @@
 namespace MoE
 {
     Controller::Controller(int controllerIndx)
-        : m_ControllerIdx{ controllerIndx }
-        , m_GameController{ SDL_GameControllerOpen(controllerIndx) }
+        : m_GameController{ SDL_GameControllerOpen(controllerIndx) }
+        , m_ControllerIdx{ controllerIndx }
+        , m_CurrentButtonStates
+        { 
+            static_cast<uint8_t>(ControllerButton::CB_MAX),
+            GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID)
+        }
+        , m_PreviousButtonStates
+        {
+            static_cast<uint8_t>(ControllerButton::CB_MAX),
+            GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID)
+        }
+        , m_Commands{}
     {
         if (!m_GameController)
         {
             std::cerr << "CONTROLLER::CONTROLLER::COULD_NOT_FIND_CONTROLLER_ON_START_WITH_IDX_" << m_ControllerIdx << "\n";
         }
-
-        m_CurrentButtonStates.resize(
-            static_cast<uint8_t>(ControllerButton::CB_MAX), GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID));
-        m_PreviousButtonStates.resize(
-            static_cast<uint8_t>(ControllerButton::CB_MAX), GameControllerGetButton(m_GameController, ControllerButton::CB_INVALID));
     }
 
     Controller::~Controller()
     {
         if (m_GameController) SDL_GameControllerClose(m_GameController);
+        m_GameController = nullptr;
     }
 
     void Controller::Update()
