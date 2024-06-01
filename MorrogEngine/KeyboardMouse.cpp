@@ -10,7 +10,7 @@ namespace MoE
 		: m_CurrentKeyStates{}
 		, m_PreviousKeyStates{}
 		, m_Commands{}
-		, m_KeyStack{ 4 }
+		, m_KeyStack{}
 	{
 		m_CurrentKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);
 		m_PreviousKeyStates.assign(SDL_GetKeyboardState(nullptr), SDL_GetKeyboardState(nullptr) + SDL_NUM_SCANCODES);

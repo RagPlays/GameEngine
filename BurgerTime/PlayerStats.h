@@ -7,6 +7,7 @@
 namespace MoE
 {
 	class GameObject;
+	class Subject;
 }
 
 class Player;
@@ -15,7 +16,7 @@ class PlayerStats final : public MoE::Component, public MoE::Observer
 {
 public:
 
-	explicit PlayerStats(MoE::GameObject* const owner);
+	explicit PlayerStats(MoE::GameObject* const owner, MoE::Subject* const subject);
 	virtual ~PlayerStats() = default;
 
 	PlayerStats(const PlayerStats& other) = delete;

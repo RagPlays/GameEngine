@@ -8,9 +8,9 @@
 
 using namespace MoE;
 
-PlayerStats::PlayerStats(GameObject* const owner)
+PlayerStats::PlayerStats(GameObject* const owner, Subject* const subject)
 	: Component{ owner }
-	, Observer{}
+	, Observer{ subject }
 	, m_NeedsUpdate{ true }
 	, m_PlayerIdx{ -1 }
 	, m_Lives{ 3 }

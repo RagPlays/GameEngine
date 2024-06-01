@@ -3,14 +3,15 @@
 #include "TextureRenderer.h"
 
 Animation::Animation(MoE::TextureRenderer* renderComponent, uint8_t nrOfFrames, uint8_t fps)
-	: m_IsPlaying{ false }
-	, m_CurrentFrame{ 0 }
+	: m_IsPlaying{}
+	, m_CurrentFrame{}
 	, m_NrOfFrames{ nrOfFrames }
 	, m_FPS{ fps }
-	, m_LastFrameTime{ 0.f }
+	, m_LastFrameTime{}
 	, m_pRenderComponent{ renderComponent }
-	, m_SrcRects{ static_cast<size_t>(nrOfFrames) }
+	, m_SrcRects{}
 {
+	m_SrcRects.reserve(static_cast<size_t>(nrOfFrames));
 }
 
 void Animation::AddFrame(const SDL_Rect& srcRect)

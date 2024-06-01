@@ -4,13 +4,14 @@
 namespace MoE
 {
 	class GameObject;
+	class Subject;
 	enum class GameEvent;
 
 	class Observer
 	{
 	public:
 
-		virtual ~Observer() = default;
+		virtual ~Observer();
 
 		Observer(const Observer& other) = delete;
 		Observer(Observer&& other) noexcept = delete;
@@ -21,7 +22,11 @@ namespace MoE
 
 	protected:
 
-		Observer() = default;
+		Observer(Subject* const subject);
+
+	private:
+
+		Subject* const m_pSubject;
 
 	};
 }

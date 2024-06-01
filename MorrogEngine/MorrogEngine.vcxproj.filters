@@ -314,5 +314,6 @@
     <ClCompile Include="FontRenderer.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Observer.cpp" />
   </ItemGroup>
 </Project>
