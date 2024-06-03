@@ -36,7 +36,7 @@ public:
 
 	void Kill();
 	bool IsDead() const;
-	void Attack();
+	void SetAttacking(bool attacking);
 	bool IsAttacking() const;
 
 	// Player Info

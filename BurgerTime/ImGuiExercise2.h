@@ -33,15 +33,15 @@ private:
 	class GameObject3D
 	{
 	public:
-		Transform transform;
-		int ID;
+		Transform transform{};
+		int ID{};
 	};
 
 	class GameObject3DAlt
 	{
 	public:
-		Transform* transform;
-		int ID;
+		Transform* transform{};
+		int ID{};
 	};
 
 private:

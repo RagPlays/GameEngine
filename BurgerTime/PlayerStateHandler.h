@@ -5,6 +5,8 @@
 
 #include "Component.h"
 
+using EventID = int;
+
 class PlayerWalkState;
 class PlayerAttackState;
 class PlayerWinState;
@@ -29,6 +31,9 @@ public:
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void LateUpdate() override;
+	virtual void OnNotify(MoE::GameObject* gameObj, EventID eventID);
+
+	void Notify(EventID eventID);
 
 	void SetState(PlayerState* playerState);
 
@@ -38,6 +43,8 @@ public:
 	void SetDieState();
 
 private:
+
+	Player* const m_pPlayer;
 
 	PlayerState* m_pCurrentState;
 

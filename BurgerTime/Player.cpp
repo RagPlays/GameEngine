@@ -4,7 +4,7 @@
 #include "PlayerStateHandler.h"
 #include "GameObject.h"
 #include "EventQueue.h"
-#include "GameEvents.h"
+#include "EventIDs.h"
 #include "TextureRenderer.h"
 #include "LevelManager.h"
 #include "LevelCollision.h"
@@ -52,7 +52,7 @@ void Player::SceneStart()
 		GetOwner()->SetLocalPosition(coll->GetStartPos());
 	}
 
-	Notify(GetOwner(), MoE::GameEvent::playerJoined);
+	Notify(GetOwner(), Event::playerJoined);
 }
 
 #if  defined _DEBUG || defined DEBUG
@@ -68,7 +68,7 @@ void Player::Render() const
 	renderer.SetCurrentDrawColor(Color{ 255, 0, 255 });
 	renderer.RenderRect(Rectf{ position, static_cast<glm::vec2>(hitBox) });
 
-	if (LevelCollision * coll{ LevelManager::Get().GetCollision() })
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
 		const int moveOffset{ coll->GetMoveOffset() };
 		Recti moveRect
@@ -108,7 +108,7 @@ void Player::Kill()
 {
 	if (m_IsDead) return;
 	m_IsDead = true;
-	Notify(GetOwner(), MoE::GameEvent::playerDied);
+	Notify(GetOwner(), Event::playerDied);
 }
 
 bool Player::IsDead() const
@@ -116,9 +116,9 @@ bool Player::IsDead() const
 	return m_IsDead;
 }
 
-void Player::Attack()
+void Player::SetAttacking(bool attacking)
 {
-	m_IsAttacking = true;
+	m_IsAttacking = attacking;
 }
 
 bool Player::IsAttacking() const

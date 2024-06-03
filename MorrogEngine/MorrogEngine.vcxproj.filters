@@ -141,9 +141,6 @@
     <ClInclude Include="Controller.h">
       <Filter>EngineCore\Input</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvents.h">
-      <Filter>EngineCore\Events</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiComponent.h">
       <Filter>ImGuiImpl</Filter>
     </ClInclude>
@@ -314,6 +311,8 @@
     <ClCompile Include="FontRenderer.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Observer.cpp">
+      <Filter>EngineCore\Events\ObserverSubject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

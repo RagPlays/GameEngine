@@ -52,6 +52,11 @@ namespace MoE
 		m_Scenes.clear();
 	}
 
+	bool SceneManager::IsValidGameObject(MoE::GameObject* const gameObject) const
+	{
+		return GetCurrentScene().IsValidGameObject(gameObject);
+	}
+
 	bool SceneManager::Empty() const
 	{
 		return m_Scenes.empty();
@@ -85,13 +90,9 @@ namespace MoE
 		m_NeedSceneChange = true;
 	}
 
-	void SceneManager::GoNextScene()
-	{
-		SetCurrentSceneByIndex(m_CurrentSceneIdx + 1);
-	}
-
 	Scene& SceneManager::GetCurrentScene() const
 	{
+		assert(m_CurrentSceneIdx < m_Scenes.size());
 		return *m_Scenes[m_CurrentSceneIdx];
 	}
 

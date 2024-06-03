@@ -33,6 +33,11 @@ void LevelManager::UnRegisterLevel(Level* level)
     assert(false);
 }
 
+void LevelManager::CompleteLevel()
+{
+    m_LevelCompleted = true;
+}
+
 void LevelManager::NextLevel()
 {
     if (m_CurrentLevel != -1)
@@ -41,7 +46,13 @@ void LevelManager::NextLevel()
         const uint8_t nextLevelIdx{ static_cast<uint8_t>((currentLevel + 1) % m_NrLevelsCount) };
         SceneManager::Get().SetCurrentSceneByIndex(nextLevelIdx);
         m_CurrentLevel = nextLevelIdx;
+        m_LevelCompleted = false;
     }
+}
+
+bool LevelManager::IsLevelCompleted() const
+{
+    return m_LevelCompleted;
 }
 
 uint8_t LevelManager::GetTileSize() const
@@ -73,7 +84,8 @@ LevelCollision* LevelManager::GetCollision()
 }
 
 LevelManager::LevelManager()
-    : m_CurrentLevel{}
+    : m_LevelCompleted{}
+    , m_CurrentLevel{}
     , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }
     , m_pCurrentLevel{}

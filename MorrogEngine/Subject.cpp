@@ -26,11 +26,11 @@ namespace MoE
 	{
 	}
 
-	void Subject::Notify(GameObject* gameObj, GameEvent gameEvent)
+	void Subject::Notify(GameObject* gameObj, EventID eventID)
 	{
 		for (const auto& observer : m_Observers)
 		{
-			observer->OnNotify(gameObj, gameEvent);
+			observer->OnNotify(gameObj, eventID);
 		}
 	}
 }

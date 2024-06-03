@@ -16,12 +16,12 @@ namespace MoE
 		m_Handlers.clear();
 	}
 
-	void EventQueue::AddEvent(GameEvent gameEvent)
+	void EventQueue::AddEvent(EventID eventID)
 	{
 		assert((m_Tail + 1) % s_MaxPending != m_Head);
 		if ((m_Tail + 1) % s_MaxPending == m_Head) return;
 
-		m_Events[m_Tail] = gameEvent;
+		m_Events[m_Tail] = eventID;
 		m_Tail = (m_Tail + 1) % s_MaxPending;
 	}
 

@@ -8,10 +8,12 @@
 #include "GameManager.h"
 #include "GameObject.h"
 #include "TextureRenderer.h"
+#include "Player.h"
 
 PlayerStateHandler::PlayerStateHandler(MoE::GameObject* const owner, Player* const player)
 	: Component{ owner }
-	, m_pCurrentState{ nullptr }
+	, m_pPlayer{ player }
+	, m_pCurrentState{}
 	, m_WalkState{ std::make_unique<PlayerWalkState>(player, this) }
 	, m_AttackState{ std::make_unique<PlayerAttackState>(player, this) }
 	, m_WinState{ std::make_unique<PlayerWinState>(player, this) }
@@ -25,7 +27,7 @@ void PlayerStateHandler::SceneStart()
 {
 	if (MoE::TextureRenderer * pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() })
 	{
-		int gameScale{ GameManager::Get().GetGameScale() };
+		const int gameScale{ GameManager::Get().GetGameScale() };
 		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });
 		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
 	}
@@ -52,6 +54,16 @@ void PlayerStateHandler::Update()
 void PlayerStateHandler::LateUpdate()
 {
 	if (m_pCurrentState) m_pCurrentState->LateUpdate();
+}
+
+void PlayerStateHandler::OnNotify(MoE::GameObject* gameObj, EventID eventID)
+{
+	if (m_pCurrentState) m_pCurrentState->OnNotify(gameObj, eventID);
+}
+
+void PlayerStateHandler::Notify(EventID eventID)
+{
+	m_pPlayer->Notify(m_pPlayer->GetOwner(), eventID);
 }
 
 void PlayerStateHandler::SetState(PlayerState* playerState)

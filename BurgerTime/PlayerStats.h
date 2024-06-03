@@ -4,6 +4,8 @@
 #include "Component.h"
 #include "Observer.h"
 
+using EventID = int;
+
 namespace MoE
 {
 	class GameObject;
@@ -26,7 +28,7 @@ public:
 
 	void Update() override;
 
-	void OnNotify(MoE::GameObject* gameObj, MoE::GameEvent gameEvent) override;
+	void OnNotify(MoE::GameObject* gameObj, EventID eventID) override;
 
 private:
 

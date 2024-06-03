@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Burger.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
@@ -188,7 +189,9 @@
     <ClCompile Include="SoundEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\MorrogEngine\EventIDs.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Burger.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="NextLevelCommand.h" />
+    <ClInclude Include="PlayerAttackCommand.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="Player.h" />
@@ -213,6 +217,7 @@
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
     <ClInclude Include="SoundIDs.h" />
+    <ClInclude Include="WinLevelCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

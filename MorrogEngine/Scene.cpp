@@ -49,6 +49,15 @@ namespace MoE
 		return m_IsLoaded;
 	}
 
+	bool Scene::IsValidGameObject(MoE::GameObject* gameObj) const
+	{
+		for (const auto& object : m_Objects)
+		{
+			if (object.get() == gameObj) return true;
+		}
+		return false;
+	}
+
 	void Scene::SceneStart()
 	{
 		for (auto& object : m_Objects)

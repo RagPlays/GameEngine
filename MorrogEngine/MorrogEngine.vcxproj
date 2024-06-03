@@ -198,7 +198,6 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="FpsComponent.h" />
-    <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiComponent.h" />
     <ClInclude Include="ImGuiRenderer.h" />

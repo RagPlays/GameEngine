@@ -38,11 +38,12 @@ void PlayerWalkState::SceneStart()
 
 void PlayerWalkState::OnEnter()
 {
-	SetAnimation(m_DownAnimation.get());
+	ChangeAnimation();
 }
 
 void PlayerWalkState::OnExit()
 {
+	if (m_pCurrentAnimation) m_pCurrentAnimation->Stop();
 }
 
 void PlayerWalkState::FixedUpdate()
@@ -73,7 +74,7 @@ void PlayerWalkState::Update()
 
 void PlayerWalkState::InitAnimations()
 {
-	constexpr int tileSize{ 16 };
+	const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
 	// UP
 	m_UpAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
 	SDL_Rect up1Rect{ 1 * tileSize, 1 * tileSize, tileSize, tileSize };
@@ -105,15 +106,15 @@ void PlayerWalkState::InitAnimations()
 void PlayerWalkState::ChangeAnimation()
 {
 	const glm::ivec2& moveDir{ m_pPlayer->GetMoveDir() };
-	if (moveDir.x != 0)
+	if (moveDir.x)
 	{
 		SetAnimation(m_SidewayAnimation.get(), moveDir.x > 0);
 	}
-	else if (moveDir.y != 0)
+	else if (moveDir.y)
 	{
 		SetAnimation(moveDir.y > 0 ? m_DownAnimation.get() : m_UpAnimation.get());
 	}
-	else if (m_PreviousDir.x != 0 || m_PreviousDir.y != 0)
+	else if (m_PreviousDir.x || m_PreviousDir.y)
 	{
 		SetAnimation(m_PreviousDir.y < 0 ? m_UpAnimation.get() : m_DownAnimation.get());
 	}
@@ -134,7 +135,7 @@ void PlayerWalkState::UpdateMovement()
 {
 	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
 
-	if (LevelCollision * coll{ LevelManager::Get().GetCollision() })
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
 		MoE::GameObject* owner{ m_pPlayer->GetOwner() };
 		const float fixedTime{ MoE::Timer::Get().GetFixedElapsedSec() };
@@ -171,10 +172,8 @@ void PlayerWalkState::UpdateStateChange()
 	{
 		m_pHandler->SetAttackState();
 	}
-
-	// check if won
-	/*if (won)
+	else if (LevelManager::Get().IsLevelCompleted())
 	{
 		m_pHandler->SetWinState();
-	}*/
+	}
 }

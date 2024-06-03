@@ -27,6 +27,7 @@ namespace MoE
 		void Load();
 		void UnLoad();
 		bool IsLoaded() const;
+		bool IsValidGameObject(MoE::GameObject* gameObj) const;
 
 		void SceneStart();
 		void FixedUpdate();

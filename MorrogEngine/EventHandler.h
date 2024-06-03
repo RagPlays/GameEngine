@@ -3,7 +3,7 @@
 
 namespace MoE
 {
-	enum class GameEvent;
+	using EventID = int;
 
 	class EventHandler
 	{
@@ -17,7 +17,7 @@ namespace MoE
 		EventHandler& operator=(const EventHandler& other) = delete;
 		EventHandler& operator=(EventHandler&& other) noexcept = delete;
 
-		virtual void HandleEvent(GameEvent gameEvent) const = 0;
+		virtual void HandleEvent(EventID) const = 0;
 
 	};
 
@@ -33,7 +33,7 @@ namespace MoE
 		NullEventHandler& operator=(const NullEventHandler& other) = delete;
 		NullEventHandler& operator=(NullEventHandler&& other) noexcept = delete;
 
-		virtual void HandleEvent(GameEvent) const override {}
+		virtual void HandleEvent(EventID) const override {}
 
 	};
 }

@@ -18,8 +18,10 @@ public:
 	void RegisterLevel(Level* level);
 	void UnRegisterLevel(Level* level);
 
+	void CompleteLevel();
 	void NextLevel();
 
+	bool IsLevelCompleted() const;
 	uint8_t GetTileSize() const;
 
 	Level* GetLevel() const;
@@ -33,6 +35,7 @@ private:
 
 private:
 
+	bool m_LevelCompleted;
 	int m_CurrentLevel;
 	uint8_t m_NrLevelsCount;
 	const uint8_t m_TileSize;

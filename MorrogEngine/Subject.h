@@ -6,9 +6,10 @@
 
 namespace MoE
 {
+	using EventID = int;
+
 	class Observer;
 	class GameObject;
-	enum class GameEvent;
 
 	class Subject
 	{
@@ -19,11 +20,11 @@ namespace MoE
 		void RegisterObserver(Observer* observer);
 		void UnRegisterObserver(Observer* observer);
 
+		void Notify(GameObject* gameObj, EventID eventID);
+
 	protected:
 
 		Subject();
-
-		void Notify(GameObject* gameObj, GameEvent gameEvent);
 
 	private:
 

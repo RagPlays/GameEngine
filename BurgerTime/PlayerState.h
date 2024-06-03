@@ -3,6 +3,13 @@
 
 #include <State.h>
 
+using EventID = int;
+
+namespace MoE
+{
+	class GameObject;
+}
+
 class Player;
 class PlayerStateHandler;
 
@@ -24,6 +31,7 @@ public:
 	virtual void FixedUpdate() override{};
 	virtual void Update() override{};
 	virtual void LateUpdate() override{};
+	virtual void OnNotify(MoE::GameObject*, EventID) {};
 
 protected:
 

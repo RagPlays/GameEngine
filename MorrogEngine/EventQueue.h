@@ -9,9 +9,10 @@
 
 namespace MoE
 {
+	using EventID = int;
+
 	class NullEventHandler;
 	class EventHandler;
-	enum class GameEvent;
 
 	class EventQueue final : public Singleton<EventQueue>
 	{
@@ -26,7 +27,7 @@ namespace MoE
 
 		void AddHandler(std::unique_ptr<EventHandler>&& handler);
 		void ClearHandlers();
-		void AddEvent(GameEvent gameEvent);
+		void AddEvent(EventID eventID);
 		void ClearEvents();
 		void Update();
 
@@ -42,7 +43,7 @@ namespace MoE
 		unsigned int m_Tail;
 
 		std::vector<std::unique_ptr<EventHandler>> m_Handlers;
-		std::array<GameEvent, s_MaxPending> m_Events;
+		std::array<EventID, s_MaxPending> m_Events;
 
 	};
 }

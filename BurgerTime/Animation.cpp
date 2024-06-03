@@ -21,20 +21,17 @@ void Animation::AddFrame(const SDL_Rect& srcRect)
 
 void Animation::Play()
 {
-	if (m_IsPlaying || m_SrcRects.empty()) return;
 	m_CurrentFrame = 0;
-	m_pRenderComponent->SetSourceRect(m_SrcRects[m_CurrentFrame]);
 	m_LastFrameTime = 0.f;
+	if (m_IsPlaying || m_SrcRects.empty()) return;
+	m_pRenderComponent->SetSourceRect(m_SrcRects[m_CurrentFrame]);
 	m_IsPlaying = true;
 }
 
 bool Animation::Update()
 {
-	if (m_IsPlaying)
+	if (m_IsPlaying && !m_SrcRects.empty())
 	{
-		if (m_SrcRects.empty()) return false;
-		else if (m_SrcRects.size() == 1) return false;
-
 		m_LastFrameTime += MoE::Timer::Get().GetElapsedSec();
 
 		const float secPerFrame{ 1.f / static_cast<float>(m_FPS) };

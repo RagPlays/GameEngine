@@ -3,9 +3,10 @@
 
 namespace MoE
 {
+	using EventID = int;
+
 	class GameObject;
 	class Subject;
-	enum class GameEvent;
 
 	class Observer
 	{
@@ -18,7 +19,7 @@ namespace MoE
 		Observer& operator=(const Observer& other) = delete;
 		Observer& operator=(Observer&& other) noexcept = delete;
 
-		virtual void OnNotify(GameObject* gameObj, GameEvent event) = 0;
+		virtual void OnNotify(GameObject* gameObj, EventID eventID) = 0;
 
 	protected:
 

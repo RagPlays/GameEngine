@@ -12,6 +12,7 @@ namespace MoE
 {
 	class Scene;
 	class Engine;
+	class GameObject;
 
 	class SceneManager final : public Singleton<SceneManager>
 	{
@@ -26,12 +27,13 @@ namespace MoE
 
 		Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
 		void Destroy();
+
+		bool IsValidGameObject(GameObject* const gameObject) const;
 		
 		bool Empty() const;
 		void SetCurrentSceneByIndex(uint8_t idx);
 		void SetCurrentSceneByName(const std::string& name);
 		void ReloadScene();
-		void GoNextScene();
 
 		Scene& GetCurrentScene() const;
 		uint8_t GetCurrentSceneIndex() const;

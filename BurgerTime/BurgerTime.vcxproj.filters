@@ -34,6 +34,12 @@
     <Filter Include="GameSourceFile\GameComponents\Player\States\Basics">
       <UniqueIdentifier>{b633d08e-507a-4713-845e-091e4347f304}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Burgers">
+      <UniqueIdentifier>{3ecaa65a-676b-4c30-bdfd-843030105625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameIDs">
+      <UniqueIdentifier>{a9f34c47-cec2-47e4-b4f9-26dffa028613}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGuiExercise1.cpp">
@@ -99,6 +105,9 @@
     <ClCompile Include="ReloadSceneCommand.h">
       <Filter>GameSourceFile\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Burger.cpp">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiExercise1.h">
@@ -118,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameSourceFile\GameComponents\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundIDs.h">
-      <Filter>GameSourceFile\Sound</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStopCommand.h">
       <Filter>GameSourceFile\Input</Filter>
@@ -175,6 +181,21 @@
     </ClInclude>
     <ClInclude Include="KillPlayerCommand.h">
       <Filter>GameSourceFile\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Burger.h">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLevelCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MorrogEngine\EventIDs.h">
+      <Filter>GameSourceFile\GameIDs</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundIDs.h">
+      <Filter>GameSourceFile\GameIDs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
