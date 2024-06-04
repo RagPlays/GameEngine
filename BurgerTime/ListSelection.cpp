@@ -1,5 +1,5 @@
 #include "ListSelection.h"
-#include "Button.h"
+//#include "Button.h"
 
 ListSelection::ListSelection(MoE::GameObject* const owner, bool looping)
 	: Component{ owner }
@@ -10,9 +10,9 @@ ListSelection::ListSelection(MoE::GameObject* const owner, bool looping)
 
 ListSelection::~ListSelection() = default;
 
-void ListSelection::AddButton(std::unique_ptr<Button>&& button)
+void ListSelection::AddButton(std::unique_ptr<Button>&&)
 {
-	m_Buttons.emplace_back(std::move(button));
+	//m_Buttons.emplace_back(std::move(button));
 }
 
 void ListSelection::MoveUp()
@@ -46,7 +46,7 @@ void ListSelection::MoveDown()
 	}
 	if (nowSelected != m_SelectedIndex)
 	{
-		//m_Buttons[nowSelected]->Update();
+		//m_Buttons[nowSelected]-
 	}
 }
 

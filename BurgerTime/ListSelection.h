@@ -38,7 +38,7 @@ private:
 	bool m_Looping;
 	int m_SelectedIndex;
 
-	std::vector<std::unique_ptr<Button>> m_Buttons;
+	//std::vector<std::unique_ptr<Button>> m_Buttons;
 
 };
 
