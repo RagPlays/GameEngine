@@ -24,7 +24,6 @@ Player::Player(MoE::GameObject* const owner)
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
 	, m_MovementDir{}
-	, m_IsDead{}
 	, m_IsAttacking{}
 	, m_pRenderComponent{}
 {
@@ -106,14 +105,7 @@ const glm::ivec2& Player::GetMoveDir() const
 
 void Player::Kill()
 {
-	if (m_IsDead) return;
-	m_IsDead = true;
-	Notify(GetOwner(), Event::playerDied);
-}
-
-bool Player::IsDead() const
-{
-	return m_IsDead;
+	GetOwner()->GetComponent<PlayerStateHandler>()->SetDieState(); // debug code needs to be fixed!!
 }
 
 void Player::SetAttacking(bool attacking)

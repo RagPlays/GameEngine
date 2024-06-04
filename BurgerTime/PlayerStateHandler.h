@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Component.h"
+#include "Observer.h"
 
 using EventID = int;
 
@@ -15,7 +16,7 @@ class PlayerDieState;
 class Player;
 class PlayerState;
 
-class PlayerStateHandler final : public MoE::Component
+class PlayerStateHandler final : public MoE::Component, public MoE::Observer
 {
 public:
 
@@ -31,7 +32,8 @@ public:
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
 	virtual void LateUpdate() override;
-	virtual void OnNotify(MoE::GameObject* gameObj, EventID eventID);
+
+	virtual void OnNotify(MoE::GameObject* gameObj, EventID eventID) override;
 
 	void Notify(EventID eventID);
 

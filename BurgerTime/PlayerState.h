@@ -17,7 +17,7 @@ class PlayerState : public MoE::State
 {
 public:
 
-	explicit PlayerState(Player* const player, PlayerStateHandler* handler);
+	explicit PlayerState(Player* const player, PlayerStateHandler* const handler);
 	virtual ~PlayerState() = default;
 
 	PlayerState(const PlayerState& other) = delete;

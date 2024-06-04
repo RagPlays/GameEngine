@@ -40,6 +40,12 @@
     <Filter Include="GameSourceFile\GameIDs">
       <UniqueIdentifier>{a9f34c47-cec2-47e4-b4f9-26dffa028613}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFile\GameComponents\UI">
+      <UniqueIdentifier>{5ef7fd64-31ec-4469-9962-5164a5430bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\EnemyPlayer">
+      <UniqueIdentifier>{a0152f0f-fa62-41e5-826a-fd20f74b26b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGuiExercise1.cpp">
@@ -107,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="Burger.cpp">
       <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHealthStats.cpp">
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ListSelection.cpp">
+      <Filter>GameSourceFile\GameComponents\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPlayer.cpp">
+      <Filter>GameSourceFile\GameComponents\EnemyPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GameSourceFile\GameComponents\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +214,21 @@
     </ClInclude>
     <ClInclude Include="SoundIDs.h">
       <Filter>GameSourceFile\GameIDs</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHealthStats.h">
+      <Filter>GameSourceFile\GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="StartGameCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ListSelection.h">
+      <Filter>GameSourceFile\GameComponents\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPlayer.h">
+      <Filter>GameSourceFile\GameComponents\EnemyPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GameSourceFile\GameComponents\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

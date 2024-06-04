@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "Subject.h"
+#include "Observer.h"
 
 #include "PlayerStateHandler.h"
 
@@ -35,7 +36,6 @@ public:
 	const glm::ivec2& GetMoveDir() const;
 
 	void Kill();
-	bool IsDead() const;
 	void SetAttacking(bool attacking);
 	bool IsAttacking() const;
 
@@ -54,7 +54,6 @@ private:
 	// Movement
 	glm::ivec2 m_MovementDir;
 	
-	bool m_IsDead;
 	bool m_IsAttacking;
 
 	// Player Components

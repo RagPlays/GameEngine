@@ -4,24 +4,34 @@
 #include <glm.hpp>
 
 #include "Singleton.h"
+#include "Subject.h"
+
+using EventID = int;
 
 class Level;
 class LevelCollision;
 class LevelRenderer;
 
-class LevelManager final : public MoE::Singleton<LevelManager>
+enum class GameMode
+{
+	singlePlayer,
+	multiplayer
+};
+
+class LevelManager final : public MoE::Singleton<LevelManager>, public MoE::Subject
 {
 public:
 
 	virtual ~LevelManager() = default;
 
-	void RegisterLevel(Level* level);
-	void UnRegisterLevel(Level* level);
+	void RegisterLevel(Level* const level);
+	void UnRegisterLevel(Level* const level);
 
-	void CompleteLevel();
+	void SetGameMode(GameMode gameMode);
+	void StartGame();
 	void NextLevel();
+	void GameOver();
 
-	bool IsLevelCompleted() const;
 	uint8_t GetTileSize() const;
 
 	Level* GetLevel() const;
@@ -35,7 +45,8 @@ private:
 
 private:
 
-	bool m_LevelCompleted;
+	GameMode m_GameMode;
+
 	int m_CurrentLevel;
 	uint8_t m_NrLevelsCount;
 	const uint8_t m_TileSize;

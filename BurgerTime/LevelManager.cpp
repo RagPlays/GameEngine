@@ -7,11 +7,13 @@
 #include "Level.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "EventIDs.h"
 
 using namespace MoE;
 
-void LevelManager::RegisterLevel(Level* level)
+void LevelManager::RegisterLevel(Level* const level)
 {
+    if (!level) return;
     if (m_pCurrentLevel)
     {
         std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_REGISTER_LEVEL\n";
@@ -20,8 +22,9 @@ void LevelManager::RegisterLevel(Level* level)
     m_pCurrentLevel = level;
 }
 
-void LevelManager::UnRegisterLevel(Level* level)
+void LevelManager::UnRegisterLevel(Level* const level)
 {
+    if (!level) return;
     if (m_pCurrentLevel == level)
     {
         m_pCurrentLevel = nullptr;
@@ -33,9 +36,20 @@ void LevelManager::UnRegisterLevel(Level* level)
     assert(false);
 }
 
-void LevelManager::CompleteLevel()
+void LevelManager::SetGameMode(GameMode gameMode)
 {
-    m_LevelCompleted = true;
+    if (m_CurrentLevel)
+    {
+        std::cerr << "ERROR::LEVELMANAGER::CANT_CHANGE_GAMEMODE_INSIDE_LEVEL\n";
+        return;
+    }
+    m_GameMode = gameMode;
+}
+
+void LevelManager::StartGame()
+{
+    m_CurrentLevel = 0;
+    SceneManager::Get().SetCurrentSceneByIndex(static_cast<uint8_t>(m_CurrentLevel));
 }
 
 void LevelManager::NextLevel()
@@ -46,13 +60,15 @@ void LevelManager::NextLevel()
         const uint8_t nextLevelIdx{ static_cast<uint8_t>((currentLevel + 1) % m_NrLevelsCount) };
         SceneManager::Get().SetCurrentSceneByIndex(nextLevelIdx);
         m_CurrentLevel = nextLevelIdx;
-        m_LevelCompleted = false;
     }
 }
 
-bool LevelManager::IsLevelCompleted() const
+void LevelManager::GameOver()
 {
-    return m_LevelCompleted;
+    if (SceneManager::Get().IsValidSceneName("EndMenuScene"))
+    {
+        SceneManager::Get().SetCurrentSceneByName("EndMenuScene");
+    }
 }
 
 uint8_t LevelManager::GetTileSize() const
@@ -84,7 +100,8 @@ LevelCollision* LevelManager::GetCollision()
 }
 
 LevelManager::LevelManager()
-    : m_LevelCompleted{}
+    //: Subject{}
+    : m_GameMode{ GameMode::singlePlayer }
     , m_CurrentLevel{}
     , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }

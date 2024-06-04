@@ -7,6 +7,7 @@
 #include "LevelManager.h"
 #include "Timer.h"
 #include "LevelCollision.h"
+#include "EventIDs.h"
 
 PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
@@ -38,6 +39,7 @@ void PlayerWalkState::SceneStart()
 
 void PlayerWalkState::OnEnter()
 {
+	SetAnimation(m_DownAnimation.get());
 	ChangeAnimation();
 }
 
@@ -68,6 +70,11 @@ void PlayerWalkState::Update()
 
 	// Update Other State
 	UpdateStateChange();
+}
+
+void PlayerWalkState::OnNotify(MoE::GameObject*, EventID eventID)
+{
+	if (eventID == Event::levelCompleted) m_pHandler->SetWinState();
 }
 
 // Private //
@@ -164,16 +171,8 @@ void PlayerWalkState::UpdateAnimation()
 
 void PlayerWalkState::UpdateStateChange()
 {
-	if (m_pPlayer->IsDead())
-	{
-		m_pHandler->SetDieState();
-	}
-	else if (m_pPlayer->IsAttacking())
+	if (m_pPlayer->IsAttacking())
 	{
 		m_pHandler->SetAttackState();
-	}
-	else if (LevelManager::Get().IsLevelCompleted())
-	{
-		m_pHandler->SetWinState();
 	}
 }

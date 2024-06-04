@@ -19,15 +19,17 @@ namespace MoE
 		Observer& operator=(const Observer& other) = delete;
 		Observer& operator=(Observer&& other) noexcept = delete;
 
+		void ChangeSubject(Subject* const subject);
+
 		virtual void OnNotify(GameObject* gameObj, EventID eventID) = 0;
 
 	protected:
 
-		Observer(Subject* const subject);
+		explicit Observer(Subject* const subject);
 
 	private:
 
-		Subject* const m_pSubject;
+		Subject* m_pSubject;
 
 	};
 }

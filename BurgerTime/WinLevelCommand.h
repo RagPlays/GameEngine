@@ -3,6 +3,7 @@
 
 #include "Command.h"
 #include "LevelManager.h"
+#include "EventIDs.h"
 
 class WinLevelCommand final : public MoE::Command
 {
@@ -18,9 +19,8 @@ public:
 
 	void Execute() override
 	{
-		LevelManager::Get().CompleteLevel();
+		LevelManager::Get().Notify(nullptr, Event::levelCompleted);
 	}
-
 };
 
 #endif // !WINLEVELCOMMAND_H

@@ -50,7 +50,7 @@ namespace MoE
 		Mix_PlayChannel(-1, m_pSoundEffect, loops);
 	}
 
-	constexpr int SoundEffect::MaxVolume()
+	int SoundEffect::MaxVolume()
 	{
 		return MIX_MAX_VOLUME;
 	}

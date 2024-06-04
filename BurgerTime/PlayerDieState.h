@@ -35,7 +35,6 @@ private:
 	void SetAnimation(Animation* animation);
 
 	void UpdateAnimations();
-	void UpdateStateChange();
 
 private:
 

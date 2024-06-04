@@ -26,6 +26,14 @@ namespace MoE
 	{
 	}
 
+	Subject::~Subject()
+	{
+		for (const auto& observer : m_Observers)
+		{
+			observer->ChangeSubject(nullptr);
+		}
+	}
+
 	void Subject::Notify(GameObject* gameObj, EventID eventID)
 	{
 		for (const auto& observer : m_Observers)

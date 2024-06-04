@@ -9,9 +9,11 @@
 #include "GameObject.h"
 #include "TextureRenderer.h"
 #include "Player.h"
+#include "LevelManager.h"
 
 PlayerStateHandler::PlayerStateHandler(MoE::GameObject* const owner, Player* const player)
 	: Component{ owner }
+	, Observer{ &LevelManager::Get() }
 	, m_pPlayer{ player }
 	, m_pCurrentState{}
 	, m_WalkState{ std::make_unique<PlayerWalkState>(player, this) }
@@ -25,7 +27,7 @@ PlayerStateHandler::~PlayerStateHandler() = default;
 
 void PlayerStateHandler::SceneStart()
 {
-	if (MoE::TextureRenderer * pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() })
+	if (MoE::TextureRenderer* pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() })
 	{
 		const int gameScale{ GameManager::Get().GetGameScale() };
 		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });

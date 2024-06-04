@@ -14,7 +14,7 @@ namespace MoE
 
 class Player;
 
-class PlayerStats final : public MoE::Component, public MoE::Observer
+class PlayerStats final : public MoE::Component/*, public MoE::Observer*/
 {
 public:
 
@@ -28,7 +28,7 @@ public:
 
 	void Update() override;
 
-	void OnNotify(MoE::GameObject* gameObj, EventID eventID) override;
+	/*void OnNotify(MoE::GameObject* gameObj, EventID eventID) override;*/
 
 private:
 

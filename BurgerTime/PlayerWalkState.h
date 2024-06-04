@@ -29,6 +29,8 @@ public:
 	virtual void FixedUpdate() override;
 	virtual void Update() override;
 
+	virtual void OnNotify(MoE::GameObject* gameObj, EventID eventID) override;
+
 private:
 
 	void InitAnimations();

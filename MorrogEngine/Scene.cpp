@@ -15,7 +15,10 @@ namespace MoE
 	{
 	}
 
-	Scene::~Scene() = default;
+	Scene::~Scene()
+	{
+		UnLoad();
+	}
 
 	void Scene::Add(std::unique_ptr<GameObject>&& object)
 	{

@@ -167,6 +167,8 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Burger.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="EnemyPlayer.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
@@ -175,10 +177,12 @@
     <ClCompile Include="LevelCollision.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
+    <ClCompile Include="ListSelection.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerDieState.cpp" />
+    <ClCompile Include="PlayerHealthStats.cpp" />
     <ClCompile Include="PlayerStateHandler.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerStats.cpp" />
@@ -192,6 +196,8 @@
     <ClInclude Include="..\MorrogEngine\EventIDs.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Burger.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="EnemyPlayer.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
@@ -201,12 +207,14 @@
     <ClInclude Include="LevelCollision.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
+    <ClInclude Include="ListSelection.h" />
     <ClInclude Include="NextLevelCommand.h" />
     <ClInclude Include="PlayerAttackCommand.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerCommand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDieState.h" />
+    <ClInclude Include="PlayerHealthStats.h" />
     <ClInclude Include="PlayerMoveCommand.h" />
     <ClInclude Include="PlayerStateHandler.h" />
     <ClInclude Include="PlayerState.h" />
@@ -217,6 +225,7 @@
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
     <ClInclude Include="SoundIDs.h" />
+    <ClInclude Include="StartGameCommand.h" />
     <ClInclude Include="WinLevelCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

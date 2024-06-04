@@ -29,6 +29,7 @@ namespace MoE
 		void Destroy();
 
 		bool IsValidGameObject(GameObject* const gameObject) const;
+		bool IsValidSceneName(const std::string& sceneName);
 		
 		bool Empty() const;
 		void SetCurrentSceneByIndex(uint8_t idx);

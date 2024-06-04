@@ -4,6 +4,7 @@
 #include "TextureRenderer.h"
 #include "GameObject.h"
 #include "Animation.h"
+#include "EventIDs.h"
 
 PlayerDieState::PlayerDieState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
@@ -40,11 +41,7 @@ void PlayerDieState::OnExit()
 
 void PlayerDieState::Update()
 {
-	// Animations
 	UpdateAnimations();
-
-	// Update Other State
-	UpdateStateChange();
 }
 
 // Private //
@@ -97,17 +94,6 @@ void PlayerDieState::UpdateAnimations()
 		{
 			SetAnimation(m_DownAnimation.get());
 		}
+		else m_pHandler->Notify(Event::playerDied);
 	}
-}
-
-void PlayerDieState::UpdateStateChange()
-{
-	/*if (m_pPlayer->IsDead())
-	{
-		m_pHandler->SetDieState();
-	}*/
-	//if (m_pCurrentAnimation == m_DownAnimation.get())
-	//{
-
-	//}
 }

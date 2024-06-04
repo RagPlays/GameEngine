@@ -5,6 +5,7 @@ enum Event
 {
 	sceneStarts = 0,
 	gameEnds,
+	levelCompleted,
 	levelLoaded,
 	playerJoined,
 	playerDied,

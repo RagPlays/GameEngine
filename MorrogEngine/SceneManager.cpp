@@ -57,6 +57,18 @@ namespace MoE
 		return GetCurrentScene().IsValidGameObject(gameObject);
 	}
 
+	bool SceneManager::IsValidSceneName(const std::string& sceneName)
+	{
+		for (size_t idx{}; idx < m_Scenes.size(); ++idx)
+		{
+			if (m_Scenes[idx]->GetName() == sceneName)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool SceneManager::Empty() const
 	{
 		return m_Scenes.empty();

@@ -15,7 +15,7 @@ namespace MoE
 	{
 	public:
 
-		virtual ~Subject() = default;
+		virtual ~Subject();
 
 		void RegisterObserver(Observer* observer);
 		void UnRegisterObserver(Observer* observer);
