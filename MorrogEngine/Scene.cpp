@@ -24,8 +24,6 @@ namespace MoE
 
 	void Scene::Add(std::unique_ptr<GameObject>&& object)
 	{
-		//object->SetParent(m_RootObject.get());
-		//object.release(); // ownership is transfered to the parent gameObject
 		m_RootObject->AddChild(std::move(object));
 	}
 

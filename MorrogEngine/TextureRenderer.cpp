@@ -1,3 +1,5 @@
+#include <SDL.h>
+
 #include "TextureRenderer.h"
 #include "GameObject.h"
 #include "Renderer.h"
@@ -40,7 +42,7 @@ namespace MoE
 			m_RenderDimensions.y
 		};
 
-		renderer.RenderTexture(*m_Texture, destRect, m_SrcRect, m_FlipMode);
+		renderer.RenderTexture(*m_Texture, destRect, static_cast<SDL_Rect>(m_SrcRect), m_FlipMode);
 	}
 
 	void TextureRenderer::SetTexture(std::shared_ptr<Texture2D> texture)
@@ -109,15 +111,15 @@ namespace MoE
 	void TextureRenderer::SetDefaultSourceRect()
 	{
 		const glm::ivec2& dimentions{ m_Texture->GetSize() };
-		m_SrcRect = SDL_Rect{ 0, 0, dimentions.x, dimentions.y };
+		m_SrcRect = Recti{ glm::ivec2{}, dimentions };
 	}
 
 	void TextureRenderer::SetSourceRect(int x, int y, int width, int height)
 	{
-		SetSourceRect(SDL_Rect{ x, y, width, height });
+		SetSourceRect(Recti{ x, y, width, height });
 	}
 
-	void TextureRenderer::SetSourceRect(const SDL_Rect& srcRect)
+	void TextureRenderer::SetSourceRect(const Recti& srcRect)
 	{
 		m_SrcRect = srcRect;
 	}

@@ -15,7 +15,8 @@ class LevelRenderer;
 enum class GameMode
 {
 	singlePlayer,
-	multiplayer
+	multiplayer,
+	versus
 };
 
 class LevelManager final : public MoE::Singleton<LevelManager>, public MoE::Subject
@@ -30,6 +31,7 @@ public:
 	void SetGameMode(GameMode gameMode);
 	GameMode GetGameMode() const;
 
+	void GoStartMenu();
 	void StartGame();
 	void GoInfoMenu();
 	void NextLevel();

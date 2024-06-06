@@ -1,9 +1,10 @@
 #ifndef ANIMATION_H
 #define	ANIMATION_H
 
-#include <SDL.h>
 #include <cstdint>
 #include <vector>
+
+#include "Structs.h"
 
 namespace MoE
 {
@@ -24,7 +25,7 @@ public:
 	Animation& operator=(const Animation& other) = delete;
 	Animation& operator=(Animation&& other) noexcept = delete;
 
-	void AddFrame(const SDL_Rect& srcRect);
+	void AddFrame(const MoE::Recti& srcRect);
 
 	void Play();
 	bool Update();
@@ -38,7 +39,7 @@ private:
 	uint8_t m_FPS;
 	float m_LastFrameTime;
 	MoE::TextureRenderer* m_pRenderComponent;
-	std::vector<SDL_Rect> m_SrcRects;
+	std::vector<MoE::Recti> m_SrcRects;
 
 };
 

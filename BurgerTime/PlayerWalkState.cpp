@@ -84,27 +84,27 @@ void PlayerWalkState::InitAnimations()
 	const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
 	// UP
 	m_UpAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect up1Rect{ 1 * tileSize, 1 * tileSize, tileSize, tileSize };
-	SDL_Rect up2Rect{ 2 * tileSize, 1 * tileSize, tileSize, tileSize };
-	SDL_Rect up3Rect{ 0 * tileSize, 1 * tileSize, tileSize, tileSize };
+	const MoE::Recti up1Rect{ 1 * tileSize, 1 * tileSize, tileSize, tileSize };
+	const MoE::Recti up2Rect{ 2 * tileSize, 1 * tileSize, tileSize, tileSize };
+	const MoE::Recti up3Rect{ 0 * tileSize, 1 * tileSize, tileSize, tileSize };
 	m_UpAnimation->AddFrame(up1Rect);
 	m_UpAnimation->AddFrame(up2Rect);
 	m_UpAnimation->AddFrame(up3Rect);
 
 	// DOWN
 	m_DownAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect down1Rect{ 1 * tileSize, 0 * tileSize, tileSize, tileSize };
-	SDL_Rect down2Rect{ 2 * tileSize, 0 * tileSize, tileSize, tileSize };
-	SDL_Rect down3Rect{ 0 * tileSize, 0 * tileSize, tileSize, tileSize };
+	const MoE::Recti down1Rect{ 1 * tileSize, 0 * tileSize, tileSize, tileSize };
+	const MoE::Recti down2Rect{ 2 * tileSize, 0 * tileSize, tileSize, tileSize };
+	const MoE::Recti down3Rect{ 0 * tileSize, 0 * tileSize, tileSize, tileSize };
 	m_DownAnimation->AddFrame(down1Rect);
 	m_DownAnimation->AddFrame(down2Rect);
 	m_DownAnimation->AddFrame(down3Rect);
 
 	// SIDEWAY
 	m_SidewayAnimation = std::make_unique<Animation>(m_pRenderComp, static_cast<uint8_t>(3), static_cast<uint8_t>(21));
-	SDL_Rect side1Rect{ 1 * tileSize, 2 * tileSize, tileSize, tileSize };
-	SDL_Rect side2Rect{ 2 * tileSize, 2 * tileSize, tileSize, tileSize };
-	SDL_Rect side3Rect{ 0 * tileSize, 2 * tileSize, tileSize, tileSize };
+	const MoE::Recti side1Rect{ 1 * tileSize, 2 * tileSize, tileSize, tileSize };
+	const MoE::Recti side2Rect{ 2 * tileSize, 2 * tileSize, tileSize, tileSize };
+	const MoE::Recti side3Rect{ 0 * tileSize, 2 * tileSize, tileSize, tileSize };
 	m_SidewayAnimation->AddFrame(side1Rect);
 	m_SidewayAnimation->AddFrame(side2Rect);
 	m_SidewayAnimation->AddFrame(side3Rect);

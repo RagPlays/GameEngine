@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include <glm.hpp>
 #include <SDL.h>
+#include <glm.hpp>
 
 #include "Component.h"
 #include "Structs.h"
@@ -50,13 +50,13 @@ namespace MoE
 		// SrcRect
 		void SetDefaultSourceRect();
 		void SetSourceRect(int x, int y, int width, int height);
-		void SetSourceRect(const SDL_Rect& srcRect);
+		void SetSourceRect(const MoE::Recti& srcRect);
 
 	private:
 
 		std::shared_ptr<Texture2D> m_Texture;
 		glm::ivec2 m_RenderDimensions;
-		SDL_Rect m_SrcRect;
+		MoE::Recti m_SrcRect;
 		SDL_RendererFlip m_FlipMode;
 
 	};

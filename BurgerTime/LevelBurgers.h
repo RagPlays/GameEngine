@@ -20,12 +20,12 @@ class Burger;
 
 enum class BurgerPartType
 {
-	topBun,
-	patty,
+	topBun = 0,
+	botBun,
 	chees,
-	lettuce,
+	patty,
 	tomato,
-	botBun
+	lettuce
 };
 
 class LevelBurgers final : MoE::Component
@@ -42,7 +42,7 @@ public:
 
 	virtual void Render() const override;
 
-	void UpdateCollision(const MoE::Recti& hitbox);
+	void CheckForCollision(const MoE::Recti& hitbox);
 
 private:
 

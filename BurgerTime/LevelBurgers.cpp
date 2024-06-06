@@ -21,8 +21,12 @@ void LevelBurgers::Render() const
 	}
 }
 
-void LevelBurgers::UpdateCollision(const Recti& /*hitbox*/)
+void LevelBurgers::CheckForCollision(const Recti& hitbox)
 {
+	for (auto& burger : m_Burgers)
+	{
+		burger->CheckForCollision(static_cast<Rectf>(hitbox));
+	}
 }
 
 void LevelBurgers::LoadBurgers(const std::string& loadPath)
@@ -36,6 +40,6 @@ void LevelBurgers::LoadBurgers(const std::string& loadPath)
 	}
 	else
 	{
-
+		// load the burgers
 	}
 }

@@ -25,8 +25,8 @@ void PlayerWinState::SceneStart()
 	{
 		const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
 		m_WinAnimation = std::make_unique<Animation>(renderComp, static_cast<uint8_t>(2), static_cast<uint8_t>(2));
-		const SDL_Rect win1Rect{ 1 * tileSize, 0 * tileSize, tileSize, tileSize };
-		const SDL_Rect win2Rect{ 0 * tileSize, 4 * tileSize, tileSize, tileSize };
+		const MoE::Recti win1Rect{ 1 * tileSize, 0 * tileSize, tileSize, tileSize };
+		const MoE::Recti win2Rect{ 0 * tileSize, 4 * tileSize, tileSize, tileSize };
 		m_WinAnimation->AddFrame(win1Rect);
 		m_WinAnimation->AddFrame(win2Rect);
 	}

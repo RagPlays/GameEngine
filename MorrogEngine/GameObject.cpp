@@ -1,4 +1,5 @@
 #include <algorithm>
+
 #include "GameObject.h"
 #include "Component.h"
 
@@ -179,6 +180,19 @@ namespace MoE
 			child->SetLocalPosition(child->GetWorldPosition() - GetWorldPosition());
 		}
 		child->SetPositionDirty();
+
+		/*if (this)
+		{
+			if (keepWorldPos)
+			{
+				child->SetLocalPosition(child->GetWorldPosition() - GetWorldPosition());
+			}
+			child->SetPositionDirty();
+		}
+		else
+		{
+			child->SetLocalPosition(child->GetWorldPosition());
+		}*/
 
 		// Remove child from previous parent
 		if (child->m_Parent) child->m_Parent->RemoveChild(child.get());

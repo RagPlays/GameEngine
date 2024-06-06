@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <SDL.h>
 
 #include "Component.h"
 #include "Structs.h"
@@ -40,8 +39,8 @@ private:
 		//uint8_t srcGridX;
 		//uint8_t srcGridY;
 
-		SDL_Rect destRect;
-		SDL_Rect srcRect;
+		MoE::Recti destRect;
+		MoE::Recti srcRect;
 
 	};
 

@@ -3,8 +3,18 @@
 
 #include <glm.hpp>
 
+struct SDL_Rect;
+struct SDL_FRect;
+
 namespace MoE
 {
+	struct Linef;
+	struct Linei;
+	struct Rectf;
+	struct Recti;
+	struct Circlef;
+	struct Circlei;
+
 	//////// SHAPES ////////
 
 	using Point2f = glm::vec2;
@@ -16,6 +26,8 @@ namespace MoE
 		explicit Linef(float x1, float y1, float x2, float y2);
 		explicit Linef(const glm::vec2& pointOne, const glm::vec2& pointTwo);
 
+		explicit operator Linei() const;
+
 		glm::vec2 pointOne;
 		glm::vec2 pointTwo;
 	};
@@ -26,18 +38,10 @@ namespace MoE
 		explicit Linei(int x1, int y1, int x2, int y2);
 		explicit Linei(const glm::ivec2& pointOne, const glm::ivec2& pointTwo);
 
+		explicit operator Linef() const;
+
 		glm::ivec2 pointOne;
 		glm::ivec2 pointTwo;
-	};
-
-	struct Rectf
-	{
-		Rectf() = default;
-		explicit Rectf(float x, float y, float width, float height);
-		explicit Rectf(const glm::vec2& pos, const glm::vec2& size);
-
-		glm::vec2 pos;
-		glm::vec2 size;
 	};
 
 	struct Recti
@@ -46,8 +50,25 @@ namespace MoE
 		explicit Recti(int x, int y, int width, int height);
 		explicit Recti(const glm::ivec2& pos, const glm::ivec2& size);
 
+		explicit operator Rectf() const;
+		explicit operator SDL_Rect() const;
+
 		glm::ivec2 pos;
 		glm::ivec2 size;
+	};
+
+	struct Rectf
+	{
+		Rectf() = default;
+		explicit Rectf(float x, float y, float width, float height);
+		explicit Rectf(const glm::vec2& pos, const glm::vec2& size);
+
+		explicit operator Recti() const;
+		explicit operator SDL_Rect() const;
+		explicit operator SDL_FRect() const;
+
+		glm::vec2 pos;
+		glm::vec2 size;
 	};
 
 	struct Circlef

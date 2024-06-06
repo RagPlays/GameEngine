@@ -51,6 +51,11 @@ GameMode LevelManager::GetGameMode() const
     return m_GameMode;
 }
 
+void LevelManager::GoStartMenu()
+{
+    SceneManager::Get().SetCurrentSceneByName("StartMenuScene");
+}
+
 void LevelManager::StartGame()
 {
     m_CurrentLevel = 0;

@@ -14,7 +14,7 @@ Animation::Animation(MoE::TextureRenderer* renderComponent, uint8_t nrOfFrames, 
 	m_SrcRects.reserve(static_cast<size_t>(nrOfFrames));
 }
 
-void Animation::AddFrame(const SDL_Rect& srcRect)
+void Animation::AddFrame(const MoE::Recti& srcRect)
 {
 	m_SrcRects.emplace_back(srcRect);
 }

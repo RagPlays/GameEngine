@@ -25,7 +25,7 @@ void LevelRenderer::Render() const
 
 	for (const auto& tileInfo : m_LevelTiles)
 	{
-		renderer.RenderTexture(*m_TileMapTexture, tileInfo.destRect, tileInfo.srcRect);
+		renderer.RenderTexture(*m_TileMapTexture, static_cast<SDL_Rect>(tileInfo.destRect), static_cast<SDL_Rect>(tileInfo.srcRect));
 	}
 }
 
@@ -82,14 +82,14 @@ void LevelRenderer::LoadTiles(const std::string& filePath)
 			(
 				RenderTile
 				{
-					SDL_Rect
+					MoE::Recti
 					{
 						gridX * m_TileDrawSize,
 						gridY * m_TileDrawSize,
 						m_TileDrawSize,
 						m_TileDrawSize
 					},
-					SDL_Rect
+					MoE::Recti
 					{
 						srcGridX * m_TileSourceSize,
 						srcGridY * m_TileSourceSize,
