@@ -46,6 +46,11 @@ void LevelManager::SetGameMode(GameMode gameMode)
     m_GameMode = gameMode;
 }
 
+GameMode LevelManager::GetGameMode() const
+{
+    return m_GameMode;
+}
+
 void LevelManager::StartGame()
 {
     m_CurrentLevel = 0;

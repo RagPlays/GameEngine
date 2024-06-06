@@ -28,6 +28,8 @@ public:
 	void UnRegisterLevel(Level* const level);
 
 	void SetGameMode(GameMode gameMode);
+	GameMode GetGameMode() const;
+
 	void StartGame();
 	void GoInfoMenu();
 	void NextLevel();

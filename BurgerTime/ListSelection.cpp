@@ -22,8 +22,7 @@ ListSelection::ListSelection(MoE::GameObject* const owner, bool looping, int off
         markerRenderer->ScaleTextureDimensions(static_cast<float>(GameManager::Get().GetGameScale()));
         m_pMarkerRenderer = markerRenderer.get();
         marker->AddComponent<MoE::TextureRenderer>(std::move(markerRenderer));
-        marker->SetParent(owner);
-        marker.release();
+        owner->AddChild(std::move(marker));
     }
 }
 
@@ -57,9 +56,8 @@ void ListSelection::AddButton(std::unique_ptr<MoE::GameObject>&& buttonObj)
 {
     if (Button* buttonComp{ buttonObj->GetComponent<Button>() }; buttonComp)
     {
-        buttonObj->SetParent(GetOwner());
-        buttonObj.release();
-        m_pButtons.emplace_back(std::move(buttonComp));
+        GetOwner()->AddChild(std::move(buttonObj));
+        m_pButtons.emplace_back(buttonComp);
         if (m_pButtons.size() == 1) m_pButtons[0]->Select();
     }
     else std::cerr << "ERROR::LISTSELECTION::GAMEOBJECT_HAS_NO_BUTTONCOMPONENT\n";

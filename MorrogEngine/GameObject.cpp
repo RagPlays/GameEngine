@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "GameObject.h"
 #include "Component.h"
 
@@ -116,11 +117,12 @@ namespace MoE
 	// Childeren/Parent
 	bool GameObject::IsChild(GameObject* gameObj) const
 	{
-		for (const auto& child : m_Children)
-		{
-			if (child.get() == gameObj) return true;
-		}
-		return false;
+		return std::any_of(m_Children.begin(), m_Children.end(),
+			[gameObj](const auto& ptr)
+			{
+				return ptr.get() == gameObj;
+			}
+		);
 	}
 
 	GameObject* GameObject::GetParent() const
@@ -144,7 +146,7 @@ namespace MoE
 		return m_Children;
 	}
 
-	void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
+	/*void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
 	{
 		if (parent == this || m_Parent == parent || IsChild(parent)) return;
 
@@ -164,6 +166,28 @@ namespace MoE
 		if (m_Parent) m_Parent->RemoveChild(this);
 		m_Parent = parent;
 		if (m_Parent) m_Parent->AddChild(this);
+	}*/
+
+	void GameObject::AddChild(std::unique_ptr<GameObject>&& child, bool keepWorldPos)
+	{
+		// Checks
+		if (!child || child.get() == this || IsChild(child.get()) || IsAncestor(child.get())) return;
+
+		// Positioning
+		if (keepWorldPos)
+		{
+			child->SetLocalPosition(child->GetWorldPosition() - GetWorldPosition());
+		}
+		child->SetPositionDirty();
+
+		// Remove child from previous parent
+		if (child->m_Parent) child->m_Parent->RemoveChild(child.get());
+
+		// Set Correct Parent
+		child->m_Parent = this;
+
+		// Add To Childeren
+		m_Children.emplace_back(std::move(child));
 	}
 
 	// Get/Set Transform
@@ -243,10 +267,10 @@ namespace MoE
 	}
 
 	// Private functions
-	void GameObject::AddChild(GameObject* child)
+	/*void GameObject::AddChild(GameObject* child)
 	{
 		m_Children.emplace_back(std::move(child));
-	}
+	}*/
 
 	void GameObject::RemoveChild(GameObject* child)
 	{
@@ -256,6 +280,17 @@ namespace MoE
 				return ptr.get() == child;
 			}
 		), m_Children.end());
+	}
+
+	bool GameObject::IsAncestor(GameObject* gameObj)
+	{
+		GameObject* currentParent{ m_Parent };
+		while (currentParent)
+		{
+			if (currentParent == gameObj) return true;
+			currentParent = currentParent->m_Parent;
+		}
+		return false;
 	}
 
 	void GameObject::UpdateWorldPosition()

@@ -87,7 +87,7 @@ namespace MoE
 		size_t GetChildCount() const;
 		GameObject* GetChildAt(size_t idx) const;
 		const std::vector<std::unique_ptr<GameObject>>& GetChilderen() const;
-		void SetParent(GameObject* parent, bool keepWorldPos = false);
+		void AddChild(std::unique_ptr<GameObject>&& child, bool keepWorldPos = false);
 
 		// Get/Set Transforms
 		const glm::vec2& GetLocalPosition() const;
@@ -109,8 +109,9 @@ namespace MoE
 
 	private:
 
-		void AddChild(GameObject* child);
 		void RemoveChild(GameObject* child);
+		bool IsAncestor(GameObject* gameObj);
+
 		void UpdateWorldPosition();
 
 	private:
