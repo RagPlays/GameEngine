@@ -1,12 +1,16 @@
 #ifndef BURGER_H
 #define BURGER_H
 
+#include <array>
+
 #include "Component.h"
 
 namespace MoE
 {
 	class GameObject;
 }
+
+class BurgerPart;
 
 class Burger final : MoE::Component
 {
@@ -27,6 +31,7 @@ public:
 private:
 
 	// 4 burgerPieces Rects
+	//std::array<BurgerPart, 4> m_BurgerParts;
 
 	// has a rect on itself 
 

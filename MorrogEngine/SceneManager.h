@@ -25,10 +25,9 @@ namespace MoE
 		SceneManager& operator=(const SceneManager& other) = delete;
 		SceneManager& operator=(SceneManager&& other) noexcept = delete;
 
-		Scene& CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc);
+		Scene& CreateScene(const std::string& name, std::function<void(Scene&)>&& loadFunc);
 		void Destroy();
 
-		bool IsValidGameObject(GameObject* const gameObject) const;
 		bool IsValidSceneName(const std::string& sceneName);
 		
 		bool Empty() const;

@@ -18,7 +18,7 @@ public:
 
 	void Execute() override
 	{
-		LevelManager::Get().StartGame();
+		LevelManager::Get().GoInfoMenu();
 	}
 
 };

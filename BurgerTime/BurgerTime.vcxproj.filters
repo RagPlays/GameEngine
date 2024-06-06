@@ -46,6 +46,12 @@
     <Filter Include="GameSourceFile\GameComponents\EnemyPlayer">
       <UniqueIdentifier>{a0152f0f-fa62-41e5-826a-fd20f74b26b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Ohter">
+      <UniqueIdentifier>{4be7a3da-a546-408a-a175-3b05ecc254f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\Input\UI">
+      <UniqueIdentifier>{7a65df33-82d7-4bfd-97e1-b5f4eccc5057}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGuiExercise1.cpp">
@@ -125,6 +131,15 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoMenu.cpp">
+      <Filter>GameSourceFile\GameComponents\Ohter</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelBurgers.cpp">
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BurgerPart.cpp">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +244,21 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoMenu.h">
+      <Filter>GameSourceFile\GameComponents\Ohter</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelBurgers.h">
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerPart.h">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClInclude>
+    <ClInclude Include="ListNavCommand.h">
+      <Filter>GameSourceFile\Input\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ListPressCommand.h">
+      <Filter>GameSourceFile\Input\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

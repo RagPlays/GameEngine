@@ -29,6 +29,7 @@ public:
 
 	void SetGameMode(GameMode gameMode);
 	void StartGame();
+	void GoInfoMenu();
 	void NextLevel();
 	void GameOver();
 

@@ -21,13 +21,14 @@ namespace MoE
 
 	void SceneManager::Update()
 	{
-		CheckSceneSwap();
 		m_Scenes[m_CurrentSceneIdx]->Update();
 	}
 
 	void SceneManager::LateUpdate()
 	{
 		m_Scenes[m_CurrentSceneIdx]->LateUpdate();
+
+		CheckSceneSwap();
 	}
 
 	void SceneManager::Render() const
@@ -35,7 +36,7 @@ namespace MoE
 		m_Scenes[m_CurrentSceneIdx]->Render();
 	}
 
-	Scene& SceneManager::CreateScene(const std::string& name, std::function<void(Scene&)> loadFunc)
+	Scene& SceneManager::CreateScene(const std::string& name, std::function<void(Scene&)>&& loadFunc)
 	{
 		std::unique_ptr<Scene> scene{ std::make_unique<Scene>(name, std::move(loadFunc)) };
 		Scene* scenePtr{ scene.get() };
@@ -50,11 +51,6 @@ namespace MoE
 			scene.reset();
 		}
 		m_Scenes.clear();
-	}
-
-	bool SceneManager::IsValidGameObject(MoE::GameObject* const gameObject) const
-	{
-		return GetCurrentScene().IsValidGameObject(gameObject);
 	}
 
 	bool SceneManager::IsValidSceneName(const std::string& sceneName)
@@ -128,16 +124,17 @@ namespace MoE
 	{
 		if (!m_NeedSceneChange) return;
 
-		if (m_CurrentSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
-		{
-			if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
-			{
-				m_Scenes[m_CurrentSceneIdx]->SceneEnd();
-				m_Scenes[m_CurrentSceneIdx]->UnLoad();
-			}
-		}
 		if (m_ToSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
 		{
+			if (m_CurrentSceneIdx < static_cast<uint8_t>(m_Scenes.size()))
+			{
+				if (m_Scenes[m_CurrentSceneIdx]->IsLoaded())
+				{
+					m_Scenes[m_CurrentSceneIdx]->SceneEnd();
+					m_Scenes[m_CurrentSceneIdx]->UnLoad();
+				}
+			}
+
 			m_CurrentSceneIdx = m_ToSceneIdx;
 			m_Scenes[m_ToSceneIdx]->Load();
 			m_Scenes[m_ToSceneIdx]->SceneStart();

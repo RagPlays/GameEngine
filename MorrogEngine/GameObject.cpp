@@ -16,7 +16,11 @@ namespace MoE
 		m_Children.clear();
 	}
 
-	GameObject::~GameObject() = default;
+	GameObject::~GameObject()
+	{
+		m_Components.clear();
+		m_Children.clear();
+	}
 
 	void GameObject::SceneStart()
 	{
@@ -208,6 +212,20 @@ namespace MoE
 	bool GameObject::IsDestroyed() const
 	{
 		return m_IsDestroyed;
+	}
+
+	void GameObject::DeleteDestroyed()
+	{
+		for (auto it{ m_Children.rbegin() }; it != m_Children.rend();)
+		{
+			if ((*it)->IsDestroyed())
+			{
+				it = decltype(it)(m_Children.erase(std::next(it).base()));
+			}
+			else ++it;
+		}
+
+		for (auto& child : m_Children) child->DeleteDestroyed();
 	}
 
 	void GameObject::Destroy()

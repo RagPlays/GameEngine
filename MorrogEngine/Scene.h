@@ -1,7 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <vector>
 #include <string>
 #include <memory>
 #include <functional>
@@ -15,7 +14,7 @@ namespace MoE
 	{
 	public:
 
-		explicit Scene(const std::string& name, std::function<void(Scene&)> loadFunc);
+		explicit Scene(const std::string& name, std::function<void(Scene&)>&& loadFunc);
 		~Scene();
 
 		Scene(const Scene& other) = delete;
@@ -27,7 +26,6 @@ namespace MoE
 		void Load();
 		void UnLoad();
 		bool IsLoaded() const;
-		bool IsValidGameObject(MoE::GameObject* gameObj) const;
 
 		void SceneStart();
 		void FixedUpdate();
@@ -40,10 +38,14 @@ namespace MoE
 
 	private:
 
+		void CheckDeletions();
+
+	private:
+
+		std::unique_ptr<GameObject> m_RootObject;
 		bool m_IsLoaded;
 		std::function<void(Scene&)> m_LoadFunction;
 		const std::string m_Name;
-		std::vector<std::unique_ptr<GameObject>> m_Objects;
 
 	};
 }

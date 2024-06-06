@@ -99,8 +99,9 @@ namespace MoE
 		// Translate
 		void Translate(const glm::vec2& translate);
 
-		// Getters
+		// Deleting / Destroying
 		bool IsDestroyed() const;
+		void DeleteDestroyed();
 
 		// Other
 		void Destroy();

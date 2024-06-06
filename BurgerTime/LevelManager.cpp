@@ -52,6 +52,11 @@ void LevelManager::StartGame()
     SceneManager::Get().SetCurrentSceneByIndex(static_cast<uint8_t>(m_CurrentLevel));
 }
 
+void LevelManager::GoInfoMenu()
+{
+    SceneManager::Get().SetCurrentSceneByName("InfoMenuScene");
+}
+
 void LevelManager::NextLevel()
 {
     if (m_CurrentLevel != -1)
@@ -65,10 +70,7 @@ void LevelManager::NextLevel()
 
 void LevelManager::GameOver()
 {
-    if (SceneManager::Get().IsValidSceneName("EndMenuScene"))
-    {
-        SceneManager::Get().SetCurrentSceneByName("EndMenuScene");
-    }
+    SceneManager::Get().SetCurrentSceneByName("EndMenuScene");
 }
 
 uint8_t LevelManager::GetTileSize() const

@@ -9,6 +9,8 @@
 namespace MoE
 {
 	class GameObject;
+	class Texture2D;
+	class TextureRenderer;
 }
 
 class Button;
@@ -17,7 +19,7 @@ class ListSelection final : public MoE::Component
 {
 public:
 
-	explicit ListSelection(MoE::GameObject* const owner, bool looping);
+	explicit ListSelection(MoE::GameObject* const owner, bool looping, int offset, std::shared_ptr<MoE::Texture2D> makerTexture, int startButtonPosY);
 
 	virtual ~ListSelection();
 
@@ -26,19 +28,30 @@ public:
 	ListSelection& operator=(const ListSelection& other) = delete;
 	ListSelection& operator=(ListSelection&& other) noexcept = delete;
 
-	void AddButton(std::unique_ptr<Button>&& button);
+	virtual void SceneStart() override;
 
-	void MoveUp();
-	void MoveDown();
+	void AddButton(std::unique_ptr<MoE::GameObject>&& button);
 
+	void Press();
+	void Move(bool up);
+
+	void ManualSelect(uint8_t idx);
 	void SetLooping(bool looping);
 
 private:
 
+	void UpdateMarker();
+
+private:
+
+	MoE::TextureRenderer* m_pMarkerRenderer;
+	int m_MarkerOffset;
+	int m_StartButtonYPos;
+
 	bool m_Looping;
 	int m_SelectedIndex;
 
-	//std::vector<std::unique_ptr<Button>> m_Buttons;
+	std::vector<Button*> m_pButtons;
 
 };
 

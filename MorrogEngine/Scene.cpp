@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Scene.h"
 #include "GameObject.h"
 #include "ServiceLocator.h"
@@ -7,11 +9,11 @@
 
 namespace MoE
 {
-	Scene::Scene(const std::string& name, std::function<void(Scene&)> loadFunc)
+	Scene::Scene(const std::string& name, std::function<void(Scene&)>&& loadFunc)
 		: m_IsLoaded{}
 		, m_LoadFunction{ std::move(loadFunc) }
 		, m_Name{ name }
-		, m_Objects{}
+		, m_RootObject{ std::make_unique<GameObject>() }
 	{
 	}
 
@@ -22,7 +24,8 @@ namespace MoE
 
 	void Scene::Add(std::unique_ptr<GameObject>&& object)
 	{
-		m_Objects.emplace_back(std::move(object));
+		object->SetParent(m_RootObject.get());
+		object.release(); // can be released because ownership is transfered to the parent gameObject
 	}
 
 	void Scene::Load()
@@ -33,8 +36,9 @@ namespace MoE
 
 	void Scene::UnLoad()
 	{
+		if (!m_IsLoaded) return;
 		// Unload GameObjects
-		m_Objects.clear();
+		m_RootObject.reset();
 		// Unload Events
 		EventQueue::Get().ClearEvents();
 		// Unload EventHandlers
@@ -52,77 +56,45 @@ namespace MoE
 		return m_IsLoaded;
 	}
 
-	bool Scene::IsValidGameObject(MoE::GameObject* gameObj) const
-	{
-		for (const auto& object : m_Objects)
-		{
-			if (object.get() == gameObj) return true;
-		}
-		return false;
-	}
-
 	void Scene::SceneStart()
 	{
-		for (auto& object : m_Objects)
-		{
-			object->SceneStart();
-		}
+		m_RootObject->SceneStart();
 	}
 
 	void Scene::FixedUpdate()
 	{
-		for (auto& object : m_Objects)
-		{
-			object->FixedUpdate();
-		}
+		m_RootObject->FixedUpdate();
 	}
 
 	void Scene::Update()
 	{
-		for (auto& object : m_Objects)
-		{
-			object->Update();
-		}
-
-		m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(),
-			[](auto& object)
-			{
-				if (object->IsDestroyed())
-				{
-					object->OnDestroy();
-					return true;
-				}
-				else return false;
-			}
-		), m_Objects.end());
+		m_RootObject->Update();
 	}
 
 	void Scene::LateUpdate()
 	{
-		for (auto& object : m_Objects)
-		{
-			object->LateUpdate();
-		}
+		m_RootObject->LateUpdate();
+
+		CheckDeletions();
 	}
 
 	void Scene::Render() const
 	{
-		for (const auto& object : m_Objects)
-		{
-			object->Render();
-		}
+		m_RootObject->Render();
 	}
 
 	void Scene::SceneEnd()
 	{
-		for (const auto& object : m_Objects)
-		{
-			object->SceneEnd();
-		}
+		m_RootObject->SceneEnd();
 	}
 
 	const std::string& Scene::GetName() const
 	{
 		return m_Name;
+	}
+
+	void Scene::CheckDeletions()
+	{
+		m_RootObject->DeleteDestroyed();
 	}
 }
