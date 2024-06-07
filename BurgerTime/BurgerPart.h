@@ -3,31 +3,23 @@
 
 #include <memory>
 
-#include "Structs.h"
+#include "Component.h"
 
 namespace MoE
 {
-	struct Recti;
+	struct Rectf;
 }
 
-namespace MoE
-{
-	class Texture2D;
-}
-
-class BurgerPart final
+class BurgerPart final : public MoE::Component
 {
 public:
 
-	explicit BurgerPart
-	(
-		const MoE::Rectf& hitbox,
-		std::shared_ptr<MoE::Texture2D> burgerType,
-		const MoE::Recti& srcRect
-	);
+	explicit BurgerPart(MoE::GameObject* const owner, const glm::ivec2& dimentions);
 	virtual ~BurgerPart() = default;
 
-	void Render() const;
+#if defined DEBUG || defined _DEBUG
+	virtual void Render() const override;
+#endif
 
 	bool GetIsPushed() const;
 
@@ -35,14 +27,9 @@ public:
 
 private:
 
-	// Texture
-	const std::shared_ptr<MoE::Texture2D> m_Texture;
-	MoE::Recti m_SrcRect;
-
-	//
 	bool m_Pushed;
 	float m_PushDistance;
-	MoE::Rectf m_Hitbox;
+	const glm::ivec2 m_Dimentions;
 
 };
 

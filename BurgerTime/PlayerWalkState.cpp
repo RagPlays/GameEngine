@@ -7,6 +7,7 @@
 #include "LevelManager.h"
 #include "Timer.h"
 #include "LevelCollision.h"
+#include "LevelBurgers.h"
 #include "EventIDs.h"
 
 PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handler)
@@ -159,6 +160,12 @@ void PlayerWalkState::UpdateMovement()
 			{
 				m_pCurrentAnimation->Stop();
 			}
+		}
+		else if (LevelBurgers* burgers{ LevelManager::Get().GetBurgers() }; burgers)
+		{
+			const glm::vec2& pos{ owner->GetLocalPosition() };
+			const MoE::Recti hitbox{ static_cast<glm::ivec2>(pos), m_HitBoxSize };
+			burgers->CheckForCollision(hitbox);
 		}
 	}
 }

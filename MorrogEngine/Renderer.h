@@ -55,8 +55,8 @@ namespace MoE
 		void RenderLine(const Linef& line) const;
 		void RenderLine(const Linei& line) const;
 
-		void RenderRect(const Rectf& rect, bool filled = false) const;
-		void RenderRect(const Recti& rect, bool filled = false) const;
+		void RenderRect(const SDL_FRect& rect, bool filled = false) const;
+		void RenderRect(const SDL_Rect& rect, bool filled = false) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
 

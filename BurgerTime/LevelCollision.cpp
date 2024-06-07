@@ -158,31 +158,27 @@ void LevelCollision::LoadCollision(const std::string& filePath)
 
 		while (inFile >> p1x >> p1y >> p2x >> p2y)
 		{
-			if (inFile)
+			if (std::abs(p1y - p2y) < epsilon) // LineX
 			{
-				if (std::abs(p1y - p2y) < epsilon) // LineX
-				{
-					const int po1X{ static_cast<int>(p1x * tileSize) };
-					const int po1Y{ static_cast<int>((p1y - 0.75f) * tileSize) };
-					const int po2X{ static_cast<int>(p2x * tileSize) };
-					const int po2Y{ static_cast<int>((p2y - 0.75f) * tileSize) };
-					m_LinesX.emplace_back(Linei{ glm::ivec2{ po1X, po1Y }, glm::ivec2{ po2X, po2Y } });
-				}
-				else if (std::abs(p1x - p2x) < epsilon) // LineY
-				{
-					const int po1X{ static_cast<int>(p1x * tileSize) };
-					const int po1Y{ static_cast<int>((p1y - 0.25f) * tileSize) };
-					const int po2X{ static_cast<int>(p2x * tileSize) };
-					const int po2Y{ static_cast<int>((p2y - 0.25f) * tileSize) };
-					m_LinesY.emplace_back(Linei{ glm::ivec2{ po1X, po1Y }, glm::ivec2{ po2X, po2Y } });
-				}
-				else
-				{
-					std::cerr << "ERROR::LEVELCOLLISION::COLLISIONFILE_NOT_SET_CORRECTLY!\n";
-					std::cout << "Values: " << p1x << " " << p1y << " " << p2x << " " << p2y << "\n";
-				}
+				const int po1X{ static_cast<int>(p1x * tileSize) };
+				const int po1Y{ static_cast<int>((p1y - 0.75f) * tileSize) };
+				const int po2X{ static_cast<int>(p2x * tileSize) };
+				const int po2Y{ static_cast<int>((p2y - 0.75f) * tileSize) };
+				m_LinesX.emplace_back(Linei{ glm::ivec2{ po1X, po1Y }, glm::ivec2{ po2X, po2Y } });
 			}
-			else return;
+			else if (std::abs(p1x - p2x) < epsilon) // LineY
+			{
+				const int po1X{ static_cast<int>(p1x * tileSize) };
+				const int po1Y{ static_cast<int>((p1y - 0.25f) * tileSize) };
+				const int po2X{ static_cast<int>(p2x * tileSize) };
+				const int po2Y{ static_cast<int>((p2y - 0.25f) * tileSize) };
+				m_LinesY.emplace_back(Linei{ glm::ivec2{ po1X, po1Y }, glm::ivec2{ po2X, po2Y } });
+			}
+			else
+			{
+				std::cerr << "ERROR::LEVELCOLLISION::COLLISIONFILE_NOT_SET_CORRECTLY!\n";
+				std::cout << "Values: " << p1x << " " << p1y << " " << p2x << " " << p2y << "\n";
+			}
 		}
 	}
 }

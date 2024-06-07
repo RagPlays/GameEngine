@@ -1,11 +1,13 @@
 #ifndef BURGER_H
 #define BURGER_H
 
-#include <array>
+#include <vector>
+#include <memory>
+
+#include <glm.hpp>
 
 #include "Component.h"
-#include "BurgerPart.h"
-#include "LevelBurgers.h"
+#include "Structs.h"
 
 namespace MoE
 {
@@ -17,11 +19,11 @@ namespace MoE
 
 class BurgerPart;
 
-class Burger final : MoE::Component
+class Burger final : public MoE::Component
 {
 public:
 
-	explicit Burger(MoE::GameObject* const owner, std::shared_ptr<MoE::Texture2D> texture, BurgerPartType burgerType);
+	explicit Burger(MoE::GameObject* const owner, std::shared_ptr<MoE::Texture2D> texture, int burgerType);
 	virtual ~Burger() = default;
 
 	Burger(const Burger& other) = delete;
@@ -29,18 +31,17 @@ public:
 	Burger& operator=(const Burger& other) = delete;
 	Burger& operator=(Burger&& other) noexcept = delete;
 
-	virtual void SceneStart() override;
-	virtual void Render() const override;
-
 	void CheckForCollision(const MoE::Rectf& hitbox);
 
 private:
 
-	BurgerPartType m_BurgerType;
-	std::shared_ptr<MoE::Texture2D> m_Texture;
-	MoE::Recti m_Hitbox;
+	void LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> texture);
 
-	std::vector<BurgerPart> m_BurgerParts;
+private:
+
+	glm::ivec2 m_Dimentions;
+
+	std::vector<BurgerPart*> m_BurgerParts;
 
 };
 

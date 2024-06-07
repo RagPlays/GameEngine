@@ -119,18 +119,16 @@ namespace MoE
 		SDL_RenderDrawLine(m_pRenderer, line.pointOne.x, line.pointOne.y, line.pointTwo.x, line.pointTwo.y);
 	}
 
-	void Renderer::RenderRect(const Rectf& rect, bool filled) const
+	void Renderer::RenderRect(const SDL_FRect& rect, bool filled) const
 	{
-		const SDL_FRect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
-		if (filled) SDL_RenderFillRectF(m_pRenderer, &sdlRect);
-		else SDL_RenderDrawRectF(m_pRenderer, &sdlRect);
+		if (filled) SDL_RenderFillRectF(m_pRenderer, &rect);
+		else SDL_RenderDrawRectF(m_pRenderer, &rect);
 	}
 
-	void Renderer::RenderRect(const Recti& rect, bool filled) const
+	void Renderer::RenderRect(const SDL_Rect& rect, bool filled) const
 	{
-		const SDL_Rect sdlRect{ rect.pos.x, rect.pos.y, rect.size.x, rect.size.y };
-		if (filled) SDL_RenderFillRect(m_pRenderer, &sdlRect);
-		else SDL_RenderDrawRect(m_pRenderer, &sdlRect);
+		if (filled) SDL_RenderFillRect(m_pRenderer, &rect);
+		else SDL_RenderDrawRect(m_pRenderer, &rect);
 	}
 
 	// Getters / Setters

@@ -3,14 +3,14 @@
 
 #include <vector>
 #include <string>
-#include <vector>
 #include <memory>
 
 #include "Component.h"
 
 namespace MoE
 {
-	class GameManager;
+	class Texture2D;
+	class GameObject;
 
 	struct Recti;
 }
@@ -28,12 +28,12 @@ enum class BurgerPartType
 	lettuce
 };
 
-class LevelBurgers final : MoE::Component
+class LevelBurgers final : public MoE::Component
 {
 public:
 	
-	explicit LevelBurgers(MoE::GameObject* const owner, const std::string& burgerLoadPath);
-	virtual ~LevelBurgers() = default;
+	explicit LevelBurgers(MoE::GameObject* const owner, const std::string& burgerLoadPath, std::shared_ptr<MoE::Texture2D> texture);
+	virtual ~LevelBurgers();
 
 	LevelBurgers(const LevelBurgers& other) = delete;
 	LevelBurgers(LevelBurgers&& other) noexcept = delete;
@@ -52,6 +52,8 @@ private:
 
 	// all burgers are owned by the owner of this component
 	std::vector<Burger*> m_Burgers;
+
+	std::shared_ptr<MoE::Texture2D> m_Texture;
 
 };
 

@@ -65,18 +65,18 @@ void Player::Render() const
 	MoE::Renderer& renderer{ MoE::Renderer::Get() };
 
 	renderer.SetCurrentDrawColor(Color{ 255, 0, 255 });
-	renderer.RenderRect(Rectf{ position, static_cast<glm::vec2>(hitBox) });
+	renderer.RenderRect(static_cast<SDL_FRect>(Rectf{ position, static_cast<glm::vec2>(hitBox) }));
 
 	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
 		const int moveOffset{ coll->GetMoveOffset() };
-		Recti moveRect
+		const Recti moveRect
 		{
 			static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(hitBox) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
 			glm::ivec2{ moveOffset, moveOffset }
 		};
 		renderer.SetCurrentDrawColor(Color{ 0, 255, 0 });
-		renderer.RenderRect(moveRect);
+		renderer.RenderRect(static_cast<SDL_Rect>(moveRect));
 	}
 }
 #endif

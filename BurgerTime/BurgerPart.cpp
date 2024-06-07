@@ -1,28 +1,31 @@
-#include <SDL.h>
-
 #include "BurgerPart.h"
 #include "Renderer.h"
 #include "Collisions.h"
 #include "TextureRenderer.h"
 #include "GameManager.h"
+#include "GameObject.h"
+#include "Structs.h"
 
-BurgerPart::BurgerPart(const MoE::Rectf& hitbox, std::shared_ptr<MoE::Texture2D> texture, const MoE::Recti& srcRect)
-	: m_Texture{ texture }
-	, m_SrcRect{ srcRect }
+BurgerPart::BurgerPart(MoE::GameObject* const owner, const glm::ivec2& dimentions)
+	: Component{ owner }
 	, m_Pushed{}
-	, m_PushDistance{ 5.f * GameManager::Get().GetGameScale() }
-	, m_Hitbox{ hitbox }
+	, m_PushDistance{ 2.f * GameManager::Get().GetGameScale() }
+	, m_Dimentions{ dimentions }
 {
 }
 
+#if defined DEBUG || defined _DEBUG
 void BurgerPart::Render() const
 {
-	if (!m_Texture) return;
+	const glm::vec2& position{ GetOwner()->GetWorldPosition() };
+	const MoE::Recti destRect{ static_cast<glm::ivec2>(position), m_Dimentions };
 
 	MoE::Renderer& renderer{ MoE::Renderer::Get() };
 
-	renderer.RenderTexture(*m_Texture, static_cast<SDL_Rect>(m_Hitbox), static_cast<SDL_Rect>(m_SrcRect));
+	renderer.SetCurrentDrawColor(MoE::Color{ 255, 0, 255 });
+	renderer.RenderRect(static_cast<SDL_Rect>(destRect));
 }
+#endif
 
 bool BurgerPart::GetIsPushed() const
 {
@@ -32,9 +35,13 @@ bool BurgerPart::GetIsPushed() const
 void BurgerPart::CheckForCollision(const MoE::Rectf& hitbox)
 {
 	if (m_Pushed) return;
-	if (MoE::Coll::OverLapping(hitbox, m_Hitbox))
+	const glm::vec2& position{ GetOwner()->GetWorldPosition() };
+	const MoE::Rectf partHitbox{ position, static_cast<glm::vec2>(m_Dimentions) };
+	if (MoE::Coll::OverLapping(hitbox, partHitbox))
 	{
 		m_Pushed = true;
-		m_Hitbox.pos.y -= m_PushDistance;
+		MoE::GameObject* burgerObjPtr{ GetOwner() };
+		const glm::vec2 translation{ 0.f, m_PushDistance };
+		burgerObjPtr->Translate(translation);
 	}
 }

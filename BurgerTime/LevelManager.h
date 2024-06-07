@@ -11,6 +11,7 @@ using EventID = int;
 class Level;
 class LevelCollision;
 class LevelRenderer;
+class LevelBurgers;
 
 enum class GameMode
 {
@@ -42,6 +43,7 @@ public:
 	Level* GetLevel() const;
 	LevelRenderer* GetRenderer();
 	LevelCollision* GetCollision();
+	LevelBurgers* GetBurgers();
 
 private:
 
@@ -58,6 +60,7 @@ private:
 	Level* m_pCurrentLevel;
 	LevelRenderer* m_pCurrentLevelRenderer;
 	LevelCollision* m_pCurrentLevelCollision;
+	LevelBurgers* m_pCurrentLevelBurgers;
 
 };
 

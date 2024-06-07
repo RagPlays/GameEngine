@@ -2,9 +2,10 @@
 #include <cassert>
 
 #include "LevelManager.h"
-#include "LevelCollision.h"
-#include "LevelRenderer.h"
 #include "Level.h"
+#include "LevelRenderer.h"
+#include "LevelCollision.h"
+#include "LevelBurgers.h"
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "EventIDs.h"
@@ -111,15 +112,25 @@ LevelCollision* LevelManager::GetCollision()
     return m_pCurrentLevelCollision;
 }
 
+LevelBurgers* LevelManager::GetBurgers()
+{
+    if (!m_pCurrentLevelBurgers && m_pCurrentLevel)
+    {
+        m_pCurrentLevelBurgers = m_pCurrentLevel->GetOwner()->GetComponent<LevelBurgers>();
+    }
+    return m_pCurrentLevelBurgers;
+}
+
 LevelManager::LevelManager()
-    //: Subject{}
-    : m_GameMode{ GameMode::singlePlayer }
+    : Subject{}
+    , m_GameMode{ GameMode::singlePlayer }
     , m_CurrentLevel{}
     , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }
     , m_pCurrentLevel{}
     , m_pCurrentLevelRenderer{}
     , m_pCurrentLevelCollision{}
+    , m_pCurrentLevelBurgers{}
 {
     assert(m_NrLevelsCount);
 }

@@ -27,18 +27,10 @@ namespace MoE
 		virtual void SceneEnd();
 
 		GameObject* const GetOwner() const;
-		GameObject* const GetParent() const;
 
 	protected:
 
 		explicit Component(GameObject* const owner);
-
-		// Gets
-		const glm::vec2& GetLocalPosition() const;
-		const glm::vec2& GetWorldPosition() const;
-
-		// Sets
-		void SetLocalPosition(const glm::vec2& pos);
 
 	private:
 
