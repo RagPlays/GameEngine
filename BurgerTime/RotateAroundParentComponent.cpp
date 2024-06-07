@@ -18,16 +18,18 @@ void RotateAroundParentComponent::Update()
 {
 	constexpr float fullCirlce{ static_cast<float>(std::numbers::pi) * 2.f };
 
-	if (GetParent())
+	GameObject* owner{ GetOwner() };
+
+	if (owner->GetParent())
 	{
 		if (m_CurrentAngle >= fullCirlce)
 		{
 			m_CurrentAngle -= fullCirlce;
 		}
 
-		const float radius{ glm::length(GetLocalPosition()) };
+		const float radius{ glm::length(owner->GetLocalPosition()) };
 		m_CurrentAngle += m_RotationSpeed * Timer::Get().GetElapsedSec();
 
-		SetLocalPosition({ radius * std::cosf(m_CurrentAngle), radius * std::sinf(m_CurrentAngle) });
+		owner->SetLocalPosition({ radius * std::cosf(m_CurrentAngle), radius * std::sinf(m_CurrentAngle) });
 	}
 }
