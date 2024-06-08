@@ -10,6 +10,7 @@
 #include "TextureRenderer.h"
 #include "Player.h"
 #include "LevelManager.h"
+#include "LevelCollision.h"
 
 PlayerStateHandler::PlayerStateHandler(MoE::GameObject* const owner, Player* const player)
 	: Component{ owner }
@@ -34,13 +35,18 @@ void PlayerStateHandler::SceneStart()
 		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
 	}
 
-	m_WalkState->SceneStart();
-	m_AttackState->SceneStart();
-	m_WinState->SceneStart();
-	m_DieState->SceneStart();
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	{
+		GetOwner()->SetLocalPosition(coll->GetStartPos());
+	}
+
+	if(m_WalkState) m_WalkState->SceneStart();
+	if (m_AttackState) m_AttackState->SceneStart();
+	if (m_WinState) m_WinState->SceneStart();
+	if (m_DieState) m_DieState->SceneStart();
 
 	m_pCurrentState = m_WalkState.get();
-	m_pCurrentState->OnEnter();
+	if(m_pCurrentState) m_pCurrentState->OnEnter();
 }
 
 void PlayerStateHandler::FixedUpdate()

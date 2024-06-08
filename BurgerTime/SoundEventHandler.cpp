@@ -16,11 +16,11 @@ void SoundEventHandler::HandleEvent(EventID eventID) const
 	switch (eventID)
 	{
 	case Event::sceneStarts:
-		soundSystem.Play(MusicSoundID::calmMusic, maxVol, SoundType::Music);
+		soundSystem.Play(MusicSoundID::calmMusic, maxVol, SoundType::music);
 		break;
 
 	case Event::playerDied:
-		soundSystem.Play(SoundEffectSoundID::die, maxVol / 10, SoundType::SoundEffect);
+		soundSystem.Play(SoundEffectSoundID::die, maxVol / 10, SoundType::soundEffect);
 		break;
 	}
 }

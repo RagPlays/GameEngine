@@ -15,11 +15,6 @@ PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handl
 	, m_pRenderComp{}
 	, m_MovementSpeed{ glm::ivec2{42, 22} * GameManager::Get().GetGameScale() }
 	, m_PreviousDir{}
-	, m_HitBoxSize
-	{ 
-		GameManager::Get().GetGameScale() * LevelManager::Get().GetTileSize(),
-		GameManager::Get().GetGameScale()* LevelManager::Get().GetTileSize()
-	}
 	, m_pCurrentAnimation{}
 	, m_UpAnimation{}
 	, m_DownAnimation{}
@@ -153,7 +148,7 @@ void PlayerWalkState::UpdateMovement()
 
 		owner->Translate(translation);
 
-		if (!coll->CanMove(m_pPlayer, m_HitBoxSize))
+		if (!coll->CanMove(m_pPlayer, m_pRenderComp->GetTextureDimentions()))
 		{
 			owner->SetLocalPosition(originalPos);
 			if (m_pCurrentAnimation)
@@ -163,9 +158,7 @@ void PlayerWalkState::UpdateMovement()
 		}
 		else if (LevelBurgers* burgers{ LevelManager::Get().GetBurgers() }; burgers)
 		{
-			const glm::vec2& pos{ owner->GetLocalPosition() };
-			const MoE::Recti hitbox{ static_cast<glm::ivec2>(pos), m_HitBoxSize };
-			burgers->CheckForCollision(hitbox);
+			burgers->CheckForCollision(m_pPlayer->GetHitbox());
 		}
 	}
 }

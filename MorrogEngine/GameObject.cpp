@@ -26,7 +26,7 @@ namespace MoE
 
 	void GameObject::SceneStart()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->SceneStart();
 		}
@@ -39,7 +39,7 @@ namespace MoE
 
 	void GameObject::FixedUpdate()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->FixedUpdate();
 		}
@@ -52,7 +52,7 @@ namespace MoE
 
 	void GameObject::Update()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->Update();
 		}
@@ -65,7 +65,7 @@ namespace MoE
 
 	void GameObject::LateUpdate()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->LateUpdate();
 		}
@@ -78,7 +78,7 @@ namespace MoE
 
 	void GameObject::Render() const
 	{
-		for (const auto& component : m_Components)
+		for (const auto& [type, component] : m_Components)
 		{
 			component->Render();
 		}
@@ -91,7 +91,7 @@ namespace MoE
 
 	void GameObject::OnDestroy()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->OnDestroy();
 		}
@@ -104,7 +104,7 @@ namespace MoE
 
 	void GameObject::SceneEnd()
 	{
-		for (auto& component : m_Components)
+		for (auto& [type, component] : m_Components)
 		{
 			component->SceneEnd();
 		}

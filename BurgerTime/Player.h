@@ -4,8 +4,8 @@
 #include "Component.h"
 #include "Subject.h"
 #include "Observer.h"
-
 #include "PlayerStateHandler.h"
+#include "Structs.h"
 
 namespace MoE
 {
@@ -26,6 +26,7 @@ public:
 	
 	// Overrides
 	virtual void SceneStart() override;
+	virtual void FixedUpdate() override;
 #if defined _DEBUG || defined DEBUG
 	virtual void Render() const override;
 #endif
@@ -33,7 +34,9 @@ public:
 	// Movement
 	void Move(const glm::ivec2& dir);
 	void Stop(const glm::ivec2& dir);
+
 	const glm::ivec2& GetMoveDir() const;
+	const MoE::Recti& GetHitbox() const;
 
 	void Kill();
 	void SetAttacking(bool attacking);
@@ -53,6 +56,8 @@ private:
 
 	// Movement
 	glm::ivec2 m_MovementDir;
+
+	MoE::Recti m_HitBox;
 	
 	bool m_IsAttacking;
 

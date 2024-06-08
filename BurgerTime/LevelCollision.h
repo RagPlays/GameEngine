@@ -25,6 +25,10 @@ public:
 
 	bool CanMove(Player* player, const glm::ivec2& moveHitBox);
 
+	int GetNextBurgerFallPos(const glm::ivec2& pos) const;
+
+	static bool IsBetween(int x, int x1, int x2);
+
 private:
 
 	void LoadCollision(const std::string& filePath);

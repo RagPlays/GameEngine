@@ -147,7 +147,7 @@ namespace MoE
 
 			switch (soundInfo.type)
 			{
-			case SoundType::SoundEffect:
+			case SoundType::soundEffect:
 				if (!m_SoundEffects[id]->IsLoaded())
 				{
 					m_SoundEffects[id]->Load();
@@ -155,7 +155,7 @@ namespace MoE
 				m_SoundEffects[id]->SetVolume(volume);
 				m_SoundEffects[id]->Play();
 				break;
-			case SoundType::Music:
+			case SoundType::music:
 				if (!m_Music[id]->IsLoaded())
 				{
 					m_Music[id]->Load();

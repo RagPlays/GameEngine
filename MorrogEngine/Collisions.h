@@ -23,6 +23,11 @@ namespace MoE
 					);
 		}
 
+		inline bool OverLapping(const Recti& r1, const Recti r2)
+		{
+			return OverLapping(static_cast<Rectf>(r1), static_cast<Rectf>(r2));
+		}
+
 		inline bool LinesIntersecting(const Linei& l1, const Linei& l2)
 		{
 			const glm::ivec2& p1{ l1.pointOne };
@@ -43,6 +48,11 @@ namespace MoE
 			const float uB{ static_cast<float>(p2x_p1x * p1y_p3y - p2y_p1y * p1x_p3x) * denominator };
 
 			return (uA >= 0.f && uA <= 1.f && uB >= 0.f && uB <= 1.f);
+		}
+
+		inline bool LinesIntersecting(const Linef& l1, const Linef& l2)
+		{
+			return LinesIntersecting(static_cast<Linei>(l1), static_cast<Linei>(l2));
 		}
 	}
 }

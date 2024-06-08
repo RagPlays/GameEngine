@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "PlayerState.h"
+#include "Structs.h"
 
 namespace MoE
 {
@@ -49,7 +50,6 @@ private:
 	// Movement
 	const glm::ivec2 m_MovementSpeed;
 	glm::ivec2 m_PreviousDir;
-	const glm::ivec2 m_HitBoxSize;
 
 	// Animations
 	Animation* m_pCurrentAnimation;

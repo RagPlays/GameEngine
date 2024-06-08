@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <typeindex>
+#include <unordered_map>
 
 #include "Transform.h"
 
@@ -39,46 +41,31 @@ namespace MoE
 		{
 			if (!HasComponent<ComponentType>())
 			{
-				m_Components.emplace_back(std::move(component));
+				m_Components[typeid(ComponentType)] = std::move(component);
 			}
 		}
+
 		template <class ComponentType>
 		void RemoveComponent()
 		{
-			ComponentType* component = GetComponent<ComponentType>();
-			if (component)
-			{
-				m_Components.erase(std::remove_if(m_Components.begin(), m_Components.end(), [&](std::unique_ptr<Component> comp)
-					{
-						return comp.get() == component;
-					}
-				), m_Components.end());
-			}
+			m_Components.erase(typeid(ComponentType));
 		}
+
 		template <class ComponentType>
 		ComponentType* GetComponent() const
 		{
-			for (auto& component : m_Components)
+			auto it{ m_Components.find(typeid(ComponentType)) };
+			if (it != m_Components.end())
 			{
-				ComponentType* castedComponent{ dynamic_cast<ComponentType*>(component.get()) };
-				if (castedComponent)
-				{
-					return castedComponent;
-				}
+				return static_cast<ComponentType*>(it->second.get());
 			}
 			return nullptr;
 		}
+
 		template <class ComponentType>
 		bool HasComponent() const
 		{
-			for (auto& component : m_Components)
-			{
-				if (dynamic_cast<ComponentType*>(component.get()))
-				{
-					return true;
-				}
-			}
-			return false;
+			return m_Components.find(typeid(ComponentType)) != m_Components.end();
 		}
 
 		// Childeren/Parent
@@ -118,7 +105,7 @@ namespace MoE
 
 		Transform m_LocalTransform;
 		Transform m_WorldTransform;
-		std::vector<std::unique_ptr<Component>> m_Components;
+		std::unordered_map<std::type_index, std::unique_ptr<Component>> m_Components;
 		std::vector<std::unique_ptr<GameObject>> m_Children;
 		GameObject* m_Parent;
 		bool m_PositionIsDirty;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #include "LevelBurgers.h"
 #include "Burger.h"
@@ -7,46 +8,63 @@
 #include "LevelManager.h"
 #include "GameManager.h"
 #include "GameObject.h"
+#include "BurgerHolder.h"
+#include "EventIDs.h"
 
 LevelBurgers::LevelBurgers(MoE::GameObject* const owner, const std::string& burgerLoadPath, std::shared_ptr<MoE::Texture2D> texture)
 	: MoE::Component{ owner }
-	, m_Burgers{}
-	, m_Texture{ texture }
+	, m_BurgerHolders{}
 {
-	LoadBurgers(burgerLoadPath);
+	LoadBurgers(burgerLoadPath, texture);
 }
 
 LevelBurgers::~LevelBurgers() = default;
 
+#if defined DEBUG || defined _DEBUG
 void LevelBurgers::Render() const
 {
-	for (const auto& burger : m_Burgers)
+	for (auto& holders : m_BurgerHolders)
 	{
-		burger->Render();
+		holders->Render();
 	}
 }
+#endif
 
 void LevelBurgers::CheckForCollision(const MoE::Recti& hitbox)
 {
-	for (auto& burger : m_Burgers)
+	for (auto& holders : m_BurgerHolders)
 	{
-		burger->CheckForCollision(static_cast<MoE::Rectf>(hitbox));
+		holders->CheckForCollision(hitbox);
 	}
 }
 
-void LevelBurgers::LoadBurgers(const std::string& loadPath)
+void LevelBurgers::CheckLevelCompleted()
+{
+	if (std::all_of(m_BurgerHolders.begin(), m_BurgerHolders.end(),
+		[](const auto& holder)
+		{
+			return holder->IsHolderCompleted();
+		}
+	)) LevelManager::Get().Notify(nullptr, Event::levelCompleted);
+}
+
+void LevelBurgers::LoadBurgers(const std::string& loadPath, std::shared_ptr<MoE::Texture2D> texture)
 {
 	////// FILE STRUCTURE //////
-	// nr of burgers
+	// nr of burgerHolders
 	//
+	// // nr of burgers
 	// type X Y
 	// type X Y
+	// type X Y
+	// 
+	// // nr of burgers
 	// type X Y
 	// type X Y
 	// etc....
 	///////////////////////////
 
-	m_Burgers.clear();
+	m_BurgerHolders.clear();
 
 	const std::string pathName{ MoE::ResourceManager::Get().GetFullPath(loadPath) };
 
@@ -57,51 +75,62 @@ void LevelBurgers::LoadBurgers(const std::string& loadPath)
 	}
 	else
 	{
-		const int tileSize{ LevelManager::Get().GetTileSize() };
+		const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
 		const int scaledTileSize{ tileSize * GameManager::Get().GetGameScale() };
 
-		int nrBurgers{};
+		int nrHolders{};
+		
+		if (!(inFile >> nrHolders)) return;
 
-		if (inFile >> nrBurgers)
-		{
-			m_Burgers.reserve(nrBurgers);
-		}
-		else return;
-
-		int type{};
-		int x{};
-		int y{};
+		m_BurgerHolders.reserve(nrHolders);
 
 		std::unique_ptr<MoE::GameObject> burgersRootObj{ std::make_unique<MoE::GameObject>() };
+		MoE::GameObject* burgerRootObjPtr{ burgersRootObj.get() };
+		GetOwner()->AddChild(std::move(burgersRootObj), true);
 
-		while (inFile >> type >> x >> y)
+		for (int holderIdx{}; holderIdx < nrHolders; ++holderIdx)
 		{
-			// Create BurgerObject
-			std::unique_ptr<MoE::GameObject> burgerObj{ std::make_unique<MoE::GameObject>() };
-			MoE::GameObject* burgerObjPtr{ burgerObj.get() };
+			int nrBurgers{};
+			float holdHeight{};
 
-			// Create Burger Component And Add To Vector
-			std::unique_ptr<Burger> burger{ std::make_unique<Burger>(burgerObjPtr, m_Texture, static_cast<int>(type)) };
-			Burger* burgerPtr{ burger.get() };
+			if (!(inFile >> nrBurgers >> holdHeight)) break;
 
-			// Add Component
-			burgerObj->AddComponent(std::move(burger));
-			
-			// Add Pointer to vector
-			m_Burgers.emplace_back(burgerPtr);
+			auto holder{ std::make_unique<BurgerHolder>(nrBurgers, static_cast<int>(holdHeight * scaledTileSize)) };
 
-			// Make Child Of Burgers Root Object
-			burgersRootObj->AddChild(std::move(burgerObj));
-
-			// Set Correct Position
-			const glm::vec2 pos
+			for (int burgerIdx{}; burgerIdx < nrBurgers; ++burgerIdx)
 			{
-				static_cast<float>(x * scaledTileSize),
-				static_cast<float>((y * scaledTileSize) + (scaledTileSize / 2.f))
-			};
-			burgerObjPtr->SetWorldPosition(pos);
-		}
+				int type{};
+				int x{};
+				int y{};
 
-		GetOwner()->AddChild(std::move(burgersRootObj));
+				if (!(inFile >> type >> x >> y)) break;
+
+				// Create BurgerObject
+				auto burgerObj{ std::make_unique<MoE::GameObject>() };
+
+				// Create Burger Component And Add To Vector
+				auto burger{ std::make_unique<Burger>(burgerObj.get(), texture, static_cast<int>(type), holder.get()) };
+
+				// Set Correct Position
+				const glm::vec2 pos
+				{
+					static_cast<float>(x * scaledTileSize),
+					static_cast<float>((y * scaledTileSize) + (scaledTileSize / 2.f))
+				};
+				burgerObj->SetWorldPosition(pos);
+
+				// Add pointer in holder
+				holder->AddBurger(burger.get());
+
+				// Add Component
+				burgerObj->AddComponent(std::move(burger));
+
+				// Make Child Of Burgers Root Object
+				burgerRootObjPtr->AddChild(std::move(burgerObj), true);
+			}
+
+			// Add Pointer to vector
+			m_BurgerHolders.emplace_back(std::move(holder));
+		}
 	}
 }

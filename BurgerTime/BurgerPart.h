@@ -8,6 +8,7 @@
 namespace MoE
 {
 	struct Rectf;
+	struct Recti;
 }
 
 class BurgerPart final : public MoE::Component
@@ -21,14 +22,17 @@ public:
 	virtual void Render() const override;
 #endif
 
+	static float GetPushDistance();
 	bool GetIsPushed() const;
+	void UnPush();
 
-	void CheckForCollision(const MoE::Rectf& hitbox);
+	bool CheckForCollision(const MoE::Recti& hitbox);
 
 private:
 
+	static float s_PushDistance;
+
 	bool m_Pushed;
-	float m_PushDistance;
 	const glm::ivec2 m_Dimentions;
 
 };

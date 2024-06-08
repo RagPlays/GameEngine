@@ -10,8 +10,8 @@ namespace MoE
 
 	enum class SoundType
 	{
-		SoundEffect,
-		Music
+		soundEffect,
+		music
 	};
 
 	struct SoundInfo
@@ -87,10 +87,10 @@ namespace MoE
 			m_RealSS->Play(id, volume, type);
 			switch (type)
 			{
-			case SoundType::SoundEffect:
+			case SoundType::soundEffect:
 				std::cout << "SoundEffect ";
 				break;
-			case SoundType::Music:
+			case SoundType::music:
 				std::cout << "Music ";
 				break;
 			}

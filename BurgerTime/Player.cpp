@@ -7,7 +7,6 @@
 #include "EventIDs.h"
 #include "TextureRenderer.h"
 #include "LevelManager.h"
-#include "LevelCollision.h"
 
 #if  defined _DEBUG || defined DEBUG
 #include "GameManager.h"
@@ -24,6 +23,7 @@ Player::Player(MoE::GameObject* const owner)
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
 	, m_MovementDir{}
+	, m_HitBox{}
 	, m_IsAttacking{}
 	, m_pRenderComponent{}
 {
@@ -39,40 +39,50 @@ void Player::SceneStart()
 	if (MoE::TextureRenderer* pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() }; pRenderComp)
 	{
 		m_pRenderComponent = pRenderComp;
-		pRenderComp->SetSourceRect(16, 0, 16, 16);
+
+		m_HitBox.size.x = static_cast<int>(0.5f * m_pRenderComponent->GetTextureWidth());
+		m_HitBox.size.y = static_cast<int>(m_pRenderComponent->GetTextureHeight() * 0.75f);
+		const glm::ivec2& pos{ GetOwner()->GetLocalPosition() };
+
+		m_HitBox.pos.x = pos.x + static_cast<int>(m_pRenderComponent->GetTextureWidth() * 0.25f);
+		m_HitBox.pos.y = pos.y;
 	}
 	if(!m_pRenderComponent)
 	{
 		std::cerr << "ERROR::PLAYER::RENDERCOMPONENT_NOT_SET!\n";
 		assert(false);
 	}
-	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
-	{
-		GetOwner()->SetLocalPosition(coll->GetStartPos());
-	}
 
 	Notify(GetOwner(), Event::playerJoined);
+}
+
+void Player::FixedUpdate()
+{
+	if (m_pRenderComponent)
+	{
+		const glm::ivec2& pos{ GetOwner()->GetLocalPosition() };
+
+		m_HitBox.pos.x = pos.x + static_cast<int>(m_pRenderComponent->GetTextureWidth() * 0.25);
+		m_HitBox.pos.y = pos.y + static_cast<int>(m_pRenderComponent->GetTextureHeight() * 0.25);
+	}
 }
 
 #if  defined _DEBUG || defined DEBUG
 void Player::Render() const
 {
-	const int tileSize{ LevelManager::Get().GetTileSize() };
-	const int gameScale{ GameManager::Get().GetGameScale() };
-	const glm::ivec2 hitBox{ glm::ivec2{ gameScale * tileSize, gameScale * tileSize } };
-	const glm::vec2& position{ GetOwner()->GetLocalPosition() };
-
 	MoE::Renderer& renderer{ MoE::Renderer::Get() };
 
 	renderer.SetCurrentDrawColor(Color{ 255, 0, 255 });
-	renderer.RenderRect(static_cast<SDL_FRect>(Rectf{ position, static_cast<glm::vec2>(hitBox) }));
+	renderer.RenderRect(static_cast<SDL_Rect>(m_HitBox));
 
 	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
+		const glm::ivec2& texDimentions{ m_pRenderComponent->GetTextureDimentions() };
+		const glm::vec2& position{ GetOwner()->GetLocalPosition() };
 		const int moveOffset{ coll->GetMoveOffset() };
 		const Recti moveRect
 		{
-			static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(hitBox) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
+			static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(texDimentions) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
 			glm::ivec2{ moveOffset, moveOffset }
 		};
 		renderer.SetCurrentDrawColor(Color{ 0, 255, 0 });
@@ -101,6 +111,11 @@ void Player::Stop(const glm::ivec2& dir)
 const glm::ivec2& Player::GetMoveDir() const
 {
 	return m_MovementDir;
+}
+
+const MoE::Recti& Player::GetHitbox() const
+{
+	return m_HitBox;
 }
 
 void Player::Kill()

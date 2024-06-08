@@ -8,11 +8,6 @@
 
 using EventID = int;
 
-class PlayerWalkState;
-class PlayerAttackState;
-class PlayerWinState;
-class PlayerDieState;
-
 class Player;
 class PlayerState;
 
@@ -50,10 +45,10 @@ private:
 
 	PlayerState* m_pCurrentState;
 
-	std::unique_ptr<PlayerWalkState> m_WalkState;
-	std::unique_ptr<PlayerAttackState> m_AttackState;
-	std::unique_ptr<PlayerWinState> m_WinState;
-	std::unique_ptr<PlayerDieState> m_DieState;
+	std::unique_ptr<PlayerState> m_WalkState;
+	std::unique_ptr<PlayerState> m_AttackState;
+	std::unique_ptr<PlayerState> m_WinState;
+	std::unique_ptr<PlayerState> m_DieState;
 
 };
 

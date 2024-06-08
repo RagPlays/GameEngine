@@ -16,7 +16,7 @@ namespace MoE
 }
 
 class Player;
-class Burger;
+class BurgerHolder;
 
 enum class BurgerPartType
 {
@@ -40,20 +40,21 @@ public:
 	LevelBurgers& operator=(const LevelBurgers& other) = delete;
 	LevelBurgers& operator=(LevelBurgers&& other) noexcept = delete;
 
-	virtual void Render() const override;
+#if defined DEBUG || defined _DEBUG
+	virtual void Render() const;
+#endif
 
 	void CheckForCollision(const MoE::Recti& hitbox);
 
-private:
-
-	void LoadBurgers(const std::string& loadPath);
+	void CheckLevelCompleted();
 
 private:
 
-	// all burgers are owned by the owner of this component
-	std::vector<Burger*> m_Burgers;
+	void LoadBurgers(const std::string& loadPath, std::shared_ptr<MoE::Texture2D> texture);
 
-	std::shared_ptr<MoE::Texture2D> m_Texture;
+private:
+
+	std::vector<std::unique_ptr<BurgerHolder>> m_BurgerHolders;
 
 };
 

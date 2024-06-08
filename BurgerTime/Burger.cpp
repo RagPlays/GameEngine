@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Burger.h"
 #include "Structs.h"
 #include "Collisions.h"
@@ -6,29 +8,104 @@
 #include "LevelManager.h"
 #include "GameManager.h"
 #include "BurgerPart.h"
+#include "LevelCollision.h"
+#include "Timer.h"
+#include "BurgerHolder.h"
 
 #if defined DEBUG || defined _DEBUG
 #include "Renderer.h"
 #endif
 
-Burger::Burger(MoE::GameObject* const owner, std::shared_ptr<MoE::Texture2D> texture, int burgerType)
+Burger::Burger(MoE::GameObject* const owner, std::shared_ptr<MoE::Texture2D> texture, int burgerType, BurgerHolder* holder)
 	: MoE::Component{ owner }
-	, m_Dimentions{}
+	, m_FallSpeed{ 25.f * GameManager::Get().GetGameScale() }
+	, m_IsFalling{}
+	, m_InHolder{}
+	, m_Dimentions
+	{
+		static_cast<int>(LevelManager::Get().GetTileSize()) * GameManager::Get().GetGameScale() * 2,
+		static_cast<int>(LevelManager::Get().GetTileSize()) * GameManager::Get().GetGameScale() / 2
+	}
+	, m_pHolder{ holder }
 	, m_BurgerParts{}
 {
 	LoadBurgerParts(burgerType, texture);
 }
 
-void Burger::CheckForCollision(const MoE::Rectf& hitbox)
+void Burger::FixedUpdate()
 {
-	const MoE::Rectf burgerHitBox{ GetOwner()->GetWorldPosition(), static_cast<glm::vec2>(m_Dimentions) };
-	if (MoE::Coll::OverLapping(hitbox, burgerHitBox))
+	if (!m_IsFalling) return;
+
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 	{
-		for (auto& burgerPart : m_BurgerParts)
+		MoE::GameObject* const owner{ GetOwner() };
+		const int holdHeight{ m_pHolder->GetCurrentHoldHeight()};
+
+		if (int collFallPos{ coll->GetNextBurgerFallPos(static_cast<glm::ivec2>(owner->GetWorldPosition())) })
 		{
-			burgerPart->CheckForCollision(hitbox);
+			const int fallPos{ collFallPos < holdHeight ? collFallPos : holdHeight };
+			const float fallDist{ m_FallSpeed * MoE::Timer::Get().GetFixedElapsedSec() };
+
+			owner->Translate(glm::vec2{ 0.f, fallDist });
+
+			if (owner->GetWorldPosition().y >= fallPos)
+			{
+				const glm::vec2& pos{ owner->GetWorldPosition() };
+				owner->SetWorldPosition(glm::vec2{pos.x, static_cast<float>(fallPos)});
+				m_IsFalling = false;
+				if (holdHeight == fallPos)
+				{
+					m_InHolder = true;
+					m_pHolder->CheckInHolder();
+					return;
+				}
+				m_pHolder->CheckOverLapping(this);
+			}
 		}
 	}
+}
+
+void Burger::CheckForCollision(const MoE::Recti& hitbox)
+{
+	if (m_InHolder || m_IsFalling || m_BurgerParts.empty()) return;
+
+	const MoE::Recti burgerHitBox{ static_cast<glm::ivec2>(GetOwner()->GetWorldPosition()), m_Dimentions };
+	if (MoE::Coll::OverLapping(hitbox, burgerHitBox))
+	{
+		if (std::any_of(m_BurgerParts.begin(), m_BurgerParts.end(),
+			[&hitbox](const auto& burgerPart)
+			{
+				return burgerPart->CheckForCollision(hitbox);
+			}
+		)) CheckBurgerFalling();
+	}
+}
+
+void Burger::ForceFalling()
+{
+	m_IsFalling = true;
+	for (auto& burgerPart : m_BurgerParts)
+	{
+		burgerPart->UnPush();
+	}
+	const float pushDist{ BurgerPart::GetPushDistance() };
+	GetOwner()->Translate(glm::vec2{ 0.f, pushDist });
+}
+
+bool Burger::GetInHolder() const
+{
+	return m_InHolder;
+}
+
+const glm::ivec2& Burger::GetDimentions() const
+{
+	return m_Dimentions;
+}
+
+MoE::Recti Burger::GetHitBox() const
+{
+	const glm::ivec2& pos{ static_cast<glm::ivec2>(GetOwner()->GetWorldPosition()) };
+	return MoE::Recti{ pos, m_Dimentions };
 }
 
 void Burger::LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> texture)
@@ -36,13 +113,10 @@ void Burger::LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> tex
 	const size_t nrOfBurgerParts{ 4 };
 	m_BurgerParts.reserve(nrOfBurgerParts);
 
-	const int gameScale{ GameManager::Get().GetGameScale() };
-
 	const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
-	const int renderTileSize{ tileSize * gameScale };
 	const int half{ tileSize / 2 };
 
-	m_Dimentions = glm::ivec2{ renderTileSize * 2, renderTileSize / 2 };
+	const glm::ivec2 texDim{ m_Dimentions.x / static_cast<int>(nrOfBurgerParts),  m_Dimentions.y };
 
 	for (size_t burgerIdx{}; burgerIdx < nrOfBurgerParts; ++burgerIdx)
 	{
@@ -52,9 +126,9 @@ void Burger::LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> tex
 		const MoE::Recti srcRect{ half * static_cast<int>(burgerIdx), half * burgerType, half, half };
 		auto burgerPartRenderC{ std::make_unique<MoE::TextureRenderer>(burgerPartObj.get(), texture) };
 		burgerPartRenderC->SetSourceRect(srcRect);
-		burgerPartRenderC->SetTextureDimensions(glm::ivec2{ m_Dimentions.x / nrOfBurgerParts,  m_Dimentions.y });
+		burgerPartRenderC->SetTextureDimensions(texDim);
 
-		auto burgerPart{ std::make_unique<BurgerPart>(burgerPartObj.get(), glm::ivec2{ renderTileSize / 2, renderTileSize / 2 }) };
+		auto burgerPart{ std::make_unique<BurgerPart>(burgerPartObj.get(), glm::ivec2{ m_Dimentions.y, m_Dimentions.y }) };
 		BurgerPart* burgerPartPtr{ burgerPart.get() };
 		m_BurgerParts.emplace_back(burgerPartPtr);
 
@@ -63,7 +137,17 @@ void Burger::LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> tex
 
 		GetOwner()->AddChild(std::move(burgerPartObj));
 		
-		const glm::vec2 pos{ burgerIdx * renderTileSize / 2, 0.f };
+		const glm::vec2 pos{ burgerIdx * m_Dimentions.y, 0.f };
 		burgerPartObjPtr->SetLocalPosition(pos);
 	}
+}
+
+void Burger::CheckBurgerFalling()
+{
+	if (std::all_of(m_BurgerParts.begin(), m_BurgerParts.end(),
+		[](const auto& burgerPart)
+		{
+			return burgerPart->GetIsPushed();
+		}
+	)) ForceFalling();
 }

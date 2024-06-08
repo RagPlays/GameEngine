@@ -43,14 +43,17 @@
     <Filter Include="GameSourceFile\GameComponents\UI">
       <UniqueIdentifier>{5ef7fd64-31ec-4469-9962-5164a5430bc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSourceFile\GameComponents\EnemyPlayer">
-      <UniqueIdentifier>{a0152f0f-fa62-41e5-826a-fd20f74b26b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameSourceFile\GameComponents\Ohter">
-      <UniqueIdentifier>{4be7a3da-a546-408a-a175-3b05ecc254f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameSourceFile\Input\UI">
       <UniqueIdentifier>{7a65df33-82d7-4bfd-97e1-b5f4eccc5057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Enemies">
+      <UniqueIdentifier>{a0152f0f-fa62-41e5-826a-fd20f74b26b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Enemies\States">
+      <UniqueIdentifier>{3850b21f-840f-4a8e-8824-a85654c4dcd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceFile\GameComponents\Enemies\States\Basics">
+      <UniqueIdentifier>{ff39d02f-cfcf-445f-b8d3-76bfd8ce84b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +114,6 @@
     <ClCompile Include="PlayerStateHandler.cpp">
       <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>GameSourceFile\GameComponents\Player\States\Basics</Filter>
-    </ClCompile>
     <ClCompile Include="ReloadSceneCommand.h">
       <Filter>GameSourceFile\Input</Filter>
     </ClCompile>
@@ -126,20 +126,32 @@
     <ClCompile Include="ListSelection.cpp">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyPlayer.cpp">
-      <Filter>GameSourceFile\GameComponents\EnemyPlayer</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="InfoMenu.cpp">
-      <Filter>GameSourceFile\GameComponents\Ohter</Filter>
     </ClCompile>
     <ClCompile Include="LevelBurgers.cpp">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
     </ClCompile>
     <ClCompile Include="BurgerPart.cpp">
       <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClCompile>
+    <ClCompile Include="BurgerHolder.cpp">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoMenu.cpp">
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelEnemies.cpp">
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateHandler.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies\States\Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHotdogWalkState.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,14 +251,8 @@
     <ClInclude Include="ListSelection.h">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyPlayer.h">
-      <Filter>GameSourceFile\GameComponents\EnemyPlayer</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GameSourceFile\GameComponents\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="InfoMenu.h">
-      <Filter>GameSourceFile\GameComponents\Ohter</Filter>
     </ClInclude>
     <ClInclude Include="LevelBurgers.h">
       <Filter>GameSourceFile\GameComponents\Level</Filter>
@@ -259,6 +265,30 @@
     </ClInclude>
     <ClInclude Include="ListPressCommand.h">
       <Filter>GameSourceFile\Input\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerHolder.h">
+      <Filter>GameSourceFile\GameComponents\Burgers</Filter>
+    </ClInclude>
+    <ClInclude Include="QuitGameCommand.h">
+      <Filter>GameSourceFile\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoMenu.h">
+      <Filter>GameSourceFile\GameComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameSourceFile\GameComponents\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEnemies.h">
+      <Filter>GameSourceFile\GameComponents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States\Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateHandler.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States\Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHotdogWalkState.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

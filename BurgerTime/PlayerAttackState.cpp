@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "LevelManager.h"
 #include "Structs.h"
+#include "EventIDs.h"
 
 PlayerAttackState::PlayerAttackState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
@@ -48,6 +49,11 @@ void PlayerAttackState::Update()
 
 void PlayerAttackState::LateUpdate()
 {
+}
+
+void PlayerAttackState::OnNotify(MoE::GameObject*, EventID eventID)
+{
+	if (eventID == Event::levelCompleted) m_pHandler->SetWinState();
 }
 
 void PlayerAttackState::InitAnimations()

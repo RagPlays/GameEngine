@@ -167,9 +167,12 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Burger.cpp" />
+    <ClCompile Include="BurgerHolder.cpp" />
     <ClCompile Include="BurgerPart.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="EnemyPlayer.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyHotdogWalkState.cpp" />
+    <ClCompile Include="EnemyStateHandler.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImGuiExercise1.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelBurgers.cpp" />
     <ClCompile Include="LevelCollision.cpp" />
+    <ClCompile Include="LevelEnemies.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="ListSelection.cpp" />
@@ -187,7 +191,6 @@
     <ClCompile Include="PlayerDieState.cpp" />
     <ClCompile Include="PlayerHealthStats.cpp" />
     <ClCompile Include="PlayerStateHandler.cpp" />
-    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerStats.cpp" />
     <ClCompile Include="PlayerWalkState.cpp" />
     <ClCompile Include="PlayerWinState.cpp" />
@@ -199,9 +202,13 @@
     <ClInclude Include="..\MorrogEngine\EventIDs.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Burger.h" />
+    <ClInclude Include="BurgerHolder.h" />
     <ClInclude Include="BurgerPart.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="EnemyPlayer.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyHotdogWalkState.h" />
+    <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnemyStateHandler.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImGuiExercise1.h" />
@@ -211,6 +218,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelBurgers.h" />
     <ClInclude Include="LevelCollision.h" />
+    <ClInclude Include="LevelEnemies.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="ListPressCommand.h" />
@@ -230,6 +238,7 @@
     <ClInclude Include="PlayerStopCommand.h" />
     <ClInclude Include="PlayerWalkState.h" />
     <ClInclude Include="PlayerWinState.h" />
+    <ClInclude Include="QuitGameCommand.h" />
     <ClInclude Include="RotateAroundParentComponent.h" />
     <ClInclude Include="SoundEventHandler.h" />
     <ClInclude Include="SoundIDs.h" />

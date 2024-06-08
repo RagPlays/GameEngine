@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 #include "LevelCollision.h"
 #include "Collisions.h"
@@ -30,12 +31,12 @@ LevelCollision::LevelCollision(GameObject* const owner, const std::string& colli
 void LevelCollision::Render() const
 {
 	Renderer& renderer{ Renderer::Get() };
-	renderer.SetCurrentDrawColor(MoE::Color{ 255, 0, 0, 255 });
+	renderer.SetCurrentDrawColor(MoE::Color{ 255, 0, 0 });
 	for (auto& linex : m_LinesX)
 	{
 		renderer.RenderLine(linex);
 	}
-	renderer.SetCurrentDrawColor(MoE::Color{ 255, 255, 0, 255 });
+	renderer.SetCurrentDrawColor(MoE::Color{ 255, 255, 0 });
 	for (auto& liney : m_LinesY)
 	{
 		renderer.RenderLine(liney);
@@ -96,6 +97,31 @@ bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 		}
 	}
 	return false;
+}
+
+int LevelCollision::GetNextBurgerFallPos(const glm::ivec2& pos) const
+{
+	const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) * GameManager::Get().GetGameScale() };
+	const int yOffset{ static_cast<int>(0.25f * tileSize) };
+	const int yPos{ pos.y };
+
+	for (const auto& lineX : m_LinesX)
+	{
+		const int fallPos{ lineX.pointOne.y + yOffset };
+		if (fallPos > yPos)
+		{
+			if (IsBetween(pos.x, lineX.pointOne.x, lineX.pointTwo.x))
+			{
+				return fallPos;
+			}
+		}
+	}
+	return std::numeric_limits<int>::max();
+}
+
+bool LevelCollision::IsBetween(int x, int x1, int x2)
+{
+	return (x >= std::min(x1, x2) && x <= std::max(x1, x2));
 }
 
 void LevelCollision::LoadCollision(const std::string& filePath)

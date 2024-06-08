@@ -37,7 +37,7 @@ namespace MoE
 	{
 		if (!m_IsLoaded) return;
 		// Unload GameObjects
-		m_RootObject.reset();
+		m_RootObject = std::make_unique<GameObject>();
 		// Unload Events
 		EventQueue::Get().ClearEvents();
 		// Unload EventHandlers

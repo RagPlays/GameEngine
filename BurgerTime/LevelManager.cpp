@@ -31,6 +31,7 @@ void LevelManager::UnRegisterLevel(Level* const level)
         m_pCurrentLevel = nullptr;
         m_pCurrentLevelCollision = nullptr;
         m_pCurrentLevelRenderer = nullptr;
+        m_pCurrentLevelBurgers = nullptr;
         return;
     }
     std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_UNREGISTER_LEVEL\n";
