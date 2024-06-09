@@ -38,6 +38,9 @@ private:
 
 private:
 
+	const int m_NeededFeetItterations;
+	int m_CurrentFeetItterations;
+
 	// Animations
 	Animation* m_pCurrentAnimation;
 

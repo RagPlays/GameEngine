@@ -1,29 +1,25 @@
 #include "EnemyStateHandler.h"
 #include "LevelManager.h"
+#include "GameManager.h"
 #include "EnemyState.h"
 #include "Enemy.h"
+#include "EnemyWalkState.h"
+#include "EnemyStunState.h"
+#include "EnemyDieState.h"
+#include "EnemyEndState.h"
+#include "TextureRenderer.h"
+#include "GameObject.h"
 
 EnemyStateHandler::EnemyStateHandler(MoE::GameObject* const owner, Enemy* const enemy)
 	: Component{ owner }
 	, Observer{ &LevelManager::Get() }
 	, m_pEnemy{ enemy }
 	, m_pCurrentState{}
-	, m_WalkState{}
-	, m_StunnedState{}
-	, m_DieState{}
+	, m_WalkState{ std::make_unique<EnemyWalkState>(enemy, this) }
+	, m_StunnedState{ std::make_unique<EnemyStunState>(enemy, this) }
+	, m_DieState{ std::make_unique<EnemyDieState>(enemy, this) }
+	, m_EndState{ std::make_unique<EnemyEndState>(enemy, this) }
 {
-	const EnemyType type{ m_pEnemy->GetType() };
-	switch (type)
-	{
-	case EnemyType::hotdog:
-		break;
-
-	case EnemyType::egg:
-		break;
-
-	case EnemyType::pickle:
-		break;
-	}
 }
 
 void EnemyStateHandler::SceneStart()
@@ -80,4 +76,9 @@ void EnemyStateHandler::SetStunnedState()
 void EnemyStateHandler::SetDieState()
 {
 	SetState(m_DieState.get());
+}
+
+void EnemyStateHandler::SetEndState()
+{
+	SetState(m_EndState.get());
 }

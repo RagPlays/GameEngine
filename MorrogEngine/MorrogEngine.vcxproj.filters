@@ -55,9 +55,6 @@
     <Filter Include="EngineCore\Font">
       <UniqueIdentifier>{c760d6aa-6627-4234-be09-fdd195dc5d4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineCore\Textures">
-      <UniqueIdentifier>{dcb597e6-a249-464d-ad0f-500adc7149ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EngineCore\Timer">
       <UniqueIdentifier>{e13864a3-bbf0-4545-b925-188cc120b1c1}</UniqueIdentifier>
     </Filter>
@@ -67,11 +64,14 @@
     <Filter Include="EngineCore\Sound\SoundAbstractions">
       <UniqueIdentifier>{34d7f648-33ff-4099-9d44-e233ed12d545}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineCore\StateMachine">
-      <UniqueIdentifier>{27afa3df-9fdd-47d7-b50e-68d4827a15e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers">
       <UniqueIdentifier>{f2ce5a90-ca03-4b19-a717-459d8bfcb90e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\Rendering\Textures">
+      <UniqueIdentifier>{dcb597e6-a249-464d-ad0f-500adc7149ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineCore\States">
+      <UniqueIdentifier>{27afa3df-9fdd-47d7-b50e-68d4827a15e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +169,7 @@
       <Filter>EngineCore\Font</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>EngineCore\Textures</Filter>
+      <Filter>EngineCore\Rendering\Textures</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>EngineCore\Timer</Filter>
@@ -193,7 +193,7 @@
       <Filter>EngineCore\Sound</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>EngineCore\StateMachine</Filter>
+      <Filter>EngineCore\States</Filter>
     </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>Helpers</Filter>
@@ -288,7 +288,7 @@
       <Filter>EngineCore\Font</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>EngineCore\Textures</Filter>
+      <Filter>EngineCore\Rendering\Textures</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>EngineCore\Timer</Filter>

@@ -99,6 +99,38 @@ bool LevelCollision::CanMove(Player* player, const glm::ivec2& moveHitBox)
 	return false;
 }
 
+MoveResult LevelCollision::CanMove(const glm::vec2& pos, const glm::ivec2& dir, const glm::ivec2& hitbox, bool enemy)
+{
+	const float moveOffset{ (enemy) ? static_cast<float>(m_MoveOffset * 0.5f) : static_cast<float>(m_MoveOffset) };
+
+	Recti moveRect
+	{
+		static_cast<glm::ivec2>((pos + (static_cast<glm::vec2>(hitbox) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
+		glm::ivec2{ moveOffset, moveOffset }
+	};
+
+	glm::ivec2 start{};
+	Linei line{};
+
+	if (dir.x)
+	{
+		moveRect.pos.x = static_cast<int>(pos.x);
+		moveRect.size.x = hitbox.x;
+		start = glm::ivec2{ moveRect.pos.x + (dir.x > 0 ? moveRect.size.x : 0), moveRect.pos.y };
+		line = Linei{ start, start + glm::ivec2{ 0, moveRect.size.y } }; // left or right line
+		return CanMoveX(line);
+	}
+	else if (dir.y)
+	{
+		moveRect.pos.y = static_cast<int>(pos.y);
+		moveRect.size.y = hitbox.y;
+		start = glm::ivec2{ moveRect.pos.x, moveRect.pos.y + (dir.y > 0 ? moveRect.size.y : 0) };
+		line = Linei{ start, start + glm::ivec2{ moveRect.size.x, 0 } }; // top or bot line
+		return CanMoveY(line, pos, hitbox);
+	}
+	return { false, Linei{} };
+}
+
 int LevelCollision::GetNextBurgerFallPos(const glm::ivec2& pos) const
 {
 	const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) * GameManager::Get().GetGameScale() };
@@ -121,7 +153,7 @@ int LevelCollision::GetNextBurgerFallPos(const glm::ivec2& pos) const
 
 bool LevelCollision::IsBetween(int x, int x1, int x2)
 {
-	return (x >= std::min(x1, x2) && x <= std::max(x1, x2));
+	return (x > std::min(x1, x2) && x < std::max(x1, x2));
 }
 
 void LevelCollision::LoadCollision(const std::string& filePath)
@@ -259,4 +291,26 @@ bool LevelCollision::CanMoveY(const Linei& hitLine, const Linei& topOrBot, Playe
 		return true;
 	}
 	return false;
+}
+
+MoveResult LevelCollision::CanMoveX(const MoE::Linei& leftOrRight)
+{
+	for (const Linei& lineX : m_LinesX)
+	{
+		if (Coll::LinesIntersecting(lineX, leftOrRight)) return { true, lineX };
+	}
+	return { false, Linei{} };
+}
+
+MoveResult LevelCollision::CanMoveY(const MoE::Linei& topOrBot, const glm::vec2& pos, const glm::ivec2& hitbox)
+{
+	for (const Linei& lineY : m_LinesY)
+	{
+		if (Coll::LinesIntersecting(lineY, topOrBot))
+		{
+			const int midY{ static_cast<int>(pos.y) + static_cast<int>(hitbox.y * 0.5f) };
+			if(IsBetween(midY, lineY.pointOne.y, lineY.pointTwo.y)) return { true, lineY };
+		}
+	}
+	return { false, Linei{} };
 }

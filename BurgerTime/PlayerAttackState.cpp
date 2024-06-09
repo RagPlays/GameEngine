@@ -110,7 +110,6 @@ void PlayerAttackState::UpdateAnimation()
 	{
 		if (m_pCurrentAnimation->Update())
 		{
-			m_pPlayer->SetAttacking(false);
 			m_pHandler->SetWalkState();
 		}
 	}

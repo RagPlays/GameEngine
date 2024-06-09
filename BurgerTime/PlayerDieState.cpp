@@ -6,9 +6,12 @@
 #include "Animation.h"
 #include "EventIDs.h"
 #include "Structs.h"
+#include "LevelManager.h"
 
 PlayerDieState::PlayerDieState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
+	, m_NeededFeetItterations{ 4 }
+	, m_CurrentFeetItterations{}
 	, m_pCurrentAnimation{}
 	, m_CaughtAnimation{}
 	, m_FallAnimation{}
@@ -28,6 +31,15 @@ void PlayerDieState::SceneStart()
 
 void PlayerDieState::OnEnter()
 {
+	const std::vector<Player*> players{ LevelManager::Get().GetPlayers() };
+	for (const auto& player : players)
+	{
+		if (PlayerStateHandler* handler{ player->GetOwner()->GetComponent<PlayerStateHandler>() }; handler)
+		{
+			handler->SetDieState();
+		}
+	}
+
 	if (MoE::TextureRenderer* pRenderComp{ m_pPlayer->GetOwner()->GetComponent<MoE::TextureRenderer>() })
 	{
 		pRenderComp->SetFlipMode(SDL_FLIP_NONE);
@@ -38,6 +50,7 @@ void PlayerDieState::OnEnter()
 void PlayerDieState::OnExit()
 {
 	if (m_pCurrentAnimation) m_pCurrentAnimation->Stop();
+	m_CurrentFeetItterations = 0;
 }
 
 void PlayerDieState::Update()
@@ -95,6 +108,13 @@ void PlayerDieState::UpdateAnimations()
 		{
 			SetAnimation(m_DownAnimation.get());
 		}
-		else m_pHandler->Notify(Event::playerDied);
+		else
+		{
+			++m_CurrentFeetItterations;
+			if (m_CurrentFeetItterations >= m_NeededFeetItterations)
+			{
+				m_pHandler->Notify(Event::playerDied);
+			}
+		}
 	}
 }

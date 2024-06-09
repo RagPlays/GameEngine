@@ -8,9 +8,9 @@
 
 using namespace MoE;
 
-void SoundEventHandler::HandleEvent(EventID eventID) const
+void SoundEventHandler::HandleEvent(EventID /*eventID*/) const
 {
-	SoundSystem& soundSystem{ ServiceLocator::GetSoundSystem() };
+	/*SoundSystem& soundSystem{ ServiceLocator::GetSoundSystem() };
 	const int maxVol{ soundSystem.MaxVolume() };
 
 	switch (eventID)
@@ -22,5 +22,5 @@ void SoundEventHandler::HandleEvent(EventID eventID) const
 	case Event::playerDied:
 		soundSystem.Play(SoundEffectSoundID::die, maxVol / 10, SoundType::soundEffect);
 		break;
-	}
+	}*/
 }

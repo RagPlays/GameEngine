@@ -1,18 +1,19 @@
-#include "InfoMenu.h"
+#include "WaitMenu.h"
 #include "Timer.h"
 #include "LevelManager.h"
 #include "TextureRenderer.h"
 #include "GameManager.h"
 #include "GameObject.h"
 
-InfoMenu::InfoMenu(MoE::GameObject* const owner)
+WaitMenu::WaitMenu(MoE::GameObject* const owner, float waitTime, bool startMenu)
 	: Component{ owner }
 	, m_CurrentWaitTime{}
-	, m_TotalWaitTime{ 3.f }
+	, m_TotalWaitTime{ waitTime }
+	, m_StartMenu{ startMenu }
 {
 }
 
-void InfoMenu::SceneStart()
+void WaitMenu::SceneStart()
 {
 	if (MoE::TextureRenderer* renderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() }; renderComp)
 	{
@@ -21,12 +22,19 @@ void InfoMenu::SceneStart()
 	}
 }
 
-void InfoMenu::Update()
+void WaitMenu::Update()
 {
 	m_CurrentWaitTime += MoE::Timer::Get().GetElapsedSec();
 
 	if (m_CurrentWaitTime >= m_TotalWaitTime)
 	{
-		LevelManager::Get().StartGame();
+		if (m_StartMenu)
+		{
+			LevelManager::Get().GoStartMenu();
+		}
+		else
+		{
+			LevelManager::Get().StartGame();
+		}
 	}
 }

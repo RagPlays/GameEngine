@@ -6,6 +6,7 @@
 #include "LevelRenderer.h"
 #include "LevelCollision.h"
 #include "LevelBurgers.h"
+#include "LevelEnemies.h"
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "EventIDs.h"
@@ -32,10 +33,28 @@ void LevelManager::UnRegisterLevel(Level* const level)
         m_pCurrentLevelCollision = nullptr;
         m_pCurrentLevelRenderer = nullptr;
         m_pCurrentLevelBurgers = nullptr;
+        m_pCurrentLevelEnemies = nullptr;
+
+        m_pCurrentPlayers.clear();
         return;
     }
     std::cerr << "ERROR::LEVELMANAGER::UNABLE_TO_UNREGISTER_LEVEL\n";
     assert(false);
+}
+
+void LevelManager::RegisterPlayer(Player* const player)
+{
+    m_pCurrentPlayers.emplace_back(player);
+}
+
+void LevelManager::UnRegisterPlayer(Player* const player)
+{
+    m_pCurrentPlayers.erase(std::remove_if(m_pCurrentPlayers.begin(), m_pCurrentPlayers.end(),
+        [player](const auto& ptr)
+        {
+            return ptr == player;
+        }
+    ), m_pCurrentPlayers.end());
 }
 
 void LevelManager::SetGameMode(GameMode gameMode)
@@ -90,6 +109,11 @@ uint8_t LevelManager::GetTileSize() const
     return m_TileSize;
 }
 
+const std::vector<Player*>& LevelManager::GetPlayers()
+{
+    return m_pCurrentPlayers;
+}
+
 Level* LevelManager::GetLevel() const
 {
     return m_pCurrentLevel;
@@ -122,16 +146,27 @@ LevelBurgers* LevelManager::GetBurgers()
     return m_pCurrentLevelBurgers;
 }
 
+LevelEnemies* LevelManager::GetEnemies()
+{
+    if (!m_pCurrentLevelEnemies && m_pCurrentLevel)
+    {
+        m_pCurrentLevelEnemies = m_pCurrentLevel->GetOwner()->GetComponent<LevelEnemies>();
+    }
+    return m_pCurrentLevelEnemies;
+}
+
 LevelManager::LevelManager()
     : Subject{}
     , m_GameMode{ GameMode::singlePlayer }
     , m_CurrentLevel{}
     , m_NrLevelsCount{ 3 }
     , m_TileSize{ 16 }
+    , m_pCurrentPlayers{}
     , m_pCurrentLevel{}
     , m_pCurrentLevelRenderer{}
     , m_pCurrentLevelCollision{}
     , m_pCurrentLevelBurgers{}
+    , m_pCurrentLevelEnemies{}
 {
     assert(m_NrLevelsCount);
 }

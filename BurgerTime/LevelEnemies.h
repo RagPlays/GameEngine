@@ -17,6 +17,7 @@ namespace MoE
 }
 
 class Enemy;
+class Player;
 
 class LevelEnemies final : public MoE::Component
 {
@@ -26,6 +27,10 @@ public:
 	virtual ~LevelEnemies() = default;
 
 	void CheckForCollision(const MoE::Recti& burgerColl);
+	void CheckForCollision(Player* player);
+	void GoEndState();
+
+	void Respawn();
 
 private:
 

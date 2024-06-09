@@ -8,6 +8,13 @@
 #include "Structs.h" // 'Linef' and 'Rectf'
 
 class Player;
+class Enemy;
+
+struct MoveResult
+{
+	bool canMove;
+	MoE::Linei line;
+};
 
 class LevelCollision final : public MoE::Component
 {
@@ -24,6 +31,7 @@ public:
 	int GetMoveOffset() const;
 
 	bool CanMove(Player* player, const glm::ivec2& moveHitBox);
+	MoveResult CanMove(const glm::vec2& pos, const glm::ivec2& dir, const glm::ivec2& hitbox, bool enemy);
 
 	int GetNextBurgerFallPos(const glm::ivec2& pos) const;
 
@@ -36,6 +44,9 @@ private:
 	bool CanMoveX(const MoE::Linei& leftOrRight, Player* player, const glm::ivec2& hitbox) const;
 	bool CanMoveY(const MoE::Linei& line, MoE::Linei& hitLine) const;
 	bool CanMoveY(const MoE::Linei& hitLine, const MoE::Linei& topOrBot, Player* player, const glm::ivec2& hitbox) const;
+
+	MoveResult CanMoveX(const MoE::Linei& leftOrRight);
+	MoveResult CanMoveY(const MoE::Linei& topOrBot, const glm::vec2& pos, const glm::ivec2& hitbox);
 
 private:
 

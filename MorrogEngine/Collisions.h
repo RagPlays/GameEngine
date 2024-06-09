@@ -47,7 +47,7 @@ namespace MoE
 			const float uA{ static_cast<float>(p4x_p3x * p1y_p3y - p4y_p3y * p1x_p3x) * denominator };
 			const float uB{ static_cast<float>(p2x_p1x * p1y_p3y - p2y_p1y * p1x_p3x) * denominator };
 
-			return (uA >= 0.f && uA <= 1.f && uB >= 0.f && uB <= 1.f);
+			return (uA > 0.f && uA < 1.f && uB > 0.f && uB < 1.f);
 		}
 
 		inline bool LinesIntersecting(const Linef& l1, const Linef& l2)

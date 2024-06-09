@@ -40,6 +40,7 @@ public:
 	void SetWalkState();
 	void SetStunnedState();
 	void SetDieState();
+	void SetEndState();
 
 private:
 
@@ -50,6 +51,7 @@ private:
 	std::unique_ptr<EnemyState> m_WalkState;
 	std::unique_ptr<EnemyState> m_StunnedState;
 	std::unique_ptr<EnemyState> m_DieState;
+	std::unique_ptr<EnemyState> m_EndState;
 
 };
 

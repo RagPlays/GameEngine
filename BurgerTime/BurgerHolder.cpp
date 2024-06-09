@@ -44,7 +44,7 @@ void BurgerHolder::Render() const
 
 void BurgerHolder::AddBurger(Burger* burger)
 {
-	if (m_Burgers.size() < m_FullSizeNr) m_Burgers.emplace_back(burger);
+	if (m_Burgers.size() < static_cast<size_t>(m_FullSizeNr)) m_Burgers.emplace_back(burger);
 	else std::cerr << "ERROR::BURGERHOLDER::CANT_ADD_MORE_THEN_LIMIT\n";
 }
 

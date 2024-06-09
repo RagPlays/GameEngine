@@ -30,6 +30,7 @@ public:
 #if defined _DEBUG || defined DEBUG
 	virtual void Render() const override;
 #endif
+	virtual void LateUpdate() override;
 
 	// Movement
 	void Move(const glm::ivec2& dir);
@@ -39,14 +40,11 @@ public:
 	const MoE::Recti& GetHitbox() const;
 
 	void Kill();
-	void SetAttacking(bool attacking);
-	bool IsAttacking() const;
+	void Attack();
+	void Respawn();
 
 	// Player Info
 	int GetPlayerIdx() const;
-
-	// Components
-	MoE::TextureRenderer* GetRenderComponent() const;
 
 private:
 
@@ -54,15 +52,17 @@ private:
 	static unsigned int s_PlayerCount;
 	const unsigned int m_PlayerIdx;
 
+	// Other
+	const float m_RespawnProtectTime;
+	float m_CurrentProtectTime;
+
 	// Movement
 	glm::ivec2 m_MovementDir;
+	MoE::Recti m_Hitbox;
 
-	MoE::Recti m_HitBox;
-	
-	bool m_IsAttacking;
-
-	// Player Components
-	MoE::TextureRenderer* m_pRenderComponent;
+	// Components
+	MoE::TextureRenderer* m_pRenderComp;
+	PlayerStateHandler* m_pStateHandler;
 
 };
 

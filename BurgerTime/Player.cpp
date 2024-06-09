@@ -7,11 +7,13 @@
 #include "EventIDs.h"
 #include "TextureRenderer.h"
 #include "LevelManager.h"
+#include "LevelCollision.h"
+#include "GameManager.h"
+#include "LevelEnemies.h"
+#include "Timer.h"
 
 #if  defined _DEBUG || defined DEBUG
-#include "GameManager.h"
 #include "Renderer.h"
-#include "LevelCollision.h"
 #endif
 
 using namespace MoE;
@@ -22,32 +24,63 @@ Player::Player(MoE::GameObject* const owner)
 	: Component{ owner }
 	, Subject{}
 	, m_PlayerIdx{ s_PlayerCount++ }
+	, m_RespawnProtectTime{ 2.f }
+	, m_CurrentProtectTime{}
 	, m_MovementDir{}
-	, m_HitBox{}
-	, m_IsAttacking{}
-	, m_pRenderComponent{}
+	, m_Hitbox{}
+	, m_pRenderComp{}
+	, m_pStateHandler{}
 {
+	LevelManager::Get().RegisterPlayer(this);
 }
 
 Player::~Player()
 {
+	LevelManager::Get().UnRegisterPlayer(this);
 	--s_PlayerCount;
 }
 
 void Player::SceneStart()
 {
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	{
+		GetOwner()->SetWorldPosition(coll->GetStartPos());
+	}
+
+	if (PlayerStateHandler* handler{ GetOwner()->GetComponent<PlayerStateHandler>() }; handler)
+	{
+		m_pStateHandler = handler;
+	}
+	else
+	{
+		std::cerr << "ERROR::PLAYER::PLAYERSTATEHANDLER_NOT_SET!\n";
+		assert(false);
+	}
+
 	if (MoE::TextureRenderer* pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() }; pRenderComp)
 	{
-		m_pRenderComponent = pRenderComp;
+		m_pRenderComp = pRenderComp;
+		const int gameScale{ GameManager::Get().GetGameScale() };
+		const int tileSize{ static_cast<int>(LevelManager::Get().GetTileSize()) };
+		const int renderTileSize{ tileSize * gameScale };
+		pRenderComp->SetTextureDimensions(glm::ivec2{ tileSize, tileSize });
+		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
+		const glm::ivec2& pos{ static_cast<glm::ivec2>(GetOwner()->GetWorldPosition()) };
+		
+		const MoE::Recti hitbox
+		{
+			pos,
+			glm::ivec2
+			{
+				static_cast<int>(renderTileSize * 0.5f),
+				static_cast<int>(renderTileSize * 0.75f),
+			}
+		};
+		m_Hitbox = hitbox;
 
-		m_HitBox.size.x = static_cast<int>(0.5f * m_pRenderComponent->GetTextureWidth());
-		m_HitBox.size.y = static_cast<int>(m_pRenderComponent->GetTextureHeight() * 0.75f);
-		const glm::ivec2& pos{ GetOwner()->GetLocalPosition() };
-
-		m_HitBox.pos.x = pos.x + static_cast<int>(m_pRenderComponent->GetTextureWidth() * 0.25f);
-		m_HitBox.pos.y = pos.y;
+		m_Hitbox.pos = pos + static_cast<glm::ivec2>(static_cast<glm::vec2>(glm::ivec2{ renderTileSize, renderTileSize }) * 0.25f);
 	}
-	if(!m_pRenderComponent)
+	else
 	{
 		std::cerr << "ERROR::PLAYER::RENDERCOMPONENT_NOT_SET!\n";
 		assert(false);
@@ -58,13 +91,9 @@ void Player::SceneStart()
 
 void Player::FixedUpdate()
 {
-	if (m_pRenderComponent)
-	{
-		const glm::ivec2& pos{ GetOwner()->GetLocalPosition() };
-
-		m_HitBox.pos.x = pos.x + static_cast<int>(m_pRenderComponent->GetTextureWidth() * 0.25);
-		m_HitBox.pos.y = pos.y + static_cast<int>(m_pRenderComponent->GetTextureHeight() * 0.25);
-	}
+	const glm::ivec2& pos{ GetOwner()->GetWorldPosition() };
+	const glm::vec2& texDim{ static_cast<glm::vec2>(m_pRenderComp->GetTextureDimentions()) };
+	m_Hitbox.pos = pos + static_cast<glm::ivec2>(texDim * 0.25f);
 }
 
 #if  defined _DEBUG || defined DEBUG
@@ -73,23 +102,38 @@ void Player::Render() const
 	MoE::Renderer& renderer{ MoE::Renderer::Get() };
 
 	renderer.SetCurrentDrawColor(Color{ 255, 0, 255 });
-	renderer.RenderRect(static_cast<SDL_Rect>(m_HitBox));
+	renderer.RenderRect(static_cast<SDL_Rect>(m_Hitbox));
 
-	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	if (MoE::TextureRenderer* renderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() }; renderComp)
 	{
-		const glm::ivec2& texDimentions{ m_pRenderComponent->GetTextureDimentions() };
-		const glm::vec2& position{ GetOwner()->GetLocalPosition() };
-		const int moveOffset{ coll->GetMoveOffset() };
-		const Recti moveRect
+		if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
 		{
-			static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(texDimentions) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
-			glm::ivec2{ moveOffset, moveOffset }
-		};
-		renderer.SetCurrentDrawColor(Color{ 0, 255, 0 });
-		renderer.RenderRect(static_cast<SDL_Rect>(moveRect));
+			const glm::ivec2& texDimentions{ renderComp->GetTextureDimentions() };
+			const glm::vec2& position{ GetOwner()->GetLocalPosition() };
+			const int moveOffset{ coll->GetMoveOffset() };
+			const Recti moveRect
+			{
+				static_cast<glm::ivec2>((position + (static_cast<glm::vec2>(texDimentions) * 0.5f)) - static_cast<float>(moveOffset) * 0.5f),
+				glm::ivec2{ moveOffset, moveOffset }
+			};
+			renderer.SetCurrentDrawColor(Color{ 0, 255, 0 });
+			renderer.RenderRect(static_cast<SDL_Rect>(moveRect));
+		}
 	}
 }
 #endif
+
+void Player::LateUpdate()
+{
+	if (m_CurrentProtectTime >= m_RespawnProtectTime)
+	{
+		if (LevelEnemies* enemies{ LevelManager::Get().GetEnemies() }; enemies)
+		{
+			enemies->CheckForCollision(this);
+		}
+	}
+	else m_CurrentProtectTime += MoE::Timer::Get().GetFixedElapsedSec();
+}
 
 void Player::Move(const glm::ivec2& dir)
 {
@@ -115,30 +159,29 @@ const glm::ivec2& Player::GetMoveDir() const
 
 const MoE::Recti& Player::GetHitbox() const
 {
-	return m_HitBox;
+	return m_Hitbox;
 }
 
 void Player::Kill()
 {
-	GetOwner()->GetComponent<PlayerStateHandler>()->SetDieState(); // debug code needs to be fixed!!
+	GetOwner()->GetComponent<PlayerStateHandler>()->SetDieState();
 }
 
-void Player::SetAttacking(bool attacking)
+void Player::Attack()
 {
-	m_IsAttacking = attacking;
+	if (m_pStateHandler) m_pStateHandler->SetAttackState();
 }
 
-bool Player::IsAttacking() const
+void Player::Respawn()
 {
-	return m_IsAttacking;
+	m_CurrentProtectTime = 0.f;
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	{
+		GetOwner()->SetWorldPosition(coll->GetStartPos());
+	}
 }
 
 int Player::GetPlayerIdx() const
 {
 	return m_PlayerIdx;
-}
-
-MoE::TextureRenderer* Player::GetRenderComponent() const
-{
-	return m_pRenderComponent;
 }

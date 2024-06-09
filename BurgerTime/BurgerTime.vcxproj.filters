@@ -138,7 +138,7 @@
     <ClCompile Include="BurgerHolder.cpp">
       <Filter>GameSourceFile\GameComponents\Burgers</Filter>
     </ClCompile>
-    <ClCompile Include="InfoMenu.cpp">
+    <ClCompile Include="WaitMenu.cpp">
       <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
@@ -150,7 +150,16 @@
     <ClCompile Include="EnemyStateHandler.cpp">
       <Filter>GameSourceFile\GameComponents\Enemies\States\Basics</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyHotdogWalkState.cpp">
+    <ClCompile Include="EnemyStunState.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWalkState.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDieState.cpp">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyEndState.cpp">
       <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
     </ClCompile>
   </ItemGroup>
@@ -272,7 +281,7 @@
     <ClInclude Include="QuitGameCommand.h">
       <Filter>GameSourceFile\Input</Filter>
     </ClInclude>
-    <ClInclude Include="InfoMenu.h">
+    <ClInclude Include="WaitMenu.h">
       <Filter>GameSourceFile\GameComponents\Components</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -287,7 +296,16 @@
     <ClInclude Include="EnemyStateHandler.h">
       <Filter>GameSourceFile\GameComponents\Enemies\States\Basics</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHotdogWalkState.h">
+    <ClInclude Include="EnemyStunState.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWalkState.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDieState.h">
+      <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyEndState.h">
       <Filter>GameSourceFile\GameComponents\Enemies\States</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,18 +28,6 @@ PlayerStateHandler::~PlayerStateHandler() = default;
 
 void PlayerStateHandler::SceneStart()
 {
-	if (MoE::TextureRenderer* pRenderComp{ GetOwner()->GetComponent<MoE::TextureRenderer>() })
-	{
-		const int gameScale{ GameManager::Get().GetGameScale() };
-		pRenderComp->SetTextureDimensions(glm::ivec2{ 16, 16 });
-		pRenderComp->ScaleTextureDimensions(static_cast<float>(gameScale));
-	}
-
-	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
-	{
-		GetOwner()->SetLocalPosition(coll->GetStartPos());
-	}
-
 	if(m_WalkState) m_WalkState->SceneStart();
 	if (m_AttackState) m_AttackState->SceneStart();
 	if (m_WinState) m_WinState->SceneStart();

@@ -1,28 +1,27 @@
-#ifndef PLAYERWALKSTATE_H
+#ifndef ENEMYWALKSTATE_H
+#define ENEMYWALKSTATE_H
 
 #include <glm.hpp>
+
 #include <memory>
 
-#include "PlayerState.h"
-#include "Structs.h"
+#include "EnemyState.h"
 
 namespace MoE
 {
 	class TextureRenderer;
 }
-class Animation;
 
-class PlayerWalkState final : public PlayerState
+class Player;
+class Animation;
+class LevelCollision;
+
+class EnemyWalkState final : public EnemyState
 {
 public:
 
-	explicit PlayerWalkState(Player* const player, PlayerStateHandler* handler);
-	virtual ~PlayerWalkState();
-
-	PlayerWalkState(const PlayerWalkState& other) = delete;
-	PlayerWalkState(PlayerWalkState&& other) noexcept = delete;
-	PlayerWalkState& operator=(const PlayerWalkState& other) = delete;
-	PlayerWalkState& operator=(PlayerWalkState&& other) noexcept = delete;
+	explicit EnemyWalkState(Enemy* const enemy, EnemyStateHandler* handler);
+	virtual ~EnemyWalkState();
 
 	virtual void SceneStart() override;
 	virtual void OnEnter() override;
@@ -34,28 +33,37 @@ public:
 
 private:
 
-	void InitAnimations();
+	void InitAnimation();
+	
 	void ChangeAnimation();
 	void SetAnimation(Animation* animation, bool flipped = false);
 
 	void UpdateMovement();
+	bool TryMove(const glm::ivec2& dir, LevelCollision* coll);
+
 	void UpdateAnimation();
+
+	Player* GetClosestPlayer() const;
 
 private:
 
-	// Components
-	MoE::TextureRenderer* m_pRenderComp;
-
-	// Movement
+	// Physics
+	glm::ivec2 m_MoveDir;
 	const glm::ivec2 m_MovementSpeed;
-	glm::ivec2 m_PreviousDir;
+	bool m_CanChangeDir;
+	const float m_WaitUntilDirChange;
+	float m_CurrentDirChangeWait;
+
+	// Component
+	MoE::TextureRenderer* m_pRenderComp;
 
 	// Animations
 	Animation* m_pCurrentAnimation;
+	
 	std::unique_ptr<Animation> m_UpAnimation;
 	std::unique_ptr<Animation> m_DownAnimation;
 	std::unique_ptr<Animation> m_SidewayAnimation;
 
 };
 
-#endif // !PLAYERWALKSTATE_H
+#endif // !ENEMYWALKSTATE_H

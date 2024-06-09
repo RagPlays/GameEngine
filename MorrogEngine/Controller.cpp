@@ -19,6 +19,7 @@ namespace MoE
         if (!m_GameController)
         {
             std::cerr << "CONTROLLER::CONTROLLER::COULD_NOT_FIND_CONTROLLER_ON_START_WITH_IDX_" << m_ControllerIdx << "\n";
+            m_ControllerIdx = -1;
         }
 
         m_CurrentButtonStates.resize(

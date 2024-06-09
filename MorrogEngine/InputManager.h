@@ -34,9 +34,9 @@ namespace MoE
 		bool HasQuit() const;
 		void Quit();
 
-		void AddController(int controllerIdx);
+		Controller* AddController(int controllerIdx);
 		bool HasController(int controllerIdx);
-		const Controller* GetController(int controllerIdx) const;
+		Controller* GetController(int controllerIdx) const;
 		const KeyboardMouse* GetKeyBoard() const;
 
 		void AddKeyboardMouseBind(const KeyBoardInput& input, std::unique_ptr<Command>&& command);

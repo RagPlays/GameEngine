@@ -66,7 +66,7 @@ void ListSelection::AddButton(std::unique_ptr<MoE::GameObject>&& buttonObj)
 void ListSelection::Press()
 {
 	if (m_pButtons.empty()) return;
-	if (m_SelectedIndex < m_pButtons.size())
+	if (static_cast<size_t>(m_SelectedIndex) < m_pButtons.size())
 	{
 		m_pButtons[m_SelectedIndex]->Press();
 	}

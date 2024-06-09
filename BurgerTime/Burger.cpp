@@ -11,6 +11,7 @@
 #include "LevelCollision.h"
 #include "Timer.h"
 #include "BurgerHolder.h"
+#include "LevelEnemies.h"
 
 #if defined DEBUG || defined _DEBUG
 #include "Renderer.h"
@@ -18,7 +19,7 @@
 
 Burger::Burger(MoE::GameObject* const owner, std::shared_ptr<MoE::Texture2D> texture, int burgerType, BurgerHolder* holder)
 	: MoE::Component{ owner }
-	, m_FallSpeed{ 25.f * GameManager::Get().GetGameScale() }
+	, m_FallSpeed{ 45.f * GameManager::Get().GetGameScale() }
 	, m_IsFalling{}
 	, m_InHolder{}
 	, m_Dimentions
@@ -36,32 +37,17 @@ void Burger::FixedUpdate()
 {
 	if (!m_IsFalling) return;
 
-	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	UpdateFallingMovement();
+}
+
+void Burger::LateUpdate()
+{
+	if (!m_IsFalling) return;
+	if (LevelEnemies* enemies{ LevelManager::Get().GetEnemies() }; enemies)
 	{
-		MoE::GameObject* const owner{ GetOwner() };
-		const int holdHeight{ m_pHolder->GetCurrentHoldHeight()};
-
-		if (int collFallPos{ coll->GetNextBurgerFallPos(static_cast<glm::ivec2>(owner->GetWorldPosition())) })
-		{
-			const int fallPos{ collFallPos < holdHeight ? collFallPos : holdHeight };
-			const float fallDist{ m_FallSpeed * MoE::Timer::Get().GetFixedElapsedSec() };
-
-			owner->Translate(glm::vec2{ 0.f, fallDist });
-
-			if (owner->GetWorldPosition().y >= fallPos)
-			{
-				const glm::vec2& pos{ owner->GetWorldPosition() };
-				owner->SetWorldPosition(glm::vec2{pos.x, static_cast<float>(fallPos)});
-				m_IsFalling = false;
-				if (holdHeight == fallPos)
-				{
-					m_InHolder = true;
-					m_pHolder->CheckInHolder();
-					return;
-				}
-				m_pHolder->CheckOverLapping(this);
-			}
-		}
+		const glm::vec2& pos{ GetOwner()->GetWorldPosition() };
+		const MoE::Recti hitbox{ pos, static_cast<glm::vec2>(m_Dimentions) };
+		enemies->CheckForCollision(hitbox);
 	}
 }
 
@@ -150,4 +136,35 @@ void Burger::CheckBurgerFalling()
 			return burgerPart->GetIsPushed();
 		}
 	)) ForceFalling();
+}
+
+void Burger::UpdateFallingMovement()
+{
+	if (LevelCollision* coll{ LevelManager::Get().GetCollision() }; coll)
+	{
+		MoE::GameObject* const owner{ GetOwner() };
+		const int holdHeight{ m_pHolder->GetCurrentHoldHeight() };
+
+		if (int collFallPos{ coll->GetNextBurgerFallPos(static_cast<glm::ivec2>(owner->GetWorldPosition())) })
+		{
+			const int fallPos{ collFallPos < holdHeight ? collFallPos : holdHeight };
+			const float fallDist{ m_FallSpeed * MoE::Timer::Get().GetFixedElapsedSec() };
+
+			owner->Translate(glm::vec2{ 0.f, fallDist });
+
+			if (owner->GetWorldPosition().y >= fallPos)
+			{
+				const glm::vec2& pos{ owner->GetWorldPosition() };
+				owner->SetWorldPosition(glm::vec2{ pos.x, static_cast<float>(fallPos) });
+				m_IsFalling = false;
+				if (holdHeight == fallPos)
+				{
+					m_InHolder = true;
+					m_pHolder->CheckInHolder();
+					return;
+				}
+				m_pHolder->CheckOverLapping(this);
+			}
+		}
+	}
 }

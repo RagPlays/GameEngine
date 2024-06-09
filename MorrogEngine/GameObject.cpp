@@ -147,28 +147,6 @@ namespace MoE
 		return m_Children;
 	}
 
-	/*void GameObject::SetParent(GameObject* parent, bool keepWorldPos)
-	{
-		if (parent == this || m_Parent == parent || IsChild(parent)) return;
-
-		if (parent)
-		{
-			if (keepWorldPos)
-			{
-				SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
-			}
-			SetPositionDirty();
-		}
-		else
-		{
-			SetLocalPosition(GetWorldPosition());
-		}
-
-		if (m_Parent) m_Parent->RemoveChild(this);
-		m_Parent = parent;
-		if (m_Parent) m_Parent->AddChild(this);
-	}*/
-
 	void GameObject::AddChild(std::unique_ptr<GameObject>&& child, bool keepWorldPos)
 	{
 		// Checks
@@ -268,10 +246,6 @@ namespace MoE
 	}
 
 	// Private functions
-	/*void GameObject::AddChild(GameObject* child)
-	{
-		m_Children.emplace_back(std::move(child));
-	}*/
 
 	void GameObject::RemoveChild(GameObject* child)
 	{

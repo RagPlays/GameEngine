@@ -33,6 +33,7 @@ public:
 	Burger& operator=(Burger&& other) noexcept = delete;
 
 	virtual void FixedUpdate() override;
+	virtual void LateUpdate() override;
 
 	void CheckForCollision(const MoE::Recti& hitbox);
 
@@ -46,6 +47,8 @@ private:
 
 	void LoadBurgerParts(int burgerType, std::shared_ptr<MoE::Texture2D> texture);
 	void CheckBurgerFalling();
+
+	void UpdateFallingMovement();
 
 private:
 

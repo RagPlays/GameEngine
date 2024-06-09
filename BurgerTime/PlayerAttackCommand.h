@@ -16,10 +16,7 @@ public:
 
 	virtual void Execute()
 	{
-		if (!GetPlayer()->IsAttacking())
-		{
-			GetPlayer()->SetAttacking(true);
-		}
+		GetPlayer()->Attack();
 	}
 };
 

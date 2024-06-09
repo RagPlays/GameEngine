@@ -48,14 +48,17 @@ namespace MoE
 		m_HasQuit = true;
 	}
 
-	void InputManager::AddController(int controllerIdx)
+	Controller* InputManager::AddController(int controllerIdx)
 	{
 		if (HasController(controllerIdx))
 		{
 			std::cerr << "INPUTMANAGER::ADDCONTROLLER::CONTROLLER_ALREADY_EXISTS\n";
-			return;
+			return GetController(controllerIdx);
 		}
-		m_Controllers.emplace_back(std::make_unique<Controller>(controllerIdx));
+		auto controller{ std::make_unique<Controller>(controllerIdx) };
+		auto controllerPtr{ controller.get() };
+		m_Controllers.emplace_back(std::move(controller));
+		return controllerPtr;
 	}
 
 	bool InputManager::HasController(int controllerIdx)
@@ -63,7 +66,7 @@ namespace MoE
 		return FindController(controllerIdx) != nullptr;
 	}
 
-	const Controller* InputManager::GetController(int controllerIdx) const
+	Controller* InputManager::GetController(int controllerIdx) const
 	{
 		Controller* controller{ FindController(controllerIdx) };
 		if (!controller) std::cerr << "INPUTMANAGER::GETCONTROLLER::CONTROLLERIDX_NOT_FOUND\n";

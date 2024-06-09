@@ -13,7 +13,7 @@
 PlayerWalkState::PlayerWalkState(Player* const player, PlayerStateHandler* handler)
 	: PlayerState{ player, handler }
 	, m_pRenderComp{}
-	, m_MovementSpeed{ glm::ivec2{42, 22} * GameManager::Get().GetGameScale() }
+	, m_MovementSpeed{ glm::ivec2{ 42, 22 } * GameManager::Get().GetGameScale() }
 	, m_PreviousDir{}
 	, m_pCurrentAnimation{}
 	, m_UpAnimation{}
@@ -55,17 +55,12 @@ void PlayerWalkState::FixedUpdate()
 		m_PreviousDir = moveDir;
 	}
 
-	// Movement
 	UpdateMovement();
 }
 
 void PlayerWalkState::Update()
 {
-	// Animations
 	UpdateAnimation();
-
-	// Update Other State
-	UpdateStateChange();
 }
 
 void PlayerWalkState::OnNotify(MoE::GameObject*, EventID eventID)
@@ -148,17 +143,29 @@ void PlayerWalkState::UpdateMovement()
 
 		owner->Translate(translation);
 
-		if (!coll->CanMove(m_pPlayer, m_pRenderComp->GetTextureDimentions()))
+		const glm::vec2& currentPos{ owner->GetLocalPosition() };
+		const glm::ivec2& moveDir{ m_pPlayer->GetMoveDir() };
+		const glm::ivec2& moveHitbox{ m_pRenderComp->GetTextureDimentions() };
+
+		const MoveResult moveResult{ coll->CanMove(currentPos, moveDir, moveHitbox, false) };
+		if (moveResult.canMove)
 		{
-			owner->SetLocalPosition(originalPos);
-			if (m_pCurrentAnimation)
+			// position
+			glm::vec newPos{ currentPos };
+			if (moveDir.x) newPos.y = moveResult.line.pointOne.y - (moveHitbox.y * 0.5f);
+			else newPos.x = moveResult.line.pointOne.x - (moveHitbox.x * 0.5f);
+			owner->SetLocalPosition(newPos);
+
+			// burgers
+			if (LevelBurgers* burgers{ LevelManager::Get().GetBurgers() }; burgers)
 			{
-				m_pCurrentAnimation->Stop();
+				burgers->CheckForCollision(m_pPlayer->GetHitbox());
 			}
 		}
-		else if (LevelBurgers* burgers{ LevelManager::Get().GetBurgers() }; burgers)
+		else
 		{
-			burgers->CheckForCollision(m_pPlayer->GetHitbox());
+			owner->SetLocalPosition(originalPos);
+			if (m_pCurrentAnimation) m_pCurrentAnimation->Stop();
 		}
 	}
 }
@@ -167,12 +174,4 @@ void PlayerWalkState::UpdateAnimation()
 {
 	if (!m_PreviousDir.x && !m_PreviousDir.y) return;
 	if (m_pCurrentAnimation) m_pCurrentAnimation->Update();
-}
-
-void PlayerWalkState::UpdateStateChange()
-{
-	if (m_pPlayer->IsAttacking())
-	{
-		m_pHandler->SetAttackState();
-	}
 }
