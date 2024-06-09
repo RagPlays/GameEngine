@@ -73,12 +73,13 @@ void Player::SceneStart()
 			glm::ivec2
 			{
 				static_cast<int>(renderTileSize * 0.5f),
-				static_cast<int>(renderTileSize * 0.75f),
+				static_cast<int>(renderTileSize * 0.65f),
 			}
 		};
 		m_Hitbox = hitbox;
 
-		m_Hitbox.pos = pos + static_cast<glm::ivec2>(static_cast<glm::vec2>(glm::ivec2{ renderTileSize, renderTileSize }) * 0.25f);
+		m_Hitbox.pos.x = pos.x + static_cast<int>(renderTileSize * 0.25f);
+		m_Hitbox.pos.y = pos.y + static_cast<int>(renderTileSize * 0.35f);
 	}
 	else
 	{
@@ -93,7 +94,8 @@ void Player::FixedUpdate()
 {
 	const glm::ivec2& pos{ GetOwner()->GetWorldPosition() };
 	const glm::vec2& texDim{ static_cast<glm::vec2>(m_pRenderComp->GetTextureDimentions()) };
-	m_Hitbox.pos = pos + static_cast<glm::ivec2>(texDim * 0.25f);
+	m_Hitbox.pos.x = pos.x + static_cast<int>(texDim.x * 0.25f);
+	m_Hitbox.pos.y = pos.y + static_cast<int>(texDim.y * 0.35f);
 }
 
 #if  defined _DEBUG || defined DEBUG
