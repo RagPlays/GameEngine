@@ -7,12 +7,17 @@
 #include <memory>
 #include <typeindex>
 #include <unordered_map>
+#include <type_traits>
+#include <concepts>
 
 #include "Transform.h"
 
 namespace MoE
 {
 	class Component;
+
+	template<class ComponentType>
+	concept IsComponent = std::is_base_of_v<Component, ComponentType>;
 
 	class GameObject final
 	{
@@ -36,7 +41,7 @@ namespace MoE
 		void SceneEnd();
 
 		// Components
-		template <class ComponentType>
+		template <IsComponent ComponentType>
 		void AddComponent(std::unique_ptr<ComponentType>&& component)
 		{
 			if (!HasComponent<ComponentType>())
@@ -45,13 +50,13 @@ namespace MoE
 			}
 		}
 
-		template <class ComponentType>
+		template <IsComponent ComponentType>
 		void RemoveComponent()
 		{
 			m_Components.erase(typeid(ComponentType));
 		}
 
-		template <class ComponentType>
+		template <IsComponent ComponentType>
 		ComponentType* GetComponent() const
 		{
 			auto it{ m_Components.find(typeid(ComponentType)) };
@@ -62,7 +67,7 @@ namespace MoE
 			return nullptr;
 		}
 
-		template <class ComponentType>
+		template <IsComponent ComponentType>
 		bool HasComponent() const
 		{
 			return m_Components.find(typeid(ComponentType)) != m_Components.end();
