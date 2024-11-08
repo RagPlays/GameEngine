@@ -1,4 +1,4 @@
-# Input Bindings ### (QUERTY)
+### Input Bindings ### (QUERTY)
 
 #### General Inputs
 
